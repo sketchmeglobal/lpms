@@ -1,0 +1,241 @@
+<?php
+/**
+ * Coded by: Pran Krishna Das
+ * Social: www.fb.com/pran93
+ * CI: 3.0.6
+ * Date: 11-03-2020
+ * Time: 08:55
+ */
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Article Costing | <?=WEBSITE_NAME;?></title>
+    <meta name="description" content="add article costing">
+
+    <!--Select2-->
+    <link href="<?=base_url();?>assets/admin_panel/css/select2.css" rel="stylesheet">
+    <link href="<?=base_url();?>assets/admin_panel/css/select2-bootstrap.css" rel="stylesheet">
+
+    <!--iCheck-->
+    <link href="<?=base_url();?>assets/admin_panel/js/icheck/skins/all.css" rel="stylesheet">
+
+    <!-- common head -->
+    <?php $this->load->view('components/_common_head'); ?>
+    <!-- /common head -->
+</head>
+
+<body class="sticky-header">
+
+<section>
+    <!-- sidebar left start (Menu)-->
+    <?php $this->load->view('components/left_sidebar'); //left side menu ?>
+    <!-- sidebar left end (Menu)-->
+
+    <!-- body content start-->
+    <div class="body-content" style="min-height: 1500px;">
+
+        <!-- header section start-->
+        <?php $this->load->view('components/top_menu'); ?>
+        <!-- header section end-->
+
+        <!-- page head start-->
+        <div class="page-head">
+            <h3 class="m-b-less">Add Article Costing</h3>
+            <div class="state-information">
+                <ol class="breadcrumb m-b-less bg-less">
+                    <li><a href="<?=base_url('admin/dashboard');?>">Home</a></li>
+                    <li class="active"> Add Article Costing</li>
+                </ol>
+            </div>
+        </div>
+        <!-- page head end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <form id="form_add_article_costing" method="post" action="<?=base_url('admin/form_add_article_costing')?>" class="cmxform form-horizontal tasi-form">
+                                <div class="form-group ">
+                                    <label for="am_id" class="control-label col-lg-2 text-danger">Article *</label>
+                                    <div class="col-lg-4">
+                                        <select id="am_id" name="am_id" required class="select2 form-control round-input">
+                                            <option value="">Select Article</option>
+                                            <?php foreach($article_masters as $val) { ?>
+                                                <option value="<?=$val['am_id']?>"><?=$val['art_no']?> [<?=$val['group_name']?>]</option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+
+                                    <label for="remark" class="control-label col-lg-2">Remark</label>
+                                    <div class="col-lg-4">
+                                        <input id="remark" name="remark" type="text" placeholder="Remark" class="form-control round-input" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    <label for="exworks_amt" class="control-label col-lg-2">Ex-Works</label>
+                                    <div class="col-lg-4">
+                                        <input id="exworks_amt" name="exworks_amt" type="number" placeholder="Ex-Works amount" readonly class="form-control round-input" />
+                                    </div>
+
+                                    <label for="cf_amt" class="control-label col-lg-2">C & F</label>
+                                    <div class="col-lg-4">
+                                        <input id="cf_amt" name="cf_amt" type="number" placeholder="C & F amount" readonly class="form-control round-input" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    <label for="fob_amt" class="control-label col-lg-2">F.O.B</label>
+                                    <div class="col-lg-4">
+                                        <input id="fob_amt" name="fob_amt" type="number" placeholder="F.O.B amount" readonly class="form-control round-input" />
+                                    </div>
+                                    
+                                    <div class="col-lg-4">
+                                        <label class="control-label">Combination article or not</label>
+                                        <input type="radio" name="combination_or_not" id="yes" value="1" class="iCheck-square-green">
+                                        <label for="enable" class="control-label">Yes</label>
+
+                                        <input type="radio" name="combination_or_not" id="no" value="0" checked class="iCheck-square-red">
+                                        <label for="disable" class="control-label">No</label>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="form-group ">
+                                    
+                                    <div class="col-lg-4">
+                                        <label class="control-label text-danger">Status *</label>
+                                        <input type="radio" name="status" id="enable" value="1" checked required class="iCheck-square-green">
+                                        <label for="enable" class="control-label">Enable</label>
+
+                                        <input type="radio" name="status" id="disable" value="0" required class="iCheck-square-red">
+                                        <label for="disable" class="control-label">Disable</label>
+                                    </div>
+                                    
+                                    <label class="control-label col-lg-2">Image</label>
+                                    <div class="col-lg-4 text-center">
+                                        <img id="article_img" src="<?=base_url()?>assets/admin_panel/img/article_img/default.png" height="75">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-plus"> Add Article Costing</i></button>
+                                        <a id="edit_btn" href="javascript:void(0)" class="hidden btn btn-info"><i class="fa fa-pencil"> Edit Article Costing</i></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <?php $this->load->view('components/footer'); ?>
+        <!--footer section end-->
+
+    </div>
+    <!-- body content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="<?=base_url()?>assets/admin_panel/js/jquery-1.10.2.min.js"></script>
+<!-- common js -->
+<?php $this->load->view('components/_common_js'); //left side menu ?>
+<!--Select2-->
+<script src="<?=base_url();?>assets/admin_panel/js/select2.js" type="text/javascript"></script>
+<script>
+    $('.select2').select2();
+</script>
+<!--Icheck-->
+<script src="<?=base_url();?>assets/admin_panel/js/icheck/skins/icheck.min.js"></script>
+<script src="<?=base_url();?>assets/admin_panel/js/icheck-init.js"></script>
+<!--form validation-->
+<script src="<?=base_url();?>assets/admin_panel/js/jquery.validate.min.js"></script>
+<!--ajax form submit-->
+<script src="<?=base_url();?>assets/admin_panel/js/jquery.form.min.js"></script>
+
+<script>
+    //add-item-form validation and submit
+    $("#form_add_article_costing").validate({
+        rules: {
+            am_id: {
+                required: true,
+                remote: {
+                    url: "<?=base_url('ajax_unique_article_costing_amId')?>",
+                    type: "post",
+                    data: {
+                        article_costing_id: '',
+                    },
+                },
+            },
+        },
+        messages: {
+
+        }
+    });
+    $('#form_add_article_costing').ajaxForm({
+        beforeSubmit: function () {
+            return $("#form_add_article_costing").valid(); // TRUE when form is valid, FALSE will cancel submit
+        },
+        success: function (returnData) {
+            obj = JSON.parse(returnData);
+
+            $('#form_add_article_costing')[0].reset(); //reset form
+            $("#form_add_article_costing select").select2("val", ""); //reset all select2 fields
+            $('#form_add_article_costing :radio').iCheck('update'); //reset all iCheck fields
+            $("#form_add_article_costing").validate().resetForm(); //reset validation
+            notification(obj);
+
+            $('#edit_btn').attr('href', '<?=base_url()?>admin/edit_article_costing/'+obj.insert_id);
+            $('#edit_btn').removeClass('hidden');
+        }
+    });
+
+    //fetch article image
+    $("#am_id").on('change', function () {
+       am_id = $("#am_id").val();
+
+       $.ajax({
+           url: "<?= base_url('ajax_fetch_article_master_image') ?>",
+           method: "post",
+           dataType: 'json',
+           data: {'am_id':am_id,},
+           success: function(data){
+               $('#article_img').attr('src', '<?=base_url()?>assets/admin_panel/img/article_img/'+data.img);
+           },
+       });
+    });
+
+    //toastr notification
+    function notification(obj) {
+        toastr[obj.type](obj.msg, obj.title, {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "15000",
+            "extendedTimeOut": "10000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        })
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+[
+    {
+        "Version": "1.1",
+        "TranDtls": {
+            "TaxSch": "GST",
+            "SupTyp": "EXPWOP",
+            "IgstOnIntra": "N",
+            "RegRev": "N",
+            "EcmGstin": null
+        },
+        "DocDtls": {
+            "Typ": "INV",
+            "No": null,
+            "Dt": "01/01/1970"
+        },
+        "SellerDtls": {
+            "Gstin": "19AAECS6338L1ZT",
+            "LglNm": "SHILPA OVERSEAS PVT. LTD.",
+            "TrdNm": "SHILPA OVERSEAS PVT. LTD.",
+            "Addr1": "51, MAHANIRBAN ROAD",
+            "Addr2": "KOLKATA",
+            "Loc": "WEST BENGAL",
+            "Pin": 700029,
+            "Stcd": "19",
+            "Ph": "03340031411",
+            "Em": "deep.paul@shilpaoverseas.com"
+        },
+        "BuyerDtls": {
+            "Gstin": "URP",
+            "LglNm": null,
+            "TrdNm": null,
+            "Pos": "96",
+            "Addr1": null,
+            "Addr2": null,
+            "Loc": null,
+            "Pin": 999999,
+            "Stcd": "96",
+            "Ph": null,
+            "Em": null
+        },
+        "DispDtls": null,
+        "ShipDtls": null,
+        "ValDtls": {
+            "AssVal": 0,
+            "IgstVal": 0,
+            "CgstVal": 0,
+            "SgstVal": 0,
+            "CesVal": 0,
+            "StCesVal": 0,
+            "Discount": 0,
+            "OthChrg": 0,
+            "RndOffAmt": 0,
+            "TotInvVal": 0,
+            "TotInvValFc": 0
+        },
+        "ExpDtls": {
+            "ShipBNo": null,
+            "ShipBdt": null,
+            "Port": null,
+            "RefClm": null,
+            "ForCur": null,
+            "CntCode": null,
+            "ExpDuty": null
+        },
+        "EwbDtls": {
+            "TransId": null,
+            "TransName": null,
+            "TransMode": "1",
+            "Distance": 0,
+            "TransDocNo": null,
+            "TransDocDt": null,
+            "VehNo": null,
+            "VehType": null
+        },
+        "PayDtls": null,
+        "RefDtls": null,
+        "AddlDocDtls": null,
+        "ItemList": []
+    }
+]

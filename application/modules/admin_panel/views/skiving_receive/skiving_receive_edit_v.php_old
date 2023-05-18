@@ -1,0 +1,650 @@
+<?php
+/**
+ * Coded by: Pran Krishna Das
+ * Social: www.fb.com/pran93
+ * CI: 3.0.6
+ * Date: 11-03-2020
+ * Time: 09:55
+ */
+ ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Skiving Receive Edit | <?=WEBSITE_NAME;?></title>
+    <meta name="description" content="edit Purchase Order">
+
+     <!--Data Table-->
+    <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/admin_panel/js/DataTables/DataTables-1.10.18/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/admin_panel/js/DataTables/Buttons-1.5.6/css/buttons.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/admin_panel/js/DataTables/Responsive-2.2.2/css/responsive.bootstrap.min.css"/>
+
+    <!--Select2-->
+    <link href="<?=base_url();?>assets/admin_panel/css/select2.css" rel="stylesheet">
+    <link href="<?=base_url();?>assets/admin_panel/css/select2-bootstrap.css" rel="stylesheet">
+
+    <!--iCheck-->
+    <link href="<?=base_url();?>assets/admin_panel/js/icheck/skins/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <!-- common head -->
+    <?php $this->load->view('components/_common_head'); ?>
+    <!-- /common head -->
+    <style>
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        text-align: right;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            text-align: right;
+            -moz-appearance: textfield;
+        }
+
+        .border-black-bottom{border-bottom: 1px dotted #000}
+    </style>
+</head>
+
+<body class="sticky-header">
+
+<section>
+    <!-- sidebar left start (Menu)-->
+    <?php $this->load->view('components/left_sidebar'); //left side menu ?>
+    <!-- sidebar left end (Menu)-->
+
+    <!-- body content start-->
+    <div class="body-content" style="min-height: 1500px;">
+
+        <!-- header section start-->
+        <?php $this->load->view('components/top_menu'); ?>
+        <!-- header section end-->
+
+        <!-- page head start-->
+        <div class="page-head">
+            <h3 class="m-b-less">Skiving Receive Edit</h3>
+            <div class="state-information">
+                <ol class="breadcrumb m-b-less bg-less">
+                    <li><a href="<?=base_url('admin/dashboard');?>">Home</a></li>
+                    <li class="active"> Skiving Receive Edit </li>
+                </ol>
+            </div>
+        </div>
+        <!-- page head end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+
+            <!--Edit Article Costing-->
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Edit <?= $skiving_receive_details[0]->skiving_receive_challan_number ?>
+                            <span class="tools pull-right">
+                                <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+                        <?php #print_r($purchase_order_details); die;?>
+                            <form id="form_skiving_receive_edit" method="post" action="<?=base_url('admin/form-skiving-receive-edit')?>" class="cmxform form-horizontal tasi-form">
+                            
+                            <div class="form-group ">
+                                <div class="col-lg-4">
+                                    <label for="cut_rcv_id" class="control-label text-danger">Skiving Issue Challan Number *</label>
+                                    <select id="cut_rcv_id" name="cut_rcv_id" class="form-control select2">
+                                    <option value="">Select Skiving Issue Challan Number</option>
+                                            <?php
+                                            foreach($skiving_issue_number as $sin){
+                                            ?> 
+                                                <option value="<?=$sin->cut_rcv_id?>" <?php if($skiving_receive_details[0]->cut_rcv_id == $sin->cut_rcv_id){?> selected <?php } ?>><?=$sin->skiving_issue_number?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="skiving_receive_challan_number" class="control-label text-danger">Skiving Receive Challan Number *</label>
+                                    <input id="skiving_receive_challan_number" name="skiving_receive_challan_number" type="text" placeholder="Skiving Receive Challan Number" class="form-control round-input" value="<?=$skiving_receive_details[0]->skiving_receive_challan_number?>" />
+                                    </div>
+                                <div class="col-lg-4">
+                                        <label for="skiving_receive_date" class="control-label text-danger">Skiving Receive Date *</label>
+                                        <input id="skiving_receive_date" name="skiving_receive_date" type="date" placeholder="Skiving Receive Date" class="form-control round-input" value="<?= date('Y-m-d', strtotime($skiving_receive_details[0]->skiving_receive_date)) ?>" />
+                                    </div>
+                            </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-3">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update Receive Challan</i></button>
+                                    </div>
+                                    <!--<div class="col-sm-3">
+                                        <button id="print_all" type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+                                    </div>-->
+                                </div> 
+                                <input type="hidden" id="skiving_receive_id" name="skiving_receive_id" class="hidden" value="<?= $skiving_receive_details[0]->skiving_receive_id ?>" />
+                            </form>
+                        </div>
+                    </section>
+                </div>
+                <!--<div class="col-md-2 hidden-xs">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Total:
+                            <span class="tools pull-right">
+                                <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
+                            </span>
+                        </header>
+                        
+                        <div class="panel-body">
+                            <p class='text-center' id="challan_total_amount">100</p>
+                            <hr />
+                        </div>
+                    </section>
+                </div>-->
+            </div>
+
+
+
+           
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Add Skiving Receive details for: <?= $skiving_receive_details[0]->skiving_receive_challan_number ?>
+                            <span class="tools pull-right">
+                                <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
+                            </span>
+                        </header>
+                        <div class="panel-body">
+                            <!--Tabs-->
+                            <ul id="purchase_order_tabs" class="nav nav-tabs nav-justified">
+                                <li class="active"><a href="#cut_issue_challan_list" data-toggle="tab">List</a></li>
+                                <li id="skiving_add"><a href="#cut_issue_challan_add" data-toggle="tab">Add</a></li>
+                                <li id="cut_issue_receive_edit_tab" class="disabled"><a href="#cut_issue_receive_edit" data-toggle="">Edit</a></li>
+                            </ul>
+                            <!--Tab Content-->
+                            <div class="tab-content">
+                                <img id="pod_edit_loader" class="hidden" style="display:block; margin: auto" src="<?= base_url('assets/img/ellipsis.gif') ?>" alt="" />
+                                <div id="cut_issue_challan_list" class="tab-pane fade in active">
+                                    <table id="cutting_receive_challan_details_table" class="table data-table dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Article Number</th>
+                                                <th>Leather Color</th>
+                                                <th>Fitting Color</th>
+                                                <th>Receive Quantity</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div id="cut_issue_challan_add" class="tab-pane fade">
+                                    <br/>
+                                    <div class="form">
+                                        <form id="form_add_skiving_receive_challan_details" method="post" action="<?=base_url('admin/form-add-skiving-receive-challan-details')?>" class="cmxform form-horizontal tasi-form">
+                                            <div class="form-group ">
+                                            
+                                                <div class="col-lg-4"><!-- It is showing Article Number[Atricle Details] but calculating with the customer order detail PK -->
+                                                    <label for="am_id_add" class="control-label text-danger">Article Number*</label>
+                                                    <?php //print_r($articles); ?>
+                                                    <select id="am_id_add" name="am_id_add" class="form-control select2">
+                                                        <option value="">Select Article Number</option>
+                                                        <?php foreach($articles as $val){ ?>
+														<option value="<?=$val['am_id']?>" cod_id="<?=$val['cod_id']?>" fitting_color="<?=$val['fitting_color']?>" fitting_id="<?=$val['fitting_id']?>" leather_color="<?=$val['leather_color']?>" leather_id="<?=$val['leather_id']?>" cut_rcv_id="<?=$val['cut_rcv_id']?>"><?=$val['art_no'] . ' ['. $val['leather_color'] .']'?></option>
+                                                        <?php } ?>
+                                                     </select>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <label for="lc_id_text" class="control-label text-danger">Leather Colour</label>
+                                                    <input type="text" id="lc_id_text" name="lc_id_text" required class="form-control" readonly />
+                                                    <input type="hidden" id="lc_id" name="lc_id" required class="form-control" readonly />
+                                                    <input type="hidden" id="cut_rcv_id_hidden" name="cut_rcv_id_hidden" required class="form-control" readonly />
+                                                    <input type="hidden" id="cod_id" name="cod_id" required class="form-control" readonly />
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <label for="fc_id_text" class="control-label text-danger">Fitting Colour</label>
+                                                    <input type="text" id="fc_id_text" name="fc_id_text" required class="form-control" readonly />
+                                                    <input type="hidden" id="fc_id" name="fc_id" required class="form-control" readonly />
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <label for="receive_cut_quantity_add" class="control-label text-danger">Issue Quantity</label>
+                                                    <input type="text" id="receive_cut_quantity_add" name="receive_cut_quantity_add" required class="form-control" readonly />
+                                                    
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <label for="receive_quantity_add" class="control-label text-danger">Receive Quantity</label>
+                                                    <input type="text" id="receive_quantity_add" name="receive_quantity_add" required class="form-control" />
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <div class="col-lg-4 col-lg-offset-4">
+                                                    <label for="" class="control-label">&nbsp;</label><br>
+                                                    <button class="btn btn-success" style="margin: auto; display:block;" type="submit"><i class="fa fa-plus"></i> Add details</button>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="skiving_receive_id" id="skiving_receive_id" class="hidden" value="<?= $skiving_receive_details[0]->skiving_receive_id ?>" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div id="cut_issue_receive_edit" class="tab-pane">
+                                    <br/>
+                                    <div class="form">
+                                        <form id="form_edit_skiving_receive_details" method="post" action="<?=base_url('admin/form-edit-skiving-receive-details')?>" class="cmxform form-horizontal tasi-form">
+                                   <div class="form-group ">
+                                    
+                                        <div class="col-lg-4"><!-- It is showing Article Number[Atricle Details] but calculating with the customer order detail PK -->
+                                            <label for="am_id_edit1" class="control-label text-danger">Article Number*</label><br>
+
+                                            <label id="am_id_edit" class="control-label"> </label>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label for="lc_id_text" class="control-label text-danger">Leather Colour</label>
+                                            <input type="text" id="lc_id_text_edit" name="lc_id_text_edit" required class="form-control" readonly />
+                                            <input type="hidden" id="lc_id_edit" name="lc_id_edit" required class="form-control" readonly />
+                                            <input type="hidden" id="cut_rcv_id_hidden_edit" name="cut_rcv_id_hidden_edit" required class="form-control" readonly />
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label for="fc_id_text" class="control-label text-danger">Fitting Colour</label>
+                                            <input type="text" id="fc_id_text_edit" name="fc_id_text_edit" required class="form-control" readonly />
+                                            <input type="hidden" id="fc_id_edit" name="fc_id_edit" required class="form-control" readonly />
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label for="receive_cut_quantity_edit" class="control-label text-danger">Issue Quantity</label>
+                                            <input type="text" id="receive_cut_quantity_edit" name="receive_cut_quantity_edit" required class="form-control" readonly />
+                                            
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label for="receive_quantity_edit" class="control-label text-danger">Receive Quantity</label>
+                                            <input type="text" id="receive_quantity_edit" name="receive_quantity_edit" required class="form-control" />
+                                            <input type="hidden" id="receive_quantity_edit_pro" name="receive_quantity_edit_pro" required class="form-control" />
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                            
+                                    <div class="form-group">
+                                        <div class="col-lg-4 col-lg-offset-4">
+                                            <label for="" class="control-label">&nbsp;</label><br>
+                                            <button class="btn btn-success" style="margin: auto; display:block;" type="submit"><i class="fa fa-plus"></i> Update details</button>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="skiving_receive_detail_id" name="skiving_receive_detail_id" class="hidden" value="" />
+                                    
+                                </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+            </div>
+
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <?php $this->load->view('components/footer'); ?>
+        <!--footer section end-->
+
+    </div>
+    <!-- body content end-->
+</section>
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="<?=base_url()?>assets/admin_panel/js/jquery-1.10.2.min.js"></script>
+<!-- common js -->
+<?php $this->load->view('components/_common_js'); //left side menu ?>
+<!--Data Table-->
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Buttons-1.5.6/js/buttons.bootstrap.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Buttons-1.5.6/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Buttons-1.5.6/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Buttons-1.5.6/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Buttons-1.5.6/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Responsive-2.2.2/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/admin_panel/js/DataTables/Responsive-2.2.2/js/responsive.bootstrap.min.js"></script>
+<!--data table init-->
+<script src="<?=base_url()?>assets/admin_panel/js/data-table-init.js"></script>
+<!--Select2-->
+<script src="<?=base_url();?>assets/admin_panel/js/select2.js" type="text/javascript"></script>
+<script>
+    $('.select2').select2();
+</script>
+<!--Icheck-->
+<script src="<?=base_url();?>assets/admin_panel/js/icheck/skins/icheck.min.js"></script>
+<script src="<?=base_url();?>assets/admin_panel/js/icheck-init.js"></script>
+<!--form validation-->
+<script src="<?=base_url();?>assets/admin_panel/js/jquery.validate.min.js"></script>
+<!--ajax form submit-->
+<script src="<?=base_url();?>assets/admin_panel/js/jquery.form.min.js"></script>
+
+
+<script>
+    
+    $(document).ready(function() {
+        $('#cutting_receive_challan_details_table').DataTable( {
+            "processing": true,
+            "language": {
+                processing: '<img src="<?=base_url('assets/img/ellipsis.gif')?>"><span class="sr-only">Processing...</span>',
+            },
+            "serverSide": true,
+            "ajax": {
+                "url": "<?=base_url('admin/ajax-skiving-receive-challan-details-table-data')?>",
+                "type": "POST",
+                "dataType": "json",
+                data: {
+                    skiving_receive_id: function () {
+                        return $("#skiving_receive_id").val();
+                    },
+                },
+            },
+            //will get these values from JSON 'data' variable
+            "columns": [
+				{ "data": "article_number" },
+                { "data": "fitting_color" },
+                { "data": "leather_color" },
+				{ "data": "receive_quantity" },				
+                { "data": "action" },
+            ],
+            //column initialisation properties
+            "columnDefs": [{
+                "targets": [1,2,4],
+                "orderable": false,
+            }]
+        } );  
+    });
+	
+	
+	$("#am_id_add").change(function(){
+        $am_id_add = $(this).val();
+		
+		$fitting_color = $('option:selected', this).attr('fitting_color');
+		$fitting_id = $('option:selected', this).attr('fitting_id');
+		$leather_color = $('option:selected', this).attr('leather_color');
+		$leather_id = $('option:selected', this).attr('leather_id');
+		$cut_rcv_id = $('option:selected', this).attr('cut_rcv_id');
+		$cod_id = $('option:selected', this).attr('cod_id');
+		
+		console.log('leather_id: '+$leather_id);
+		
+		$('#lc_id_text').val($leather_color);
+		$('#lc_id').val($leather_id);
+		$('#fc_id_text').val($fitting_color);
+		$('#fc_id').val($fitting_id);
+		$('#cut_rcv_id_hidden').val($cut_rcv_id);
+		$('#cod_id').val($cod_id);
+		
+        $.ajax({
+            url: "<?= base_url('admin/ajax-cutting-receive-quantity-and-article-detail') ?>",
+            method: "post",
+            dataType: 'json',
+            data: {'am_id': $am_id_add, 'cut_rcv_id': $cut_rcv_id, 'cod_id': $cod_id},
+            success: function(result){
+                console.log(JSON.stringify(result));
+				$('#receive_cut_quantity_add').val(result.remain_receive_quantity_in_skiving);				
+				$('#receive_quantity_add').val(result.remain_receive_quantity_in_skiving);
+            },
+            error: function(e){console.log(e);}
+        });
+    });
+	
+	
+	
+	$("#receive_quantity_add").blur(function(){
+        $receive_quantity_add = $('#receive_quantity_add').val();
+		$receive_cut_quantity_add = $('#receive_cut_quantity_add').val();
+		if(parseInt($receive_quantity_add) > parseInt($receive_cut_quantity_add)){
+			alert('Can not greater than Issue Quantity');
+			$('#receive_quantity_add').val($receive_cut_quantity_add);
+		}
+	});
+	
+
+    
+    $("#form_skiving_receive_edit").validate({
+        rules: {
+            cut_rcv_id: {
+                required: true
+            },
+            skiving_receive_challan_number: {
+                required: true
+            },
+            skiving_receive_date: {
+                required: true
+            }
+        },
+        messages: {
+
+        }
+    });
+    $('#form_skiving_receive_edit').ajaxForm({
+        beforeSubmit: function () {
+            return $("#form_skiving_receive_edit").valid(); // TRUE when form is valid, FALSE will cancel submit
+        },
+        success: function (returnData) {
+            obj = JSON.parse(returnData);
+			notification(obj);
+            //console.log(returnData);
+        }
+    });
+
+    //add-purchase order details-form validation and submit
+    $("#form_add_skiving_receive_challan_details").validate({
+        rules: {
+            am_id_add: {
+                required: true,
+            },
+			receive_quantity_add: {
+                required: true,
+            }			
+        },
+        messages: {
+
+        }
+    });
+    $('#form_add_skiving_receive_challan_details').ajaxForm({
+        beforeSubmit: function () {
+            return $("#form_add_skiving_receive_challan_details").valid(); // TRUE when form is valid, FALSE will cancel submit
+        },
+        success: function (returnData) {
+            console.log('RD => ' + returnData);
+            obj = JSON.parse(returnData);
+			$('#form_add_skiving_receive_challan_details')[0].reset(); 
+            $("#form_add_skiving_receive_challan_details").validate().resetForm(); //reset validation
+            notification(obj);
+            
+            //refresh table
+            $('#cutting_receive_challan_details_table').DataTable().ajax.reload();
+            
+        }
+    });
+
+	$("#cutting_receive_challan_details_table").on('click', '.skiving_receive_challan_details_edit_btn', function() {
+        $("#pod_edit_loader").removeClass('hidden');
+
+        $skiving_receive_detail_id = $(this).attr('skiving_receive_detail_id');
+
+        $.ajax({
+            url: "<?= base_url('admin/ajax-fetch-skiving-receive-challan-details-on-pk') ?>",
+            method: "post",
+            dataType: 'json',
+            data: {'skiving_receive_detail_id': $skiving_receive_detail_id,},
+            success: function(result){
+                console.log(JSON.stringify(result));
+				$("#am_id_edit").html(result.skiving_receive_details.art_no);
+				
+                //data = pod_data[0];
+                
+                $("#lc_id_edit").val(result.skiving_receive_details.lc_id);
+				$("#fc_id_edit").val(result.skiving_receive_details.fc_id);
+				$("#lc_id_text_edit").val(result.skiving_receive_details.leather_color);
+				$("#fc_id_text_edit").val(result.skiving_receive_details.fitting_color);
+				$("#receive_cut_quantity_edit").val(result.remain_receive_quantity_in_skiving);
+				$("#receive_quantity_edit").val(result.skiving_receive_details.receive_quantity);
+				$("#receive_quantity_edit_pro").val(result.skiving_receive_details.receive_quantity);
+				$("#skiving_receive_detail_id").val(result.skiving_receive_details.skiving_receive_detail_id);
+
+                $('#cut_issue_receive_edit_tab').removeClass('disabled');
+                $('#supp_po_details_edit_tab').children("a").attr("data-toggle", 'tab');
+                // $('#supp_po_details_edit_tab li:eq(2) a').tab('show');
+                $('a[href="#cut_issue_receive_edit"]').tab('show');
+                $("#pod_edit_loader").addClass('hidden');
+                
+            }
+        });
+    });
+	
+	$("#receive_quantity_edit").blur(function(){
+        $receive_quantity_edit = $('#receive_quantity_edit').val();
+		$receive_cut_quantity_edit = $('#receive_cut_quantity_edit').val();
+		$receive_quantity_edit_pro = $('#receive_quantity_edit_pro').val();
+		
+		$max_limit = parseInt($receive_quantity_edit_pro) + parseInt($receive_cut_quantity_edit);
+		console.log('max_limit: '+$max_limit);
+		if(parseInt($receive_quantity_edit) > parseInt($max_limit)){
+			alert('You can Receive Maximum: ( '+$max_limit+' ) ');
+			$('#receive_quantity_edit').val($max_limit);
+		}
+	});
+	
+    //edit-purchase order details-form validation and submit
+    $("#form_edit_skiving_receive_details").validate({
+        rules: {
+            receive_quantity_edit: {
+                required: true,
+            }
+        },
+        messages: {
+            
+        }
+    });
+
+    $('#form_edit_skiving_receive_details').ajaxForm({
+        beforeSubmit: function () {
+            return $("#form_edit_skiving_receive_details").valid(); // TRUE when form is valid, FALSE will cancel submit
+        },
+        success: function (returnData) {
+            console.log('RD => ' + returnData);
+            obj = JSON.parse(returnData);			
+            notification(obj);
+            //refresh table
+            $('#cutting_receive_challan_details_table').DataTable().ajax.reload();
+        }
+    });
+
+    //article-costing-measurement edit button
+    $("#cutting_receive_challan_details_table").on('click', '.purchase_details_edit_btn', function() {
+        $("#pod_edit_loader").removeClass('hidden');
+
+        $supp_dtl_id = $(this).attr('supp_dtl_id');
+
+        $.ajax({
+            url: "<?= base_url('admin/ajax-fetch-supp-purchase-order-details-on-pk') ?>",
+            method: "post",
+            dataType: 'json',
+            data: {'supp_dtl_id': $supp_dtl_id,},
+            success: function(pod_data){
+                console.log(pod_data);
+                data = pod_data[0];
+                
+                $("#ig_id_edit").html("<option>"+data.group_name+"</option>").trigger('change');
+                $("#id_id_edit").html("<option>"+data.item+"</option>").trigger('change');
+                $("#color_edit").html("<option>"+data.color+"</option>").trigger('change');
+                $("#pod_unit_edit").html('<b>'+data.unit+'</b>');
+                $("#pod_quantity_edit").val(data.item_qty);
+                $("#pod_rate_edit").val(data.item_rate);
+                $("#pod_total_edit").html('<b>'+(Number(data.total_amount)).toFixed(2)+'</b>');
+                $("#pod_remarks_edit").val(data.sup_pod_remarks);
+                $("#supp_dtl_id").val(data.supp_dtl_id);
+
+                $('#supp_po_details_edit_tab').removeClass('disabled');
+                $('#supp_po_details_edit_tab').children("a").attr("data-toggle", 'tab');
+                // $('#supp_po_details_edit_tab li:eq(2) a').tab('show');
+                $('a[href="#po_details_edit"]').tab('show');
+                $("#pod_edit_loader").addClass('hidden');
+                
+            }
+        });
+    });
+
+
+    //toastr notification
+    function notification(obj) {
+        toastr[obj.type](obj.msg, obj.title, {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "5000",
+            "timeOut": "5000",
+            "extendedTimeOut": "7000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        })
+    }
+
+// delete area 
+    
+    $(document).on('click', '.delete', function(){
+        $this = $(this);
+        if(confirm("Are You Sure?")){
+			$tab = $(this).attr('tab');
+			$tab_pk = $(this).attr('tab-pk');
+			$data_pk = $(this).attr('data-pk');
+
+            $.ajax({
+                url: "<?= base_url('admin/del-skiving-receive-challan-details-list') ?>",
+                dataType: 'json',
+                type: 'POST',
+                data: {tab: $tab, tab_pk : $tab_pk, data_pk: $data_pk},
+                success: function (returnData) {
+                    console.log(returnData);
+                    $this.closest('tr').remove();
+                    
+                    // obj = JSON.parse(returnData);
+                    notification(returnData);
+                    
+                    //refresh table
+                    $("#cutting_receive_challan_details_table").DataTable().ajax.reload();
+
+                },
+                error: function (returnData) {
+                    obj = JSON.parse(returnData);
+                    notification(obj);
+                }
+            });
+        }
+        
+    });
+    
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });    
+
+</script>
+<script>$("#skiving_add").click(function(){	$("#am_id_add").select2("destroy").val(1).trigger("change").select2();})</script>
+</body>
+</html>

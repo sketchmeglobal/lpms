@@ -87,7 +87,6 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 //User defined Constants
-
 define('YEAR', '2023-24');
 define('YEAR_START', '2023');
 define('YEAR_START_DATE', '2023-04-01');

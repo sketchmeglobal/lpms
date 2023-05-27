@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/sopl/public_html/2023/
+    - /bin/cp -R * $DEPLOYPATH

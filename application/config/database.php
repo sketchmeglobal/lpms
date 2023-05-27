@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
-    'password' => '',
-	'database' => 'sopl_2023',
+	'username' => 'sopl_shilpa_2022',
+    'password' => 'U.Uj^M=r0%Uo',
+    'database' => 'sopl_2023',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

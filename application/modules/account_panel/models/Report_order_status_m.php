@@ -78,32 +78,27 @@ class Report_order_status_m extends CI_Model {
             $mon = $this->input->post('month');
             $data['mont'] = $mon;
             $new_arr = array();
-            
             $new_iter = implode(",", $it_arr);
-            
-            
-                
-                $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
-    CAST((employees.basic_pay+employees.da_amout) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
-    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
-        FROM salary
-        INNER JOIN(employees)
-        ON(salary.EMPCODE=employees.e_id)
-        WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN ($new_iter)
-        ORDER BY employees.name";
+
+            $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
+            CAST((employees.basic_pay+employees.da_amout) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
+            salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
+            FROM salary
+            INNER JOIN(employees)
+            ON(salary.EMPCODE=employees.e_id)
+            WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN ($new_iter)
+            ORDER BY employees.name";
         
-        $res = $this->db->query($sql)->result();
-        if(count($res) > 0) {
-            foreach($res as $r) {
-        $data['result'][] = $this->_fetch_register($mon,$r->e_id);
-        }
+            $res = $this->db->query($sql)->result();
+            if(count($res) > 0) {
+                foreach($res as $r) {
+                    $data['result'][] = $this->_fetch_register($mon,$r->e_id);
+                }
             }
-            
-            
-            
             
             $data['segment'] = 'payroll_register';
             return array('page'=>'reports/common_print_v','data'=>$data);
+
         }
         
         if($this->input->post("pf")){
@@ -255,13 +250,13 @@ class Report_order_status_m extends CI_Model {
         }
         $user_id = $this->session->userdata['accounts']['user_id'];
         $sql="SELECT employees.name,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
-    CAST((employees.basic_pay+employees.da_amout) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
-    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
-        FROM salary
-        INNER JOIN(employees)
-        ON(salary.EMPCODE=employees.e_id)
-        WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN('".$i_a."')
-        ORDER BY employees.name";    
+            CAST((employees.basic_pay+employees.da_amout) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
+            salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
+            FROM salary
+            INNER JOIN(employees)
+            ON(salary.EMPCODE=employees.e_id)
+            WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN('".$i_a."')
+            ORDER BY employees.name";    
             
         $res = $this->db->query($sql)->result();
         // echo $this->db->last_query();die;

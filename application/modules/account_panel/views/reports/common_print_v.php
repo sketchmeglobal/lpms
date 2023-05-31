@@ -5217,100 +5217,100 @@ $dates = array();
 								<!--<h5>Retrieve Table</h5>-->
 								<table id="all_det" class="table table-bordered">
 									<thead>
-                <tr>
-                                    <th class="text-center" align="center" colspan="26">REGISTER OF WAGES <br /> [Prescribed under Rule 23(1) of the West Bengal Minimum Wages Rules 1951] <br /> [Prescribed under Rule 26(1) of the Central Minimum Wages Rules 1951]</th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="2" style="text-align: center;">Sr. #</th>
-                                    <th rowspan="2" style="text-align: center;">Name</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
-                                    <th class="text-center" rowspan="1" colspan="6">Salary / Wages Scale</th>
-                                    <th class="text-center" rowspan="1" colspan="6">Salary / Wages Paid</th>
-                                    <th class="text-center" rowspan="1" colspan="6" style="text-align: right;">Deductions</th>
-                                    <th rowspan="2" style="text-align: right;">Salary <br/> / Wages Paid</th>
-                                    <th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="1" style="text-align: right;">Basic</th>
-                                    <th rowspan="1" style="text-align: right;">D.A.</th>
-                                    <th rowspan="1" style="text-align: right;">HRA</th>
-                                    <th rowspan="1" style="text-align: right;">Conv. Alwnc</th>
-                                    <th rowspan="1" style="text-align: right;">Med. Alwnc</th>
-                                    <th rowspan="1" style="text-align: right;">Total</th>
-                                    <th rowspan="1" style="text-align: right;">Basic</th>
-                                    <th rowspan="1" style="text-align: right;">D.A.</th>
-                                    <th rowspan="1" style="text-align: right;">HRA</th>
-                                    <th rowspan="1" style="text-align: right;">Conv. Alwnc</th>
-                                    <th rowspan="1" style="text-align: right;">Med. Alwnc</th>
-                                    <th rowspan="1" style="text-align: right;">Total</th>
-                                    <th rowspan="1" style="text-align: right;">P.F.</th>
-                                    <th rowspan="1" style="text-align: right;">E.S.I.</th>
-                                    <th rowspan="1" style="text-align: right;">WB. PR TAX</th>
-                                    <th rowspan="1" style="text-align: right;">L.I.C. <br/> /T.D.S.</th>
-                                    <th rowspan="1" style="text-align: right;">Loan <br/> /Advance</th>
-                                    <th rowspan="1" style="text-align: right;">Total</th>
-                                </tr>
-                </thead>
-                <tbody>
-                            <?php
-                                $new_iter = 10;
-                                $total_count = 0;
-                                $new_iter1 = 9;
-                                $iter = 1;
-                                $total_BASIC1 = 0;
-                                $total_DA1 = 0;
-                                $total_HRA11 = 0;
-                                $total_CONV11 = 0;
-                                $total_OA11 = 0;
-                                $total_HRA12 = 0;
-                                $total_CONV12 = 0;
-                                $total_OA12 = 0;
-                                $total_TOTAL1 = 0;
-                                $total_BASIC2 = 0;
-                                $total_TOTAL2 = 0;
-                                $total_DA2 = 0;
-                                $total_TOTAL22 = 0;
-                                $total_HRA = 0;
-                                $total_CONV = 0;
-                                $total_MED = 0;
-                                $total_OA = 0;
-                                $total_GROSS = 0;
-                                $total_PFAMT = 0;
-                                $total_ESIAMT = 0;
-                                $total_TAX = 0;
-                                $total_INS = 0;
-                                $total_LOAN = 0;
-                                $total_DEDUC = 0;
-                                $total_NET = 0;
-                                $total_BASIC11 = 0;
-                                $total_DA11 = 0;
-                                $total_HRA111 = 0;
-                                $total_CONV111 = 0;
-                                $total_OA111 = 0;
-                                $total_HRA121 = 0;
-                                $total_CONV121 = 0;
-                                $total_OA121 = 0;
-                                $total_TOTAL11 = 0;
-                                $total_BASIC21 = 0;
-                                $total_TOTAL21 = 0;
-                                $total_DA21 = 0;
-                                $total_TOTAL221 = 0;
-                                $total_HRA1 = 0;
-                                $total_CONV1 = 0;
-                                $total_MED1 = 0;
-                                $total_OA1 = 0;
-                                $total_GROSS1 = 0;
-                                $total_PFAMT1 = 0;
-                                $total_ESIAMT1 = 0;
-                                $total_TAX1 = 0;
-                                $total_INS1 = 0;
-                                $total_LOAN1 = 0;
-                                $total_DEDUC1 = 0;
-                                $total_NET1 = 0;
+                						<tr>
+											<th class="text-center" align="center" colspan="26">REGISTER OF WAGES <br /> [Prescribed under Rule 23(1) of the West Bengal Minimum Wages Rules 1951] <br /> [Prescribed under Rule 26(1) of the Central Minimum Wages Rules 1951]</th>
+										</tr>
+										<tr>
+											<th rowspan="2" style="text-align: center;">Sr. #</th>
+											<th rowspan="2" style="text-align: center;">Name</th>
+											<th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>
+											<th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
+											<th rowspan="2" style="text-align: center; font-size: 10px;">Hldays</th>
+											<th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>
+											<th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
+											<th class="text-center" rowspan="1" colspan="6">Salary / Wages Scale</th>
+											<th class="text-center" rowspan="1" colspan="6">Salary / Wages Paid</th>
+											<th class="text-center" rowspan="1" colspan="6" style="text-align: right;">Deductions</th>
+											<th rowspan="2" style="text-align: right;">Salary <br/> / Wages Paid</th>
+											<th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
+										</tr>
+										<tr>
+											<th rowspan="1" style="text-align: right;">Basic</th>
+											<th rowspan="1" style="text-align: right;">D.A.</th>
+											<th rowspan="1" style="text-align: right;">HRA</th>
+											<th rowspan="1" style="text-align: right;">Conv. Alwnc</th>
+											<th rowspan="1" style="text-align: right;">Med. Alwnc</th>
+											<th rowspan="1" style="text-align: right;">Total</th>
+											<th rowspan="1" style="text-align: right;">Basic</th>
+											<th rowspan="1" style="text-align: right;">D.A.</th>
+											<th rowspan="1" style="text-align: right;">HRA</th>
+											<th rowspan="1" style="text-align: right;">Conv. Alwnc</th>
+											<th rowspan="1" style="text-align: right;">Med. Alwnc</th>
+											<th rowspan="1" style="text-align: right;">Total</th>
+											<th rowspan="1" style="text-align: right;">P.F.</th>
+											<th rowspan="1" style="text-align: right;">E.S.I.</th>
+											<th rowspan="1" style="text-align: right;">WB. PR TAX</th>
+											<th rowspan="1" style="text-align: right;">L.I.C. <br/> /T.D.S.</th>
+											<th rowspan="1" style="text-align: right;">Loan <br/> /Advance</th>
+											<th rowspan="1" style="text-align: right;">Total</th>
+										</tr>
+                					</thead>
+                					<tbody>
+                            		<?php
+										$new_iter = 10;
+										$total_count = 0;
+										$new_iter1 = 9;
+										$iter = 1;
+										$total_BASIC1 = 0;
+										$total_DA1 = 0;
+										$total_HRA11 = 0;
+										$total_CONV11 = 0;
+										$total_OA11 = 0;
+										$total_HRA12 = 0;
+										$total_CONV12 = 0;
+										$total_OA12 = 0;
+										$total_TOTAL1 = 0;
+										$total_BASIC2 = 0;
+										$total_TOTAL2 = 0;
+										$total_DA2 = 0;
+										$total_TOTAL22 = 0;
+										$total_HRA = 0;
+										$total_CONV = 0;
+										$total_MED = 0;
+										$total_OA = 0;
+										$total_GROSS = 0;
+										$total_PFAMT = 0;
+										$total_ESIAMT = 0;
+										$total_TAX = 0;
+										$total_INS = 0;
+										$total_LOAN = 0;
+										$total_DEDUC = 0;
+										$total_NET = 0;
+										$total_BASIC11 = 0;
+										$total_DA11 = 0;
+										$total_HRA111 = 0;
+										$total_CONV111 = 0;
+										$total_OA111 = 0;
+										$total_HRA121 = 0;
+										$total_CONV121 = 0;
+										$total_OA121 = 0;
+										$total_TOTAL11 = 0;
+										$total_BASIC21 = 0;
+										$total_TOTAL21 = 0;
+										$total_DA21 = 0;
+										$total_TOTAL221 = 0;
+										$total_HRA1 = 0;
+										$total_CONV1 = 0;
+										$total_MED1 = 0;
+										$total_OA1 = 0;
+										$total_GROSS1 = 0;
+										$total_PFAMT1 = 0;
+										$total_ESIAMT1 = 0;
+										$total_TAX1 = 0;
+										$total_INS1 = 0;
+										$total_LOAN1 = 0;
+										$total_DEDUC1 = 0;
+										$total_NET1 = 0;
                                 
                                 if(isset($result)) {
                                 foreach($result as $res){
@@ -5323,7 +5323,7 @@ $dates = array();
                                     ?>
                                     
                                     <tr>
-                                    <th colspan="7">Total</th>
+                                    	<th colspan="7">Total</th>
                                         <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
                                         ; 
                                         ?></th>
@@ -5581,7 +5581,8 @@ $dates = array();
                                         <td style="text-align: right;"><?php echo number_format((float)$r->ESIAMT, 2);
                                         $total_ESIAMT += $r->ESIAMT; $total_ESIAMT1 += $r->ESIAMT;
                                         ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->TAX, 2);
+                                        <td style="text-align: right;">
+										<?php echo number_format((float)$r->TAX, 2);
                                         $total_TAX += $r->TAX; $total_TAX1 += $r->TAX;
                                         ?></td>
                                         <td style="text-align: right;"><?php echo number_format((float)$r->INS, 2);

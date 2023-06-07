@@ -75,6 +75,8 @@
     <title>OVERTIME CHECKING REPORT</title>
     <?php } else if($segment == 'purchase_order_rate_setup_details') { ?>
     <title>PURCHASE RATE DETAILS</title>
+	<?php } else if($segment == 'emp_pay_slip_section') { ?>
+    <title>Pay Slip</title>
 	<?php } else { ?>
     <title>ORDER STATUS</title>
 	<?php } ?>

@@ -8125,7 +8125,12 @@ body.A3.landscape .sheet {
                                     <td style="text-align: center; font-size: 15px;">
                                         <?php
                                         $new_sql_advc = "SELECT advance.amount AS ADV FROM advance WHERE advance.emp_id ='" . $result->EMPCODE . "'";
-                                        $advnc = $this->db->query($new_sql_advc)->row()->ADV;
+										if($this->db->query($new_sql_advc)->num_rows() > 0){
+											$advnc = $this->db->query($new_sql_advc)->row()->ADV;
+										} else{
+											$advnc = 0;
+										}
+                                        
                                         echo number_format($advnc, 2);
                                         ?>
                                         <!--< ?=number_format($result->LOAN, 2) ?> -->

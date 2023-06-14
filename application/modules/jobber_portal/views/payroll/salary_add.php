@@ -972,6 +972,13 @@ var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#
                     
                 });
                 
+                $("#rate_or_part").blur(funcion(){
+
+                    $final_val = parseInt($("#adw").val()) * parseFloat($(this).val());
+                    $("#abasic").val($final_val);
+
+                });
+
                 $("#pfamnt, #esiamnt").blur(function(){
 
                     var gross = $("#gross").val();                    

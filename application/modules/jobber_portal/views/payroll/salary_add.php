@@ -970,9 +970,12 @@ var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#
     });
     
     $("#rate_or_part").blur(function(){
+        console.log(parseInt($("#adw").val()) + ' ... ' + parseFloat($(this).val()));
 
         $final_val = parseInt($("#adw").val()) * parseFloat($(this).val());
         $("#abasic").val($final_val);
+
+        console.log($final_val);
 
     });
 

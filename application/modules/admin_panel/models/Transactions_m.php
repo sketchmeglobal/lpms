@@ -555,7 +555,9 @@
             if($nr == 0){
                 
                 #insert
-                $this->db->insert('page_setup', $setup_array);
+                if($this->input->post('module_id') != NULL and $this->input->post('user_id') != NULL){
+                    $this->db->insert('page_setup', $setup_array);
+                }
                 
             }else{
                 

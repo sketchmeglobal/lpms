@@ -430,29 +430,31 @@
             
             if($this->input->post()){
             
-            $setup_array = array(
-                'front_page' => $this->input->post('first_page_row'),
-                'other_page' => $this->input->post('other_page_row'),
-                'module_id' => $this->input->post('module_id'),
-                'user_id' => $this->input->post('user_id')
-            );
-            
-            $nr = $this->db->get_where('page_setup', array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')))->num_rows();
-            
-            if($nr == 0){
+                $setup_array = array(
+                    'front_page' => $this->input->post('first_page_row'),
+                    'other_page' => $this->input->post('other_page_row'),
+                    'module_id' => $this->input->post('module_id'),
+                    'user_id' => $this->input->post('user_id')
+                );
                 
-                #insert
-                $this->db->insert('page_setup', $setup_array);
+                $nr = $this->db->get_where('page_setup', array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')))->num_rows();
                 
-            }else{
+                if($nr == 0){
+                    
+                    #insert
+                    if($this->input->post('module_id') != NULL and $this->input->post('user_id') != NULL){
+                        $this->db->insert('page_setup', $setup_array);
+                    }
+                    
+                }else{
+                    
+                    #update
+                    $this->db->update('page_setup',$setup_array,array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')));
+                    
+                }
                 
-                #update
-                $this->db->update('page_setup',$setup_array,array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')));
                 
             }
-            
-            
-        }
         
         $data['page_setup'] = $this->db->select('front_page,other_page,blank_row')->get_where('page_setup', array('module_id' => 1, 'user_id' => $this->session->user_id))->result(); # 1 = Article Costing
          

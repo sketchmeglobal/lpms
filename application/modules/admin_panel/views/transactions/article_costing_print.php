@@ -97,6 +97,7 @@ $blank_row = 6;
                 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 5px; text-align: left; font-size: 13px}
                 .col-sm-6{ width: 50%!important;float:left; }.col-sm-5 { width: 41.66666667%;float:left; }.col-sm-7 { width: 58.33333333%;float:left; }
                 .border-bottom{border-bottom:  1px solid #000} .text-right{text-align: right!important;}
+                .no-print{display: none}
             }
         </style>
     </head>

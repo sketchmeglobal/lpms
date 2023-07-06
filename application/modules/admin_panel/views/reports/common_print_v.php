@@ -1744,7 +1744,7 @@ echo   round($res->total_quantity); $total_qntys += $res->total_quantity;
         'co_quantity' => $res->co_quantity,
         'temp_qnty' => $res->temp_qnty,
         'final_qnty' => $res->final_qnty,
-        'final_cut_qnty' => $res->final_cut_qnty,
+        'final_cut_qnty' => ($res->final_cut_qnty == NULL) ? 0 : $res->final_cut_qnty,
         'final_rcv_qnty' => 0,
         'combination_or_not' => $res->combination_or_not
         );
@@ -1848,11 +1848,11 @@ echo   round($res->total_quantity); $total_qntys += $res->total_quantity;
         'costing_id' => $res->costing_id,
         'item_dtl' => $res->item_dtl,
         'item_dtl_quantity' => $res->item_dtl_quantity,
-        'co_quantity' => $res->receive_cut_quantity,
+        'co_quantity' => ($res->receive_cut_quantity == NULL) ? 0 : $res->receive_cut_quantity,
         'temp_qnty' => $res->temp_qnty,
         'final_qnty' => 0,
         'final_cut_qnty' => 0,
-        'final_rcv_qnty' => $res->final_rcv_qnty,
+        'final_rcv_qnty' => ($res->final_rcv_qnty == NULL) ? 0 : $res->final_rcv_qnty,
         'combination_or_not' => $res->combination_or_not
         );
         

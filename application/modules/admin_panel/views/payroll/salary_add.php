@@ -447,9 +447,10 @@
                             var gross_salary = (parseFloat(emp_details[0].basic_pay) + parseFloat(emp_details[0].da_amout) + parseFloat(emp_details[0].convenience) + parseFloat(emp_details[0].hra_amount) + parseFloat(emp_details[0].medical_allowance) + parseFloat(emp_details[0].special_allowance));
 
 $tax_amount = 0;
-if(emp_details[0].d_id == 4) {
-$tax_amount = 0;    
-} else {
+// if(emp_details[0].d_id == 4) {
+// $tax_amount = 0;    
+// }
+// else {
 if(gross_salary <= 10000) {
     $tax_amount = 0;
 } else if(gross_salary > 10000 && gross_salary <= 15000) {
@@ -461,7 +462,7 @@ if(gross_salary <= 10000) {
 } else {
     $tax_amount = 200;
 }
-}
+// }
 
                             // alert(emp_details[0].NAME);
                             $('.dept').text(emp_details[0].name);
@@ -1080,4 +1081,4 @@ var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#
       </script>
 
 </body>
-</html>
+</html> 

@@ -16357,16 +16357,30 @@ if($check_consumption_list == 0) {
                             <tr>
                                 <td><?=$resl->name?></td>
                                 <td nowrap><?=$resl->co_no?></td>
-                                <td nowrap><?php
-                                foreach($proforma_details as $p_d) {
-                                echo $p_d->proforma_number."<br/>";
-                                }?></td>
-                                <td style="text-align: right;"><?php echo $resl->co_quantity; $co_quantity_total += $resl->co_quantity; ?></td>
+                                <td nowrap>
+                                    <?php
+                                    foreach($proforma_details as $p_d) {
+                                        echo $p_d->proforma_number."<br/>";
+                                    }
+                                    ?>
+                                </td>
+                                <td style="text-align: right;"><?php echo (int)$resl->co_quantity; $co_quantity_total += $resl->co_quantity; ?></td>
                                 <td style="text-align: right;"><?php echo $resl->proforma_total_rate_amount; $proforma_total_rate_amount_total += $resl->proforma_total_rate_amount; ?></td>
                                 <td style="text-align: right;"><?php echo $quantity; $quantity_total += $quantity; ?></td>
                                 <td style="text-align: right;"><?php echo $invoice_amount; $invoice_amount_total += $invoice_amount ?></td>
                                 <td style="text-align: right;"><?php echo ($resl->co_quantity - $quantity); $qnty_balance_total += ($resl->co_quantity - $quantity); ?></td>
-                                <td style="text-align: right;"><?php echo ($resl->proforma_total_rate_amount - $invoice_amount); $outstanding_total += ($resl->proforma_total_rate_amount - $invoice_amount); ?></td>
+                                <td style="text-align: right;">
+                                    <?php 
+                                        if(($resl->co_quantity == $quantity) and ($resl->proforma_total_rate_amount != $invoice_amount)){
+                                            echo '<label style="background-color: green;padding: 1px 8px;font-weight:bold;color:#fff">0</label>';
+                                            $outstanding_total += 0;     
+                                        }else{
+                                            echo ($resl->proforma_total_rate_amount - $invoice_amount); 
+                                            $outstanding_total += ($resl->proforma_total_rate_amount - $invoice_amount);     
+                                        }
+                                        
+                                    ?>
+                                </td>
                             </tr>
                             
                             
@@ -16380,6 +16394,7 @@ if($check_consumption_list == 0) {
                         <th style="text-align: right;"><?= $quantity_total ?></th>
                         <th style="text-align: right;"><?= $invoice_amount_total ?></th>
                         <th style="text-align: right;"><?= $qnty_balance_total ?></th>
+                        <th style="text-align: right;"><?= $outstanding_total ?></th>
                     </tr>
                     <?php
                     $quantity_total = 0;

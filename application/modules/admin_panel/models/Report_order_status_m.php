@@ -2428,45 +2428,32 @@ ORDER BY
             // echo $ac_id;
             $charges_groups = explode('-', $am_id);
             if($charges_groups[0] == 'items') {
-            $this->db
-                            ->select('article_master.art_no, article_master.alt_art_no, article_master.info,article_master.pack_dtl, item_groups.group_name, colors.color, 
-                                item_master.item as item_name, item_master.im_code as item_master_code, im1.item as cartoon_size, acc_master.name as customer_name,
-                                SUM(article_costing_details.quantity) as cost_qnty, SUM(article_costing_details.rate) as cost_rate')
-                            ->join('article_costing', 'article_costing.ac_id = article_costing_details.ac_id', 'left')
-                            ->join('article_master', 'article_master.am_id = article_costing.am_id', 'left')
-                            ->join('acc_master', 'acc_master.am_id = article_master.customer_id', 'left')
-                            ->join('item_master im1', 'im1.im_id = article_master.carton_id', 'left')
-                            ->join('item_dtl', 'item_dtl.id_id = article_costing_details.id_id', 'left')
-                            ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
-                            ->join('item_groups', 'item_groups.ig_id = item_master.ig_id', 'left')
-                            ->join('colors', 'item_dtl.c_id = colors.c_id', 'left');
-                            
-                            
-                               $this->db->where_in('article_costing.ac_id', $group); 
-                            
-                            
-                                $this->db->where('item_groups.ig_id', $charges_groups[1]);
-
-                            
-                            $this->db->group_by('article_costing.ac_id');
-                            
-                            
-                            $this->db->order_by('item_groups.sort_order, article_master.art_no');
-                            $data['costing'] = $this->db->get_where('article_costing_details', array('article_costing.status' => 1, 
-                                'article_costing_details.status'=> 1))->result();
+                $this->db
+                    ->select('article_master.art_no, article_master.alt_art_no, article_master.info,article_master.pack_dtl, item_groups.group_name, colors.color, 
+                        item_master.item as item_name, item_master.im_code as item_master_code, im1.item as cartoon_size, acc_master.name as customer_name,
+                        SUM(article_costing_details.quantity) as cost_qnty, SUM(article_costing_details.rate) as cost_rate')
+                    ->join('article_costing', 'article_costing.ac_id = article_costing_details.ac_id', 'left')
+                    ->join('article_master', 'article_master.am_id = article_costing.am_id', 'left')
+                    ->join('acc_master', 'acc_master.am_id = article_master.customer_id', 'left')
+                    ->join('item_master im1', 'im1.im_id = article_master.carton_id', 'left')
+                    ->join('item_dtl', 'item_dtl.id_id = article_costing_details.id_id', 'left')
+                    ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
+                    ->join('item_groups', 'item_groups.ig_id = item_master.ig_id', 'left')
+                    ->join('colors', 'item_dtl.c_id = colors.c_id', 'left');
+                    
+                    $this->db->where_in('article_costing.ac_id', $group); 
+                    $this->db->where('item_groups.ig_id', $charges_groups[1]);
+                    $this->db->group_by('article_costing.ac_id');
+                    
+                    $this->db->order_by('item_groups.sort_order, article_master.art_no');
+                    $data['costing'] = $this->db->get_where('article_costing_details', array('article_costing.status' => 1, 
+                        'article_costing_details.status'=> 1))->result();
             } else {
                                 
-
-
-                                
+            if($charges_groups[1] != 2) {                   
                                 
 
-                                
-             
-             if($charges_groups[1] != 2) {                   
-                                
-
-            $data['charges'] = $this->db
+                $data['charges'] = $this->db
                             ->select('article_master.art_no, article_master.alt_art_no, article_master.info,article_master.pack_dtl, acc_master.name as customer_name, article_master.fabrication_rate_b, article_costing_charges.quantity as charge_qnty, article_costing_charges.rate as charge_rate,article_costing_charges.percentage as charge_percentage, charges.c_id,
                                 charges.charge_group, charges.charge as charge_name, charges.amount as charge_amount')
                             ->join('article_costing', 'article_costing.ac_id = article_costing_charges.ac_id', 'left')
@@ -2479,7 +2466,7 @@ ORDER BY
                             ->order_by('article_master.art_no')
                             ->get('article_costing_charges')->result();
              } else {
-             $data['charges_another'] = $this->db
+                $data['charges_another'] = $this->db
                             ->select('article_master.art_no, article_master.alt_art_no, article_master.info,article_master.pack_dtl, acc_master.name as customer_name, article_master.fabrication_rate_b, article_costing_charges.quantity as charge_qnty, article_costing_charges.rate as charge_rate,article_costing_charges.percentage as charge_percentage, charges.c_id,
                                 charges.charge_group, charges.charge as charge_name, charges.amount as charge_amount')
                             ->join('article_costing', 'article_costing.ac_id = article_costing_charges.ac_id', 'left')
@@ -2498,7 +2485,7 @@ ORDER BY
             }
                             
                             
-                            return $data;
+            return $data;
         
         
     }

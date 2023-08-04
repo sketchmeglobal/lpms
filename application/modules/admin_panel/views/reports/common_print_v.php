@@ -6381,7 +6381,7 @@ hr {
 
 <?php if ($segment == 'payroll_attendance')
 {
-    echo '<pre>',print_r($result),'</pre>';
+    // echo '<pre>',print_r($result),'</pre>';
     
 ?>
 		<section class="sheet padding-5mm" style="height: auto">
@@ -6455,10 +6455,22 @@ hr {
                                         <td>Working days</td>
                                         
                                         <?php 
+                                        
+                                        $wd = array();
+                                        $dw = array();
+                                        $hol = array();
+                                        $lv = array();
+                                        $abs = array();
+                                        
                                         for($month_iter = 0; $month_iter < 12; $month_iter++){
                                             if(isset($res[$month_iter])){
                                                 ?>
-                                                <td style="text-align: right;"><?=$res[$month_iter]->T1?></td>    
+                                                <td style="text-align: right;">
+                                                    <?php 
+                                                        array_push($wd, $res[$month_iter]->T1);
+                                                        echo $res[$month_iter]->T1;
+                                                    ?>
+                                                </td>    
                                                 <?php    
                                             }else{
                                                 echo '<td>0</td>';
@@ -6466,7 +6478,7 @@ hr {
                                         }
                                         ?>
                                         
-                                        <td style="text-align: right;"></td>
+                                        <td style="text-align: right;"><?=array_sum($wd)?></td>
                                     </tr>
                                     <tr>
                                         <td>Days worked</td>
@@ -6475,7 +6487,12 @@ hr {
                                         for($month_iter = 0; $month_iter < 12; $month_iter++){
                                             if(isset($res[$month_iter])){
                                                 ?>
-                                                <td style="text-align: right;"><?=$res[$month_iter]->T2?></td>    
+                                                <td style="text-align: right;">
+                                                    <?php 
+                                                        array_push($dw, $res[$month_iter]->T2);
+                                                        echo $res[$month_iter]->T2;
+                                                    ?>
+                                                </td>    
                                                 <?php    
                                             }else{
                                                 echo '<td>0</td>';
@@ -6483,7 +6500,7 @@ hr {
                                         }
                                         ?>
                                         
-                                        <td style="text-align: right;"></td>
+                                        <td style="text-align: right;"><?=array_sum($dw)?></td>
                                     </tr>
                                     <tr>
                                         <td>Holidays</td>
@@ -6492,7 +6509,12 @@ hr {
                                         for($month_iter = 0; $month_iter < 12; $month_iter++){
                                             if(isset($res[$month_iter])){
                                                 ?>
-                                                <td style="text-align: right;"><?=$res[$month_iter]->T3?></td>    
+                                                <td style="text-align: right;">
+                                                    <?php 
+                                                        array_push($hol, $res[$month_iter]->T3);
+                                                        echo $res[$month_iter]->T3;
+                                                    ?>
+                                                </td>
                                                 <?php    
                                             }else{
                                                 echo '<td>0</td>';
@@ -6500,7 +6522,7 @@ hr {
                                         }
                                         ?>
                                         
-                                        <td style="text-align: right;"></td>
+                                        <td style="text-align: right;"><?=array_sum($hol)?></td>
                                     </tr>
                                     <tr>
                                         <td>Leave</td>
@@ -6509,7 +6531,13 @@ hr {
                                         for($month_iter = 0; $month_iter < 12; $month_iter++){
                                             if(isset($res[$month_iter])){
                                                 ?>
-                                                <td style="text-align: right;"><?=$res[$month_iter]->T4 + $res[$month_iter]->T5 + $res[$month_iter]->T6?></td>    
+                                                <td style="text-align: right;">
+                                                    <?php 
+                                                        $lvs = $res[$month_iter]->T4 + $res[$month_iter]->T5 + $res[$month_iter]->T6;
+                                                        array_push($lv, $lvs);
+                                                        echo $lvs;
+                                                    ?>
+                                                </td>
                                                 <?php    
                                             }else{
                                                 echo '<td>0</td>';
@@ -6517,7 +6545,7 @@ hr {
                                         }
                                         ?>
                                         
-                                        <td style="text-align: right;"></td>
+                                        <td style="text-align: right;"><?=array_sum($lv)?></td>
                                     </tr>
                                     <tr>
                                         <td>Absent </td>
@@ -6526,7 +6554,12 @@ hr {
                                         for($month_iter = 0; $month_iter < 12; $month_iter++){
                                             if(isset($res[$month_iter])){
                                                 ?>
-                                                <td style="text-align: right;"><?=$res[$month_iter]->T7?></td>    
+                                                <td style="text-align: right;">
+                                                    <?php 
+                                                        array_push($abs, $res[$month_iter]->T7);
+                                                        echo $res[$month_iter]->T7;
+                                                    ?>
+                                                </td>  
                                                 <?php    
                                             }else{
                                                 echo '<td>0</td>';
@@ -6534,18 +6567,17 @@ hr {
                                         }
                                         ?>
                                         
-                                        <td style="text-align: right;"></td>
+                                        <td style="text-align: right;"><?=array_sum($abs)?></td>
                                     </tr>
                                     <?php
                                     // }
                                 }
                                 ?>
                                 
-                                <tr>
-                                    <td colspan="14"><b>Total</b></td>
-                                    <td style="text-align: right;"><b><?= number_format($total_amounts, 2) ?></b></td>
-                                </tr>
-
+                                <!--<tr>-->
+                                <!--    <td colspan="14"><b>Total</b></td>-->
+                                <!--    <td style="text-align: right;"><b><?= number_format($total_amounts, 2) ?></b></td>-->
+                                <!--</tr>-->
 
                         </tbody>
             </table>
@@ -6559,7 +6591,7 @@ hr {
 		<?php
 } ?>
 	
-	<?php if ($segment == 'payroll_esi_pf')
+<?php if ($segment == 'payroll_esi_pf')
 {
     // echo '<pre>',print_r($result),'</pre>';
     

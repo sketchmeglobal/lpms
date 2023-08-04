@@ -6381,7 +6381,7 @@ hr {
 
 <?php if ($segment == 'payroll_attendance')
 {
-    // echo '<pre>',print_r($result),'</pre>';
+    echo '<pre>',print_r($result),'</pre>';
     
 ?>
 		<section class="sheet padding-5mm" style="height: auto">
@@ -6411,223 +6411,140 @@ hr {
 								<!--<h5>Retrieve Table</h5>-->
 								<table id="all_det" class="table table-bordered">
 									<thead>
-                <!-- <tr>
-                                    <th>Emp. Name</th>
-                                    <th>Month</th>
-                                    <th>Casual Leave</th>
-                                    <th>Earn Leave</th>
-                                    <th>ESI Leave</th>
-                                </tr> -->
-                                <tr>
-                		<th>Emp. Name</th>
-                		<th>Leave</th>
-                		<th style="text-align: right;">Total <br/> Granted</th>
-                	<?php $dates = array();
-    $total_cl = 0;
-    $total_el = 0;
-    $total_esil = 0;
-    $current = strtotime('2022-04-01');
-    $total_salarys = 0;
-    $total_leave = 0;
-    $total_leaves_days = 0;
-    $rate_total = 0;
-    $total_amounts = 0;
-    $date2 = strtotime('2023-03-01');
-    $stepVal = '+1 month';
-    $total_absent = 0;
-    while ($current <= $date2)
-    {
-        $dates[] = date('M', $current);
-        $dates1[] = date('m', $current);
-        $current = strtotime($stepVal, $current);
-    }
-    foreach ($dates as $d)
-    {
-?>
-<th style="text-align: right;"><?=$d
-?></th>
-                            			 <?php
-    }
-?>
-                            			  <th style="text-align: right;">Total</th>
-                            			  <th style="text-align: right;">Leave <br/> Blnc.</th>
-                            			  <th style="text-align: right;">Wages <br/> Rate</th>
-                            			  <th style="text-align: right;">Amount</th>
-                            			  <th>Signature/Thumb</th>
-                            			  <tr/>
-                </thead>
-                <tbody> 
-                	<?php
-    foreach ($result as $res)
-    {
-        foreach ($res as $a)
-        {
-?>
+                                        <tr>
+                                    		<th>Emp. Name</th>
+                                    		<th>Particulars</th>
+                                    		<!--<th style="text-align: right;">Total <br/> Granted</th>-->
+                                        	<?php $dates = array();
+                                            $total_cl = 0;
+                                            $total_el = 0;
+                                            $total_esil = 0;
+                                            $current = strtotime('2022-04-01');
+                                            $total_salarys = 0;
+                                            $total_leave = 0;
+                                            $total_leaves_days = 0;
+                                            $rate_total = 0;
+                                            $total_amounts = 0;
+                                            $date2 = strtotime('2023-03-01');
+                                            $stepVal = '+1 month';
+                                            $total_absent = 0;
+                                            while ($current <= $date2) {
+                                                $dates[] = date('M', $current);
+                                                $dates1[] = date('m', $current);
+                                                $current = strtotime($stepVal, $current);
+                                            }
+                                            foreach ($dates as $d) {
+                                            ?>
+                                                <th style="text-align: right;"><?=$d?></th>
+                                            <?php
+                                            }
+                                            ?>
+                            			   <th style="text-align: right;">Total</th>
+                            			   <!--<th style="text-align: right;">Leave <br/> Blnc.</th>-->
+                            			</tr>
+                                    </thead>
+                                    <tbody> 
+                                	<?php
+                                    foreach ($result as $res)
+                                    {
+                                        // foreach ($res as $a)
+                                        // {
+                                    ?>
                                     <tr>
-                                        <td rowspan="4"><?=$a->name . '[' . $a->e_code . ']' ?></td>
-                                    <td>Casual Leave</td>
-                                    <td style="text-align: right;"><?=$a->cl_granted ?></td>
-                                    <?php foreach ($dates as $d)
-            {
-                $sql = "SELECT employees.name,e_code,employees.pf_acc_no,employees.esi_acc_no,salary.T4,salary.T5,salary.T6,CAST((salary.BASIC+salary.DA+salary.HRA) AS DECIMAL(11,2)) AS TOTAL2,salary.GROSS
-            FROM salary
-            INNER JOIN(employees)
-            ON(salary.EMPCODE=employees.e_id)
-            WHERE salary.MON LIKE '" . $d . "%' AND employees.e_id='" . $a->e_id . "' AND employees.user_id  != '13'
-            ORDER BY employees.e_code";
-                $salary_details = $this
-                    ->db
-                    ->query($sql)->row();
-                if (count($salary_details) > 0)
-                {
-?>
-<td style="text-align: right;"><b><?=$salary_details->T4
-?><?php $total_cl += $salary_details->T4; $total_salarys += $salary_details->TOTAL2; $total_leave += ($salary_details->T5); ?><b/></td>
-<?php
-                }
-                else
-                { ?>
-<td style="text-align: right;">0</td>                   			 
-                            			 <?php
-                }
-            }
-?>
-                            			  <td style="text-align: right;"><b><?=$total_cl
-?></b>
-                            			  <td style="text-align: right;"><b><?php echo ($a->cl_granted - $total_cl);$total_cl = 0; ?></b></td>
-                                         
-                                         <td rowspan="4" style="text-align: right;"><br/><br/>
-                                         <?= round(($a->basic_pay + $a->da_amout + $a->hra_amount)/26); ?>
-                                         <?php
-                                         $rate_total += round(($a->basic_pay + $a->da_amout + $a->hra_amount)/26);
-                                         ?>
-                                         </td>
-                                         
-                                         <?php 
-                                         if(($a->el_granted - $total_leave) > 0) {
-                                         $total_leaves_days = ($a->el_granted - $total_leave);
-                                         } else {
-                                         $total_leaves_days = 0;   
-                                         }
-                                         ?>
-                            			  <td rowspan="4" style="text-align: right;"><br/><br/>
-                            			  <?= number_format((round(($a->basic_pay + $a->da_amout + $a->hra_amount)/26) * $total_leaves_days), 2); ?>
-                            			  <?php 
-                            			  $total_amounts += (round(($a->basic_pay + $a->da_amout + $a->hra_amount)/26) * $total_leaves_days);
-                            			  $total_leaves_days = 0;
-                            			  $total_leave = 0;
-                            			  ?>
-                            		     </td>	  
+                                        <td rowspan="5"><?=$res[0]->name . '[' . $res[0]->e_code . ']' ?></td>
+                                        <td>Working days</td>
+                                        
+                                        <?php 
+                                        for($month_iter = 0; $month_iter < 12; $month_iter++){
+                                            if(isset($res[$month_iter])){
+                                                ?>
+                                                <td style="text-align: right;"><?=$res[$month_iter]->T1?></td>    
+                                                <?php    
+                                            }else{
+                                                echo '<td>0</td>';
+                                            }
+                                        }
+                                        ?>
+                                        
+                                        <td style="text-align: right;"></td>
                                     </tr>
                                     <tr>
-                                    <td>Earn Leave</td>
-                                    <td style="text-align: right;"><?=$a->el_granted ?></td>
-                                    <?php foreach ($dates as $d)
-            {
-                $sql1 = "SELECT employees.name,e_code,employees.pf_acc_no,employees.esi_acc_no,salary.T5,CAST((salary.BASIC+salary.DA+salary.HRA) AS DECIMAL(11,2)) AS TOTAL2,salary.GROSS
-            FROM salary
-            INNER JOIN(employees)
-            ON(salary.EMPCODE=employees.e_id)
-            WHERE salary.MON LIKE '" . $d . "%' AND employees.e_id='" . $a->e_id . "' AND employees.user_id  != '13'
-            ORDER BY employees.e_code";
-                $salary_details1 = $this
-                    ->db
-                    ->query($sql1)->row();
-                if (count($salary_details1) > 0)
-                {
-?>
-<td style="text-align: right;"><b><?=$salary_details1->T5
-?></b><?php $total_el += $salary_details1->T5; $total_salarys += $salary_details1->TOTAL2; ?></td>
-<?php
-                }
-                else
-                { ?>
-<td style="text-align: right;">0</td>                   			 
-                            			 <?php
-                }
-            }
-?>
-                            			  <td style="text-align: right;"><b><?=$total_el
-?></b></td>
-                            			  <td style="text-align: right;"><b><?php echo ($a->el_granted - $total_el);
-            $total_el = 0; ?></b></td>
+                                        <td>Days worked</td>
+                                        
+                                        <?php 
+                                        for($month_iter = 0; $month_iter < 12; $month_iter++){
+                                            if(isset($res[$month_iter])){
+                                                ?>
+                                                <td style="text-align: right;"><?=$res[$month_iter]->T2?></td>    
+                                                <?php    
+                                            }else{
+                                                echo '<td>0</td>';
+                                            }
+                                        }
+                                        ?>
+                                        
+                                        <td style="text-align: right;"></td>
                                     </tr>
                                     <tr>
-                                    <td>E.S.I. Leave</td>
-                                    <td></td>
-                                    <?php foreach ($dates1 as $d)
-            {
-                $sql2 = "SELECT employees.name,e_code,employees.pf_acc_no,employees.esi_acc_no,salary.T6,CAST((salary.BASIC+salary.DA+salary.CONV) AS DECIMAL(11,2)) AS TOTAL2,salary.GROSS
-            FROM salary
-            INNER JOIN(employees)
-            ON(salary.EMPCODE=employees.e_id)
-            WHERE salary.MON LIKE '%" . $d . "' AND employees.e_id='" . $a->e_id . "' AND employees.user_id  != '13'
-            ORDER BY employees.e_code";
-                $salary_details2 = $this
-                    ->db
-                    ->query($sql2)->row();
-                if (count($salary_details2) > 0)
-                {
-?>
-<td style="text-align: right;"><b><?=$salary_details2->T6
-?><b/><?php $total_esil += $salary_details2->T6; ?></td>
-<?php
-                }
-                else
-                { ?>
-<td style="text-align: right;">0</td>                   			 
-                            			 <?php
-                }
-            }
-?>
-                            			  <td style="text-align: right;"><b><?=$total_esil
-?></b><?php $total_esil = 0; ?></td>
-                            			  <td></td>
+                                        <td>Holidays</td>
+                                        
+                                        <?php 
+                                        for($month_iter = 0; $month_iter < 12; $month_iter++){
+                                            if(isset($res[$month_iter])){
+                                                ?>
+                                                <td style="text-align: right;"><?=$res[$month_iter]->T3?></td>    
+                                                <?php    
+                                            }else{
+                                                echo '<td>0</td>';
+                                            }
+                                        }
+                                        ?>
+                                        
+                                        <td style="text-align: right;"></td>
                                     </tr>
                                     <tr>
-                                    <td>Absent </td>
-                                    <td></td>
-                                    <?php foreach ($dates1 as $d)
-            {
-                $sql3 = "SELECT employees.name,e_code,employees.pf_acc_no,employees.esi_acc_no,salary.T7,CAST((salary.BASIC+salary.DA+salary.CONV) AS DECIMAL(11,2)) AS TOTAL2,salary.GROSS
-            FROM salary
-            INNER JOIN(employees)
-            ON(salary.EMPCODE=employees.e_id)
-            WHERE salary.MON LIKE '%".$d."' AND employees.e_id='" . $a->e_id . "' AND employees.user_id  != '13'
-            ORDER BY employees.e_code";
-                $salary_details3 = $this
-                    ->db
-                    ->query($sql3)->row();
-                if (count($salary_details3) > 0)
-                {
-?>
-<td style="text-align: right;"><b><?=$salary_details3->T7
-?><b/><?php $total_absent += $salary_details3->T7; ?></td>
-<?php
-                }
-                else
-                { ?>
-<td style="text-align: right;">0</td>                   			 
-                            			 <?php
-                }
-            }
-?>
-                            			  <td style="text-align: right;"><b><?=$total_absent
-?></b><?php $total_absent = 0; ?></td>
-                            			  <td></td>
-                            			  <td class="text-center" align="center"><small><?='('.$a->name .')'?></small></td>
+                                        <td>Leave</td>
+                                        
+                                        <?php 
+                                        for($month_iter = 0; $month_iter < 12; $month_iter++){
+                                            if(isset($res[$month_iter])){
+                                                ?>
+                                                <td style="text-align: right;"><?=$res[$month_iter]->T4 + $res[$month_iter]->T5 + $res[$month_iter]->T6?></td>    
+                                                <?php    
+                                            }else{
+                                                echo '<td>0</td>';
+                                            }
+                                        }
+                                        ?>
+                                        
+                                        <td style="text-align: right;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Absent </td>
+                                        
+                                        <?php 
+                                        for($month_iter = 0; $month_iter < 12; $month_iter++){
+                                            if(isset($res[$month_iter])){
+                                                ?>
+                                                <td style="text-align: right;"><?=$res[$month_iter]->T7?></td>    
+                                                <?php    
+                                            }else{
+                                                echo '<td>0</td>';
+                                            }
+                                        }
+                                        ?>
+                                        
+                                        <td style="text-align: right;"></td>
                                     </tr>
                                     <?php
-        }
-    }
-?>
-
-
-
-<tr>
-    <td colspan="18"><b>Total</b></td>
-    <td style="text-align: right;"><b><?= number_format($total_amounts, 2) ?></b></td>
-</tr>
+                                    // }
+                                }
+                                ?>
+                                
+                                <tr>
+                                    <td colspan="14"><b>Total</b></td>
+                                    <td style="text-align: right;"><b><?= number_format($total_amounts, 2) ?></b></td>
+                                </tr>
 
 
                         </tbody>

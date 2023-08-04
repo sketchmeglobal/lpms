@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 21-02-2020
  * Time: 11:30 am
@@ -130,6 +130,9 @@
                     <div class="col-sm-12">
                         <input type="submit" name="reg" class="btn btn-success btn-sm" value="Register" target="_blank" />
                         <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
+                    </div>
+                    <div class="col-sm-12">
+                        <input type="submit" name="attendance" class="btn btn-success btn-sm" value="Attendace" target="_blank" />
                     </div>
                     <div class="col-sm-12">
                         <input type="submit" name="ot" class="btn btn-success btn-sm" value="Overtime" target="_blank" />

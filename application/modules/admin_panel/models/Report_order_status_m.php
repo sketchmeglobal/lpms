@@ -5169,18 +5169,16 @@ EOD;
             
             $new_iter = implode(",", $it_arr);
             
-            
-                
-                $sql="SELECT employees.e_id
-        FROM employees
-        WHERE employees.e_id IN ($new_iter)
-        ORDER BY employees.name";
+            $sql="SELECT employees.e_id
+                    FROM employees
+                    WHERE employees.e_id IN ($new_iter)
+                    ORDER BY employees.name";
         
-        $res = $this->db->query($sql)->result();
-        if(count($res) > 0) {
-            foreach($res as $r) {
-        $data['result'][] = $this->_fetch_leave($mon,$r->e_id);
-        }
+            $res = $this->db->query($sql)->result();
+            if(count($res) > 0) {
+                foreach($res as $r) {
+                    $data['result'][] = $this->_fetch_leave($mon,$r->e_id);
+                }
             }
             
             $data['segment'] = 'payroll_reports_leave';
@@ -5222,27 +5220,22 @@ EOD;
             
             $new_iter = implode(",", $it_arr);
             
-            
-                
-                $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
-                employees.hra_amount AS HRA1,employees.convenience AS CONV1,employees.medical_allowance AS MA1,employees.special_allowance AS OA1,
-    CAST((employees.basic_pay+employees.da_amout+employees.hra_amount+employees.convenience+employees.medical_allowance+employees.special_allowance) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
-    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
-        FROM salary
-        INNER JOIN(employees)
-        ON(salary.EMPCODE=employees.e_id)
-        WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN ($new_iter)
-        ORDER BY employees.name";
+            $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
+                            employees.hra_amount AS HRA1,employees.convenience AS CONV1,employees.medical_allowance AS MA1,employees.special_allowance AS OA1,
+                    CAST((employees.basic_pay+employees.da_amout+employees.hra_amount+employees.convenience+employees.medical_allowance+employees.special_allowance) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
+                    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
+                    FROM salary
+                    INNER JOIN(employees)
+                    ON(salary.EMPCODE=employees.e_id)
+                    WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN ($new_iter)
+                    ORDER BY employees.name";
         
-        $res = $this->db->query($sql)->result();
-        if(count($res) > 0) {
-            foreach($res as $r) {
-        $data['result'][] = $this->_fetch_register($mon,$r->e_id);
-        }
+            $res = $this->db->query($sql)->result();
+            if(count($res) > 0) {
+                foreach($res as $r) {
+                    $data['result'][] = $this->_fetch_register($mon,$r->e_id);
+                }
             }
-            
-            
-            
             
             if($this->input->post('month') == 'January') {
                 $data['month'] = 'Januray~31~1';
@@ -5270,6 +5263,26 @@ EOD;
                 $data['month'] = 'December~31~12';
             }
             $data['segment'] = 'payroll_register';
+            return array('page'=>'reports/common_print_v','data'=>$data);
+        }
+        
+        if($this->input->post("attendance")){
+            $it_arr = $this->input->post('leather[]');
+            $new_iter = implode(",", $it_arr);
+            
+            $sql="SELECT employees.e_id
+                    FROM employees
+                    WHERE employees.e_id IN ($new_iter)
+                    ORDER BY employees.name";
+        
+            $res = $this->db->query($sql)->result();
+            if(count($res) > 0) {
+                foreach($res as $r) {
+                    $data['result'][] = $this->_fetch_attendance($r->e_id);
+                }
+            }
+            
+            $data['segment'] = 'payroll_attendance';
             return array('page'=>'reports/common_print_v','data'=>$data);
         }
         
@@ -5454,7 +5467,7 @@ EOD;
         
         $user_id = $this->session->user_id;
         
-        if($user_id == 13) {
+        if($user_id == 13) { // account dept restrictions
         
         $sql="SELECT employees.*
             FROM employees
@@ -5476,6 +5489,25 @@ EOD;
 
     }
 
+    public function _fetch_attendance($i_a) {
+        
+        if(empty($i_a)) {
+            die('No Details To Show');
+        }
+        
+        $user_id = $this->session->user_id;
+        
+        $sql="SELECT employees.e_id, employees.e_code, employees.name, salary.MON, T1, T2, T3, T4, T5, T6, T7
+            FROM employees
+            LEFT JOIN salary ON salary.EMPCODE = employees.e_id
+            WHERE employees.e_id='".$i_a."' AND employees.user_id  != '13'
+            ORDER BY employees.name";
+            
+        $res = $this->db->query($sql)->result();
+        
+        return $res;
+
+    }    
     public function _fetch_esi_pf($mon,$i_a) {
         
         if(empty($i_a)) {

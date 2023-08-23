@@ -1014,7 +1014,7 @@ $("#form_add_for_same_cartoon").validate({
             var table = '';
             $('#co_dtl_tbl').html(table);
             // $("#form_add_packing_shipment_details").validate().resetForm(); //reset validation
-            $('#gross_weight_per_carton').val('');
+            $('#gross_weight_per_carton').val('0.0');
             $('#old_carton_number').val('');
             $('#number_of_article_per_carton').val('');
             $('#item').val('');

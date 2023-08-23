@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 11-03-2020
  * Time: 09:30
@@ -112,14 +112,23 @@ class Payroll_m extends CI_Model {
 
     public function emp_salary_add_m() {
         $data = [];
-        $data[] = '';        
+        $data[] = '';
+        $data['selected_month'] = date('F', mktime(0, 0, 0, date('m'), 1)) .'~'. cal_days_in_month(CAL_GREGORIAN,date('m'),date('Y'))  .'~'. date('n');    
+        $data['selected_dept'] = '';
+        
         if($this->input->post()){
             $salary_det = array(
                 'MON' =>  $this->input->post('month'),
                 'EMPCODE' => $this->input->post('emp_id'),
-                'BASIC' => $this->input->post('abasic'),
-                'HRA' => $this->input->post('ahra'),
-
+                'BASIC' => NULL,
+                
+                'no_of_part' => $this->input->post('no_of_part'),
+                'rate_per_part' => $this->input->post('rate_per_part'),
+                'pay_for_holiday' => $this->input->post('pay_for_holiday'),
+                'pay_for_leave' => $this->input->post('pay_for_leave'),
+                
+                'HRAPER' => $this->input->post('hraper'),
+                'HRAAMT' => $this->input->post('hraamnt'),
                 'PFPER' => $this->input->post('pfper'),
                 'PFAMT' => $this->input->post('pfamnt'),
                 'ESIPER' => $this->input->post('esiper'),
@@ -140,10 +149,16 @@ class Payroll_m extends CI_Model {
                 'GROSS' => $this->input->post('gross'),
                 'DEDUC' => $this->input->post('ded'),
                 'NET' => $this->input->post('net'),
-                'USER_ID' => $this->session->userdata['accnt']['user_id']
+                'USER_ID' => $this->session->userdata['accnt']['user_id'],
+                'entry_year' => YEAR_START
             );
             $this->db->insert('salary_for_salary_department', $salary_det);
             // echo $this->db->last_query(); die();
+            
+            $data['selected_month'] = $this->input->post('month');
+            $data['selected_dept'] = $this->input->post('group');
+            $data['seleted_month'] = $this->input->post('month');
+            
             $data['error'] = false;
             $data['success'] = true;
         }
@@ -153,7 +168,6 @@ class Payroll_m extends CI_Model {
         }
         
         $user_id = $this->session->userdata['accnt']['user_id'];
-            
         $data['fetch_all_employee'] = $this->db->get_where('employees_salary_department', array('status' => 1))->result();    
             
         return array('page'=>'payroll/salary_add', 'data'=>$data);
@@ -191,19 +205,18 @@ class Payroll_m extends CI_Model {
     public function emp_advance_on_id_m(){
         $id = $this->input->post('id');
         $res = $this->db->select('*, SUM(amount) as amount_total')
-                    ->get_where('advance', array('emp_id' => $id))->result();
+                    ->get_where('advance_salary_department', array('emp_id' => $id))->result();
         return $res;
     }
 
     public function emp_advance_paid_on_id_m(){
         $id = $this->input->post('id');
-        $res1 = $this->db
-                    ->get_where('advance', array('emp_id' => $id))->result();
+        $res1 = $this->db->get_where('advance_salary_department', array('emp_id' => $id))->result();
         if(count($res1) > 0) {
-        $res = $this->db
-                    ->select('SUM(LOAN) AS loan_paid')
-                    ->group_by('EMPCODE')
-                    ->get_where('salary_for_salary_department', array('EMPCODE' => $id))->result();
+            $res = $this->db
+                ->select('SUM(LOAN) AS loan_paid')
+                ->group_by('EMPCODE')
+                ->get_where('salary_for_salary_department', array('EMPCODE' => $id))->result();
         }
         return $res;
     }
@@ -217,11 +230,18 @@ class Payroll_m extends CI_Model {
                 
         if($this->input->post()){
             $salary_det = array(
+                
                 'MON' =>  $this->input->post('month'),
                 'EMPCODE' => $this->input->post('emp_id'),
-                'BASIC' => $this->input->post('abasic'),
-                'HRA' => $this->input->post('ahra'),
-
+                'BASIC' => NULL,
+                
+                'no_of_part' => $this->input->post('no_of_part'),
+                'rate_per_part' => $this->input->post('rate_per_part'),
+                'pay_for_holiday' => $this->input->post('pay_for_holiday'),
+                'pay_for_leave' => $this->input->post('pay_for_leave'),
+                
+                'HRAPER' => $this->input->post('hraper'),
+                'HRAAMT' => $this->input->post('hraamnt'),
                 'PFPER' => $this->input->post('pfper'),
                 'PFAMT' => $this->input->post('pfamnt'),
                 'ESIPER' => $this->input->post('esiper'),
@@ -243,6 +263,7 @@ class Payroll_m extends CI_Model {
                 'DEDUC' => $this->input->post('ded'),
                 'NET' => $this->input->post('net'),
                 'USER_ID' => $this->session->userdata['accnt']['user_id']
+                
             );
             $this->db->update('salary_for_salary_department', $salary_det, array('CODE' => $sal_id));
             $data['error'] = false;
@@ -320,7 +341,26 @@ class Payroll_m extends CI_Model {
     }
     
     public function emp_on_dept_id_new_multiple(){
-        $id = implode (",", $this->input->post('gr_id'));
+        
+        if($this->input->post('gr_id') != ''){
+            
+            if(is_array($this->input->post('gr_id'))){
+                $gid = implode(",",$this->input->post('gr_id'));
+                if(strpos($gid, ",") != false){
+                    $id = implode (",", $this->input->post('gr_id'));        
+                    $str = "'". str_replace(",","','",$id) . "'";         
+                }else{
+                    $id = implode(",",$this->input->post('gr_id'));
+                    $str = "'". $id . "'";         
+                }    
+            }else{
+                $str = $this->input->post('gr_id');
+                $str = "'". $str . "'"; 
+            }
+            
+        }else{
+            $str = '';
+        }
 
         $user_id = $this->session->userdata['accnt']['user_id'];
             
@@ -330,10 +370,50 @@ class Payroll_m extends CI_Model {
                     FROM
                         `employees_salary_department`
                     WHERE
-                        employees_salary_department.d_id IN ($id)";
+                        employees_salary_department.emp_type IN ($str)";
 
             $res = $this->db->query($query)->result();
                     
+        return $res;
+    }
+    
+    public function emp_on_contractor_id_new_multiple(){
+        
+        if($this->input->post('gr_id') != ''){
+            $gid = implode(",",$this->input->post('gr_id'));
+            if(strpos($gid, ",") != false){
+                $id = implode (",", $this->input->post('gr_id'));        
+                $str = "'". str_replace(",","','",$id) . "'";         
+            }else{
+                $id = implode(",",$this->input->post('gr_id'));
+                $str = "'". $id . "'";         
+            }
+        }else{
+            $str = '';
+        }
+
+        $user_id = $this->session->userdata['accnt']['user_id'];
+            
+        $query = "
+                SELECT
+                    *
+                FROM
+                    `employees_salary_department`
+                WHERE
+                    employees_salary_department.c_id IN ($str)";
+
+        if($str != ''){
+            
+            if($this->db->query($query)->num_rows() > 0){
+                $res = $this->db->query($query)->result();
+            }else{
+                $res = '';
+            }
+            
+        }else{
+            $res = '';
+        }
+        
         return $res;
     }
     

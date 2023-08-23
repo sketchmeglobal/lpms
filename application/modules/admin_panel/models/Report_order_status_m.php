@@ -102,7 +102,7 @@ class Report_order_status_m extends CI_Model {
     }
     
     public function report_buyerwise_shipment_details() {
-        $data = '';
+        $data = array();
 
         if($this->input->post('submit') == 'buyer_wise_order_details'){
             
@@ -208,7 +208,7 @@ class Report_order_status_m extends CI_Model {
     }
     
     public function report_order_status_details() {
-        $data = '';
+        $data = array();
 
         if($this->input->post('submit') == 'order_details'){
             
@@ -425,7 +425,7 @@ class Report_order_status_m extends CI_Model {
     }
     
     public function report_shipment_details() {
-        $data = '';
+        $data = array();
 
         if($this->input->post('submit') == 'order_details_with_brkup_anty_details'){
             
@@ -1505,7 +1505,7 @@ $data['fetch_all_buyer'] = $this->db->get_where('acc_master', array('acc_type' =
     }
     
     public function purchase_order_audit_report() {
-        $data = '';
+        $data = array();
         
         $data['fetch_all_leather'] = $this->db
             ->get_where('item_groups', array('item_groups.status' => 1))->result();
@@ -1650,7 +1650,7 @@ $data['fetch_all_buyer'] = $this->db->get_where('acc_master', array('acc_type' =
     }
 
     public function fetch_report_item_status() {
-        $data = '';
+        $data = array();
 
         if($this->input->post('print') == 'Print(P.O. wise)'){
            $la =$this->input->post('leather');
@@ -1928,7 +1928,7 @@ ORDER BY
     
 
     public function fetch_checking_summary_status_v() {
-        $data = '';
+        $data = array();
 
         if($this->input->post('check_summary')){
             $order = $this->input->post('co[]');
@@ -2157,7 +2157,7 @@ ORDER BY
     }
 
     public function fetch_checking_entry_sheet() {
-        $data = '';
+        $data = array();
         
         $data['page_setup'] = $this->db->select('front_page,other_page,blank_row')->get_where('page_setup', array('module_id' =>19, 'user_id' => $this->session->user_id))->result(); # 19 = Report
                     
@@ -2317,7 +2317,7 @@ ORDER BY
     }
 
     public function fetch_stock_summary_status() {
-        $data = '';
+        $data = array();
 
         if($this->input->post('check_stock_summary')){
             $gr = $this->input->post('group');
@@ -2342,7 +2342,7 @@ ORDER BY
     public function report_article_costing_details() {
         
         
-        $data = '';
+        $data = array();
         
         $group_array = [];
 
@@ -2896,7 +2896,7 @@ ORDER BY
     }
     
     public function report_material_status_details() {
-        $data = '';
+        $data = array();
         if($this->input->post('order_details')){
                 $co_id = $this->input->post('customer_order');
             $data['result'] = $this->_fetch_material_issue_status($co_id);
@@ -3162,7 +3162,7 @@ if($check_consumption_list == 0) {
     }
     
     public function fetch_stock_summary_ledger() {
-        $data = '';
+        $data = array();
         if($this->input->post('check_stock_detail_ledger')){
             $gr = $this->input->post('group');
                 $it_arr = $this->input->post('items[]');
@@ -3524,7 +3524,7 @@ if($check_consumption_list == 0) {
 
     
     public function fetch_supplier_wise_item_position() {
-        $data = '';
+        $data = array();
         if($this->input->post('supplier_wise_item_position')) {
             $gr = $this->input->post('group');
             $it_arr = $this->input->post('items[]');
@@ -3562,7 +3562,7 @@ public function _fetch_supplier_wise_item_position_details($it_arr) {
 
     }
     public function fetch_supplier_purchase_ledger() {
-        $data = '';
+        $data = array();
         if($this->input->post('supplier_wise_item_position')) {
             $it_arr = $this->input->post('items[]');
             $data['from'] = $this->input->post('fromdate');
@@ -3605,7 +3605,7 @@ public function _fetch_supplier_purchase_ledger_details($it_arr) {
     }
     
     public function fetch_supplier_wise_purchase_position() {
-        $data = '';
+        $data = array();
         if($this->input->post('supplier_wise_item_position')) {
             $it_arr = $this->input->post('items[]');
             $data['from'] = $this->input->post('fromdate');
@@ -3763,7 +3763,7 @@ public function _fetch_supplier_purchase_ledger_details($it_arr) {
     }
     
     public function fetch_group_stock_summary() {
-        $data = '';
+        $data = array();
         if($this->input->post('supplier_wise_item_position')) {
             $it_arr = $this->input->post('items[]');
             $data['from'] = $this->input->post('fromdate');
@@ -4817,7 +4817,7 @@ EOD;
     }
     
     public function fetch_jobber_bill_summary() {
-        $data = '';
+        $data = array();
         if($this->input->post()) {
             $it_arr = $this->input->post('fab1[]');
             $df = $this->input->post('from');
@@ -4850,7 +4850,7 @@ EOD;
     }
     
     public function fetch_cutter_bill_summary() {
-        $data = '';
+        $data = array();
         if($this->input->post()) {
             $it_arr = $this->input->post('fab1[]');
             $df = $this->input->post('from');
@@ -4883,7 +4883,7 @@ EOD;
     }
     
     public function fetch_monthly_production_status() {
-        $data = '';
+        $data = array();
         if($this->input->post()) {
             $it_arr = implode(",", $this->input->post('fab1[]'));
             $df = $this->input->post('from');
@@ -4927,7 +4927,7 @@ EOD;
     }
     
     public function fetch_production_register() {
-        $data = '';
+        $data = array();
         if($this->input->post()) {
             $opening_quantity = $this->input->post('opening_quantity');
             $df = $this->input->post('fromdate');
@@ -5004,7 +5004,7 @@ EOD;
     }
     
     public function fetch_outstanding_report() {
-        $data = '';
+        $data = array();
 
         if($this->input->post('print')) {
 
@@ -5148,7 +5148,7 @@ EOD;
         
         $user_id = $this->session->user_id;
         
-        $data = '';
+        $data = array();
         
         $this->fetch_permission_matrix($user_id, $m_id = 46);
         $uvp = $this->_user_wise_view_permission(46, $user_id);
@@ -5657,7 +5657,7 @@ EOD;
     }
 
     public function article_master_report() {
-        $data = '';
+        $data = array();
         if($this->input->post()){
             $la = implode (",", $this->input->post('leather'));
             $data['result'] = $this->_fetch_article_master_report($la);
@@ -5777,7 +5777,7 @@ EOD;
     }
     
     public function overtime_reports_details_m() {
-        $data = '';
+        $data = array();
         if($this->input->post('overtime_checking')){
             $la = implode (",", $this->input->post('leather'));
             $from = $this->input->post('from');

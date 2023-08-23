@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 21-02-2020
  * Time: 11:30 am
@@ -805,9 +805,9 @@ var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#
                         success: function(emp_advance_paid){
                             console.log(emp_advance_paid);
                             if(emp_advance_paid > 0) {
-                            c += parseInt(emp_advance_paid);
+                                c += parseInt(emp_advance_paid);
                             } else {
-                            c += 0;   
+                                c += 0;   
                             }
                         $("#hol").val(c);
                         $actual_days_worked = parseInt(mday) - parseInt(c);

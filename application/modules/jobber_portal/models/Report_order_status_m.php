@@ -35,15 +35,16 @@ class Report_order_status_m extends CI_Model {
             WHERE employees.e_id IN ($new_iter)
             ORDER BY employees.name";
         
-        $res = $this->db->query($sql)->result();
-        if(count($res) > 0) {
-            foreach($res as $r) {
-        $data['result'][] = $this->_fetch_leave($mon,$r->e_id);
-        }
+            $res = $this->db->query($sql)->result();
+            if(count($res) > 0) {
+                foreach($res as $r) {
+                    $data['result'][] = $this->_fetch_leave($mon,$r->e_id);
+                }
             }
-            
+                
             $data['segment'] = 'payroll_reports_leave';
             return array('page'=>'reports/common_print_v','data'=>$data);
+        
         }
         if($this->input->post("esi")){
             $it_arr = $this->input->post('leather[]');
@@ -54,24 +55,26 @@ class Report_order_status_m extends CI_Model {
             
             
                 
-                $sql="SELECT employees_salary_department.e_id,salary_for_salary_department.T1,salary_for_salary_department.T2,salary_for_salary_department.T3,(salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,salary_for_salary_department.T7,employees_salary_department.basic_pay AS BASIC1,
-    CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2,
-    salary_for_salary_department.HRA,salary_for_salary_department.GROSS,salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,salary_for_salary_department.INS,salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET
-        FROM salary_for_salary_department
-        INNER JOIN(employees_salary_department)
-        ON(salary_for_salary_department.EMPCODE=employees_salary_department.e_id)
-        WHERE salary_for_salary_department.MON LIKE '".$mon."%' AND employees_salary_department.e_id IN ($new_iter)
-        ORDER BY employees_salary_department.name";
+            $sql="SELECT employees_salary_department.e_id,salary_for_salary_department.T1,salary_for_salary_department.T2,salary_for_salary_department.T3,(salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,salary_for_salary_department.T7,employees_salary_department.basic_pay AS BASIC1,
+            CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2,
+            salary_for_salary_department.HRA,salary_for_salary_department.GROSS,salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,salary_for_salary_department.INS,salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET
+            FROM salary_for_salary_department
+            INNER JOIN(employees_salary_department)
+            ON(salary_for_salary_department.EMPCODE=employees_salary_department.e_id)
+            WHERE salary_for_salary_department.MON LIKE '".$mon."%' AND employees_salary_department.e_id IN ($new_iter)
+            ORDER BY employees_salary_department.name";
         
-        $res = $this->db->query($sql)->result();
+            $res = $this->db->query($sql)->result();
+            
         if(count($res) > 0) {
             foreach($res as $r) {
-        $data['result'][] = $this->_fetch_esi_pf1($mon,$r->e_id);
-        }
+                $data['result'][] = $this->_fetch_esi_pf1($mon,$r->e_id);
             }
+        }
             
             $data['segment'] = 'payroll_esi_pf';
             return array('page'=>'reports/common_print_v','data'=>$data);
+            
         }
         if($this->input->post("reg")){
             $it_arr = $this->input->post('leather[]');
@@ -81,31 +84,25 @@ class Report_order_status_m extends CI_Model {
             
             $new_iter = implode(",", $it_arr);
             
-            
-                
-                $sql="SELECT employees_salary_department.e_id,salary_for_salary_department.T1,salary_for_salary_department.T2,salary_for_salary_department.T3,(salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,salary_for_salary_department.T7,employees_salary_department.basic_pay AS BASIC1,
-    CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2,
-    salary_for_salary_department.HRA,salary_for_salary_department.GROSS,salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,salary_for_salary_department.INS,salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET
-        FROM salary_for_salary_department
-        INNER JOIN(employees_salary_department)
-        ON(salary_for_salary_department.EMPCODE=employees_salary_department.e_id)
-        WHERE salary_for_salary_department.MON LIKE '".$mon."%' AND employees_salary_department.e_id IN ($new_iter)
-        ORDER BY employees_salary_department.name";
+            $sql="SELECT employees_salary_department.e_id,salary_for_salary_department.T1,salary_for_salary_department.T2,salary_for_salary_department.T3,(salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,salary_for_salary_department.T7,employees_salary_department.basic_pay AS BASIC1,
+            CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2,
+            salary_for_salary_department.HRAAMT,salary_for_salary_department.GROSS,salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,salary_for_salary_department.INS,salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET
+            FROM salary_for_salary_department
+            INNER JOIN(employees_salary_department)
+            ON(salary_for_salary_department.EMPCODE=employees_salary_department.e_id)
+            WHERE salary_for_salary_department.MON LIKE '".$mon."%' AND employees_salary_department.e_id IN ($new_iter)
+            ORDER BY employees_salary_department.name";
         
-        $res = $this->db->query($sql)->result();
-        if(count($res) > 0) {
-            foreach($res as $r) {
-        $data['result'][] = $this->_fetch_register($mon,$r->e_id);
-        }
+            $res = $this->db->query($sql)->result();
+            if(count($res) > 0) {
+                foreach($res as $r) {
+                    $data['result'][] = $this->_fetch_register($mon,$r->e_id);
+                }
             }
-            
-            
-            
             
             $data['segment'] = 'payroll_register';
             return array('page'=>'reports/common_print_v','data'=>$data);
         }
-        
         if($this->input->post("pf")){
             $it_arr = $this->input->post('leather[]');
             $mon = $this->input->post('month');
@@ -113,28 +110,28 @@ class Report_order_status_m extends CI_Model {
             
             $new_iter = implode(",", $it_arr);
             
-            
-                
-                $sql="SELECT employees_salary_department.e_id,salary_for_salary_department.T1,salary_for_salary_department.T2,salary_for_salary_department.T3,(salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,salary_for_salary_department.T7,employees_salary_department.basic_pay AS BASIC1,
-    CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2,
-    salary_for_salary_department.HRA,salary_for_salary_department.GROSS,salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,salary_for_salary_department.INS,salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET
-        FROM salary_for_salary_department
-        INNER JOIN(employees_salary_department)
-        ON(salary_for_salary_department.EMPCODE=employees_salary_department.e_id)
-        WHERE salary_for_salary_department.MON LIKE '".$mon."%' AND employees_salary_department.e_id IN ($new_iter)
-        ORDER BY employees_salary_department.name";
+            $sql="SELECT employees_salary_department.e_id,salary_for_salary_department.T1,salary_for_salary_department.T2,salary_for_salary_department.T3,
+                T4, T5, T6, (salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,salary_for_salary_department.T7,
+                employees_salary_department.basic_pay AS BASIC1,
+                CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2,
+                salary_for_salary_department.HRAAMT,salary_for_salary_department.GROSS,salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,
+                salary_for_salary_department.INS,salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET
+                FROM salary_for_salary_department
+                INNER JOIN(employees_salary_department)
+                ON(salary_for_salary_department.EMPCODE=employees_salary_department.e_id)
+                WHERE salary_for_salary_department.MON LIKE '".$mon."%' AND employees_salary_department.e_id IN ($new_iter)
+                ORDER BY employees_salary_department.name";
         
-        $res = $this->db->query($sql)->result();
-        if(count($res) > 0) {
-            foreach($res as $r) {
-        $data['result'][] = $this->_fetch_esi_pf($mon,$r->e_id);
-        }
+            $res = $this->db->query($sql)->result();
+            if(count($res) > 0) {
+                foreach($res as $r) {
+                    $data['result'][] = $this->_fetch_esi_pf($mon,$r->e_id);
+                }
             }
             
             $data['segment'] = 'payroll_pf';
             return array('page'=>'reports/common_print_v','data'=>$data);
         }
-        
         if($this->input->post("ot")){
             $it_arr = $this->input->post('leather[]');
             $mon = $this->input->post('month');
@@ -161,7 +158,7 @@ class Report_order_status_m extends CI_Model {
         }
             
         $data['fetch_all_employee'] = $this->db->get_where('employees', array('user_id' => 17))->result();    
-                    
+        $data['fetch_all_contractors'] = $this->db->get_where('contractor_master', array('status' => 1))->result();                
         $data['departments'] = $this->db->get_where('departments', array('user_id' => 17))->result();
         
         return array('page'=>'reports/payroll_reports_v', 'data'=>$data);
@@ -254,10 +251,15 @@ class Report_order_status_m extends CI_Model {
             die('No Details To Show');
         }
         $user_id = $this->session->userdata['accnt']['user_id'];
-        $sql="SELECT employees_salary_department.name,salary_for_salary_department.T1,salary_for_salary_department.T2,salary_for_salary_department.T3,(salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,salary_for_salary_department.T7,employees_salary_department.basic_pay AS BASIC1,
-    CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2,
-    salary_for_salary_department.HRA,salary_for_salary_department.GROSS,salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,salary_for_salary_department.INS,salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET,
-    employees_salary_department.cutting_rate
+        $sql="SELECT employees_salary_department.name,employees_salary_department.e_code,salary_for_salary_department.T1,salary_for_salary_department.T2,
+        salary_for_salary_department.T3,T4, T5, T6, (salary_for_salary_department.T4+salary_for_salary_department.T5+salary_for_salary_department.T6) AS T,
+        salary_for_salary_department.T7,employees_salary_department.basic_pay AS BASIC1,
+        CAST((employees_salary_department.basic_pay) AS DECIMAL(11,2)) AS TOTAL1,salary_for_salary_department.BASIC AS BASIC2,
+        CAST((salary_for_salary_department.BASIC) AS DECIMAL(11,2)) AS TOTAL2, salary_for_salary_department.HRAAMT,salary_for_salary_department.GROSS,
+        salary_for_salary_department.PFAMT,salary_for_salary_department.ESIAMT,salary_for_salary_department.TAX,salary_for_salary_department.INS,
+        salary_for_salary_department.LOAN,salary_for_salary_department.DEDUC,salary_for_salary_department.NET, employees_salary_department.cutting_rate,
+        no_of_part,rate_per_part,pay_for_holiday,pay_for_leave
+        
         FROM salary_for_salary_department
         INNER JOIN(employees_salary_department)
         ON(salary_for_salary_department.EMPCODE=employees_salary_department.e_id)

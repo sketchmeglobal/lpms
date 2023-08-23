@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 11-03-2020
  * Time: 09:30
@@ -98,8 +98,8 @@ class Skiving_receive_m extends CI_Model {
     }
 
     public function skiving_receive() {
-        $data = '';
-        $data["view_permission"] = $this->_user_wise_view_permission(8, $this->session->user_id);
+        $data = array();
+        $data['view_permission'] = $this->_user_wise_view_permission(8, $this->session->user_id);
         return array('page'=>'skiving_receive/skiving_receive_list_v', 'data'=>$data);
     }
 	

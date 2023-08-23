@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 21-02-2020
  * Time: 11:30 am
@@ -86,14 +86,29 @@
                            ?>
                        </select>
                 </div>
-                    <div class="col-sm-2">
+                <div class="col-sm-2">
                     <label>Select Department </label><br />
-                    <select id="group" name="group[]" multiple="multiple" class="form-control select2" required>
+                    <select id="group" name="group[]" multiple="multiple" class="form-control select2">
                         <option value="">Select From The List</option>
                         <?php
-                        foreach ($departments as $fcbl) {
+                        // foreach ($departments as $fcbl) {
                             ?>
-                            <option value="<?= $fcbl->d_id ?>"><?= $fcbl->department ?></option>
+                            <!--<option value="< ?= $fcbl->d_id ?>">< ?= $fcbl->department ?></option>-->
+                            <?php
+                        // }
+                        ?>
+                        <option value="Jobber">Jobber</option>
+                        <option value="Cutter">Cutter</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <label>Select Contractor </label><br />
+                    <select id="contractor" name="contractor[]" multiple="multiple" class="form-control select2">
+                        <option value="">Select From The List</option>
+                        <?php
+                        foreach ($fetch_all_contractors as $fcbl) {
+                            ?>
+                            <option value="<?= $fcbl->am_id ?>"><?= $fcbl->name ?></option>
                             <?php
                         }
                         ?>
@@ -104,8 +119,7 @@
                     <a id="select-all" href="#">Select All</a>
                  /
                 <a id="deselect-all" href="#">Deselect All</a>
-                <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
-                    </select>
+                <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%"></select>
                 </div>
                     
                 </div>
@@ -196,7 +210,7 @@
                $(function () {
                     $(".date").datepicker({dateFormat: 'dd-mm-yy'});
                 });
-               $('#group').change(function(){
+                $('#group').change(function(){
                    $gr_id = ($(this).val());
                     //   alert(new_array);
                     
@@ -219,7 +233,35 @@
                        }
                    });
                    
-               });
+                });
+                
+                $('#contractor').change(function(){
+                    $gr_id = ($(this).val());
+                    //   alert(new_array);
+                    if($gr_id != ''){
+                        $.ajax({
+                           method: 'post',
+                           dataType: 'json',
+                           url: "<?= base_url('salary_portal/emp-on-contractor-id-new-multiple') ?>",
+                           data: {gr_id:$gr_id},
+                           success: function(items){
+                               // console.log(items);
+                               $('#leather_status').html('');
+                               $.each(items, function(index, itemData){
+                                   $apnd_val = '<option value="'+ itemData.e_id +'">'+ itemData.name +'</option>';
+                                   $("#leather_status").append($apnd_val);
+                               });
+                              $('#leather_status').multiSelect('refresh');
+                           },
+                           error: function(e){
+                               console.log(e);
+                           }
+                        });    
+                    }else{
+                        $('#leather_status').html("");
+                    }
+                });
+                
            });
        </script>
 <script>

@@ -61,7 +61,7 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <div class="panel-body">
-                            <form id="form_add_office_invoice" method="post" action="<?=base_url('admin/form-add-office-invoice')?>" class="cmxform form-horizontal tasi-form">
+                            <form id="form_add_office_invoice" method="post" action="<?=base_url('admin/form-add-office-invoice')?>" class="cmxform form-horizontal tasi-form" enctype="multipart/form-data">
                             	<div class="form-group ">
                                 	<div class="col-lg-3">
                                     <label for="office_invoice_number" class="control-label text-danger">Invoice Number*</label>
@@ -413,6 +413,7 @@
 				$table_str += '<table class="table">';
 				  $table_str += '<thead>';
 					$table_str += '<tr>';
+					  $table_str += '<th scope="col">Sr #</th>';  
 					  $table_str += '<th scope="col">Order #</th>';
 					  $table_str += '<th scope="col">Article#</th>';
 					  $table_str += '<th scope="col">Colour</th>';
@@ -429,6 +430,7 @@
 				  $table_str += '</thead>';
 				  $table_str += '<tbody>';
 				  
+				  $table_iter = 1;
 				$.each(result, function(index, item) {
 					// console.log('item: '+item);
                 
@@ -436,6 +438,7 @@
                     $("#net_weight").val(item.net_weight);
 
 					$table_str += '<tr>';
+					  $table_str += '<th scope="row">' + $table_iter++ + '</th>';
 					  $table_str += '<th scope="row">'+item.co_no+'<input id="co_id_'+item.packing_shipment_detail_id+'" name="co_id_add[]" type="hidden" value="'+item.co_id+'" /></th>';
 					  $table_str += '<td>'+item.art_no+'<input id="cod_id_'+item.packing_shipment_detail_id+'" name="cod_id_add[]" type="hidden" value="'+item.cod_id+'"/>';
 					  $table_str += '<input id="am_id_detail_'+item.packing_shipment_detail_id+'" name="am_id_detail_add[]" type="hidden" value="'+item.am_id+'"/></td>';

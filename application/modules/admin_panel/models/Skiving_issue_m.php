@@ -90,7 +90,7 @@ class Skiving_issue_m extends CI_Model {
     }
 
     public function skiving_issue() {
-        $data = '';
+        $data = array();
         $data["view_permission"] = $this->_user_wise_view_permission(7, $this->session->user_id);
         return array('page'=>'skiving_issue/skiving_issue_list_v', 'data'=>$data);
     }

@@ -3151,7 +3151,7 @@ if($f->challan_status == 0) {
                                     <th rowspan="2">Emp. Name</th>
                                     <th rowspan="2">P.F. A/C No.</th>
                                     <th rowspan="2">Actual Days Worked</th>
-                                    <th rowspan="2" style="text-align: right;">Wages Eor EPF</th>
+                                    <th rowspan="2" style="text-align: right;">Total wages earned</th>
                                     <th class="text-center" rowspan="1">Employee</th>
                                     <th class="text-center" colspan="2" rowspan="1">Employer</th>
                                 </tr>
@@ -5117,13 +5117,14 @@ $dates = array();
 		<style>
 			@media print{@page {size: A3 landscape;}}
 			body.A3.landscape .sheet {
-    width: 500mm;
-    }
-			.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    padding: 5px;
-    text-align: left;
-    font-size: 14px;
-}
+                width: 500mm;
+            }
+    		
+    		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+                padding: 5px;
+                text-align: left;
+                font-size: 14px;
+            }
 		</style>
 		<body class="A3 landscape" style="overflow-x: auto; padding-top: 20px">
         <div id="page-content">
@@ -5135,7 +5136,7 @@ $dates = array();
 			<div class="clearfix"></div>
 			<div class="container">
 				<div class="row border_all text-center text-uppercase mar_bot_3">
-					<h3 class="mar_0 head_font">PAYROLL REGISTER</h3>
+					<h3 class="mar_0 head_font">CONTRACTOR PAYROLL REGISTER</h3>
 				</div>
 				<div class="row mar_bot_3 text-center">
 					<div class="col-sm-6 border_all header_left" style="height: 44px;">
@@ -5143,8 +5144,7 @@ $dates = array();
 						<p class="mar_0">51, MAHANIRBAN ROAD, KOLKATA - 700 029</p>
 					</div>
 					<div class="col-sm-6 border_all header_left" style="height: 44px; text-align: left;">
-						<b>Month: <?= $mont ?><br />
-                                        Date: <?= date('d-m-Y') ?><br /></b>
+						<b>Month: <?= $mont ?><br /> Date: <?= date('d-m-Y') ?><br /></b>
 					</div>
 				</div>
 				<!--table data-->
@@ -5164,14 +5164,22 @@ $dates = array();
                                 <!--</tr>-->
                                 <tr>
                                     <th rowspan="2" style="text-align: center;">Sr. #</th>
+                                    <th rowspan="2" style="text-align: center;">Empl.Id</th>
                                     <th rowspan="2" style="text-align: center;">Name</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>
+                                    
+                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>-->
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays + Lv.</th>
+                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>-->
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Rate Of Salary</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Daily Wages Earned</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total</th>
+                                    
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Parts of Cut Comp</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Rate per Cut Comp</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Pcs. Wages Earned</th>
+                                    
+                                    <th class="text-center" rowspan="1" colspan="2" style="text-align: right;">Additional Pay</th>
+                                    
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Total Amount</th>
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">H.R.A</th>
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Total Gross Payable</th>
@@ -5180,11 +5188,37 @@ $dates = array();
                                     <th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
                                 </tr>
                                 <tr>
+                                    <th rowspan="1" style="text-align: right;">Pay for Holiday</th> 
+                                    <th rowspan="1" style="text-align: right;">Pay for Leave</th>
                                     <th rowspan="1" style="text-align: right;">P.F.</th>
                                     <th rowspan="1" style="text-align: right;">E.S.I.</th>
                                     <th rowspan="1" style="text-align: right;">WB. PR TAX</th>
                                     <th rowspan="1" style="text-align: right;">Loan <br/> /Advance</th>
                                     <th rowspan="1" style="text-align: right;">Total</th>
+                                </tr>
+                                <tr align="center">
+                                    <th style="text-align:center">1</th>
+                                    <th style="text-align:center">2</th>
+                                    <th style="text-align:center">3</th>
+                                    <th style="text-align:center">4</th>
+                                    <th style="text-align:center">5</th>
+                                    <th style="text-align:center">6</th>
+                                    <th style="text-align:center">7</th>
+                                    <th style="text-align:center">8</th>
+                                    <th style="text-align:center">9</th>
+                                    <th style="text-align:center">10</th>
+                                    <th style="text-align:center">11</th>
+                                    <th style="text-align:center">12</th>
+                                    <th style="text-align:center">13</th>
+                                    <th style="text-align:center">14</th>
+                                    <th style="text-align:center">15</th>
+                                    <th style="text-align:center">16</th>
+                                    <th style="text-align:center">17</th>
+                                    <th style="text-align:center">18</th>
+                                    <th style="text-align:center">19</th>
+                                    <th style="text-align:center">20</th>
+                                    <th style="text-align:center">21</th>
+                                    <th style="text-align:center">22</th>
                                 </tr>
                 </thead>
                 <tbody>
@@ -5247,6 +5281,9 @@ $dates = array();
                                 if(isset($result)) {
                                 foreach($result as $res){
                                     foreach($res as $r){
+                                        
+                                        // echo '<pre>', print_r($r), '</pre>';
+                                        
                                         if($res != '') {
                                            $total_count = count($result); 
                                         }
@@ -5255,7 +5292,7 @@ $dates = array();
                                     ?>
                                     
                                     <tr>
-                                    <th colspan="7">Total</th>
+                                    <th colspan="6">Total</th>
                                         <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
                                         ; 
                                         ?></th>
@@ -5340,14 +5377,19 @@ $dates = array();
                                 </tr>
                                 <tr>
                                     <th rowspan="2" style="text-align: center;">Sr. #</th>
+                                    <th rowspan="2" style="text-align: center;">Empl.Id</th>
                                     <th rowspan="2" style="text-align: center;">Name</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>
+                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>-->
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays + Lv.</th>
+                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>-->
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Rate Of Salary</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Daily Wages Earned</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total</th>
+                                    
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Parts of Cut Comp</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Rate per Cut Comp</th>
+                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Pcs.  Wages Earned</th>
+                                    
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Total Amount</th>
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">H.R.A</th>
                                     <th rowspan="2" style="text-align: center; font-size: 10px;">Total Gross Payable</th>
@@ -5356,6 +5398,8 @@ $dates = array();
                                     <th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
                                 </tr>
                                 <tr>
+                                    <th rowspan="1" style="text-align: right;">Pay for Holiday</th> 
+                                    <th rowspan="1" style="text-align: right;">Pay for Leave</th>
                                     <th rowspan="1" style="text-align: right;">P.F.</th>
                                     <th rowspan="1" style="text-align: right;">E.S.I.</th>
                                     <th rowspan="1" style="text-align: right;">WB. PR TAX</th>
@@ -5407,22 +5451,36 @@ $dates = array();
                                     
                                     <tr>
                                         <td><?= $iter ?></td>
+                                        <td class="text-left"><?= $r->e_code ?></td>
                                         <td class="text-left"><?= $r->name ?></td>
-                                        <td style="text-align: center;"><?= $r->T1 ?></td>
                                         <td style="text-align: center;"><?= $r->T2 ?></td>
-                                        <td style="text-align: center;"><?= $r->T3 ?></td>
-                                        <td style="text-align: center;"><?= $r->T ?></td>
+                                        <td style="text-align: center;"><?= $r->T3 + $r->T ?></td>
                                         <td style="text-align: center;"><?= $r->T7 ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->cutting_rate, 2);
-                                        $total_BASIC1 += $r->cutting_rate; $total_BASIC11 += $r->cutting_rate;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->TOTAL2, 2);
-                                        $total_HRA11 += $r->TOTAL2; $total_HRA111 += $r->TOTAL2;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->TOTAL2, 2);
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->HRA, 2);
-                                        $total_TOTAL1 += $r->HRA; $total_TOTAL11 += $r->HRA;
+                                        <td style="text-align: center;"><?=  $r->T1 ?></td>
+                                        
+                                        <td style="text-align: center;"><?= $tpcc = $r->no_of_part ?></td>
+                                        <td style="text-align: center;"><?= (float)$r->rate_per_part ?></td>
+                                        <td style="text-align: right;">
+                                            <?php echo number_format($tpcc * (float)$r->rate_per_part, 2);?>
+                                        </td>
+                                        
+                                        
+                                        <td style="text-align: right;">
+                                            <?php 
+                                                echo $pfh = $r->pay_for_holiday;
+                                                $total_HRA11 += $r->TOTAL2; $total_HRA111 += $r->TOTAL2;
+                                            ?>
+                                        </td>
+                                        <td style="text-align: right;">
+                                        <?php 
+                                            echo $pfl = $r->pay_for_leave;
+                                            $total_HRA11 += $r->TOTAL2; $total_HRA111 += $r->TOTAL2;
+                                        ?>
+                                        </td>
+                                        <td style="text-align: right;"><?php echo $pfh + $pfl?></td>
+                                        
+                                        <td style="text-align: right;"><?php echo number_format((float)$r->HRAAMT, 2);
+                                        $total_TOTAL1 += $r->HRAAMT; $total_TOTAL11 += $r->HRAAMT;
                                         ?></td>
                                         <td style="text-align: right;"><?php echo number_format((float)$r->GROSS, 2);
                                         $total_BASIC2 += $r->GROSS; $total_BASIC21 += $r->GROSS;
@@ -5439,19 +5497,26 @@ $dates = array();
                                         <td style="text-align: right;"><?php echo number_format((float)$r->LOAN, 2);
                                         $total_LOAN += $r->LOAN; $total_LOAN1 += $r->LOAN;
                                         ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->DEDUC, 2);
-                                        $total_DEDUC += $r->DEDUC; $total_DEDUC1 += $r->DEDUC;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->NET, 2);
-                                        $total_NET += $r->NET; $total_NET1 += $r->NET;
-                                        ?></td>
+                                        <td style="text-align: right;">
+                                        <?php 
+                                            echo number_format((float)($r->DEDUC - $r->INS), 2);
+                                            $total_DEDUC += ($r->DEDUC - $r->INS); 
+                                            $total_DEDUC1 += ($r->DEDUC - $r->INS);
+                                        ?>
+                                        </td>
+                                        <td style="text-align: right;">
+                                        <?php 
+                                            echo number_format((float)($r->NET - $r->INS), 2);
+                                            $total_NET += ($r->NET - $r->INS); $total_NET1 += ($r->NET - $r->INS);
+                                        ?>
+                                        </td>
                                         <td style="text-align: right; height: 100px; width: 100px;"></td>
                                     </tr>
                                     
                                     <?php if($iter == $total_count) { ?>
                                     
                                     <tr>
-                                    <th colspan="7">Total</th>
+                                        <th colspan="10">Total</th>
                                         <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
                                         ; 
                                         ?></th>

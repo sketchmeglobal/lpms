@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 11-03-2020
  * Time: 10:56
@@ -143,6 +143,13 @@ class Payroll extends My_Controller {
     public function emp_on_dept_id_new_multiple() {
             $this->load->model('Payroll_m');
             $data = $this->Payroll_m->emp_on_dept_id_new_multiple();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+    }
+    
+    public function emp_on_contractor_id_new_multiple() {
+            $this->load->model('Payroll_m');
+            $data = $this->Payroll_m->emp_on_contractor_id_new_multiple();
             echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
             exit();
     }

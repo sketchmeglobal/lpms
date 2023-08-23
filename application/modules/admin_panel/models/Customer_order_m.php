@@ -1156,25 +1156,27 @@ public function ajax_fetch_customer_order_details_total_value() {
 
     public function print_customer_order_consumption($co_id){
         $this->db->empty_table('temp_consumption');
+        
+        $this->db->query("SET SQL_BIG_SELECTS=1");
 
         $data_array = array();
         $order_query = "SELECT
-    `customer_order_dtl`.*,
-    `article_costing`.`combination_or_not`,
-    `item_dtl`.`im_id`
-FROM
-    `customer_order_dtl`
-LEFT JOIN `article_costing` ON `article_costing`.`am_id` = `customer_order_dtl`.`am_id`
-LEFT JOIN `article_costing_details` ON `article_costing_details`.`ac_id` = `article_costing`.`ac_id`
-LEFT JOIN `item_dtl` ON `item_dtl`.`id_id` = `article_costing_details`.`id_id`
-WHERE
-    `co_id` = $co_id
-GROUP BY
-    `customer_order_dtl`.`co_id`,
-    `customer_order_dtl`.`lc_id`,
-    `item_dtl`.`im_id`
-    ORDER BY
-    im_id";
+            `customer_order_dtl`.*,
+            `article_costing`.`combination_or_not`,
+            `item_dtl`.`im_id`
+        FROM
+            `customer_order_dtl`
+        LEFT JOIN `article_costing` ON `article_costing`.`am_id` = `customer_order_dtl`.`am_id`
+        LEFT JOIN `article_costing_details` ON `article_costing_details`.`ac_id` = `article_costing`.`ac_id`
+        LEFT JOIN `item_dtl` ON `item_dtl`.`id_id` = `article_costing_details`.`id_id`
+        WHERE
+            `co_id` = $co_id
+        GROUP BY
+            `customer_order_dtl`.`co_id`,
+            `customer_order_dtl`.`lc_id`,
+            `item_dtl`.`im_id`
+            ORDER BY
+            im_id";
         $order_colour_res = $this->db->query($order_query)->result(); 
 
         // echo $this->db->last_query(); die();

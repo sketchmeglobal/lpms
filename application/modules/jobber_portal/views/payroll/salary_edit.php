@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 21-02-2020
  * Time: 11:30 am
@@ -213,34 +213,40 @@
                
                <div class="row"><div class="clearfix"></div></div>
                
-               <div class="col-sm-11">
-                   <div class="col-sm-6" style="border: 1px solid #000; border-radius: 2%;">
-                       <h5>Income</h5>
+                <div class="col-sm-11">
+                    <div class="col-sm-6" style="border: 1px solid #000; border-radius: 2%;margin-top:10px;">
+                    
+                        <h5>Income</h5>
                        
                        
-                       <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Daily Rate</label></div>
-                       <div class="col-sm-4"><input value="<?= $fetch_all_sal_details[0]->cutting_rate ?>" type="text" id="rate_or_part" name="rate_or_part" class="form-control" />
-                       <input value="<?= $fetch_all_sal_details[0]->pf_percentage_calculation ?>" type="hidden" id="pf_percentage_calculation" name="pf_percentage_calculation" class="form-control" />
-                       </div>
+                        <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">No. of part cutted</label></div>
+                        <div class="col-sm-4"><input value="<?= $fetch_all_sal_details[0]->no_of_part ?>" type="text" id="no_of_part" name="no_of_part" class="form-control" /></div>  
                        
-                       <div class="col-sm-8"><label style="font-weight: bold; margin-top: 10px; margin-bottom: 18px;">Wages Earned</label></div>
-                       <div class="col-sm-4"><input value="<?= $fetch_all_sal_details[0]->BASIC ?>" type="text" id="abasic" name="abasic" style="border: 1px solid black;" class="form-control" /></div>
+                        <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Rate / Part</label></div>
+                        <div class="col-sm-4"><input value="<?= $fetch_all_sal_details[0]->rate_per_part ?>" type="text" id="rate_per_part" name="rate_per_part" class="form-control" /></div>  
+
+                        <div class="col-sm-8"><label style="font-weight: bold; margin-top: 10px; margin-bottom: 18px;">Piece wages Earned</label></div>
+                        <div class="col-sm-4"><input readonly value="<?= $wages_earned = ($fetch_all_sal_details[0]->no_of_part * $fetch_all_sal_details[0]->rate_per_part)  ?>" type="text" id="wages_earned" name="wages_earned" style="border: 1px solid black;" class="form-control" /></div>
                        
+                        <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Pay for holiday</label></div>
+                        <div class="col-sm-4"><input value="<?= $fetch_all_sal_details[0]->pay_for_holiday ?>" type="text" id="pay_for_holiday" name="pay_for_holiday" class="form-control" /></div>  
                        
-                       <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Actual HRA % & Amount</label></div>
-                       <div class="col-sm-4">
-                           <input value="<?= $fetch_all_sal_details[0]->hra_percentage ?>" type="text" id="ahra_perctg" name="ahra_perctg" class="form-control" /></div>
-                           <div class="col-sm-8"></div>
-                       <div class="col-sm-4">
-                           <input value="<?= $fetch_all_sal_details[0]->HRA ?>" type="text" id="ahra" name="ahra" class="form-control" /></div>
-                       <br/>
+                        <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Pay for leave</label></div>
+                        <div class="col-sm-4"><input value="<?= $fetch_all_sal_details[0]->pay_for_leave ?>" type="text" id="pay_for_leave" name="pay_for_leave" class="form-control" /></div>  
                        
+                        <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Total wages earned</label></div>
+                        <div class="col-sm-4"><input readonly value="<?= $total_wages_earned = ($wages_earned + $fetch_all_sal_details[0]->pay_for_holiday + $fetch_all_sal_details[0]->pay_for_leave) ?>" type="text" id="total_wages_earned" name="total_wages_earned" class="form-control" /></div>  
                        
-                   </div>
-                   <div class="col-sm-6" style="border: 1px solid #000; border-radius: 2%;">
+                        <div class="col-sm-6"><label style="margin-top: 10px; margin-bottom: 18px;">Actual HRA % & Amount</label></div>
+                        <div class="col-sm-6">
+                            <input type="text" name="hraper" value="<?= $fetch_all_sal_details[0]->HRAPER ?>" id="hraper" style="width:35%;float:left" class="form-controls"/>
+                            <input type="text" name="hraamnt" value="<?= $fetch_all_sal_details[0]->HRAAMT ?>" id="hraamnt" style="width:65%;float:right" class="form-controls"/>
+                        </div>   
+                       
+                    </div>
+                   <div class="col-sm-6" style="border: 1px solid #000; border-radius: 2%;margin-top:10px;">
                         <h5>Deductions and Final</h5>
                         
-                       
                         <div class="col-sm-6"><label>P.F. % & Amount</label></div>
                         <div class="col-sm-6">
                             <input type="number" name="pfper" value="<?= $fetch_all_sal_details[0]->PFPER ?>" step="0.01" min="0" id="pfper" style="width:35%;float:left" class="form-controls"/>
@@ -361,210 +367,200 @@
     // document.getElementById("myDate2").defaultValue = date('y-m-d');  
 </script>
 
-            <script>
-                $(document).ready(function(){
+<script>
+    $(document).ready(function(){
 
-$("#cl, #el, #esil, #abs").blur(function(){
-                    // $val = parseInt($("#hol").val()) + parseInt($("#cl").val()) + parseInt($("#el").val()) + parseInt($("#esil").val()) + parseInt($("#abs").val());
-                    // $actual_d_w = parseInt($("#wd").val()) - parseInt($("#hol").val()) - parseInt($("#cl").val()) - parseInt($("#el").val()) - parseInt($("#esil").val()) - parseInt($("#abs").val());
-                    // $("#td").val($val);
-                    // $("#adw").val($actual_d_w);
-                    
-                    // CL area -- fetch already taken cl for the current session
-                    
-                    var month1 = parseInt($("#month").find(":selected").text().split('~')[1]);
-                    
-                    var total_cl_taken_no = parseInt($("#cl_geanted_value").val());
-                    var total_el_taken_no = parseInt($("#el_geanted_value").val());
-                    var cl_leave_day = 0;
-                    var cl = parseInt($("#cl").val());
-                    var el = parseInt($("#el").val());
-                    var cl_taken = parseInt($(".cl_taken").text());
-                    var el_taken = parseInt($(".el_taken").text());
-                    var tot_cl = (cl + cl_taken);
-                    var tot_el = (el + el_taken);
-                    var tot_cl_el = (cl + el);
-                    var tot_cl_el_granted = (parseInt(tot_cl) + parseInt(tot_el));
-                    
-                    if(tot_cl > total_cl_taken_no) {
-                        alert("Casual Leave exceeds Maximum Alloted");
-                        var cl_leave_day = (total_cl_taken_no - tot_cl);
-                        if(cl_leave_day > 0) {
-                            $("#cl").val(cl_leave_day);
-                        } else {
-                        $("#cl").val(0);
-                        }
-                    }
-                    
-                    if(tot_el > total_el_taken_no) {
-                        alert("Earn Leave exceeds Maximum Alloted");
-                        var el_leave_day = (total_el_taken_no - tot_el);
-                        if(el_leave_day > 0) {
-                            $("#el").val(el_leave_day);
-                        } else {
-                        $("#el").val(0);
-                        }
-                    }
-                    
-                    // ESI CALCULATION and D.A. Calculation
-                    if($("#esil").val() > 0){
-                        var esi_leave_day = parseInt($('#esil').val());
-                        var abasic = parseFloat($("#abasic").val()) - ((parseFloat($("#abasic").val()) / month1) * esi_leave_day);
+        $("#cl, #el, #esil, #abs").blur(function(){
+        // $val = parseInt($("#hol").val()) + parseInt($("#cl").val()) + parseInt($("#el").val()) + parseInt($("#esil").val()) + parseInt($("#abs").val());
+        // $actual_d_w = parseInt($("#wd").val()) - parseInt($("#hol").val()) - parseInt($("#cl").val()) - parseInt($("#el").val()) - parseInt($("#esil").val()) - parseInt($("#abs").val());
+        // $("#td").val($val);
+        // $("#adw").val($actual_d_w);
+        
+        // CL area -- fetch already taken cl for the current session
+        
+        var month1 = parseInt($("#month").find(":selected").text().split('~')[1]);
+        
+        var total_cl_taken_no = parseInt($("#cl_geanted_value").val());
+        var total_el_taken_no = parseInt($("#el_geanted_value").val());
+        var cl_leave_day = 0;
+        var cl = parseInt($("#cl").val());
+        var el = parseInt($("#el").val());
+        var cl_taken = parseInt($(".cl_taken").text());
+        var el_taken = parseInt($(".el_taken").text());
+        var tot_cl = (cl + cl_taken);
+        var tot_el = (el + el_taken);
+        var tot_cl_el = (cl + el);
+        var tot_cl_el_granted = (parseInt(tot_cl) + parseInt(tot_el));
+        
+        // if(tot_cl > total_cl_taken_no) {
+        //     alert("Casual Leave exceeds Maximum Alloted");
+        //     var cl_leave_day = (total_cl_taken_no - tot_cl);
+        //     if(cl_leave_day > 0) {
+        //         $("#cl").val(cl_leave_day);
+        //     } else {
+        //     $("#cl").val(0);
+        //     }
+        // }
+        
+        // if(tot_el > total_el_taken_no) {
+        //     alert("Earn Leave exceeds Maximum Alloted");
+        //     var el_leave_day = (total_el_taken_no - tot_el);
+        //     if(el_leave_day > 0) {
+        //         $("#el").val(el_leave_day);
+        //     } else {
+        //     $("#el").val(0);
+        //     }
+        // }
+        
+        // ESI CALCULATION and D.A. Calculation
+        if($("#esil").val() > 0){
+            var esi_leave_day = parseInt($('#esil').val());
+            var abasic = parseFloat($("#abasic").val()) - ((parseFloat($("#abasic").val()) / month1) * esi_leave_day);
 
-                        $("#abasic").val(Math.round(abasic));
-                    }
-                    
-                    // ABSENT CALCULATION and D.A. Calculation
-                    if($("#abs").val() > 0){
-                        var absent_leave_day = parseInt($('#abs').val());
-                        var abasic1 = parseFloat($("#abasic").val()) - ((parseFloat($("#abasic").val()) / month1) * absent_leave_day);
+            $("#abasic").val(Math.round(abasic));
+        }
+        
+        // ABSENT CALCULATION and D.A. Calculation
+        if($("#abs").val() > 0){
+            var absent_leave_day = parseInt($('#abs').val());
+            var abasic1 = parseFloat($("#abasic").val()) - ((parseFloat($("#abasic").val()) / month1) * absent_leave_day);
 
-                        $("#abasic").val(Math.round(abasic1));
-                    }
-                    
-                    $val = parseInt($("#hol").val()) + parseInt($("#cl").val()) + parseInt($("#el").val()) + parseInt($("#esil").val()) + parseInt($("#abs").val());
-                    $actual_d_w = parseInt($("#wd").val()) - parseInt($("#hol").val()) - parseInt($("#cl").val()) - parseInt($("#el").val()) - parseInt($("#esil").val()) - parseInt($("#abs").val());
-                    $("#td").val($val);
-                    $("#adw").val($actual_d_w);
-                    
-                    // HRA calc
-                    
-                    var ahra = (parseFloat($("#abasic").val())) * (parseFloat($("#ahra_perctg").val())/100); // 15% is static here should come from db
-                    $("#ahra").val(Math.round(ahra));
-                    
-                    // PF ded. calc
-                    if(($("#pfamnt").val() == 0) || ($("#pfamnt").val() == '')) {
-                    if(($("#pfper").val()) > 0) {
-                        var actual_pf_amnt = (parseFloat($("#abasic").val()) );
-                        if(actual_pf_amnt <= 15000) {
-                        var pfamnt = (parseFloat($("#abasic").val()) ) * (parseFloat($("#pfper").val())/100);
-                        } else {
-                        var pfamnt = (15000 * (parseFloat($("#pfper").val())/100));    
-                        }
-                            } else {
-                               var pfamnt = 0;  
-                            }
-                    } else {
-                       var pfamnt = $("#pfamnt").val();  
-                    }
-                    $("#pfamnt").val(Math.round(pfamnt));
-                    
-                    // ESI ded calc
-                    
-                    var esiamnt = (parseFloat($("#abasic").val()) parseFloat($("#ahra").val()) ) * (parseFloat($("#esiper").val())/100); 
-                    $("#esiamnt").val(Math.round(esiamnt));
-                    
-                    // gross salary and ded and net
-                    var gross = +$("#abasic").val() + +$("#ahra").val();
-                    $("#gross").val(Math.round(gross));  
-                    // alert(gross);
-                    
-                    $tax_amount = 0;
-                    if(gross <= 10000) {
-    $tax_amount = 0;
-} else if(gross > 10000 && gross <= 15000) {
-    $tax_amount = 110;
-} else if(gross > 15000 && gross <= 25000) {
-    $tax_amount = 130;
-} else if(gross > 25000 && gross <= 40000) {
-    $tax_amount = 150;
-} else {
-    $tax_amount = 200;
-}
-$('#ptax').val(Math.round($tax_amount));
+            $("#abasic").val(Math.round(abasic1));
+        }
+        
+        $val = parseInt($("#hol").val()) + parseInt($("#cl").val()) + parseInt($("#el").val()) + parseInt($("#esil").val()) + parseInt($("#abs").val());
+        $actual_d_w = parseInt($("#wd").val()) - parseInt($("#hol").val()) - parseInt($("#cl").val()) - parseInt($("#el").val()) - parseInt($("#esil").val()) - parseInt($("#abs").val());
+        $("#td").val($val);
+        $("#adw").val($actual_d_w);
+        
+        // HRA calc
+        
+        var ahra = (parseFloat($("#abasic").val())) * (parseFloat($("#ahra_perctg").val())/100); // 15% is static here should come from db
+        $("#ahra").val(Math.round(ahra));
+        
+        // PF ded. calc
+        if(($("#pfamnt").val() == 0) || ($("#pfamnt").val() == '')) {
+        if(($("#pfper").val()) > 0) {
+            var actual_pf_amnt = (parseFloat($("#abasic").val()));
+            if(actual_pf_amnt <= 15000) {
+            var pfamnt = (parseFloat($("#abasic").val())) * (parseFloat($("#pfper").val())/100);
+            } else {
+            var pfamnt = (15000 * (parseFloat($("#pfper").val())/100));    
+            }
+                } else {
+                    var pfamnt = 0;  
+                }
+        } else {
+            var pfamnt = $("#pfamnt").val();  
+        }
+        $("#pfamnt").val(Math.round(pfamnt));
+        
+        // ESI ded calc
+        
+        var esiamnt = (parseFloat($("#abasic").val())) * (parseFloat($("#esiper").val())/100); 
+        $("#esiamnt").val(Math.round(esiamnt));
+        
+        // gross salary and ded and net
+        var gross = +$("#abasic").val() + +$("#ahra").val();
+        $("#gross").val(Math.round(gross));  
+        // alert(gross);
+        
+        $tax_amount = 0;
+        if(gross <= 10000) {
+        $tax_amount = 0;
+        } else if(gross > 10000 && gross <= 15000) {
+        $tax_amount = 110;
+        } else if(gross > 15000 && gross <= 25000) {
+        $tax_amount = 130;
+        } else if(gross > 25000 && gross <= 40000) {
+        $tax_amount = 150;
+        } else {
+        $tax_amount = 200;
+        }
+        $('#ptax').val(Math.round($tax_amount));
 
-var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#insur").val() + +$("#loan_adj").val();
-                    var net = gross - ded;
-                    
-                    $("#ded").val(Math.round(ded));
-                    $("#net").val(Math.round(net));
-                    
-                    
-                });
-               
-                $("#adw, #hol, #esiper, #pfper, #abasic, #ahra, #ptax, #insur, #adad, #loan_adj, #ahra_perctg").blur(function(){
-                    
-                    $val = parseInt($("#hol").val()) + parseInt($("#cl").val()) + parseInt($("#el").val()) + parseInt($("#esil").val()) + parseInt($("#abs").val());
-                    $actual_d_w = parseInt($("#wd").val()) - parseInt($("#hol").val()) - parseInt($("#cl").val()) - parseInt($("#el").val()) - parseInt($("#esil").val()) - parseInt($("#abs").val());
-                    $("#td").val($val);
-                    $("#adw").val($actual_d_w);
-                    
-                    // HRA calc
-                    var ahra = (parseFloat($("#abasic").val())) * (parseFloat($("#ahra_perctg").val())/100); // 15% is static here should come from db
-                    $("#ahra").val(Math.round(ahra));
-                    
-                    // PF ded. calc
-                    if(($("#pfamnt").val() == 0) || ($("#pfamnt").val() == '')) {
-                    if(($("#pfper").val()) > 0) {
-                        var actual_pf_amnt = (parseFloat($("#abasic").val()) );
-                        if(actual_pf_amnt <= 15000) {
-                        var pfamnt = (parseFloat($("#abasic").val()) ) * (parseFloat($("#pfper").val())/100);
-                        } else {
-                        var pfamnt = (15000 * (parseFloat($("#pfper").val())/100));    
-                        }
-                            } else {
-                               var pfamnt = 0;  
-                            }
-                    } else {
-                      var pfamnt = $("#pfamnt").val();   
-                    }
-                    $("#pfamnt").val(Math.round(pfamnt));
-                    
-                    // ESI ded calc
-                    
-                    var esiamnt = (parseFloat($("#abasic").val()) + + parseFloat($("#ahra").val()) ) * (parseFloat($("#esiper").val())/100); 
-                    $("#esiamnt").val(Math.round(esiamnt));
-                    
-                    // gross salary and ded and net
-                    var gross = +$("#abasic").val() + +$("#ahra").val();
-                    $("#gross").val(Math.round(gross));  
-                    // alert(gross);
-                    
-                    $tax_amount = 0;
-                    if(gross <= 10000) {
-    $tax_amount = 0;
-} else if(gross > 10000 && gross <= 15000) {
-    $tax_amount = 110;
-} else if(gross > 15000 && gross <= 25000) {
-    $tax_amount = 130;
-} else if(gross > 25000 && gross <= 40000) {
-    $tax_amount = 150;
-} else {
-    $tax_amount = 200;
-}
-$('#ptax').val(Math.round($tax_amount));
-
-var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#insur").val() + +$("#loan_adj").val();
-                    var net = gross - ded;
-                    
-                    $("#ded").val(Math.round(ded));
-                    $("#net").val(Math.round(net));
-                    
-                    
-                });
+        var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#insur").val() + +$("#loan_adj").val();
+        var net = gross - ded;
+        
+        $("#ded").val(Math.round(ded));
+        $("#net").val(Math.round(net));
+        
+        
+    });
+        $("#no_of_part, #rate_per_part, #pay_for_holiday, #pay_for_leave, #hraper, #hraamnt, #pfper, #esiper, #ptax, #insur, #loan_adj").blur(function(){
+       
+           no_of_part = $("#no_of_part").val();
+           rate_per_part = $("#rate_per_part").val();
+           pay_for_holiday = $("#pay_for_holiday").val();
+           pay_for_leave = $("#pay_for_leave").val();
+           hraper = $("#hraper").val();
+           hraamnt = $("#hraamnt").val();
+           
+           wages_earned = parseFloat(no_of_part) * parseFloat(rate_per_part);
+           
+           $("#wages_earned").val(wages_earned);
+           
+           total_wages_earned = parseFloat(pay_for_holiday) + parseFloat(pay_for_leave) + wages_earned
+           $("#total_wages_earned").val(total_wages_earned)
+            
+            // HRA calc
+            
+            var ahra = (parseFloat(total_wages_earned) * (parseFloat($("#hraper").val())/100)); 
+            $("#hraamnt").val(Math.round(ahra))
+    
+            gross = parseFloat(ahra) + total_wages_earned;
+            $("#gross").val(Math.round(gross))
+    
+            // PF ded. calc
+            if(($("#pfamnt").val() == 0) || ($("#pfamnt").val() == '')) {
                 
-                $("#pfamnt, #esiamnt").blur(function(){
-
-var gross = $("#gross").val();                    
-var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#insur").val() + +$("#loan_adj").val();
-                    var net = gross - ded;
-                    
-                    $("#ded").val(Math.round(ded));
-                    $("#net").val(Math.round(net));
-                    
-                    
-                });
-
-               $("#ded").on('blur', function(){
-                //   alert();
-                    $g = $("#gross").val();
-                    $d = $("#ded").val();
-                    $res = +$g - +$d;
-                    $("#net").val(Math.round($res));
-               });
-                    
-                });
-            </script>
+                if(($("#pfper").val()) > 0) {
+                    var actual_pf_amnt = gross;
+                    if(actual_pf_amnt <= 15000) {
+                        var pfamnt = (parseFloat(gross)) * (parseFloat($("#pfper").val())/100);
+                    } else {
+                        var pfamnt = (15000 * (parseFloat($("#pfper").val())/100));    
+                    }
+                } else {
+                        var pfamnt = 0;  
+                }
+                
+            } else {
+                
+                var pfamnt = $("#pfamnt").val();  
+                
+            }
+            $("#pfamnt").val(Math.round(pfamnt));
+            
+            // ESI ded calc
+            
+            var esiamnt = (parseFloat(gross)) * (parseFloat($("#esiper").val())/100); 
+            $("#esiamnt").val(Math.round(esiamnt));
+    
+            $tax_amount = 0;
+            if(gross <= 10000) {
+                $tax_amount = 0;
+            } else if(gross > 10000 && gross <= 15000) {
+                $tax_amount = 110;
+            } else if(gross > 15000 && gross <= 25000) {
+                $tax_amount = 130;
+            } else if(gross > 25000 && gross <= 40000) {
+                $tax_amount = 150;
+            } else {
+                $tax_amount = 200;
+            }
+            
+            $('#ptax').val(Math.round($tax_amount));
+    
+            var ded = parseFloat(pfamnt) + parseFloat(esiamnt) + parseFloat($tax_amount) + parseFloat($("#insur").val()) + parseFloat($("#loan_adj").val());
+            var net = gross - ded;
+            
+            $("#ded").val(Math.round(ded));
+            $("#net").val(Math.round(net));
+        });
+        
+    });
+</script>
             <script>
         $(document).on('keyup keypress', 'input[type="text"]', function(e) {
           if(e.which == 13) {

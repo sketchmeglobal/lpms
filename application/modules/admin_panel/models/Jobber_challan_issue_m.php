@@ -737,6 +737,7 @@ FROM
         
         $updateArray = array(
             'jobber_issue_quantity' => $jobber_issue_quantity,
+            'jobber_emboss' => $this->input->post('jobber_emboss_edit'),
             'user_id' => $this->session->user_id
         );
         

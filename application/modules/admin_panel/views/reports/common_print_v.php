@@ -3243,8 +3243,8 @@ ALTERED/REJECTED</th>
                 $new_final_cut_qnty = $d_a1['final_cut_qnty'];
                 $new_final_rcv_qnty = $d_a1['final_rcv_qnty'];
                 $total_qnty = ($prev_final_qnty + $new_final_qnty);
-                $total_cut_qnty = ($prev_cut_qnty + $new_final_cut_qnty);
-                $total_rcv_qnty = ($prev_rcv_qnty + $new_final_rcv_qnty);
+                $total_cut_qnty = ((float)$prev_cut_qnty + (float)$new_final_cut_qnty);
+                $total_rcv_qnty = ((float)$prev_rcv_qnty + (float)$new_final_rcv_qnty);
                 $update_array = array(
                 'final_qnty' => $total_qnty,
                 'final_cut_qnty' => $total_cut_qnty,
@@ -3363,7 +3363,7 @@ ALTERED/REJECTED</th>
       	<?=number_format($r->final_opn_qnty_for_leather_status, 2) ?>
       	<?php
         $open_lth = $r->final_opn_qnty_for_leather_status . "<br/>";
-        $tot_open_lth += $open_lth;
+        $tot_open_lth += $r->final_opn_qnty_for_leather_status;
 ?>
       </td>
       <?php
@@ -3381,7 +3381,8 @@ ALTERED/REJECTED</th>
                     $im_id = $c_o['im_id'];
                     $lc_id = $c_o['lc_id'];
                     $cut_issue_quantity = $c_o['final_cut_qnty'];
-                    $order_peng = ($order_quantity - $cut_issue_quantity);
+                    $order_peng = ((double)$order_quantity - (double)$cut_issue_quantity);
+                    // echo $order_quantity . ' ... ' . $cut_issue_quantity;
                     echo abs(round($order_peng, 2)) . "<br/>";
                     $order_pending += $order_peng;
                     $tot_order_pending += $order_peng;
@@ -3400,8 +3401,8 @@ ALTERED/REJECTED</th>
                     $lc_id = $c_o['lc_id'];
                     $cut_is_quantity = $c_o['final_cut_qnty'];
                     echo abs(round($cut_is_quantity, 2)) . "<br/>";
-                    $issue_quantity += $cut_is_quantity;
-                    $tot_issue_quantity += $cut_is_quantity;
+                    $issue_quantity += (float)$cut_is_quantity;
+                    $tot_issue_quantity += (float)$cut_is_quantity;
                 }
             }
 ?>
@@ -3415,7 +3416,13 @@ ALTERED/REJECTED</th>
                     $co_id = $c_o['co_id'];
                     $im_id = $c_o['im_id'];
                     $lc_id = $c_o['lc_id'];
-                    $cut_rv_quantity = $c_o['final_rcv_qnty'];
+                    
+                    if($c_o['final_rcv_qnty'] == ''){
+                        $cut_rv_quantity = 0;    
+                    }else{
+                        $cut_rv_quantity = $c_o['final_rcv_qnty'];
+                    }
+                    
                     echo abs(round($cut_rv_quantity, 2)) . "<br/>";
                     $receive_quantity += $cut_rv_quantity;
                     $tot_receive_quantity += $cut_rv_quantity;
@@ -3457,7 +3464,7 @@ ALTERED/REJECTED</th>
       </td>
       <td style="text-align: right;">
       	<?php
-        $balance = $open_lth + $order_pending + $issue_quantity - $receive_quantity - $current_stock - $po_pending;
+        $balance = $r->final_opn_qnty_for_leather_status + $order_pending + $issue_quantity - $receive_quantity - $current_stock - $po_pending;
 
         echo number_format($balance, 2) . "<br/>";
         $tot_balance += $balance;
@@ -13158,9 +13165,9 @@ if($check_consumption_list == 0) {
                 $grand_total1_job_bill = array();
             }
         }
-        if ($show_iter == 26 or $show_iter == $new_show_iter)
+        if ($show_iter == 23 or $show_iter == $new_show_iter)   // prev -> 24
         {
-            $new_show_iter += 25;
+            $new_show_iter += 18;  //  // prev -> 23
 ?>
 												</tbody>
 												</table>

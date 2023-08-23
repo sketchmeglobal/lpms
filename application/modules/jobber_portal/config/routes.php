@@ -55,4 +55,5 @@ $route['salary_portal/payroll-emp-leave-from-holiday-list'] = 'jobber_portal/Pay
 $route['salary_portal/payroll-emp-pay-slip'] = 'jobber_portal/Payroll/multiple_emp_pay_slip';
 $route['salary_portal/emp-on-dept-id'] = 'jobber_portal/Payroll/emp_on_dept_id'; #ajax
 $route['salary_portal/emp-on-dept-id-new-multiple'] = 'jobber_portal/Payroll/emp_on_dept_id_new_multiple'; #ajax
+$route['salary_portal/emp-on-contractor-id-new-multiple'] = 'jobber_portal/Payroll/emp_on_contractor_id_new_multiple'; #ajax
 $route['salary_portal/if-salary-slip-made-or-not'] = 'jobber_portal/Payroll/if_salary_slip_made_or_not'; #ajax

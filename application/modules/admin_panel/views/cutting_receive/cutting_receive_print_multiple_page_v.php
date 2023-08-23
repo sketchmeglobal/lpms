@@ -22,7 +22,7 @@ if(count($page_setup) > 0) {
 
     <head>
         <meta charset="utf-8">
-        <title>Cutter Receipt</title>
+        <title>Print | Cutter Receipt</title>
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -301,7 +301,8 @@ if(count($page_setup) > 0) {
                                         <td nowrap><?= $d->co_no ?></td>
                                         <td><?= $d->art_no ?></td>
                                         <td><?= $d->leather_color ?>/<?= $d->fitting_color ?></td>
-                                        <td class="text-right"><?php echo $d->receive_cut_quantity;
+                                        <td class="text-right">
+                                        <?php echo $d->receive_cut_quantity;
                                         $total_receive_cut_quantity += $d->receive_cut_quantity;
                                         $grand_total_receive_cut_quantity += $d->receive_cut_quantity;
                                          ?></td>

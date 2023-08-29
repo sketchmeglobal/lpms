@@ -76,13 +76,13 @@ class Payroll_m extends CI_Model {
         
         $crud->unset_fields('CREATED_DATE');
         $crud->columns('MON','c_id','EMPCODE', 'NET');
-        
-        // $crud->columns('DATE', 'PARTY_SEQ', 'INVOICE_NO', 'AWB_NO', 'TOTAL_QNTY', 'TOTAL_VALUE', 'TOTAL_FOR_VAL');
+
         $crud->display_as('c_id', 'CONTRACTOR');
         // $crud->display_as('EMPCODE', 'Employee Name');
         // $crud->display_as('DT', 'Voucher Date');
         // $crud->display_as('AMT', 'Voucher Amount');
         
+        $crud->callback_column('c_id',array($this,'_callback_contractor_name'));
         // $crud->callback_before_delete(array($this,'cascade_delete_courier'));
         $crud->set_relation('EMPCODE', 'employees_salary_department', '{e_code} - {name}');
         // $crud->set_relation('c_id', 'contractor_master', 'name');
@@ -100,6 +100,14 @@ class Payroll_m extends CI_Model {
         } catch(Exception $e) {
             show_error($e->getMessage().'<br>'.$e->getTraceAsString());
         }
+    }
+
+    public function _callback_contractor_name($value, $row){
+        return 
+        $this->db
+            ->select('contractor_master.name')
+            ->join('contractor_master','contractor_master.am_id = employees_salary_department.c_id','left')
+            ->get_where('employees_salary_department', array('e_id' => $row->EMPCODE))->row()->name;
     }
 
     function set_edit_path($primary_key , $row){

@@ -85,7 +85,7 @@ class Payroll_m extends CI_Model {
         
         // $crud->callback_before_delete(array($this,'cascade_delete_courier'));
         $crud->set_relation('EMPCODE', 'employees_salary_department', '{e_code} - {name}');
-        $crud->set_relation('c_id', 'contractor_master', 'name');
+        // $crud->set_relation('c_id', 'contractor_master', 'name');
         $crud->order_by('CODE','desc');
 
         $crud->add_action('Edit', '', '','ui-icon-pencil',array($this,'set_edit_path'));

@@ -1638,13 +1638,38 @@ $data['fetch_all_buyer'] = $this->db->get_where('acc_master', array('acc_type' =
             return array('page'=>'reports/common_print_v','data'=>$data);
 
         }
+
+        if($this->input->post('print') == 'Print (New)'){
+            // $la =$this->input->post('leather');
+            $item_dtl_ids = implode (",", $this->input->post('leather'));
+            // $data['result1'] = $this->_custom_leather_status_summary_on_co_id_for_pur_order($la);
+             
+            $costing_details = $this->db
+                ->select('article_costing.ac_id,article_costing_details.id_id,article_costing_details.quantity as costin_qnty, article_costing.am_id, combination_or_not')
+                ->join('article_costing', 'article_costing.ac_id = article_costing_details.ac_id', 'left')
+                ->where_in(array('id_id' => $item_dtl_ids))
+                ->get('article_costing_details')->result();
+
+            echo '<pre>';print_r($costing_details); die;
+
+            $data['item_id'] = $item_dtl_ids;
+            $data['segment'] = 'leather_status';
+            $data['segment1'] = 'leather_status';
+ 
+            // echo '<pre>',print_r($data['result1']),'</pre>'; die(); 
+
+            
+ 
+             return array('page'=>'reports/common_print_v','data'=>$data);
+ 
+        }
         
-            $data['fetch_all_leather'] = $this->db
-            ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
-            ->join('item_groups', 'item_groups.ig_id = item_master.ig_id', 'left')
-            ->join('colors', 'colors.c_id = item_dtl.c_id', 'left')
-            ->order_by('item_master.item, colors.color')
-            ->get_where('item_dtl', array('item_dtl.status' => 1, 'item_groups.ig_id' => 1))->result();
+        $data['fetch_all_leather'] = $this->db
+        ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
+        ->join('item_groups', 'item_groups.ig_id = item_master.ig_id', 'left')
+        ->join('colors', 'colors.c_id = item_dtl.c_id', 'left')
+        ->order_by('item_master.item, colors.color')
+        ->get_where('item_dtl', array('item_dtl.status' => 1, 'item_groups.ig_id' => 1))->result();
 
         return array('page'=>'reports/leather_status_v', 'data'=>$data);
     }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Coded by: Pran Krishna Das
- * Social: www.fb.com/pran93
+ * Social: https://sketchmeglobal.com
  * CI: 3.0.6
  * Date: 21-02-2020
  * Time: 11:30 am
@@ -74,23 +74,24 @@
                         <div class="panel-body">
                             <form class="row" method="post" action="" target="_blank">
                                 <div class="col-sm-2">
-                    <label>Select Group </label><br />
-                    <select id="group" name="group" class="form-control" required >
-                            <option value="1" selected>Leather</option>
-                    </select>
-                </div>
-                <div class="col-sm-5">
-                    <label>Select Item From The List</label><br />
-                    <a id="select-all" href="#">Select All</a>
-                 /
-                <a id="deselect-all" href="#">Deselect All</a>
-                <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
-                    </select>
-                </div>
-                <input type="submit" name="print" value="Print(P.O. wise)" class="btn btn-sm btn-success" />
-                <input type="submit" name="print" value="Print" class="btn btn-sm btn-success" />
-                <input type="submit" name="print" value="Print(Pending Orders)" class="btn btn-sm btn-success" />
-            </form>
+                                    <label>Select Group </label><br />
+                                    <select id="group" name="group" class="form-control" required >
+                                            <option value="1" selected>Leather</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label>Select Item From The List</label><br />
+                                    <a id="select-all" href="#">Select All</a>
+                                 /
+                                <a id="deselect-all" href="#">Deselect All</a>
+                                <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
+                                    </select>
+                                </div>
+                                <input type="submit" name="print" value="Print(P.O. wise)" class="btn btn-sm btn-success" />
+                                <input type="submit" name="print" value="Print" class="btn btn-sm btn-success" />
+                                <input type="submit" name="print" value="Print(Pending Orders)" class="btn btn-sm btn-success" />
+                                <input type="submit" name="print" value="Print (New)" class="btn btn-sm btn-warning" />
+                            </form>
                         </div>
                     </section>
                 </div>

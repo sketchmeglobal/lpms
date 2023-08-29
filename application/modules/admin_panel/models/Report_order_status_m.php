@@ -1645,7 +1645,7 @@ $data['fetch_all_buyer'] = $this->db->get_where('acc_master', array('acc_type' =
             // $data['result1'] = $this->_custom_leather_status_summary_on_co_id_for_pur_order($la);
              
             $costing_details = $this->db
-                ->select('article_costing.ac_id,article_costing_details.id_id,article_costing_details.quantity as costin_qnty, article_costing.am_id, combination_or_not')
+                ->select('article_costing.ac_id,article_costing_details.id_id,article_costing_details.quantity as costing_qnty, article_costing.am_id, combination_or_not')
                 ->join('article_costing', 'article_costing.ac_id = article_costing_details.ac_id', 'left')
                 ->where_in(array('id_id' => $item_dtl_ids))
                 ->get('article_costing_details')->result();

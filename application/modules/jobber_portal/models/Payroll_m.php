@@ -62,39 +62,39 @@ class Payroll_m extends CI_Model {
         $crud = new grocery_CRUD();
         // $crud->set_theme('flexigrid');
         $crud = new grocery_CRUD();
-            $crud->set_crud_url_path(base_url('jobber_portal/Payroll/emp_salary_list'));
-            $crud->set_theme('datatables');
-            $crud->set_subject('Salary');
-            $crud->set_table('salary_for_salary_department');
-            $crud->unset_read();
-            $crud->unset_add();
-            $crud->unset_clone();
-            $crud->unset_edit();
+        $crud->set_crud_url_path(base_url('jobber_portal/Payroll/emp_salary_list'));
+        $crud->set_theme('datatables');
+        $crud->set_subject('Salary');
+        $crud->set_table('salary_for_salary_department');
+        $crud->unset_read();
+        $crud->unset_add();
+        $crud->unset_clone();
+        $crud->unset_edit();
 
-            $this->table_name = 'salary_for_salary_department';
-            $this->pk_field_name = 'CODE';
+        $this->table_name = 'salary_for_salary_department';
+        $this->pk_field_name = 'CODE';
         
         $crud->unset_fields('CREATED_DATE');
-        $crud->columns('MON','EMPCODE', 'NET');
+        $crud->columns('MON','c_id','EMPCODE', 'NET');
         
         // $crud->columns('DATE', 'PARTY_SEQ', 'INVOICE_NO', 'AWB_NO', 'TOTAL_QNTY', 'TOTAL_VALUE', 'TOTAL_FOR_VAL');
-        // $crud->display_as('VNAME', 'Voucher No.');
+        $crud->display_as('c_id', 'CONTRACTOR');
         // $crud->display_as('EMPCODE', 'Employee Name');
         // $crud->display_as('DT', 'Voucher Date');
         // $crud->display_as('AMT', 'Voucher Amount');
         
         // $crud->callback_before_delete(array($this,'cascade_delete_courier'));
-        
-        $crud->set_relation('EMPCODE', 'employees_salary_department', 'name');
+        $crud->set_relation('EMPCODE', 'employees_salary_department', '{e_code} - {name}');
+        $crud->set_relation('c_id', 'contractor_master', 'name');
         $crud->order_by('CODE','desc');
 
         $crud->add_action('Edit', '', '','ui-icon-pencil',array($this,'set_edit_path'));
 
         $output = $crud->render();
         //rending extra value to $output
-            $output->tab_title = 'Employee Salary';
-            $output->section_heading = 'Employee Salary <small>(Add / Edit / Delete)</small>';
-            $output->menu_name = 'Employee Salary';
+        $output->tab_title = 'Employee Salary';
+        $output->section_heading = 'Employee Salary <small>(Add / Edit / Delete)</small>';
+        $output->menu_name = 'Employee Salary';
 
         return array('page'=>'payroll/salary_list', 'data'=>$output); //loading common view page
         } catch(Exception $e) {

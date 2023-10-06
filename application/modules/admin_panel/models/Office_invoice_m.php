@@ -1235,17 +1235,12 @@ force_download($name, $path);
             $nr = $this->db->get_where('page_setup', array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')))->num_rows();
             
             if($nr == 0){
-                
                 #insert
                 $this->db->insert('page_setup', $setup_array);
-                
-            }else{
-                
+            }else{   
                 #update
                 $this->db->update('page_setup',$setup_array,array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')));
-                
             }
-            
             
         }
         

@@ -2943,16 +2943,10 @@ if($f->challan_status == 0) {
 			<div class="container">
 				<div class="row border_all text-center text-uppercase mar_bot_3">
 					<h3 class="mar_0 head_font">E.S.I. DETAILS</h3>
+					<h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
+					<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
 				</div>
-				<div class="row mar_bot_3">
-					<div class="col-sm-6 border_all header_left">
-						<h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
-						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
-					</div>
-					<div class="col-sm-6 border_all header_right">
-						<br />
-					</div>
-				</div>
+				
 				<!--table data-->
 				<div class="row">
 					<div class="container">
@@ -2962,7 +2956,7 @@ if($f->challan_status == 0) {
 								<table id="all_det" class="table table-bordered">
 									<thead>
                 <tr>
-                                    <th colspan="4">SHILPA OVERSEAS PVT. LTD. <br /> 51, Mahanirban Road, Kolkata-700029</th>
+                                    <th colspan="4"><p class="text-right"><strong>Contractor: <?=$contractor_names?></strong></p></th>
                                     <th colspan="3">
                                         Month: <?= $mont ?><br />
                                         Date: <?= date('d-m-Y') ?><br />
@@ -2996,9 +2990,14 @@ if($f->challan_status == 0) {
                                         <td><?= $a->esi_acc_no ?></td>
                                         <td><?= $a->T2 ?></td>
                                         <td style="text-align: right;"><?php echo $a->GROSS; $total_gross += $a->GROSS; ?></td>
-                                        <td style="text-align: right;"><?php echo ceil($a->GROSS * (3.25/100)); $total_esi1 += ceil($a->GROSS * (3.25/100));  ?></td>
-                                        <td style="text-align: right;"><?php echo ceil($a->GROSS * (0.75/100)); $total_esi2 += ceil($a->GROSS * (0.75/100));  ?></td>
-                                        <td style="text-align: right;"><?php echo ceil(($a->GROSS * (0.75/100) + $a->GROSS * (3.25/100))); $total_esi3 += ceil(($a->GROSS * (0.75/100) + $a->GROSS * (3.25/100)));  ?></td>
+                                        <td style="text-align: right;"><?php echo $round_esi1 = ceil($a->GROSS * (3.25/100)); $total_esi1 += ceil($a->GROSS * (3.25/100));  ?></td>
+                                        <td style="text-align: right;"><?php echo $round_esi2 = ceil($a->GROSS * (0.75/100)); $total_esi2 += ceil($a->GROSS * (0.75/100));  ?></td>
+                                        <td style="text-align: right;">
+											<?php 
+												echo $round_esi1 + $round_esi2; 
+												$total_esi3 += ceil(($a->GROSS * (0.75/100) + $a->GROSS * (3.25/100)));  
+											?>
+										</td>
                                     </tr>
                                     <?php
                                 }}
@@ -3008,7 +3007,7 @@ if($f->challan_status == 0) {
                                     <th style="text-align: right;"><?= $total_gross ?></th>
                                     <th style="text-align: right;"><?= $total_esi1 ?></th>
                                     <th style="text-align: right;"><?= $total_esi2 ?></th>
-                                    <th style="text-align: right;"><?= $total_esi3 ?></th>
+                                    <th style="text-align: right;"><?= $total_esi1+$total_esi2 ?></th>
                                 </tr>
                                 
                             <?php } ?>
@@ -3121,15 +3120,8 @@ if($f->challan_status == 0) {
 			<div class="container">
 				<div class="row border_all text-center text-uppercase mar_bot_3">
 					<h3 class="mar_0 head_font">P.F. DETAILS</h3>
-				</div>
-				<div class="row mar_bot_3">
-					<div class="col-sm-6 border_all header_left">
-						<h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
-						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
-					</div>
-					<div class="col-sm-6 border_all header_right">
-						<br />
-					</div>
+					<h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
+					<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
 				</div>
 				<!--table data-->
 				<div class="row">
@@ -3139,73 +3131,80 @@ if($f->challan_status == 0) {
 								<!--<h5>Retrieve Table</h5>-->
 								<table id="all_det" class="table table-bordered">
 									<thead>
-                <tr>
-                                    <th colspan="5">SHILPA OVERSEAS PVT. LTD. <br /> 51, Mahanirban Road, Kolkata-700029</th>
-                                    <th colspan="3">
-                                        Month: <?= $mont ?><br />
-                                        Date: <?= date('d-m-Y') ?><br />
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="2">Sr. #</th>
-                                    <th rowspan="2">Emp. Name</th>
-                                    <th rowspan="2">P.F. A/C No.</th>
-                                    <th rowspan="2">Actual Days Worked</th>
-                                    <th rowspan="2" style="text-align: right;">Total wages earned</th>
-                                    <th class="text-center" rowspan="1">Employee</th>
-                                    <th class="text-center" colspan="2" rowspan="1">Employer</th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="1" style="text-align: right;">P.F. </th>
-                                    <th rowspan="1" style="text-align: right;">P.F. @ 8.33%</th>
-                                    <th rowspan="1" style="text-align: right;">P.F. @ 2.67%</th>
-                                </tr>
-                </thead>
-                <tbody>
-                            <?php
-                            $iter = 1;
-                            $total11 = 0;
-                            $total12 = 0;
-                            $total13 = 0;
-                            $total14 = 0;
-                            if(isset($result)) {
-                                foreach($result as $res){
-                                    foreach($res as $a) {
-                                    ?>
-                                    <tr>
-                                        <td><?= $iter++ ?></td>
-                                        <td><?= $a->name . '['.$a->e_code.']' ?></td>
-                                        <td><?= $a->pf_acc_no ?></td>
-                                        <td><?= $a->T2 ?></td>
-                                        <?php if($a->pf_percentage_calculation != 'contractual') { ?>
-                                        <td style="text-align: right;"><?php echo $a->TOTAL2; $total11 += $a->TOTAL2; ?></td>
-                                        <td style="text-align: right;"><?php echo $val= $a->PFAMT; $total12 += $val; ?></td>
-                                        <td style="text-align: right;"><?php echo round($a->PFAMT * (80.33/100)); $total13 += round($a->PFAMT * (80.33/100));  ?></td>
-                                        <td style="text-align: right;"><?php echo round($a->PFAMT * (19.67/100)); $total14 += round($a->PFAMT * (19.67/100)); ?></td>
-                                    <?php } else { ?>
-                                        <td style="text-align: right;"><?php echo $a->TOTAL3; $total11 += $a->TOTAL3; ?></td>
-                                        <td style="text-align: right;"><?php echo $val= $a->PFAMT; $total12 += $val; ?></td>
-                                        <td style="text-align: right;"><?php echo round($a->PFAMT * (80.33/100)); $total13 += round($a->PFAMT * (80.33/100)); ?></td>
-                                        <td style="text-align: right;"><?php echo round($a->PFAMT * (19.67/100)); $total14 += round($a->PFAMT * (19.67/100)); ?></td>
-                                    <?php } ?>
-                                        
-                                    </tr>
-                                    <?php
-                                }
-                                }
-                            }
-                                ?>
-                                
-                                <tr>
-                                    <th colspan = "4"> Grand Total </th>
-                                    <th style="text-align: right;"><?= $total11 ?></th>
-                                    <th style="text-align: right;"><?= $total12 ?></th>
-                                    <th style="text-align: right;"><?= $total13 ?></th>
-                                    <th style="text-align: right;"><?= $total14 ?></th>
-                                </tr>
-                            
-                        </tbody>
-            </table>
+										<tr>
+											<th colspan="5"><p class="text-right"><strong>Contractor: <?=$contractor_names?></strong></p></th>
+											<th colspan="3">
+												Month: <?= $mont ?><br />
+												Date: <?= date('d-m-Y') ?><br />
+											</th>
+										</tr>
+										<tr>
+											<th rowspan="2">Sr. #</th>
+											<th rowspan="2">Emp. Name</th>
+											<th rowspan="2">P.F. A/C No.</th>
+											<th rowspan="2">Actual Days Worked</th>
+											<th rowspan="2" style="text-align: right;">Total Wages Earned</th>
+											<th class="text-center" rowspan="1">Employee</th>
+											<th class="text-center" colspan="2" rowspan="1">Employer</th>
+										</tr>
+										<tr>
+											<th rowspan="1" style="text-align: right;">P.F. </th>
+											<th rowspan="1" style="text-align: right;">P.F. @ 8.33%</th>
+											<th rowspan="1" style="text-align: right;">P.F. @ 2.67%</th>
+										</tr>
+									</thead>
+										<tbody>
+											<?php
+											$iter = 1;
+											$total11 = 0;
+											$total12 = 0;
+											$total13 = 0;
+											$total14 = 0;
+											if(isset($result)) {
+												foreach($result as $res){
+													foreach($res as $a) {
+														//echo '<pre>', print_r($a), '</pre>';
+													?>
+													<tr>
+														<td><?= $iter++ ?></td>
+														<td><?= $a->name . '['.$a->e_code.']' ?></td>
+														<td><?= $a->pf_acc_no ?></td>
+														<td><?= $a->T2 ?></td>
+														<td style="text-align: right;">
+															<?php 
+																echo $twearned = (($a->no_of_part * $a->rate_per_part) + $a->pay_for_holiday); 
+																$total11 += $twearned; 
+															?>
+														</td>
+														<td style="text-align: right;"><?php echo $val= $a->PFAMT; $total12 += $val; ?></td>
+														<td style="text-align: right;">
+															<?php 
+																echo $pf833 = round($twearned * (8.33/100)); 
+																$total13 += $pf833;  
+															?>
+														</td>
+														<td style="text-align: right;">
+															<?php 
+																echo round($val - $pf833); 
+																$total14 += round($val - $pf833); ?>
+															</td>
+													</tr>
+													<?php
+													}
+												}
+											}
+												?>
+												
+												<tr>
+													<th colspan = "4"> Grand Total </th>
+													<th style="text-align: right;"><?= $total11 ?></th>
+													<th style="text-align: right;"><?= $total12 ?></th>
+													<th style="text-align: right;"><?= $total13 ?></th>
+													<th style="text-align: right;"><?= $total14 ?></th>
+												</tr>
+											
+										</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -5111,468 +5110,638 @@ $dates = array();
 		<?php
 	} ?>
 
-<?php if($segment == 'payroll_register' ) {
-		// echo '<pre>',print_r($result),'</pre>';
-		?>
-		<style>
-			@media print{@page {size: A3 landscape;}}
-			body.A3.landscape .sheet {
-                width: 500mm;
-            }
-    		
-    		.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-                padding: 5px;
-                text-align: left;
-                font-size: 14px;
-            }
-		</style>
-		<body class="A3 landscape" style="overflow-x: auto; padding-top: 20px">
-        <div id="page-content">
-		<section class="sheet padding-5mm" style="height: auto">
-		<div>
-			<!--<header class="pull-right">-->
-			<!--    <small>Page No. </small>-->
-			<!--</header>-->
-			<div class="clearfix"></div>
-			<div class="container">
-				<div class="row border_all text-center text-uppercase mar_bot_3">
-					<h3 class="mar_0 head_font">CONTRACTOR PAYROLL REGISTER</h3>
-				</div>
-				<div class="row mar_bot_3 text-center">
-					<div class="col-sm-6 border_all header_left" style="height: 44px;">
-						<h4 class="" style="margin-top: 2px; margin-bottom: 0px;"><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
-						<p class="mar_0">51, MAHANIRBAN ROAD, KOLKATA - 700 029</p>
-					</div>
-					<div class="col-sm-6 border_all header_left" style="height: 44px; text-align: left;">
-						<b>Month: <?= $mont ?><br /> Date: <?= date('d-m-Y') ?><br /></b>
-					</div>
-				</div>
-				<!--table data-->
-				<div class="row">
-					<div class="container">
-						<div class="row">
-							<div class="table-responsive">
-								<!--<h5>Retrieve Table</h5>-->
-								<table id="all_det" class="table table-bordered">
-									<thead>
-                <tr>
-                                    <th class="text-center" align="center" colspan="26">REGISTER OF WAGES <br /> [Prescribed under Rule 23(1) of the West Bengal Minimum Wages Rules 1951] <br /> [Prescribed under Rule 26(1) of the Central Minimum Wages Rules 1951]</th>
-                                </tr>
-                                <!--<tr>-->
-                                <!--    <th class="text-center" align="center" colspan="2">Contact Name:</th>-->
-                                <!--    <th class="text-center" align="center" colspan="24"><= $result[0]->contractor_name ?></th>-->
-                                <!--</tr>-->
-                                <tr>
-                                    <th rowspan="2" style="text-align: center;">Sr. #</th>
-                                    <th rowspan="2" style="text-align: center;">Empl.Id</th>
-                                    <th rowspan="2" style="text-align: center;">Name</th>
-                                    
-                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>-->
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays + Lv.</th>
-                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>-->
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total</th>
-                                    
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Parts of Cut Comp</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Rate per Cut Comp</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Pcs. Wages Earned</th>
-                                    
-                                    <th class="text-center" rowspan="1" colspan="2" style="text-align: right;">Additional Pay</th>
-                                    
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Amount</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">H.R.A</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Gross Payable</th>
-                                    <th class="text-center" rowspan="1" colspan="5" style="text-align: right;">Deductions</th>
-                                    <th rowspan="2" style="text-align: right;">Net Amount Paid</th>
-                                    <th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="1" style="text-align: right;">Pay for Holiday</th> 
-                                    <th rowspan="1" style="text-align: right;">Pay for Leave</th>
-                                    <th rowspan="1" style="text-align: right;">P.F.</th>
-                                    <th rowspan="1" style="text-align: right;">E.S.I.</th>
-                                    <th rowspan="1" style="text-align: right;">WB. PR TAX</th>
-                                    <th rowspan="1" style="text-align: right;">Loan <br/> /Advance</th>
-                                    <th rowspan="1" style="text-align: right;">Total</th>
-                                </tr>
-                                <tr align="center">
-                                    <th style="text-align:center">1</th>
-                                    <th style="text-align:center">2</th>
-                                    <th style="text-align:center">3</th>
-                                    <th style="text-align:center">4</th>
-                                    <th style="text-align:center">5</th>
-                                    <th style="text-align:center">6</th>
-                                    <th style="text-align:center">7</th>
-                                    <th style="text-align:center">8</th>
-                                    <th style="text-align:center">9</th>
-                                    <th style="text-align:center">10</th>
-                                    <th style="text-align:center">11</th>
-                                    <th style="text-align:center">12</th>
-                                    <th style="text-align:center">13</th>
-                                    <th style="text-align:center">14</th>
-                                    <th style="text-align:center">15</th>
-                                    <th style="text-align:center">16</th>
-                                    <th style="text-align:center">17</th>
-                                    <th style="text-align:center">18</th>
-                                    <th style="text-align:center">19</th>
-                                    <th style="text-align:center">20</th>
-                                    <th style="text-align:center">21</th>
-                                    <th style="text-align:center">22</th>
-                                </tr>
-                </thead>
-                <tbody>
-                            <?php
-                                $new_iter = 10;
-                                $total_count = 0;
-                                $new_iter1 = 9;
-                                $iter = 1;
-                                $total_BASIC1 = 0;
-                                $total_DA1 = 0;
-                                $total_HRA11 = 0;
-                                $total_CONV11 = 0;
-                                $total_OA11 = 0;
-                                $total_HRA12 = 0;
-                                $total_CONV12 = 0;
-                                $total_OA12 = 0;
-                                $total_TOTAL1 = 0;
-                                $total_BASIC2 = 0;
-                                $total_TOTAL2 = 0;
-                                $total_DA2 = 0;
-                                $total_TOTAL22 = 0;
-                                $total_HRA = 0;
-                                $total_CONV = 0;
-                                $total_MED = 0;
-                                $total_OA = 0;
-                                $total_GROSS = 0;
-                                $total_PFAMT = 0;
-                                $total_ESIAMT = 0;
-                                $total_TAX = 0;
-                                $total_INS = 0;
-                                $total_LOAN = 0;
-                                $total_DEDUC = 0;
-                                $total_NET = 0;
-                                $total_BASIC11 = 0;
-                                $total_DA11 = 0;
-                                $total_HRA111 = 0;
-                                $total_CONV111 = 0;
-                                $total_OA111 = 0;
-                                $total_HRA121 = 0;
-                                $total_CONV121 = 0;
-                                $total_OA121 = 0;
-                                $total_TOTAL11 = 0;
-                                $total_BASIC21 = 0;
-                                $total_TOTAL21 = 0;
-                                $total_DA21 = 0;
-                                $total_TOTAL221 = 0;
-                                $total_HRA1 = 0;
-                                $total_CONV1 = 0;
-                                $total_MED1 = 0;
-                                $total_OA1 = 0;
-                                $total_GROSS1 = 0;
-                                $total_PFAMT1 = 0;
-                                $total_ESIAMT1 = 0;
-                                $total_TAX1 = 0;
-                                $total_INS1 = 0;
-                                $total_LOAN1 = 0;
-                                $total_DEDUC1 = 0;
-                                $total_NET1 = 0;
+
+
+
+
+
+<?php 
+    $contractor_arr = array();
+    if($segment == 'payroll_register' ) {
+    // echo '<pre>',print_r($result),'</pre>';
+    ?>
+    <style>
+        @media print{@page {size: A3 landscape;}}
+        body.A3.landscape .sheet {
+            width: 500mm;
+        }
+        
+        .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+            padding: 5px;
+            text-align: left;
+            font-size: 14px;
+        }
+    </style>
+    <body class="A3 landscape" style="overflow-x: auto; padding-top: 20px">
+    <div id="page-content">
+    <section class="sheet padding-5mm" style="height: auto">
+    <div>
+        <!--<header class="pull-right">-->
+        <!--    <small>Page No. </small>-->
+        <!--</header>-->
+        <div class="clearfix"></div>
+        <div class="container">
+            <div class="row border_all text-center text-uppercase mar_bot_3">
+                <h3 class="" style="margin-top: 2px; margin-bottom: 0px;"><strong>SHILPA OVERSEAS PVT. LTD. </strong></h3>
+                <p class="mar_0">51, MAHANIRBAN ROAD, KOLKATA - 700 029</p>
+                <h4 class="mar_0 head_font">CONTRACTOR PAYROLL REGISTER</h4>
+            </div>
+            <div class="row mar_bot_3 text-center">
+                <div class="col-sm-6 border_all header_left" style="height: 44px;">
+                    <p class="text-right"><strong>Contractor: <?=$contractor_names?></strong></p>
+                </div>
+                <div class="col-sm-6 border_all header_left" style="height: 44px; text-align: left;">
+                    <b>Month: <?= $mont ?><br /> Date: <?= date('d-m-Y') ?><br /></b>
+                </div>
+            </div>
+            <!--table data-->
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <!--<h5>Retrieve Table</h5>-->
+                            <table id="all_det" class="table table-bordered">
+                                <thead>
+                            <tr>
+                                <th class="text-center" align="center" colspan="26">REGISTER OF WAGES <br /> [Prescribed under Rule 23(1) of the West Bengal Minimum Wages Rules 1951] <br /> [Prescribed under Rule 26(1) of the Central Minimum Wages Rules 1951]</th>
+                            </tr>
+                            <!--<tr>-->
+                            <!--    <th class="text-center" align="center" colspan="2">Contact Name:</th>-->
+                            <!--    <th class="text-center" align="center" colspan="24"><= $result[0]->contractor_name ?></th>-->
+                            <!--</tr>-->
+                            <tr>
+                                <th rowspan="2" style="text-align: center;">Sr. #</th>
+                                <th rowspan="2" style="text-align: center;">Contractor</th>
+                                <th rowspan="2" style="text-align: center;">Empl.Id</th>
+                                <th rowspan="2" style="text-align: center;">Name</th>
                                 
-                                if(isset($result)) {
-                                foreach($result as $res){
-                                    foreach($res as $r){
-                                        
-                                        // echo '<pre>', print_r($r), '</pre>';
-                                        
-                                        if($res != '') {
-                                           $total_count = count($result); 
-                                        }
-                                        if($iter == 10 or $iter == $new_iter) {
-                                            $new_iter += 9;
-                                    ?>
+                                <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>-->
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays + Lv.</th>
+                                <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>-->
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Total</th>
+                                
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Total Parts of Cut Comp</th>
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Rate per Cut Comp</th>
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Pcs. Wages Earned</th>
+                                
+                                <th class="text-center" rowspan="1" colspan="2" style="text-align: right;">Additional Pay</th>
+                                
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Total Amount</th>
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">H.R.A</th>
+                                <th rowspan="2" style="text-align: center; font-size: 10px;">Total Gross Payable</th>
+                                <th class="text-center" rowspan="1" colspan="5" style="text-align: right;">Deductions</th>
+                                <th rowspan="2" style="text-align: right;">Net Amount Paid</th>
+                                <th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
+                            </tr>
+                            <tr>
+                                <th rowspan="1" style="text-align: right;">Pay for Holiday</th> 
+                                <th rowspan="1" style="text-align: right;">Pay for Leave</th>
+                                <th rowspan="1" style="text-align: right;">P.F.</th>
+                                <th rowspan="1" style="text-align: right;">E.S.I.</th>
+                                <th rowspan="1" style="text-align: right;">WB. PR TAX</th>
+                                <th rowspan="1" style="text-align: right;">Loan <br/> /Advance</th>
+                                <th rowspan="1" style="text-align: right;">Total</th>
+                            </tr>
+                            <tr align="center">
+                                <th style="text-align:right">1</th>
+                                <th style="text-align:right">2</th>
+                                <th style="text-align:right">3</th>
+                                <th style="text-align:right">4</th>
+                                <th style="text-align:right">5</th>
+                                <th style="text-align:right">6</th>
+                                <th style="text-align:right">7</th>
+                                <th style="text-align:right">8</th>
+                                <th style="text-align:right">9</th>
+                                <th style="text-align:right">10</th>
+                                <th style="text-align:right">11</th>
+                                <th style="text-align:right">12</th>
+                                <th style="text-align:right">13</th>
+                                <th style="text-align:right">14</th>
+                                <th style="text-align:right">15</th>
+                                <th style="text-align:right">16</th>
+                                <th style="text-align:right">17</th>
+                                <th style="text-align:right">18</th>
+                                <th style="text-align:right">19</th>
+                                <th style="text-align:right">20</th>
+                                <th style="text-align:right">21</th>
+                                <th style="text-align:right">22</th>
+                                <th style="text-align:right">23</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $new_iter = 10;
+                            $total_count = 0;
+                            $new_iter1 = 9;
+                            $iter = 1;
+                            $total_pcs_wages_earnd = $sa_total_pcs_wages_earnd = 0;
+                            $total_BASIC1 = 0;
+                            $total_DA1 = 0;
+                            $total_HRA11 = 0;
+                            $total_CONV11 = 0;
+                            $total_OA11 = 0;
+                            $total_HRA12 = 0;
+                            $total_CONV12 = 0;
+                            $total_OA12 = 0;
+                            $total_TOTAL1 = $sa_total_TOTAL1 = 0;
+                            $total_BASIC2 = $sa_total_BASIC2 = 0;
+                            $total_TOTAL2 = 0;
+                            $total_DA2 = 0;
+                            $total_TOTAL22 = 0;
+                            $total_HRA = 0;
+                            $total_CONV = 0;
+                            $total_MED = 0;
+                            $total_OA = 0;
+                            $total_GROSS = 0;
+                            $total_PFAMT = $sa_total_PFAMT = 0;
+                            $total_ESIAMT = $sa_total_ESIAMT = 0;
+                            $total_TAX = $sa_total_TAX = 0;
+                            $total_INS = 0;
+                            $total_LOAN = $sa_total_LOAN = 0;
+                            $total_DEDUC = $sa_total_DEDUC = 0;
+                            $total_NET = $sa_total_NET = 0;
+                            $total_BASIC11 = 0;
+                            $total_DA11 = 0;
+                            $total_HRA111 = 0;
+                            $total_CONV111 = 0;
+                            $total_OA111 = 0;
+                            $total_HRA121 = 0;
+                            $total_CONV121 = 0;
+                            $total_OA121 = 0;
+                            $total_TOTAL11 = 0;
+                            $total_BASIC21 = 0;
+                            $total_TOTAL21 = 0;
+                            $total_DA21 = 0;
+                            $total_TOTAL221 = 0;
+                            $total_HRA1 = 0;
+                            $total_CONV1 = 0;
+                            $total_MED1 = 0;
+                            $total_OA1 = 0;
+                            $total_GROSS1 = 0;
+                            $total_PFAMT1 = 0;
+                            $total_ESIAMT1 = 0;
+                            $total_TAX1 = 0;
+                            $total_INS1 = 0;
+                            $total_LOAN1 = 0;
+                            $total_DEDUC1 = 0;
+                            $total_NET1 = 0;
+
+                            $total_days_worked = 0;
+                            $total_holiday_and_leave = 0;
+                            $total_absent = 0;
+                            $total_of_total= 0 ;
+                            $total_parts_of_cut = $sa_total_parts_of_cut = 0;
+                            $total_rate_of_cut = $sa_total_rate_of_cut = 0;
+                            $total_pay_for_holiday = $sa_total_pay_for_holiday = 0;
+                            $total_pay_for_leave = $sa_total_pay_for_leave = 0;
+
+                            if(isset($result)) {
+                            foreach($result as $res){
+                                foreach($res as $r){
                                     
-                                    <tr>
-                                    <th colspan="6">Total</th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_HRA111, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_TOTAL11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC21, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_PFAMT1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_ESIAMT1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_TAX1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_LOAN1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_DEDUC1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_NET1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"></th>
-                                    </tr>
+                                    //echo '<pre>', print_r($r), '</pre>';
                                     
-                                    </tbody>
-                                    </table>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </section>
-                                    </div>
-                                    </body>
-                                    
-                                    <body class="A3 landscape" style="overflow-x: auto; padding-top: 20px">
-        <div id="page-content">
-		<section class="sheet padding-5mm" style="height: auto">
-		<div>
-			<!--<header class="pull-right">-->
-			<!--    <small>Page No. </small>-->
-			<!--</header>-->
-			<div class="clearfix"></div>
-			<div class="container">
-				<div class="row border_all text-center text-uppercase mar_bot_3">
-					<h3 class="mar_0 head_font">PAYROLL REGISTER</h3>
-				</div>
-				<div class="row mar_bot_3 text-center">
-					<div class="col-sm-6 border_all header_left" style="height: 44px;">
-						<h4 class="" style="margin-top: 2px; margin-bottom: 0px;"><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
-						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
-					</div>
-					<div class="col-sm-6 border_all header_left" style="height: 44px; text-align: left;">
-						<b>Month: <?= $mont ?><br />
-                                        Date: <?= date('d-m-Y') ?><br /></b>
-					</div>
-				</div>
-				<div class="row">
-					<div class="container">
-						<div class="row">
-							<div class="table-responsive">
-								<!--<h5>Retrieve Table</h5>-->
-								<table id="all_det" class="table table-bordered">
-									<thead>
-                <tr>
-                                    <th class="text-center" align="center" colspan="26">REGISTER OF WAGES <br /> [Prescribed under Rule 23(1) of the West Bengal Minimum Wages Rules 1951] <br /> [Prescribed under Rule 26(1) of the Central Minimum Wages Rules 1951]</th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="2" style="text-align: center;">Sr. #</th>
-                                    <th rowspan="2" style="text-align: center;">Empl.Id</th>
-                                    <th rowspan="2" style="text-align: center;">Name</th>
-                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>-->
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays + Lv.</th>
-                                    <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>-->
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total</th>
-                                    
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Parts of Cut Comp</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Rate per Cut Comp</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Pcs.  Wages Earned</th>
-                                    
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Amount</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">H.R.A</th>
-                                    <th rowspan="2" style="text-align: center; font-size: 10px;">Total Gross Payable</th>
-                                    <th class="text-center" rowspan="1" colspan="5" style="text-align: right;">Deductions</th>
-                                    <th rowspan="2" style="text-align: right;">Net Amount Paid</th>
-                                    <th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
-                                </tr>
-                                <tr>
-                                    <th rowspan="1" style="text-align: right;">Pay for Holiday</th> 
-                                    <th rowspan="1" style="text-align: right;">Pay for Leave</th>
-                                    <th rowspan="1" style="text-align: right;">P.F.</th>
-                                    <th rowspan="1" style="text-align: right;">E.S.I.</th>
-                                    <th rowspan="1" style="text-align: right;">WB. PR TAX</th>
-                                    <th rowspan="1" style="text-align: right;">Loan <br/> /Advance</th>
-                                    <th rowspan="1" style="text-align: right;">Total</th>
-                                </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr>
-                                    <th colspan="7">Total B/F</th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_HRA111, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_TOTAL11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC21, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_PFAMT1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_ESIAMT1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_TAX1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_LOAN1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_DEDUC1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_NET1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"></th>
-                                    </tr>
-                                    
-                                    <?php } ?>
-                                    
-                                    <tr>
-                                        <td><?= $iter ?></td>
-                                        <td class="text-left"><?= $r->e_code ?></td>
-                                        <td class="text-left"><?= $r->name ?></td>
-                                        <td style="text-align: center;"><?= $r->T2 ?></td>
-                                        <td style="text-align: center;"><?= $r->T3 + $r->T ?></td>
-                                        <td style="text-align: center;"><?= $r->T7 ?></td>
-                                        <td style="text-align: center;"><?=  $r->T1 ?></td>
-                                        
-                                        <td style="text-align: center;"><?= $tpcc = $r->no_of_part ?></td>
-                                        <td style="text-align: center;"><?= (float)$r->rate_per_part ?></td>
-                                        <td style="text-align: right;">
-                                            <?php echo number_format($tpcc * (float)$r->rate_per_part, 2);?>
-                                        </td>
-                                        
-                                        
-                                        <td style="text-align: right;">
-                                            <?php 
-                                                echo $pfh = $r->pay_for_holiday;
-                                                $total_HRA11 += $r->TOTAL2; $total_HRA111 += $r->TOTAL2;
-                                            ?>
-                                        </td>
-                                        <td style="text-align: right;">
-                                        <?php 
-                                            echo $pfl = $r->pay_for_leave;
-                                            $total_HRA11 += $r->TOTAL2; $total_HRA111 += $r->TOTAL2;
-                                        ?>
-                                        </td>
-                                        <td style="text-align: right;"><?php echo $pfh + $pfl?></td>
-                                        
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->HRAAMT, 2);
-                                        $total_TOTAL1 += $r->HRAAMT; $total_TOTAL11 += $r->HRAAMT;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->GROSS, 2);
-                                        $total_BASIC2 += $r->GROSS; $total_BASIC21 += $r->GROSS;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->PFAMT, 2);
-                                        $total_PFAMT += $r->PFAMT; $total_PFAMT1 += $r->PFAMT;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->ESIAMT, 2);
-                                        $total_ESIAMT += $r->ESIAMT; $total_ESIAMT1 += $r->ESIAMT;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->TAX, 2);
-                                        $total_TAX += $r->TAX; $total_TAX1 += $r->TAX;
-                                        ?></td>
-                                        <td style="text-align: right;"><?php echo number_format((float)$r->LOAN, 2);
-                                        $total_LOAN += $r->LOAN; $total_LOAN1 += $r->LOAN;
-                                        ?></td>
-                                        <td style="text-align: right;">
-                                        <?php 
-                                            echo number_format((float)($r->DEDUC - $r->INS), 2);
-                                            $total_DEDUC += ($r->DEDUC - $r->INS); 
-                                            $total_DEDUC1 += ($r->DEDUC - $r->INS);
-                                        ?>
-                                        </td>
-                                        <td style="text-align: right;">
-                                        <?php 
-                                            echo number_format((float)($r->NET - $r->INS), 2);
-                                            $total_NET += ($r->NET - $r->INS); $total_NET1 += ($r->NET - $r->INS);
-                                        ?>
-                                        </td>
-                                        <td style="text-align: right; height: 100px; width: 100px;"></td>
-                                    </tr>
-                                    
-                                    <?php if($iter == $total_count) { ?>
-                                    
-                                    <tr>
-                                        <th colspan="10">Total</th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_HRA111, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_TOTAL11, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_BASIC21, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_PFAMT1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_ESIAMT1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_TAX1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_LOAN1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_DEDUC1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"><?php echo number_format((float)$total_NET1, 2)
-                                        ; 
-                                        ?></th>
-                                        <th style="text-align: right;"></th>
-                                    </tr>
-                                    
-                                    <?php } $iter++; ?>
-                                    
-                                    <?php
+                                    if($res != '') {
+                                       $total_count = count($result); 
                                     }
-                                }
-                                }
+                                    if($iter == 10 or $iter == $new_iter) {
+                                        $new_iter += 9;
                                 ?>
-                        </tbody>
-            </table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                                
+                                </tbody>
+                                </table>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                
+                                </div>
+                                </div>
+                                </div>
+                                </section>
+                                </div>
+                                </body>
+                                
+                                <body class="A3 landscape" style="overflow-x: auto; padding-top: 20px">
+    <div id="page-content">
+    <section class="sheet padding-5mm" style="height: auto">
+    <div>
+        <!--<header class="pull-right">-->
+        <!--    <small>Page No. </small>-->
+        <!--</header>-->
+        <div class="clearfix"></div>
+        <div class="container">
+            <div class="row border_all text-center text-uppercase mar_bot_3">
+                <h3 class="mar_0 head_font">CONTRACTOR PAYROLL REGISTER</h3>
+            </div>
+            <div class="row mar_bot_3 text-center">
+                <div class="col-sm-6 border_all header_left" style="height: 44px;">
+                    <h4 class="" style="margin-top: 2px; margin-bottom: 0px;"><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
+                    <p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
+                </div>
+                <div class="col-sm-6 border_all header_left" style="height: 44px; text-align: left;">
+                    <b>Month: <?= $mont ?><br />
+                    Date: <?= date('d-m-Y') ?><br /></b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <!--<h5>Retrieve Table</h5>-->
+                            <table id="all_det" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" align="center" colspan="26">REGISTER OF WAGES <br /> [Prescribed under Rule 23(1) of the West Bengal Minimum Wages Rules 1951] <br /> [Prescribed under Rule 26(1) of the Central Minimum Wages Rules 1951]</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2" style="text-align: center;">Sr. #</th>
+                                        <th rowspan="2" style="text-align: center;">Contractor</th>
+                                        <th rowspan="2" style="text-align: center;">Empl.Id</th>
+                                        <th rowspan="2" style="text-align: center;">Name</th>
+                                        <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Wrkg. Days</th>-->
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Days Wrkd</th>
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Hldays + Lv.</th>
+                                        <!--<th rowspan="2" style="text-align: center; font-size: 10px;">Lv.</th>-->
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Ab.</th>
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Total</th>
+                                        
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Total Parts of Cut Comp</th>
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Rate per Cut Comp</th>
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Pcs.  Wages Earned</th>
+                                        
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Total Amount</th>
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">H.R.A</th>
+                                        <th rowspan="2" style="text-align: center; font-size: 10px;">Total Gross Payable</th>
+                                        <th class="text-center" rowspan="1" colspan="5" style="text-align: right;">Deductions</th>
+                                        <th rowspan="2" style="text-align: right;">Net Amount Paid</th>
+                                        <th rowspan="2" style="text-align: right;">Sign. / Thumb Impression</th>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="1" style="text-align: right;">Pay for Holiday</th> 
+                                        <th rowspan="1" style="text-align: right;">Pay for Leave</th>
+                                        <th rowspan="1" style="text-align: right;">P.F.</th>
+                                        <th rowspan="1" style="text-align: right;">E.S.I.</th>
+                                        <th rowspan="1" style="text-align: right;">WB. PR TAX</th>
+                                        <th rowspan="1" style="text-align: right;">Loan <br/> /Advance</th>
+                                        <th rowspan="1" style="text-align: right;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php } ?>
+
+                                <?php if(!in_array($r->contractor_name, $contractor_arr)){ 
+                                        array_push($contractor_arr, $r->contractor_name);
+                                        
+                                        if(count($contractor_arr) > 1){
+                                            ?>
+                                            <tr style="background:#d5e6ee">
+                                                <th style="text-align:right" colspan="8">Contractor Total For <?= ($contractor_arr[count($contractor_arr) - 2]) ?></th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        echo $sub_total_cut = $total_parts_of_cut - $sa_total_parts_of_cut;
+                                                        $sa_total_parts_of_cut = $total_parts_of_cut;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_rate = $total_rate_of_cut - $sa_total_rate_of_cut;
+                                                        echo number_format((float)$sub_tot_rate, 2, '.', '');
+                                                        $sa_total_rate_of_cut = $total_rate_of_cut;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_pcs_wages_earnd = $total_pcs_wages_earnd - $sa_total_pcs_wages_earnd;
+                                                        echo number_format((float)$sub_tot_pcs_wages_earnd, 2, '.', ''); 
+                                                        $sa_total_pcs_wages_earnd = $total_pcs_wages_earnd;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_total_hol_pay = $total_pay_for_holiday - $sa_total_pay_for_holiday;
+                                                        echo number_format((float)$sub_total_hol_pay, 2, '.', '');
+                                                        $sa_total_pay_for_holiday = $total_pay_for_holiday;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_total_leave_pay = $total_pay_for_leave - $sa_total_pay_for_leave;
+                                                        echo number_format((float)$sub_total_leave_pay, 2, '.', '');
+                                                        $sa_total_pay_for_leave = $total_pay_for_leave;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?= number_format((float)($sub_total_hol_pay + $sub_total_leave_pay), 2, '.', '')?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_TOTAL1 = $total_TOTAL1 - $sa_total_TOTAL1;
+                                                        echo number_format((float)$sub_tot_TOTAL1, 2, '.', '');
+                                                        $sa_total_TOTAL1 = $total_TOTAL1;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_BASIC2 =  $total_BASIC2 - $sa_total_BASIC2;
+                                                        echo number_format((float)$sub_tot_BASIC2, 2, '.', '');
+                                                        $sa_total_BASIC2 = $total_BASIC2;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_PFAMT = $total_PFAMT - $sa_total_PFAMT;
+                                                        echo number_format((float)$sub_tot_PFAMT, 2, '.', '');
+                                                        $sa_total_PFAMT = $total_PFAMT;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_ESIAMT = $total_ESIAMT - $sa_total_ESIAMT;
+                                                        echo number_format((float)$sub_tot_ESIAMT, 2, '.', '');
+                                                        $sa_total_ESIAMT = $total_ESIAMT;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_TAX =  $total_TAX - $sa_total_TAX;
+                                                        echo number_format((float)$sub_tot_TAX, 2, '.', '');
+                                                        $sa_total_TAX = $total_TAX;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_LOAN = $total_LOAN - $sa_total_LOAN;
+                                                        echo number_format((float)$sub_tot_LOAN, 2, '.', '');
+                                                        $sa_total_LOAN = $total_LOAN;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_DEDUC = $total_DEDUC - $sa_total_DEDUC;
+                                                        echo number_format((float)$sub_tot_DEDUC, 2, '.', '');
+                                                        $sa_total_DEDUC = $total_DEDUC;
+                                                    ?>
+                                                </th>
+                                                <th style="text-align:right">
+                                                    <?php 
+                                                        $sub_tot_NET = $total_NET - $sa_total_NET;
+                                                        echo number_format((float)$sub_tot_NET, 2, '.', '');
+                                                        $sa_total_NET = $total_NET;
+                                                    ?>
+                                                </th>
+
+                                            </tr>
+                                            <?php
+                                        }
+                                 }else{
+                                    
+                                } 
+                                ?>
+                                
+                                <tr>
+                                    <td><?= $iter ?></td>
+                                    <td class="text-left"><?= $r->contractor_name ?></td> 
+                                    <td class="text-left"><?= $r->e_code ?></td>
+                                    <td class="text-left"><?= $r->name ?></td>
+                                    <td style="text-align: center;"><?php $total_days_worked += $r->T2; echo $r->T2; ?></td>
+                                    <td style="text-align: center;"><?php $total_holiday_and_leave += ($r->T3 + $r->T); echo $r->T3 + $r->T ?></td>
+                                    <td style="text-align: center;"><?php $total_absent += $r->T7; echo $r->T7; ?></td>
+                                    <td style="text-align: center;"><?php $total_of_total += $r->T1; echo $r->T1; ?></td>
+                                    
+                                    <td style="text-align: center;"><?php $tpcc = $r->no_of_part; $total_parts_of_cut += $tpcc; echo $tpcc; ?></td>
+                                    <td style="text-align: center;">
+                                        <?php 
+                                        echo (float)$r->rate_per_part; $total_rate_of_cut += $r->rate_per_part; 
+                                        ?>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <?php 
+                                            $all_pcs_wages_earnd = $tpcc * (float)$r->rate_per_part; 
+                                            $total_pcs_wages_earnd += $all_pcs_wages_earnd;
+                                            echo number_format($all_pcs_wages_earnd, 2);
+                                        ?>
+                                    </td>
+                                    
+                                    
+                                    <td style="text-align: right;">
+                                        <?php 
+                                            echo $pfh = $r->pay_for_holiday;
+                                            $total_HRA11 += $r->TOTAL2; $total_HRA111 += $r->TOTAL2;
+                                            $total_pay_for_holiday += $pfh;
+                                        ?>
+                                    </td>
+                                    <td style="text-align: right;">
+                                    <?php 
+                                        echo $pfl = $r->pay_for_leave;
+                                        $total_HRA11 += $r->TOTAL2; $total_HRA111 += $r->TOTAL2;
+                                        $total_pay_for_leave += $pfl;
+                                    ?>
+                                    </td>
+                                    <td style="text-align: right;"><?php echo $pfh + $pfl?></td>
+                                    
+                                    <td style="text-align: right;"><?php echo number_format((float)$r->HRAAMT, 2);
+                                    $total_TOTAL1 += $r->HRAAMT; $total_TOTAL11 += $r->HRAAMT;
+                                    ?></td>
+                                    <td style="text-align: right;"><?php echo number_format((float)$r->GROSS, 2);
+                                    $total_BASIC2 += $r->GROSS; $total_BASIC21 += $r->GROSS;
+                                    ?></td>
+                                    <td style="text-align: right;"><?php echo number_format((float)$r->PFAMT, 2);
+                                    $total_PFAMT += $r->PFAMT; $total_PFAMT1 += $r->PFAMT;
+                                    ?></td>
+                                    <td style="text-align: right;"><?php echo number_format((float)$r->ESIAMT, 2);
+                                    $total_ESIAMT += $r->ESIAMT; $total_ESIAMT1 += $r->ESIAMT;
+                                    ?></td>
+                                    <td style="text-align: right;"><?php echo number_format((float)$r->TAX, 2);
+                                    $total_TAX += $r->TAX; $total_TAX1 += $r->TAX;
+                                    ?></td>
+                                    <td style="text-align: right;"><?php echo number_format((float)$r->LOAN, 2);
+                                    $total_LOAN += $r->LOAN; $total_LOAN1 += $r->LOAN;
+                                    ?></td>
+                                    <td style="text-align: right;">
+                                    <?php 
+                                        echo number_format((float)($r->DEDUC - $r->INS), 2);
+                                        $total_DEDUC += ($r->DEDUC - $r->INS); 
+                                        $total_DEDUC1 += ($r->DEDUC - $r->INS);
+                                    ?>
+                                    </td>
+                                    <td style="text-align: right;">
+                                    <?php 
+                                        echo number_format((float)($r->NET - $r->INS), 2);
+                                        $total_NET += ($r->NET - $r->INS); $total_NET1 += ($r->NET - $r->INS);
+                                    ?>
+                                    </td>
+                                    <td style="text-align: right; height: 100px; width: 100px;"></td>
+                                </tr>
+                                
+                                <?php if($iter == $total_count) { ?>
+                                
+                                <tr style="background:#d5e6ee">
+                                    <th style="text-align:right" colspan="8">Contractor Total For <?= ($contractor_arr[count($contractor_arr) - 1]) ?></th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            echo $sub_total_cut = $total_parts_of_cut - $sa_total_parts_of_cut;
+                                            $sa_total_parts_of_cut = $total_parts_of_cut;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_rate = $total_rate_of_cut - $sa_total_rate_of_cut;
+                                            echo number_format((float)$sub_tot_rate, 2, '.', '');
+                                            $sa_total_rate_of_cut = $total_rate_of_cut;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_pcs_wages_earnd = $total_pcs_wages_earnd - $sa_total_pcs_wages_earnd;
+                                            echo number_format((float)$sub_tot_pcs_wages_earnd, 2, '.', ''); 
+                                            $sa_total_pcs_wages_earnd = $total_pcs_wages_earnd;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_total_hol_pay = $total_pay_for_holiday - $sa_total_pay_for_holiday;
+                                            echo number_format((float)$sub_total_hol_pay, 2, '.', '');
+                                            $sa_total_pay_for_holiday = $total_pay_for_holiday;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_total_leave_pay = $total_pay_for_leave - $sa_total_pay_for_leave;
+                                            echo number_format((float)$sub_total_leave_pay, 2, '.', '');
+                                            $sa_total_pay_for_leave = $total_pay_for_leave;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?= number_format((float)($sub_total_hol_pay + $sub_total_leave_pay), 2, '.', '')?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_TOTAL1 = $total_TOTAL1 - $sa_total_TOTAL1;
+                                            echo number_format((float)$sub_tot_TOTAL1, 2, '.', '');
+                                            $sa_total_TOTAL1 = $total_TOTAL1;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_BASIC2 =  $total_BASIC2 - $sa_total_BASIC2;
+                                            echo number_format((float)$sub_tot_BASIC2, 2, '.', '');
+                                            $sa_total_BASIC2 = $total_BASIC2;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_PFAMT = $total_PFAMT - $sa_total_PFAMT;
+                                            echo number_format((float)$sub_tot_PFAMT, 2, '.', '');
+                                            $sa_total_PFAMT = $total_PFAMT;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_ESIAMT = $total_ESIAMT - $sa_total_ESIAMT;
+                                            echo number_format((float)$sub_tot_ESIAMT, 2, '.', '');
+                                            $sa_total_ESIAMT = $total_ESIAMT;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_TAX =  $total_TAX - $sa_total_TAX;
+                                            echo number_format((float)$sub_tot_TAX, 2, '.', '');
+                                            $sa_total_TAX = $total_TAX;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_LOAN = $total_LOAN - $sa_total_LOAN;
+                                            echo number_format((float)$sub_tot_LOAN, 2, '.', '');
+                                            $sa_total_LOAN = $total_LOAN;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_DEDUC = $total_DEDUC - $sa_total_DEDUC;
+                                            echo number_format((float)$sub_tot_DEDUC, 2, '.', '');
+                                            $sa_total_DEDUC = $total_DEDUC;
+                                        ?>
+                                    </th>
+                                    <th style="text-align:right">
+                                        <?php 
+                                            $sub_tot_NET = $total_NET - $sa_total_NET;
+                                            echo number_format((float)$sub_tot_NET, 2, '.', '');
+                                            $sa_total_NET = $total_NET;
+                                        ?>
+                                    </th>
+
+                                </tr>
+
+                                <tr>
+                                    <th colspan="4">Grand Total</th>
+                                    <th style="text-align: right;"><?=$total_days_worked?></th>
+                                    <th style="text-align: right;"><?=$total_holiday_and_leave?></th>
+                                    <th style="text-align: right;"><?=$total_absent?></th>
+                                    <th style="text-align: right;"><?=$total_of_total?></th>
+                                    <th style="text-align: right;"><?=$total_parts_of_cut?></th>
+                                    <th style="text-align: right;"><?=$total_rate_of_cut?></th>
+                                    <th style="text-align: right;"><?= $total_pcs_wages_earnd ?></th>
+                                    <th style="text-align: right;"><?=$total_pay_for_holiday?></th>
+                                    <th style="text-align: right;"><?=$total_pay_for_leave?></th>
+                                    <th style="text-align: right;"><?=$total_pay_for_holiday + $total_pay_for_leave?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_TOTAL11, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_BASIC21, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_PFAMT1, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_ESIAMT1, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_TAX1, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_LOAN1, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_DEDUC1, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"><?php echo number_format((float)$total_NET1, 2)
+                                    ; 
+                                    ?></th>
+                                    <th style="text-align: right;"></th>
+                                </tr>
+                                
+                                <?php } $iter++; ?>
+                                
+                                <?php
+                                }
+                            }
+                            }
+                            ?>
+                    </tbody>
+        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </div>
 </body>
-		<?php
-	} ?>
+    <?php
+} 
+?>
+
+
+
+
+
 	
 	<?php if($segment == 'order_details'){
 		// echo '<pre>',print_r($result),'</pre>';
@@ -8071,7 +8240,7 @@ body.A3.landscape .sheet {
 					              <div class="col-sm-5">
 					                  <h5><?= $result->cutting_rate ?></h5>
 					                  <h5><?= $result->BASIC ?></h5>
-					                  <h5><?= $result->HRA ?></h5>
+					                  <h5><?= $result->HRAAMT ?></h5>
 					              </div>
 					          </div>
 					      </div>

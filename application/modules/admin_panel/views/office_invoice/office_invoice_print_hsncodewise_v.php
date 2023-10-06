@@ -594,9 +594,10 @@ $arr = array_unique(array_column($print_packing_list_groupwise, 'ORD'));
                                 <td style="text-align: right; width: 20mm;"><?= number_format(($ppl->rate_foreign * $ppl->ex_rate), 2) ?></td>
                                 <td style="text-align: right; width: 30mm;">
                                     <?php
-                                    echo number_format(($ppl->amount_inr), 2);
-                                    $tot_amnt += ($ppl->amount_inr);
-                                    $grand_tot_amnt += ($ppl->amount_inr);
+                                    $tot_amnt_inr = $ppl->quantity * ($ppl->rate_foreign * $ppl->ex_rate);
+                                    echo number_format(($tot_amnt_inr), 2);
+                                    $tot_amnt += ($tot_amnt_inr);
+                                    $grand_tot_amnt += ($tot_amnt_inr);
                                     
                                     ?>
                                 </td>

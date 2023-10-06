@@ -158,11 +158,11 @@ class Skiving_issue_m extends CI_Model {
                 $rs = $this->db->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')->get_where('cutting_received_challan_detail', array('cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
         } else {
                 #module_permission contains the dept id now
-        $rs = $this->db
-        ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
-        ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
-        ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
-        }
+                $rs = $this->db
+                ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
+                ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
+                ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
+            }
         }
         //if searching for something
         else {
@@ -271,9 +271,9 @@ class Skiving_issue_m extends CI_Model {
     public function ajax_cutting_receive_table_data_skiving() {
 
         // fetch department-wisemodule permission
-            $session_user_id = $this->session->user_id;
-            # if id is returned then filter else show all
-            $module_permission = $this->_dept_wise_module_permission(3, $session_user_id); #3 = skiving module_id
+        $session_user_id = $this->session->user_id;
+        # if id is returned then filter else show all
+        $module_permission = $this->_dept_wise_module_permission(3, $session_user_id); #3 = skiving module_id
 
         //actual db table column names
         $column_orderable = array(
@@ -959,8 +959,7 @@ class Skiving_issue_m extends CI_Model {
 
         return $data;
     }
-	/**
-	<a href="javascript:void(0)" pk-name="cut_id" pk-value="'.$val->cut_id.'" tab="cutting_issue_challan" child="1" ref-table="cutting_issue_challan_detail" ref-pk-name="cut_id" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
+	/**<a href="javascript:void(0)" pk-name="cut_id" pk-value="'.$val->cut_id.'" tab="cutting_issue_challan" child="1" ref-table="cutting_issue_challan_detail" ref-pk-name="cut_id" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
 	**/
 
     public function delete_cutting_receive_details(){
@@ -1014,6 +1013,502 @@ class Skiving_issue_m extends CI_Model {
         $data['msg'] = 'Skiving Issue list deleted successfully';
         return $data;
     }
-    // purchase ORDER ENDS 
+    
+    public function skiving_bill() {
+        $data = '';
+        $data["view_permission"] = $this->_user_wise_view_permission(7, $this->session->user_id);
+        return array('page'=>'skiving_bill/skiving_bill_list_v', 'data'=>$data);
+    }
+
+    public function ajax_skiving_bill_table_data() {
+
+        // fetch department-wisemodule permission
+        $session_user_id = $this->session->user_id;
+        # if id is returned then filter else show all
+        $module_permission = $this->_dept_wise_module_permission(3, $session_user_id); 
+ 
+        //actual db table column names
+        $column_orderable = array(
+            0 => 'employees.name',
+            1 => 'skiving_bill.bill_number',
+            2 => 'skiving_bill.bill_date',
+            3 => 'skiving_bill.bill_type',
+        );
+        // Set searchable column fields
+        $column_search = array('employee.name', 'skiving_bill.bill_number', 'skiving_bill.bill_date', 'skiving_bill.bill_type');
+
+        $limit = $this->input->post('length');
+        $start = $this->input->post('start');
+        
+        $order = $column_orderable[$this->input->post('order')[0]['column']];
+        $dir = $this->input->post('order')[0]['dir'];
+        $search = $this->input->post('search')['value'];
+
+        if($module_permission == 'show'){
+                $rs = $this->db->get('skiving_bill')->result();
+                // print_r($rs); die;
+        } else {
+                #module_permission contains the dept id now
+          $rs = $this->db
+            ->join('user_details','user_details.user_id = skiving_bill.user_id','left')
+            ->get_where('skiving_bill', array('user_details.user_dept' => $module_permission))->result();
+        }
+
+        $totalData = count($rs);
+        $totalFiltered = $totalData;
+
+        //if not searching for anything
+        if(empty($search)) {
+            $this->db->limit($limit, $start);
+            $this->db->order_by($order, $dir);
+            $this->db->select('skiving_bill.*, DATE_FORMAT(skiving_bill.bill_date, "%d-%m-%Y") as bill_date, employees.name');
+            $this->db->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left');
+
+            if($module_permission == 'show'){
+                    $rs = $this->db->get_where('skiving_bill', array('skiving_bill.status' => 1))->result();
+            } else {
+                #module_permission contains the dept id now
+                $rs = $this->db
+                    ->join('user_details','user_details.user_id = skiving_bill.user_id','left')
+                    ->get_where('skiving_bill', array('user_details.user_dept' => $module_permission, 'skiving_bill.status' => 1))->result();
+            }
+
+        }
+        //if searching for something
+        else {
+            $this->db->start_cache();
+            // loop searchable columns
+            $i = 0;
+            foreach($column_search as $item){
+                // first loop
+                if($i===0){
+                    $this->db->group_start(); //open bracket
+                    $this->db->like($item, $search);
+                }else{
+                    $this->db->or_like($item, $search);
+                }
+                // last loop
+                if(count($column_search) - 1 == $i){
+                    $this->db->group_end(); //close bracket
+                }
+                $i++;
+            }
+            $this->db->stop_cache();
+
+            $this->db->select('skiving_bill.*, DATE_FORMAT(skiving_bill.bill_date, "%d-%m-%Y") as bill_date, employees.name');
+            $this->db->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left');
+            
+            if($module_permission == 'show'){
+                $rs = $this->db->get_where('skiving_bill', array('skiving_bill.status' => 1))->result();
+            } else {
+                    #module_permission contains the dept id now
+                $rs = $this->db
+                    ->join('user_details','user_details.user_id = skiving_bill.user_id','left')
+                    ->get_where('skiving_bill', array('user_details.user_dept' => $module_permission, 'skiving_bill.status' => 1))->result();
+            }
+
+            $totalFiltered = count($rs);
+
+            $this->db->limit($limit, $start);
+            $this->db->order_by($order, $dir);
+            $this->db->select('skiving_bill.*, DATE_FORMAT(skiving_bill.bill_date, "%d-%m-%Y") as bill_date, employees.name');
+            $this->db->join('acc_master', 'acc_master.am_id = skiving_bill.am_id', 'left');
+
+            if($module_permission == 'show'){
+                $rs = $this->db->get_where('skiving_bill', array('skiving_bill.status' => 1))->result();
+            } else {
+                #module_permission contains the dept id now
+                $rs = $this->db
+                    ->join('user_details','user_details.user_id = skiving_bill.user_id','left')
+                    ->get_where('skiving_bill', array('user_details.user_dept' => $module_permission, 'skiving_bill.status' => 1))->result();
+            }
+
+            $this->db->flush_cache();
+        }
+
+        $data = array();
+
+        //echo '<pre>', print_r($rs), '</pre>'; die;
+        //echo $this->db->last_query();die;
+
+        foreach ($rs as $val) {
+            $nestedData['skiving_bill_number'] = $val->bill_number;
+            $nestedData['skiving_bill_date'] = date('d-m-Y', strtotime($val->bill_date));
+            $nestedData['employee_name'] = $val->name;
+            $nestedData['bill_type'] = $val->bill_rate_type;
+            $nestedData['total_amount'] = $this->db->select('SUM(skiving_paid_qnty*skiving_rate) as total')->get_where('skiving_bill_detail', array('sb_id' => $val->sb_id))->row()->total;
+            $uvp = $this->_user_wise_view_permission(7, $this->session->user_id);
+            if($uvp == 'block'){
+                $nestedData['action'] = '-';    
+            }else{
+                $nestedData['action'] = '<a href="'. base_url('admin/edit-skiving-bill/'.$val->sb_id) .'" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
+                        <a href="javascript:void(0)" pk-name="sb_id" pk-value="'.$val->sb_id.'" tab="skiving_bill" child="0" ref-table="" ref-pk-name="" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
+            }
+            $data[] = $nestedData;
+
+            // echo '<pre>', print_r($rs), '</pre>'; 
+        }
+
+        $json_data = array(
+            "draw"            => intval($this->input->post('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        return $json_data;
+    } 
+
+    public function add_skiving_bill() {
+        $data = array();
+        $data["view_permission"] = $this->_user_wise_view_permission(7, $this->session->user_id);
+        $data['all_employees'] = $this->db->get_where('employees', array('d_id' => 8))->result();
+        return array('page'=>'skiving_bill/skiving_bill_add_v', 'data'=>$data);
+    }
+
+    public function form_add_skiving_bill(){
+
+        $insertArray = array(
+            'bill_number' => $this->input->post('skiving_bill_number'),
+            'bill_date' => $this->input->post('skiving_bill_date'),
+            'bill_rate_type' => $this->input->post('skiving_bill_type'),
+            'bill_employee_id' => $this->input->post('skiver_name'),
+            'bill_remarks' => $this->input->post('skiving_bill_remark'),
+            'user_id' => $this->session->user_id
+        );
+
+        $this->db->insert('skiving_bill', $insertArray);
+        $data['insert_id'] = $this->db->insert_id();
+		if($this->db->insert_id() > 0){
+			$data['type'] = 'success';
+			$data['msg'] = 'Skiving Bill added successfully.';
+		}else{
+			$data['type'] = 'error';
+			$data['msg'] = 'Not Inserted successfully.';
+		}
+        return $data;
+
+    }
+
+    public function edit_skiving_bill($skiving_bill_id) {
+        
+        $data['skiving_bill_id'] = $skiving_bill_id;
+        $data['all_employees'] = $this->db->get_where('employees', array('d_id' => 8))->result();		
+				
+        $data['skiving_bill_details'] = $this->db->select('skiving_bill.*, DATE_FORMAT(skiving_bill.bill_date, "%d-%m-%Y") as bill_date, employees.name')
+            ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
+            ->get_where('skiving_bill', array('skiving_bill.sb_id' => $skiving_bill_id))->result();
+
+        $data['skiving_issue_list'] = $this->db->get_where('cutting_received_challan',array('skiving_issue_status' => 1 ))->result();
+			
+        $query = "SELECT DISTINCT(skiving_receive_challan_details.co_id), customer_order.co_no FROM `skiving_receive_challan_details` LEFT JOIN customer_order ON customer_order.co_id = skiving_receive_challan_details.co_id WHERE customer_order.cutting_status = 1";
+        $data['co_ids'] = $this->db
+            ->query($query)->result();
+
+        return array('page'=>'skiving_bill/skiving_bill_edit_v', 'data'=>$data);
+        
+    }
+
+    public function form_edit_skiving_bill(){
+        $update_arr = array(
+            'bill_number' => $this->input->post('skiving_bill_number'),
+            'bill_date' => $this->input->post('skiving_bill_date'),
+            'bill_rate_type' => $this->input->post('skiving_bill_type'),
+            'bill_employee_id' => $this->input->post('skiver_name'),
+            'bill_remarks' => $this->input->post('skiving_bill_remark'),
+            'user_id' => $this->session->user_id
+        );
+
+        $rval = $this->db->update('skiving_bill', $update_arr, array('sb_id' => $this->input->post('skiving_bill_id')));
+        
+		if($rval){
+			$data['type'] = 'success';
+			$data['msg'] = 'Skiving bill updated successfully.';
+		}else{
+			$data['type'] = 'error';
+			$data['msg'] = 'Not updated successfully.';
+		}
+        return $data;
+    }
+
+    public function delete_skiving_bill_list(){
+        $tab = $this->input->post('tab');
+		$pk_name = $this->input->post('pk_name');
+		$pk_value = $this->input->post('pk_value');
+
+        $child_table_rows = $this->db->get_where('skiving_bill_detail', array('skiving_bill_detail.sb_id' => $pk_value))->num_rows();
+		if($child_table_rows > 0){
+            $this->db->where('sb_id', $pk_value)->delete('skiving_bill_detail');    
+            $this->db->where('sb_id', $pk_value)->delete($tab);    
+        }else{
+            $this->db->where($pk_name, $pk_value)->delete($tab);
+        }
+        
+        $data['title'] = 'Deleted!';
+        $data['type'] = 'success';
+        $data['msg'] = 'Skiving Bill Successfully Deleted';
+        return $data;
+    }
+
+    public function ajax_skiving_bill_details_table_data() {
+
+        $skiving_bill_id = $this->input->post('skiving_bill_id');
+        // fetch department-wisemodule permission
+        $session_user_id = $this->session->user_id;
+        # if id is returned then filter else show all
+        $module_permission = $this->_dept_wise_module_permission(3, $session_user_id); #7 = sample module_id
+ 
+        //actual db table column names
+        $column_orderable = array(
+            0 => 'customer_order.co_no',
+            1 => 'cutting_received_challan.skiving_issue_number'
+        );
+        // Set searchable column fields
+        $column_search = array('cutting_received_challan.skiving_issue_number', 'customer_order.co_no');
+
+        $limit = $this->input->post('length');
+        $start = $this->input->post('start');
+        
+        $order = $column_orderable[$this->input->post('order')[0]['column']];
+        $dir = $this->input->post('order')[0]['dir'];
+        $search = $this->input->post('search')['value'];
+
+        if($module_permission == 'show'){
+            $rs = $this->db->get_where('skiving_bill_detail', array('sb_id' => $skiving_bill_id))->result();
+            // print_r($rs); die;
+        } else {
+                #module_permission contains the dept id now
+            $rs = $this->db
+                ->join('user_details','user_details.user_id = skiving_bill_detail.user_id','left')
+                ->get_where('skiving_bill_detail', array('user_details.user_dept' => $module_permission, 'sb_id' => $skiving_bill_id))->result();
+        }
+
+        $totalData = count($rs);
+        $totalFiltered = $totalData;
+
+        //if not searching for anything
+        if(empty($search)) {
+            $this->db->limit($limit, $start);
+            $this->db->order_by($order, $dir);
+            $this->db->select('bill_number,article_master.art_no,color,customer_order.co_no, cutting_received_challan.skiving_issue_number, skiving_bill_detail.*');
+            $this->db->join('cutting_received_challan', 'cutting_received_challan.cut_rcv_id = skiving_bill_detail.cut_rcv_id', 'left');
+            $this->db->join('customer_order', 'customer_order.co_id = skiving_bill_detail.co_id', 'left');
+            $this->db->join('article_master', 'article_master.am_id = skiving_bill_detail.am_id', 'left');
+            $this->db->join('colors', 'colors.c_id = skiving_bill_detail.lc_id', 'left');
+            $this->db->join('skiving_bill', 'skiving_bill.sb_id = skiving_bill_detail.sb_id', 'left');
+
+            if($module_permission == 'show'){
+                $rs = $this->db->get_where('skiving_bill_detail', array('skiving_bill_detail.status' => 1, 'skiving_bill.sb_id' => $skiving_bill_id))->result();
+            } else {
+                    #module_permission contains the dept id now
+                $rs = $this->db
+                    ->join('user_details','user_details.user_id = skiving_bill_detail.user_id','left')
+                    ->get_where('skiving_bill_detail', array('user_details.user_dept' => $module_permission,'skiving_bill.sb_id' => $skiving_bill_id, 'skiving_bill_detail.status' => 1))->result();
+            }
+
+        }
+        //if searching for something
+        else {
+            $this->db->start_cache();
+            // loop searchable columns
+            $i = 0;
+            foreach($column_search as $item){
+                // first loop
+                if($i===0){
+                    $this->db->group_start(); //open bracket
+                    $this->db->like($item, $search);
+                }else{
+                    $this->db->or_like($item, $search);
+                }
+                // last loop
+                if(count($column_search) - 1 == $i){
+                    $this->db->group_end(); //close bracket
+                }
+                $i++;
+            }
+            $this->db->stop_cache();
+
+            $this->db->select('bill_number,article_master.art_no,color,customer_order.co_no, cutting_received_challan.skiving_issue_number, skiving_bill_detail.*');
+            $this->db->join('cutting_received_challan', 'cutting_received_challan.cut_rcv_id = skiving_bill_detail.cut_rcv_id', 'left');
+            $this->db->join('customer_order', 'customer_order.co_id = skiving_bill_detail.co_id', 'left');
+            $this->db->join('article_master', 'article_master.am_id = skiving_bill_detail.am_id', 'left');
+            $this->db->join('colors', 'colors.c_id = skiving_bill_detail.lc_id', 'left');
+
+            if($module_permission == 'show'){
+                $rs = $this->db->get_where('skiving_bill_detail', array('skiving_bill_detail.status' => 1, 'sb_id' => $skiving_bill_id))->result();
+            } else {
+                    #module_permission contains the dept id now
+                $rs = $this->db
+                    ->join('user_details','user_details.user_id = skiving_bill_detail.user_id','left')
+                    ->join('skiving_bill', 'skiving_bill.sb_id = skiving_bill_detail.sb_id', 'left')
+                    ->get_where('skiving_bill_detail', array('user_details.user_dept' => $module_permission, 'skiving_bill.sb_id' => $skiving_bill_id, 'skiving_bill_detail.status' => 1))->result();
+            }            
+
+            $totalFiltered = count($rs);
+
+            $this->db->limit($limit, $start);
+            $this->db->order_by($order, $dir);
+            $this->db->select('bill_number,art_no, color, customer_order.co_no, cutting_received_challan.skiving_issue_number, skiving_bill_detail.*');
+            $this->db->join('cutting_received_challan', 'cutting_received_challan.cut_rcv_id = skiving_bill_detail.cut_rcv_id', 'left');
+            $this->db->join('customer_order', 'customer_order.co_id = skiving_bill_detail.co_id', 'left');
+            $this->db->join('article_master', 'article_master.am_id = skiving_bill_detail.am_id', 'left');
+            $this->db->join('colors', 'colors.c_id = skiving_bill_detail.lc_id', 'left');
+            $this->db->join('skiving_bill', 'skiving_bill.sb_id = skiving_bill_detail.sb_id', 'left');
+
+            if($module_permission == 'show'){
+                $rs = $this->db->get_where('skiving_bill_detail', array('skiving_bill_detail.status' => 1, 'skiving_bill.sb_id' => $skiving_bill_id))->result();
+            } else {
+                    #module_permission contains the dept id now
+                $rs = $this->db
+                    ->join('user_details','user_details.user_id = skiving_bill_detail.user_id','left')
+                    ->get_where('skiving_bill_detail', array('user_details.user_dept' => $module_permission, 'skiving_bill.sb_id' => $skiving_bill_id, 'skiving_bill_detail.status' => 1))->result();
+            }
+
+            $this->db->flush_cache();
+        }
+
+        $data = array();
+
+        //echo '<pre>', print_r($rs), '</pre>'; die;
+        //echo $this->db->last_query();die;
+
+        foreach ($rs as $val) {
+
+            $nestedData['bill_no'] = $val->bill_number;
+            $nestedData['co_no'] = $val->co_no;
+            $nestedData['issue_no'] = $val->skiving_issue_number;
+            $nestedData['am_id'] = $val->art_no;
+            $nestedData['lc_id'] = $val->color;
+            $nestedData['qnty'] = $val->skiving_paid_qnty;
+            $nestedData['rate'] = $val->skiving_rate;
+            $nestedData['total'] = $val->skiving_amount;
+
+            $uvp = $this->_user_wise_view_permission(7, $this->session->user_id);
+            if($uvp == 'block'){
+                $nestedData['action'] = '-';    
+            }else{
+                $nestedData['action'] = '<a href="javascript:void(0)" pk-name="sbd_id" pk-value="'.$val->sbd_id.'" tab="skiving_bill_detail" child="0" ref-table="" ref-pk-name="" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
+            }
+            $data[] = $nestedData;
+
+            // echo '<pre>', print_r($rs), '</pre>'; 
+        }
+
+        $json_data = array(
+            "draw"            => intval($this->input->post('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        return $json_data;
+    } 
+
+    public function delete_skiving_bill_details(){
+        $tab = $this->input->post('tab');
+		$pk_name = $this->input->post('tab_pk');
+		$pk_value = $this->input->post('tab_val');
+
+        $this->db->where($pk_name, $pk_value)->delete($tab);
+        
+        
+        $data['title'] = 'Deleted!';
+        $data['type'] = 'success';
+        $data['msg'] = 'Skiving Bill Successfully Deleted';
+        return $data;
+    }
+
+    public function ajax_skiving_issue_on_co_id(){
+
+        $co_id = $this->input->post('co_id');
+        return $this->db
+            ->select('DISTINCT(cutting_received_challan.cut_rcv_id), skiving_issue_number')
+            ->join('cutting_received_challan_detail','cutting_received_challan_detail.cut_rcv_id = cutting_received_challan.cut_rcv_id','left')
+            ->get_where('cutting_received_challan', array('co_id' => $co_id))->result();
+
+    }
+
+    public function ajax_article_dtl_on_cut_rcv_id_and_co_id(){
+        $co_id = $this->input->post('co_id');
+        $cut_rcv_id = $this->input->post('cut_rcv_id');
+        return $this->db
+            ->select('cutting_received_challan_detail.am_id,cutting_received_challan_detail.lc_id,receive_cut_quantity,art_no,color,skiving_rate_a,skiving_rate_b')
+            ->join('article_master','article_master.am_id = cutting_received_challan_detail.am_id','left')
+            ->join('colors','colors.c_id = cutting_received_challan_detail.lc_id','left')
+            ->get_where('cutting_received_challan_detail', array('co_id' => $co_id, 'cut_rcv_id' => $cut_rcv_id))->result();
+
+    }
+
+    public function ajax_fetch_skiving_bill_pending_qnty(){
+        $co_id = $this->input->post('co_id');
+        $cut_rcv_id = $this->input->post('cut_rcv_id');
+        $am_id = $this->input->post('am_id');
+        $color = $this->input->post('color');
+
+        $nr = $this->db
+                ->get_where('skiving_bill_detail', 
+                    array(
+                        'co_id' => $co_id, 
+                        'cut_rcv_id' => $cut_rcv_id,
+                        'am_id' => $am_id,
+                        'lc_id' => $color
+                    )
+                )->num_rows();
+
+        if($nr > 0){
+            $rv =  $this->db
+                ->select('SUM(skiving_paid_qnty) AS used_qty')
+                ->get_where('skiving_bill_detail', 
+                    array(
+                        'co_id' => $co_id, 
+                        'cut_rcv_id' => $cut_rcv_id,
+                        'am_id' => $am_id,
+                        'lc_id' => $color
+                    )
+                )
+                ->row()->used_qty;
+            
+            // echo $this->db->last_query(); die('old');
+
+            return $rv;
+
+        }else{
+            // echo $this->db->last_query(); die('new');
+            return 0;
+        }  
+
+    }
+
+    public function form_add_skiving_bill_details(){
+
+        // print_r($_POST); die;
+
+        $insert_array = array(
+            'sb_id' => $this->input->post('sb_id_val'),
+            'cut_rcv_id' => $this->input->post('skiving_issue_id'),
+            'co_id' => $this->input->post('co_id'),
+            'am_id' => $this->input->post('article_id'),
+            'lc_id' => $this->input->post('color_val'),
+            'skiving_paid_qnty' => $this->input->post('pending_qnty'),
+            'skiving_rate' => $this->input->post('skiving_rate'),
+            'skiving_amount' => $this->input->post('skiving_total'),
+            'user_id' => $this->session->user_id
+        );
+
+
+        if($this->db->insert('skiving_bill_detail', $insert_array)){
+            $data['title'] = 'Inserted!';
+            $data['type'] = 'success';
+            $data['msg'] = 'Skiving Bill Details Added';
+        }else{
+            $data['title'] = 'Failed!';
+            $data['type'] = 'error';
+            $data['msg'] = 'Skiving Bill Not Added';
+        }
+        
+        return $data;
+    }
+
+    
 
 }

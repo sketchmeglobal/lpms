@@ -35,6 +35,7 @@
     ?>
     <!--  End grocerycrud JS & STYLES  -->
     <style type="text/css">
+        .datatables{width:100%}
         .dataTablesContainer{overflow-x: scroll;}
     </style>
 </head>

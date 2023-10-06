@@ -55,10 +55,9 @@ class Report extends My_Controller {
             $this->session->set_flashdata('msg', 'Kindly log-in to access that page.');
             redirect(base_url('accounts'));
         } else { //if admin already logged-in
-        $this->load->model('Report_order_status_m');
-        $data = $this->Report_order_status_m->fetch_payroll_reports();
+            $this->load->model('Report_order_status_m');
+            $data = $this->Report_order_status_m->fetch_payroll_reports();
             $this->load->view($data['page'], $data['data']);
-            // $this->load->view('report/stock_detail_ledger', $data)
         }
     }
 

@@ -1592,7 +1592,7 @@ class Master_m extends CI_Model {
             $crud->callback_before_delete(array($this,'check_and_log_before_delete'));
             // callback conditions
 
-            $crud->columns('name','am_code','phone','status');
+            $crud->columns('name','am_code','phone','vat_no','status');
             $crud->unset_fields('create_date','modify_date');
             $crud->required_fields('name','am_code','status','c_id','s_id');
             $crud->unique_fields(array('name','short_name','am_code'));
@@ -1605,7 +1605,7 @@ class Master_m extends CI_Model {
             $crud->display_as('short_name', 'Short Name');
             $crud->display_as('am_code', 'Code');
             $crud->display_as('email_id', 'Email ID');
-            $crud->display_as('vat_no', 'VAT No');
+            $crud->display_as('vat_no', 'VAT/GST No');
             $crud->display_as('c_id', 'Country');
             $crud->display_as('s_id', 'Station');
 

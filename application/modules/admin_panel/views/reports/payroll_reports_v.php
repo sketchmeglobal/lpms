@@ -77,81 +77,78 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <div class="panel-body">
-                <form class="row" method="post" target="_blank">
-                <div class = "row">
-                <div class="col-sm-2">
-                    <label>Month/Year</label>
-                       <select name="month" id="month" class="form-control">
-                           <?php
-                           for ($mon = 1; $mon <= 12; $mon++) {
-                           ?>
-                            <option <?= (date('F') == date('F', mktime(0, 0, 0, $mon, 1))) ? 'selected' : '' ?>><?= date('F', mktime(0, 0, 0, $mon, 1)) ?></option>
-                           <?php
-                           }
-                           ?>
-                       </select>
-                </div>
-                    <div class="col-sm-2">
-                    <label>Select Department </label><br />
-                    <select id="group" name="group" class="form-control select2" required>
-                        <option value="">Select From The List</option>
-                        <?php
-                        foreach ($departments as $fcbl) {
-                            ?>
-                            <option value="<?= $fcbl->d_id ?>"><?= $fcbl->department ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-sm-5">
-                  <label>Select Item From The List</label><br />
-                    <a id="select-all" href="#">Select All</a>
-                 /
-                <a id="deselect-all" href="#">Deselect All</a>
-                <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
-                    </select>
-                </div>
+                            <form class="row" method="post" target="_blank">
+                                <div class = "row">
+                                    <div class="col-sm-2">
+                                        <label>Month/Year</label>
+                                        <select name="month" id="month" class="form-control">
+                                            <?php
+                                            for ($mon = 1; $mon <= 12; $mon++) {
+                                            ?>
+                                                <option <?= (date('F') == date('F', mktime(0, 0, 0, $mon, 1))) ? 'selected' : '' ?>><?= date('F', mktime(0, 0, 0, $mon, 1)) ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>Select Department </label><br />
+                                        <select id="group" name="group" class="form-control select2" required>
+                                            <option value="">Select From The List</option>
+                                            <?php
+                                            foreach ($departments as $fcbl) {
+                                                ?>
+                                                <option value="<?= $fcbl->d_id ?>"><?= $fcbl->department ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label>Select Item From The List</label><br />
+                                        <a id="select-all" href="#">Select All</a> / <a id="deselect-all" href="#">Deselect All</a>
+                                        <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
+                                        </select>
+                                    </div>
                 
-                <div class="col-sm-3">
-                    <div class="row">
-                        <div class="col-sm-12">
-                        <input type="submit" name="adl" class="btn btn-success btn-sm" value="Adv. Ledger" target="_blank" />
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="lv" class="btn btn-success btn-sm" value="Leave" target="_blank" />
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="esi" class="btn btn-success btn-sm" value="E.S.I. Summary" target="_blank" />
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="pf" class="btn btn-success btn-sm" value="P.F. Summary" target="_blank" />
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="reg" class="btn btn-success btn-sm" value="Register" target="_blank" />
-                        <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="attendance" class="btn btn-success btn-sm" value="Attendace" target="_blank" />
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="ot" class="btn btn-success btn-sm" value="Overtime" target="_blank" />
-                        <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="sa_otim" class="btn btn-success btn-sm" value="Salary Overtime" target="_blank" />
-                        <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
-                    </div>
-                    <div class="col-sm-12">
-                        <input type="submit" name="bonus_report" class="btn btn-success btn-sm" value="Bonus Sheet" target="_blank" />
-                        <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
-                    </div>
-                    </div>
-                </div>
-                    
-                </div>
-            </form>
-                <br>
+                                    <div class="col-sm-3">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                            <input type="submit" name="adl" class="btn btn-success btn-sm" value="Adv. Ledger" target="_blank" />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="lv" class="btn btn-success btn-sm" value="Leave" target="_blank" />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="esi" class="btn btn-success btn-sm" value="E.S.I. Summary" target="_blank" />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="pf" class="btn btn-success btn-sm" value="P.F. Summary" target="_blank" />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="reg" class="btn btn-success btn-sm" value="Register" target="_blank" />
+                                            <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="attendance" class="btn btn-success btn-sm" value="Attendace" target="_blank" />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="ot" class="btn btn-success btn-sm" value="Overtime" target="_blank" />
+                                            <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="sa_otim" class="btn btn-success btn-sm" value="Salary Overtime" target="_blank" />
+                                            <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="submit" name="bonus_report" class="btn btn-success btn-sm" value="Bonus Sheet" target="_blank" />
+                                            <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <br>
                         </div>
                     </section>
                 </div>

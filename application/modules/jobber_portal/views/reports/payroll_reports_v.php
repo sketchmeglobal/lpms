@@ -28,15 +28,15 @@
     <!--Select2-->
     <link href="<?=base_url();?>assets/admin_panel/css/select2.css" rel="stylesheet">
     <link href="<?=base_url();?>assets/admin_panel/css/select2-bootstrap.css" rel="stylesheet">
-<style>
-    .jobber_type {
-    border: 1px solid #cac8c8;
-    padding: 6px;
-    }
-    input[type="submit"] {
-        margin-top: 26px;
-    }
-</style>
+    <style>
+        .jobber_type {
+        border: 1px solid #cac8c8;
+        padding: 6px;
+        }
+        input[type="submit"] {
+            margin-top: 26px;
+        }
+    </style>
 </head>
 
 <body class="sticky-header">
@@ -224,7 +224,7 @@
                            $('#leather_status').html('');
                            $.each(items, function(index, itemData){
                                $apnd_val = '<option value="'+ itemData.e_id +'">'+ itemData.name +'</option>';
-                               $("#leather_status").append($apnd_val);
+                            //    $("#leather_status").append($apnd_val);
                            });
                           $('#leather_status').multiSelect('refresh');
                        },

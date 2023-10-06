@@ -805,8 +805,14 @@ class Cutting_issue_challan_m extends CI_Model {
             $this->db->join('colors c2', 'c2.c_id = customer_order_dtl.lc_id', 'left');
             $this->db->join('cutting_issue_challan', 'cutting_issue_challan.cut_id = cutting_issue_challan_details.cut_id', 'left');
             $this->db->join('acc_master', 'acc_master.am_id = cutting_issue_challan.am_id', 'left');
+
+            $this->db->join('item_dtl', 'article_costing_details.id_id = item_dtl.id_id', 'left');
+            $this->db->join('item_master', 'item_dtl.im_id = item_master.im_id', 'left');
+            
             $this->db->group_by('article_master.am_id, customer_order_dtl.lc_id, customer_order_dtl.co_id');
-            $data['cutting_issue_details'] = $this->db->order_by('article_master.art_no,c2.color')->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.cut_id' => $cut_id))->result();
+            $data['cutting_issue_details'] = $this->db->order_by('article_master.art_no,c2.color')
+                ->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.cut_id' => $cut_id, 'ig_id' => 1))
+                ->result();
 
         $vals = '';
         foreach ($data["cutting_issue_details"] as $cd) {

@@ -271,5 +271,123 @@ public function purchase_order_print_without_code($po_id) {
     }
 }
 // -------------------------------PRINT ENDS----------------------------------
+
+// -------------------------------BILL STARTS----------------------------------
     
+    public function skiving_bill() {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->skiving_bill();
+            $this->load->view($data['page'], $data['data']);
+        }
+    }
+
+    public function ajax_skiving_bill_table_data(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->ajax_skiving_bill_table_data();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+
+    public function add_skiving_bill() {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->add_skiving_bill();
+            $this->load->view($data['page'], $data['data']);
+        }
+    }
+
+    public function form_add_skiving_bill(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->form_add_skiving_bill();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+
+
+    public function edit_skiving_bill($skiv_id) {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->edit_skiving_bill($skiv_id);
+            $this->load->view($data['page'], $data['data']);
+        }
+    }
+
+    public function form_edit_skiving_bill() {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->form_edit_skiving_bill();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+
+    public function delete_skiving_bill_list(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->delete_skiving_bill_list();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+
+    public function ajax_skiving_bill_details_table_data(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->ajax_skiving_bill_details_table_data();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+
+    public function delete_skiving_bill_details(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->delete_skiving_bill_details();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+    
+    public function ajax_skiving_issue_on_co_id() {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->ajax_skiving_issue_on_co_id();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+
+    public function ajax_article_dtl_on_cut_rcv_id_and_co_id() {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->ajax_article_dtl_on_cut_rcv_id_and_co_id();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
+
+    public function ajax_fetch_skiving_bill_pending_qnty(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->ajax_fetch_skiving_bill_pending_qnty();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }    
+    }
+
+    public function form_add_skiving_bill_details(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->form_add_skiving_bill_details();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }    
+    }
+// -------------------------------BILL ENDS----------------------------------
+
 }

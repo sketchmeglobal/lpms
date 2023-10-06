@@ -5405,38 +5405,31 @@ EOD;
             foreach($gets_departments as $g_d) {
                 $departments_lists .= $g_d->department.' ,';
             }
+            if(count($it_arr) == 0){
+                die('You must provide at least 1 input. Please close this window and try again.');
+            }else{
+                $new_iter = implode(",", $it_arr);
+                $data['d_id'] = $it_groups;                
+                    $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
+                    employees.hra_amount AS HRA1,employees.convenience AS CONV1,employees.medical_allowance AS MA1,employees.special_allowance AS OA1,
+                    CAST((employees.basic_pay+employees.da_amout+employees.hra_amount+employees.convenience+employees.medical_allowance+employees.special_allowance) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
+                    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
+                    FROM salary
+                    INNER JOIN(employees)
+                    ON(salary.EMPCODE=employees.e_id)
+                    WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN ($new_iter)
+                    ORDER BY employees.name";
             
-            $new_iter = implode(",", $it_arr);
-            
-            
-            
-            
-            $data['d_id'] = $it_groups;
-            
-            
-            
-            
-                
-                $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
-                employees.hra_amount AS HRA1,employees.convenience AS CONV1,employees.medical_allowance AS MA1,employees.special_allowance AS OA1,
-    CAST((employees.basic_pay+employees.da_amout+employees.hra_amount+employees.convenience+employees.medical_allowance+employees.special_allowance) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
-    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
-        FROM salary
-        INNER JOIN(employees)
-        ON(salary.EMPCODE=employees.e_id)
-        WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN ($new_iter)
-        ORDER BY employees.name";
-        
-        $res = $this->db->query($sql)->result();
-        if(count($res) > 0) {
-            foreach($res as $r) {
-        $data['result'][] = $this->_fetch_bonus_report($mon,$r->e_id);
-        }
-            } else {
-                echo 'No Results'; die();
+                $res = $this->db->query($sql)->result();
+
+                if(count($res) > 0) {
+                    foreach($res as $r) {
+                        $data['result'][] = $this->_fetch_bonus_report($mon,$r->e_id);
+                    }
+                } else {
+                    echo 'No Results'; die();
+                }
             }
-            
-            
             
             
             $data['departments_lists'] = $departments_lists;

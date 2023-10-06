@@ -16684,7 +16684,7 @@ if($check_consumption_list == 0) {
 				<div class="row border_all text-center text-uppercase mar_bot_3">
 					<h3 class="mar_0 head_font"> BONUS SHEET </h3>
 				</div>
-				<div class="row mar_bot_3">
+				<!-- <div class="row mar_bot_3">
 					<div class="col-sm-6 border_all header_left">
 						<h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
 						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
@@ -16692,7 +16692,7 @@ if($check_consumption_list == 0) {
 					<div class="col-sm-6 border_all header_right">
 						<br />
 					</div>
-				</div>
+				</div> -->
 				<!--table data-->
 				<div class="row">
 					<div class="container">
@@ -16702,135 +16702,139 @@ if($check_consumption_list == 0) {
 								<table id="all_det" class="table table-bordered">
 									<thead>
 									    <?php if($d_id == 5) { ?>
-                <tr>
-                                    <th colspan="4">SHILPA OVERSEAS PVT. LTD. <br /> 51, Mahanirban Road, Kolkata-700029</th>
-                                    <th colspan="13">
-                                        Year: <?= date('Y') . ' - ' . (date('Y') + 1) ?> <br />
-                                        Department: <?= $departments_lists ?> <br />
-                                        Bonus: 20%<br />
-                                    </th>
-                                </tr>
-                                <?php } else { ?>
-                                <tr>
-                                    <th colspan="4">SHILPA OVERSEAS PVT. LTD. <br /> 51, Mahanirban Road, Kolkata-700029</th>
-                                    <th colspan="13">
-                                        Year:  <?= date('Y') . ' - ' . (date('Y') + 1) ?> <br />
-                                        Department: <?= $departments_lists ?> <br />
-                                        Bonus: 20%<br />
-                                    </th>
-                                </tr>
-                                <?php } ?>
-                                <tr>
-                                    <th>Sl <br/> No</th>
-                                    <th>Name</th>
-                                    <?php if($d_id == 5) { ?>
-                                    <th style="text-align: right;">April</th>
-                                    <th style="text-align: right;">May</th>
-                                    <th style="text-align: right;">June</th>
-                                    <th style="text-align: right;">July</th>
-                                    <th style="text-align: right;">August</th>
-                                    <th style="text-align: right;">September</th>
-                                    <th style="text-align: right;">October</th>
-                                    <th style="text-align: right;">November</th>
-                                    <th style="text-align: right;">December</th>
-                                    <th style="text-align: right;">January</th>
-                                    <th style="text-align: right;">February</th>
-                                    <th style="text-align: right;">March</th>
-                                    <th style="text-align: right;">Total</th>
-                                    <th style="text-align: right;">Bonus</th>
-                                    <?php } else { ?>
-                                    <th style="text-align: right;">Ex gratia</th>
-                                    <?php } ?>
-                                    <th>Signature</th>
-                                </tr>
-                </thead>
-                <tbody>
-                            <?php
-                            
-                            $total_salary = 0;
-                            $iter = 1;
-                            $grand_total=0;
-                            $grand_bonus = 0;
-                            
-    if (count($result) > 0)
-    {
-        foreach ($result as $res)
-        {
-            
-            $total_april = 0;
-            $total_may = 0;
-            $total_june = 0; 
-            $total_july = 0;
-            $total_august = 0;
-            $total_september = 0;
-            $total_october = 0; 
-            $total_november = 0;
-            $total_december = 0;
-            $total_january = 0;
-            $total_february = 0;
-            $total_march = 0;
-            foreach ($res as $key=>$a)
-            {
-                
-?>
-                                    <tr>
-                                        <td style=""><?=$iter++?></td>
-                                        <td style=><?=$a['name']?></td>
-                                        <?php if($d_id == 5) { ?>
-                                        <td><?php if(isset($a['April~30~4'])) {echo $a['April~30~4']; $total_april = $a['April~30~4'];  } ?></td>
-                                        <td><?php if(isset($a['May~31~5'])) {echo $a['May~31~5']; $total_may = $a['May~31~5']; } ?></td>
-                                        <td><?php if(isset($a['June~30~6'])) {echo $a['June~30~6']; $total_june = $a['June~30~6']; } ?></td>
-                                        <td><?php if(isset($a['July~31~7'])) {echo $a['July~31~7']; $total_july = $a['July~31~7']; } ?></td>
-                                        <td><?php if(isset($a['August~31~8'])) {echo $a['August~31~8']; $total_august = $a['August~31~8']; } ?></td>
-                                        <td><?php if(isset($a['September~30~9'])) {echo $a['September~30~9']; $total_september = $a['September~30~9']; } ?></td>
-                                        <td><?php if(isset($a['October~31~10'])) {echo $a['October~31~10']; $total_october = $a['October~31~10']; } ?></td>
-                                        <td><?php if(isset($a['November~30~11'])) {echo $a['November~30~11']; $total_november = $a['November~30~11']; } ?></td>
-                                        <td><?php if(isset($a['December~31~12'])) {echo $a['December~31~12']; $total_december = $a['December~31~12']; } ?></td>
-                                        <td><?php if(isset($a['January~31~1'])) {echo $a['January~31~1']; $total_january = $a['January~31~1']; } ?></td>
-                                        <td><?php if(isset($a['February~28~2'])) {echo $a['February~28~2']; $total_february = $a['February~28~2']; } ?></td>
-                                        <td><?php if(isset($a['March~31~3'])) {echo $a['March~31~3']; $total_march = $a['March~31~3']; } ?></td>
-                                        <td>
-                                            <?php 
-                                                echo $all_total = $total_april + $total_may + $total_june + $total_july + $total_august + $total_september + $total_october + $total_november + $total_december + $total_january + $total_february + $total_march;
-                                                $grand_total += $all_total;
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                                echo $all_bonus = round(($total_april + $total_may + $total_june + $total_july + $total_august + $total_september + $total_october + $total_november + $total_december + $total_january + $total_february + $total_march) * 20/100);
-                                                $grand_bonus += $all_bonus;
-                                            ?></td>
+                                        <tr>
+                                            <th colspan="4">SHILPA OVERSEAS PVT. LTD. <br /> 51, Mahanirban Road, Kolkata-700029</th>
+                                            <th colspan="13">
+                                                Year: <?= date('Y') . ' - ' . (date('Y') + 1) ?> <br />
+                                                Department: <?= $departments_lists ?> <br />
+                                                Bonus: 20%<br />
+                                            </th>
+                                        </tr>
                                         <?php } else { ?>
-                                        <td><?php echo $a['TOTAL1'] ?></td>
+                                        <tr>
+                                            <th colspan="2">SHILPA OVERSEAS PVT. LTD. <br /> 51, Mahanirban Road, Kolkata-700029</th>
+                                            <th colspan="2">
+                                                Year:  <?= date('Y') . ' - ' . (date('Y') + 1) ?> <br />
+                                                Department: <?= $departments_lists ?> <br />
+                                                Bonus: 20%<br />
+                                            </th>
+                                        </tr>
                                         <?php } ?>
-                                        <td></td>
-                                    </tr>
-                                    
+                                        <tr>
+                                            <th>Sl <br/> No</th>
+                                            <th>Name</th>
+                                            <?php if($d_id == 5) { ?>
+                                            <th style="text-align: right;">April</th>
+                                            <th style="text-align: right;">May</th>
+                                            <th style="text-align: right;">June</th>
+                                            <th style="text-align: right;">July</th>
+                                            <th style="text-align: right;">August</th>
+                                            <th style="text-align: right;">September</th>
+                                            <th style="text-align: right;">October</th>
+                                            <th style="text-align: right;">November</th>
+                                            <th style="text-align: right;">December</th>
+                                            <th style="text-align: right;">January</th>
+                                            <th style="text-align: right;">February</th>
+                                            <th style="text-align: right;">March</th>
+                                            <th style="text-align: right;">Total</th>
+                                            <th style="text-align: right;">Bonus</th>
+                                            <?php } else { ?>
+                                            <th style="text-align: right;">Ex gratia</th>
+                                            <?php } ?>
+                                            <th>Signature</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     <?php
-
-             }
-             
-             $total_salary = 0;
-             
-        }
-    }
-    
-?>
-                            <tr>
-                                <th colspan="14">Total</th>
-                                <th><?=$grand_total?></th>
-                                <th><?=$grand_bonus?></th>
-                            </tr>
+                                    
+                                    $total_salary = 0;
+                                    $iter = 1;
+                                    $grand_total=0;
+                                    $grand_bonus = 0;
+                                    $grand_ex_gratia = 0;
                             
-                        </tbody>
-            </table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                                    if (count($result) > 0)
+                                    {
+                                        foreach ($result as $res)
+                                        {
+                                            
+                                            $total_april = 0;
+                                            $total_may = 0;
+                                            $total_june = 0; 
+                                            $total_july = 0;
+                                            $total_august = 0;
+                                            $total_september = 0;
+                                            $total_october = 0; 
+                                            $total_november = 0;
+                                            $total_december = 0;
+                                            $total_january = 0;
+                                            $total_february = 0;
+                                            $total_march = 0;
+                                            foreach ($res as $key=>$a)
+                                            {
+                                            ?>          
+                                            <tr>
+                                                <td style=""><?=$iter++?></td>
+                                                <td style=><?=$a['name']?></td>
+                                                <?php if($d_id == 5) { ?>
+                                                <td><?php if(isset($a['April~30~4'])) {echo $a['April~30~4']; $total_april = $a['April~30~4'];  } ?></td>
+                                                <td><?php if(isset($a['May~31~5'])) {echo $a['May~31~5']; $total_may = $a['May~31~5']; } ?></td>
+                                                <td><?php if(isset($a['June~30~6'])) {echo $a['June~30~6']; $total_june = $a['June~30~6']; } ?></td>
+                                                <td><?php if(isset($a['July~31~7'])) {echo $a['July~31~7']; $total_july = $a['July~31~7']; } ?></td>
+                                                <td><?php if(isset($a['August~31~8'])) {echo $a['August~31~8']; $total_august = $a['August~31~8']; } ?></td>
+                                                <td><?php if(isset($a['September~30~9'])) {echo $a['September~30~9']; $total_september = $a['September~30~9']; } ?></td>
+                                                <td><?php if(isset($a['October~31~10'])) {echo $a['October~31~10']; $total_october = $a['October~31~10']; } ?></td>
+                                                <td><?php if(isset($a['November~30~11'])) {echo $a['November~30~11']; $total_november = $a['November~30~11']; } ?></td>
+                                                <td><?php if(isset($a['December~31~12'])) {echo $a['December~31~12']; $total_december = $a['December~31~12']; } ?></td>
+                                                <td><?php if(isset($a['January~31~1'])) {echo $a['January~31~1']; $total_january = $a['January~31~1']; } ?></td>
+                                                <td><?php if(isset($a['February~28~2'])) {echo $a['February~28~2']; $total_february = $a['February~28~2']; } ?></td>
+                                                <td><?php if(isset($a['March~31~3'])) {echo $a['March~31~3']; $total_march = $a['March~31~3']; } ?></td>
+                                                <td style="text-align:right">
+                                                    <?php 
+                                                        echo $all_total = $total_april + $total_may + $total_june + $total_july + $total_august + $total_september + $total_october + $total_november + $total_december + $total_january + $total_february + $total_march;
+                                                        $grand_total += $all_total;
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        echo $all_bonus = round(($total_april + $total_may + $total_june + $total_july + $total_august + $total_september + $total_october + $total_november + $total_december + $total_january + $total_february + $total_march) * 20/100);
+                                                        $grand_bonus += $all_bonus;
+                                                    ?></td>
+                                                <?php } else { ?>
+                                                <td style="text-align:right"><?php echo $a['TOTAL1']; $grand_ex_gratia+=$a['TOTAL1'] ?></td>
+                                                <?php } ?>
+                                                <td></td>
+                                            </tr>
+                                            <?php
+                                            }
+                                            $total_salary = 0;
+                                        }
+                                    }
+                                    if($d_id == 5) {
+                                    ?>
+                                        <tr>
+                                            <th colspan="14">Total</th>
+                                            <th style="text-align:right"><?=$grand_total?></th>
+                                            <th style="text-align:right"><?=$grand_bonus?></th>
+                                        </tr>
+                                    <?php } else{
+                                        ?>
+                                        <tr>
+                                            <th colspan="2">Total</th>
+                                            <th style="text-align:right"><?=$grand_ex_gratia?></th>
+                                            <th></th>
+                                        </tr>
+                                        <?php
+                                        } ?>        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 	</div>
 	</body>
 		<?php

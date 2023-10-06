@@ -242,7 +242,7 @@
                        <div class="col-sm-4"><input value="0" readonly type="text" id="wages_earned" name="wages_earned" style="border: 1px solid black;" class="form-control" /></div>
                        
                        <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Pay for holiday</label></div>
-                       <div class="col-sm-4"><input value="0" type="text" id="pay_for_holiday" name="pay_for_holiday" class="form-control" /></div>  
+                       <div class="col-sm-4"><input readonly value="0" type="text" id="pay_for_holiday" name="pay_for_holiday" class="form-control" /></div>  
                        
                        <div class="col-sm-8"><label style="margin-top: 10px; margin-bottom: 18px;">Pay for leave</label></div>
                        <div class="col-sm-4"><input value="0" type="text" id="pay_for_leave" name="pay_for_leave" class="form-control" /></div>  
@@ -932,11 +932,15 @@
            hraamnt = $("#hraamnt").val();
            
            wages_earned = parseFloat(no_of_part) * parseFloat(rate_per_part);
-           
            $("#wages_earned").val(wages_earned);
+
+           pay_for_holiday = Math.round(parseFloat(wages_earned) / parseFloat($("#adw").val()))
+           $("#pay_for_holiday").val(pay_for_holiday);
            
            total_wages_earned = parseFloat(pay_for_holiday) + parseFloat(pay_for_leave) + wages_earned
-           $("#total_wages_earned").val(total_wages_earned)
+           $("#total_wages_earned").val(total_wages_earned.toFixed(2))
+
+
             
             // HRA calc
             

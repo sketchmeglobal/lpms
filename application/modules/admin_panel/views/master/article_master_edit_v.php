@@ -271,9 +271,9 @@
                                 </div>
 
                                 <div class="form-group ">
-                                    <label for="skiving_rate_a" class="control-label col-lg-2">Sample Rate</label>
+                                    <label for="skiving_rate_a" class="control-label col-lg-2">Skiving Sample Rate</label>
                                     <div class="col-lg-4">
-                                        <input id="skiving_rate_a" name="skiving_rate_a" type="number" min="0" value="<?=$article->skiving_rate_a?>" placeholder="Sample Rate" class="form-control round-input" />
+                                        <input id="skiving_rate_a" name="skiving_rate_a" type="number" min="0" value="<?=$article->skiving_rate_a?>" placeholder="Skiving Sample Rate" class="form-control round-input" />
                                     </div>
 
                                     <label for="skiving_rate_b" class="control-label col-lg-2">Skiving Rate</label>

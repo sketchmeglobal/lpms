@@ -294,6 +294,11 @@ foreach($all_block_menu as $abm){
                             <a href="<?=base_url();?>admin/cutter-bill"><i class="fa fa-caret-right"></i> Cutter Bill</a>
                         </li>
                     <?php } ?>    
+                    <?php if(!in_array(7, $final_array)){ ?>
+                        <li class="<?=(($class_name == 'Skiving_issue') && ($method_name == 'skiving_bill')) ? 'active' : ''; ?>">
+                            <a href="<?=base_url();?>admin/skiving-bill"><i class="fa fa-caret-right"></i> Skiving Bill</a>
+                        </li>
+                    <?php } ?>
                     <?php if(!in_array(11, $final_array)){ ?>
                         <li class="<?=(($class_name == 'Jobber_bill') && ($method_name == 'jobber_bill')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/jobber-bill"><i class="fa fa-caret-right"></i> Jobber Bill</a>

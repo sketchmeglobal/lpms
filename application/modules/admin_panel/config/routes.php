@@ -500,6 +500,25 @@ $route['admin/del-skiving-issue-list'] = 'admin_panel/Skiving_issue/delete_skivi
 // Print
 $route['admin/skiving-challan-issue-print/(:num)'] = 'admin_panel/Skiving_issue/skiving_challan_issue_print/$1';
 
+// BILL
+$route['admin/skiving-bill'] = 'admin_panel/Skiving_issue/skiving_bill';
+$route['admin/ajax-skiving-bill-table-data'] = 'admin_panel/Skiving_issue/ajax_skiving_bill_table_data';
+$route['admin/ajax-skiving-bill-details-table-data'] = 'admin_panel/Skiving_issue/ajax_skiving_bill_details_table_data';
+	//Bill add
+$route['admin/add-skiving-bill'] = 'admin_panel/Skiving_issue/add_skiving_bill';
+$route['admin/form-add-skiving-bill'] = 'admin_panel/Skiving_issue/form_add_skiving_bill';
+$route['admin/form-add-skiving-bill-details'] = 'admin_panel/Skiving_issue/form_add_skiving_bill_details';
+
+$route['admin/ajax-skiving-issue-on-co_id'] = 'admin_panel/Skiving_issue/ajax_skiving_issue_on_co_id';
+$route['admin/ajax-article-dtl-on-cut_rcv_id_and_co_id'] = 'admin_panel/Skiving_issue/ajax_article_dtl_on_cut_rcv_id_and_co_id';
+$route['admin/ajax-fetch-skiving-bill-pending-qnty'] = 'admin_panel/Skiving_issue/ajax_fetch_skiving_bill_pending_qnty';
+
+	// Bill edit
+$route['admin/edit-skiving-bill/(:num)'] = 'admin_panel/Skiving_issue/edit_skiving_bill/$1';
+$route['admin/form-edit-skiving-bill'] = 'admin_panel/Skiving_issue/form_edit_skiving_bill';
+	// Bill Delete
+$route['admin/delete-skiving-list'] = 'admin_panel/Skiving_issue/delete_skiving_bill_list';	
+$route['admin/del-skiving-bill-details'] = 'admin_panel/Skiving_issue/delete_skiving_bill_details';	
 //Skiving issue end
 
 //Skiving Receive Start

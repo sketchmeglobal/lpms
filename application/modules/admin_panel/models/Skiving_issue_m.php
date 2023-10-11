@@ -1142,6 +1142,7 @@ class Skiving_issue_m extends CI_Model {
                 $nestedData['action'] = '-';    
             }else{
                 $nestedData['action'] = '<a href="'. base_url('admin/edit-skiving-bill/'.$val->sb_id) .'" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
+                        <a href="'. base_url('admin/print-skiving-bill/'.$val->sb_id) .'" class="btn btn-warning"><i class="fa fa-print"></i> Print</a>
                         <a href="javascript:void(0)" pk-name="sb_id" pk-value="'.$val->sb_id.'" tab="skiving_bill" child="0" ref-table="" ref-pk-name="" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
             }
             $data[] = $nestedData;
@@ -1264,7 +1265,7 @@ class Skiving_issue_m extends CI_Model {
             1 => 'cutting_received_challan.skiving_issue_number'
         );
         // Set searchable column fields
-        $column_search = array('cutting_received_challan.skiving_issue_number', 'customer_order.co_no');
+        $column_search = array('cutting_received_challan.skiving_issue_number', 'customer_order.co_no', 'art_no');
 
         $limit = $this->input->post('length');
         $start = $this->input->post('start');
@@ -1328,7 +1329,7 @@ class Skiving_issue_m extends CI_Model {
             }
             $this->db->stop_cache();
 
-            $this->db->select('bill_number,article_master.art_no,color,customer_order.co_no, cutting_received_challan.skiving_issue_number, skiving_bill_detail.*');
+            $this->db->select('article_master.art_no,color,customer_order.co_no, cutting_received_challan.skiving_issue_number, skiving_bill_detail.*');
             $this->db->join('cutting_received_challan', 'cutting_received_challan.cut_rcv_id = skiving_bill_detail.cut_rcv_id', 'left');
             $this->db->join('customer_order', 'customer_order.co_id = skiving_bill_detail.co_id', 'left');
             $this->db->join('article_master', 'article_master.am_id = skiving_bill_detail.am_id', 'left');
@@ -1403,6 +1404,26 @@ class Skiving_issue_m extends CI_Model {
 
         return $json_data;
     } 
+
+    public function print_skiving_bill($skiving_bill_id) {
+        
+        $data['skiving_bill_id'] = $skiving_bill_id;
+        			
+        $data['skiving_bill_details'] = $this->db->select('skiving_bill.*, DATE_FORMAT(skiving_bill.bill_date, "%d-%m-%Y") as bill_date, skiving_paid_qnty, skiving_rate, skiving_amount, employees.name, customer_order.co_no, customer_order.buyer_reference_no, article_master.art_no, alt_art_no, colors.color,skiving_issue_number')
+            ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
+            ->join('skiving_bill_detail', 'skiving_bill_detail.sb_id = skiving_bill.sb_id', 'left')
+            ->join('customer_order', 'customer_order.co_id = skiving_bill_detail.co_id', 'left')
+            ->join('article_master', 'article_master.am_id = skiving_bill_detail.am_id', 'left')
+            ->join('colors', 'colors.c_id = skiving_bill_detail.lc_id', 'left')
+            ->join('cutting_received_challan', 'cutting_received_challan.cut_rcv_id = skiving_bill_detail.cut_rcv_id', 'left')
+            ->order_by('customer_order.co_no,skiving_issue_number')
+            ->get_where('skiving_bill', array('skiving_bill.sb_id' => $skiving_bill_id))->result();
+
+        // echo '<pre>';print_r($data);
+
+        return array('page'=>'skiving_bill/skiving_bill_print_v', 'data'=>$data);
+        
+    }
 
     public function delete_skiving_bill_details(){
         $tab = $this->input->post('tab');

@@ -317,6 +317,14 @@ public function purchase_order_print_without_code($po_id) {
         }
     }
 
+    public function print_skiving_bill($skiv_id) {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Skiving_issue_m');
+            $data = $this->Skiving_issue_m->print_skiving_bill($skiv_id);
+            $this->load->view($data['page'], $data['data']);
+        }
+    }
+
     public function form_edit_skiving_bill() {
         if($this->check_permission(array(1,2)) == true) {
             $this->load->model('Skiving_issue_m');

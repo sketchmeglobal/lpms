@@ -8282,7 +8282,7 @@ hr {
 											<th rowspan="2">Article</th>
 											<th rowspan="2">Ord <br/> Qnty</th>
 											<th colspan="3" class="text-center">Cutting Information</th>
-											<th colspan="2" class="text-center">Skiving Information</th>
+											<th colspan="3" class="text-center">Skiving Information</th>
 											<th colspan="3" class="text-center">Fabricator Information</th>
 											<th rowspan="2" class="text-center">Shipping<br>Information</th>
 										</tr>
@@ -8292,6 +8292,7 @@ hr {
 											<th>Cut Bill</th>
 											<th>Skiv Issue</th>
 											<th>Skiv Rcv.</th>
+                                            <th>Skiv Bill</th>
 											<th>Fab Issue</th>
 											<th>Fab Rcv.</th>
 											<th>Job Bill</th>
@@ -8369,12 +8370,14 @@ hr {
                 $sub_sr = $grand_sr;
 ?>
 														</th>
+                                                        <th></th>
 														<th class="text-right">
 															<?php
                 echo abs($sub_ji - $grand_ji);
                 $sub_ji = $grand_ji;
 ?>
 														</th>
+                                                        
 														<th class="text-right">
 															<?php
                 echo abs($sub_jr - $grand_jr);
@@ -8411,39 +8414,35 @@ hr {
 												<th class="mycell1" style="width: 10%;" height="60"><?=$res->co_no . '<br>(' . date('d-m-Y', strtotime($res->co_date)) . ')' ?></th>
 												<th class="mycell" style="width: 20%;" height="60"><?=$res->art_no . ' [' . $res->color . ']' ?></th>
 												<th class="mycell2" height="60" nowrap class="text-right print-text-center">
-													<?php
-        echo $res->co_quantity;
-        $grand_co += $res->co_quantity;
-?>
+													<?php echo $res->co_quantity; $grand_co += $res->co_quantity; ?>
 												</th>
 												<th class="mycell2" height="60" nowrap class="">
-													<?php if ($res->ci != '')
-        {
-            echo $res->ci . '<span>' . $res->cut_co_quantity . '</span>' . '<br>(' . date('d-m-Y', strtotime($res->cut_date)) . ')';
-            $grand_ci += $res->cut_co_quantity;
-        } ?>	 	
+												<?php 
+                                                    if ($res->ci != '') {
+                                                            echo $res->ci . '<span>' . $res->cut_co_quantity . '</span>' . '<br>(' . date('d-m-Y', strtotime($res->cut_date)) . ')';
+                                                            $grand_ci += $res->cut_co_quantity;
+                                                        } 
+                                                    ?>	 	
 												</th>
 												<th class="mycell2" height="60" nowrap class="">
-													<?php if ($res->cr != '')
-        {
-            echo $res->cr . '<span>' . $res->receive_cut_quantity . '</span>' . '<br>(' . date('d-m-Y', strtotime($res->cut_rcv_date)) . ')';
-            $grand_cr += $res->receive_cut_quantity;
-        } ?>
+													<?php 
+                                                        if ($res->cr != '') {
+                                                            echo $res->cr . '<span>' . $res->receive_cut_quantity . '</span>' . '<br>(' . date('d-m-Y', strtotime($res->cut_rcv_date)) . ')';
+                                                            $grand_cr += $res->receive_cut_quantity;
+                                                        } 
+                                                    ?>
 													<br><br>
 												</th>
-													<?php
-        $get_cutter_bill_det = $this
-            ->db
-            ->get_where('cutter_bill_dtl', array(
-            'cut_id' => $res->cutting_issue_id,
-            'cut_rcv_id' => $res->cutting_receive_id,
-            'co_id' => $res->co_id,
-            'am_id' => $res->am_id,
-            'leather_color' => $res->c_id
-        ))
-            ->row();
-
-?>
+												<?php
+                                                    $get_cutter_bill_det = $this->db
+                                                        ->get_where('cutter_bill_dtl', array(
+                                                            'cut_id' => $res->cutting_issue_id,
+                                                            'cut_rcv_id' => $res->cutting_receive_id,
+                                                            'co_id' => $res->co_id,
+                                                            'am_id' => $res->am_id,
+                                                            'leather_color' => $res->c_id
+                                                        ))->row();
+                                                ?>
 													
 													<th class="mycell2" height="60" nowrap class="">
 													<?php
@@ -8482,6 +8481,27 @@ hr {
         } ?>
 													<br><br>
 												</th>
+                                                <th nowrap>
+                                                    <?php 
+                                                        $skiving_bill_dtl = $this->db
+                                                        ->join('skiving_bill','skiving_bill.sb_id=skiving_bill_detail.sb_id','left')
+                                                        ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
+                                                        ->get_where('skiving_bill_detail', array(
+                                                            'cut_rcv_id' => $res->cutting_receive_id,
+                                                            'co_id' => $res->co_id,
+                                                            'am_id' => $res->am_id,
+                                                            'lc_id' => $res->c_id
+                                                        ))->result();
+                                                        if(count($skiving_bill_dtl) > 0){
+                                                            echo $skiving_bill_dtl[0]->bill_number . ' ('. date('d-m-Y', strtotime($skiving_bill_dtl[0]->bill_date)) .')<br>';
+                                                            foreach($skiving_bill_dtl as $sbd){
+                                                                echo $sbd->name . ': '.$sbd->skiving_paid_qnty .'<br>';
+                                                            }
+                                                        } else{
+                                                            echo '-';
+                                                        }
+                                                    ?>
+                                                </th>
 
 												<th class="mycell2" height="60" nowrap class="">
 													<?php if ($res->jobi != '')
@@ -8629,6 +8649,7 @@ hr {
 												<th></th>										
 												<th class="text-right"><?=$grand_cr - $sub_cr ?></th>
 												<th class="text-right"><?=$grand_sr - $sub_sr ?></th>
+                                                <th></th>										
 												<th class="text-right"><?=$grand_ji - $sub_ji ?></th>
 												<th class="text-right"><?=$grand_jr - $sub_jr ?></th>
 												<th class="text-right">
@@ -8662,6 +8683,7 @@ hr {
 ?></th>
 											<th class="text-right"><?=$grand_sr
 ?></th>
+                                            <th></th>
 											<th class="text-right"><?=$grand_ji
 ?></th>
 											<th class="text-right"><?=$grand_jr

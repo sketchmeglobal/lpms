@@ -82,6 +82,9 @@ class Report_order_status_m extends CI_Model {
         }
         if($this->input->post("reg")){
             $it_arr = $this->input->post('leather[]');
+            if(count($it_arr) == 0){
+                die("You must provide at least 1 input. Close this window and try again.");
+            }
             $new_iter = implode(",", $it_arr);
             $mon = $this->input->post('month');
             $data['mont'] = $mon;
@@ -112,7 +115,7 @@ class Report_order_status_m extends CI_Model {
             }
             
             $data['segment'] = 'payroll_register';
-            return array('page'=>'reports/common_print_v','data'=>$data);
+            return array('page'=>'reports/payroll_register','data'=>$data);
         }
         if($this->input->post("pf")){
             $it_arr = $this->input->post('leather[]');

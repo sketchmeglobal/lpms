@@ -516,6 +516,8 @@ $route['admin/ajax-fetch-skiving-bill-pending-qnty'] = 'admin_panel/Skiving_issu
 	// Bill edit
 $route['admin/edit-skiving-bill/(:num)'] = 'admin_panel/Skiving_issue/edit_skiving_bill/$1';
 $route['admin/form-edit-skiving-bill'] = 'admin_panel/Skiving_issue/form_edit_skiving_bill';
+	// Bill Print
+$route['admin/print-skiving-bill/(:num)'] = 'admin_panel/Skiving_issue/print_skiving_bill/$1';
 	// Bill Delete
 $route['admin/delete-skiving-list'] = 'admin_panel/Skiving_issue/delete_skiving_bill_list';	
 $route['admin/del-skiving-bill-details'] = 'admin_panel/Skiving_issue/delete_skiving_bill_details';	

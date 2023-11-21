@@ -570,6 +570,14 @@ class Master extends My_Controller {
         exit();
     }
 
+    public function article_rate_stitch() {
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Master_m');
+            $data = $this->Master_m->article_rate_stitch();
+            $this->load->view($data['page'], $data['data']);
+        }
+    }
+
     public function ajax_item_master_table_data() {
         if($this->check_permission(array(1,2)) == true) {
             $this->load->model('Master_m');

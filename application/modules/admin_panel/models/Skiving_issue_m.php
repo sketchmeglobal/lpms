@@ -1142,7 +1142,7 @@ class Skiving_issue_m extends CI_Model {
                 $nestedData['action'] = '-';    
             }else{
                 $nestedData['action'] = '<a href="'. base_url('admin/edit-skiving-bill/'.$val->sb_id) .'" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
-                        <a href="'. base_url('admin/print-skiving-bill/'.$val->sb_id) .'" class="btn btn-warning"><i class="fa fa-print"></i> Print</a>
+                        <a target="_new" href="'. base_url('admin/print-skiving-bill/'.$val->sb_id) .'" class="btn btn-warning"><i class="fa fa-print"></i> Print</a>
                         <a href="javascript:void(0)" pk-name="sb_id" pk-value="'.$val->sb_id.'" tab="skiving_bill" child="0" ref-table="" ref-pk-name="" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
             }
             $data[] = $nestedData;

@@ -909,12 +909,12 @@ force_download($name, $path);
         $search = $this->input->post('search')['value'];
 
         $rs = $this->db->select('sum(packing_shipment_detail.article_quantity) as article_quantity, packing_shipment_detail.packing_shipment_detail_id, packing_shipment_detail.packing_shipment_id, packing_shipment_detail.carton_number, packing_shipment_detail.co_id, packing_shipment_detail.cod_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id, packing_shipment_detail.fc_id, packing_shipment_detail.item, packing_shipment_detail.reference, packing_shipment_detail.box_size, packing_shipment_detail.leather, packing_shipment_detail.fitting, packing_shipment_detail.gross_weight, packing_shipment.invoice_status, packing_shipment_detail.net_weight,customer_order.co_no,customer_order.co_date, colors.color as leather_color, colors.c_code as leather_code, colors.c_id as leather_id, article_master.art_no, packing_shipment_detail.update_after_invoice_text, customer_order.co_id, article_master.am_id, article_master.info, article_master.alt_art_no')
-        ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
-        ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
-        ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
-        ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
-        ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
-        ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();
+            ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
+            ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
+            ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
+            ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
+            ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
+            ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();
             
         $totalData = count($rs);
         $totalFiltered = $totalData;
@@ -924,12 +924,12 @@ force_download($name, $path);
             $this->db->limit($limit, $start);
             $this->db->order_by($order, $dir);
             $rs = $this->db->select('sum(packing_shipment_detail.article_quantity) as article_quantity, packing_shipment_detail.packing_shipment_detail_id, packing_shipment_detail.packing_shipment_id, packing_shipment_detail.carton_number, packing_shipment_detail.co_id, packing_shipment_detail.cod_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id, packing_shipment_detail.fc_id, packing_shipment_detail.item, packing_shipment_detail.reference, packing_shipment_detail.box_size, packing_shipment_detail.leather, packing_shipment_detail.fitting, packing_shipment_detail.gross_weight, packing_shipment.invoice_status, packing_shipment_detail.net_weight,customer_order.co_no,customer_order.co_date, colors.color as leather_color, colors.c_code as leather_code, colors.c_id as leather_id, article_master.art_no, packing_shipment_detail.update_after_invoice_text, customer_order.co_id, article_master.am_id, article_master.info, article_master.alt_art_no')
-        ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
-        ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
-        ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
-        ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
-        ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
-        ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();
+                ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
+                ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
+                ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
+                ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
+                ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
+                ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();
         }
         //if searching for something
         else {
@@ -953,24 +953,24 @@ force_download($name, $path);
             $this->db->stop_cache();
 
             $rs = $this->db->select('sum(packing_shipment_detail.article_quantity) as article_quantity, packing_shipment_detail.packing_shipment_detail_id, packing_shipment_detail.packing_shipment_id, packing_shipment_detail.carton_number, packing_shipment_detail.co_id, packing_shipment_detail.cod_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id, packing_shipment_detail.fc_id, packing_shipment_detail.item, packing_shipment_detail.reference, packing_shipment_detail.box_size, packing_shipment_detail.leather, packing_shipment_detail.fitting, packing_shipment_detail.gross_weight, packing_shipment.invoice_status, packing_shipment_detail.net_weight,customer_order.co_no,customer_order.co_date, colors.color as leather_color, colors.c_code as leather_code, colors.c_id as leather_id, article_master.art_no, packing_shipment_detail.update_after_invoice_text, customer_order.co_id, article_master.am_id, article_master.info, article_master.alt_art_no')
-        ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
-        ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
-        ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
-        ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
-        ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
-        ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();        
+                ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
+                ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
+                ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
+                ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
+                ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
+                ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();        
 
             $totalFiltered = count($rs);
 
             $this->db->limit($limit, $start);
             $this->db->order_by($order, $dir);
             $rs = $this->db->select('sum(packing_shipment_detail.article_quantity) as article_quantity, packing_shipment_detail.packing_shipment_detail_id, packing_shipment_detail.packing_shipment_id, packing_shipment_detail.carton_number, packing_shipment_detail.co_id, packing_shipment_detail.cod_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id, packing_shipment_detail.fc_id, packing_shipment_detail.item, packing_shipment_detail.reference, packing_shipment_detail.box_size, packing_shipment_detail.leather, packing_shipment_detail.fitting, packing_shipment_detail.gross_weight, packing_shipment.invoice_status, packing_shipment_detail.net_weight,customer_order.co_no,customer_order.co_date, colors.color as leather_color, colors.c_code as leather_code, colors.c_id as leather_id, article_master.art_no, packing_shipment_detail.update_after_invoice_text, customer_order.co_id, article_master.am_id, article_master.info, article_master.alt_art_no')
-        ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
-        ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
-        ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
-        ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
-        ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
-        ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();
+                ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
+                ->join('customer_order', 'customer_order.co_id = packing_shipment_detail.co_id', 'left')
+                ->join('article_master', 'article_master.am_id = packing_shipment_detail.am_id', 'left')
+                ->join('colors', 'colors.c_id = packing_shipment_detail.lc_id', 'left')
+                ->group_by('packing_shipment_detail.co_id, packing_shipment_detail.am_id, packing_shipment_detail.lc_id')
+                ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $packing_shipment_id, 'packing_shipment_detail.update_after_invoice' => 1))->result();
 
             $this->db->flush_cache();
         }
@@ -985,7 +985,7 @@ force_download($name, $path);
            $inv_rows = $this->db->join('office_invoice', 'office_invoice.office_invoice_id = office_invoice_detail.office_invoice_id', 'left')->get_where('office_invoice_detail', array('office_invoice.packing_shipment_id' => $val->packing_shipment_id, 'office_invoice_detail.office_invoice_id' => $office_invoice_id, 'office_invoice_detail.co_id' => $val->co_id, 'office_invoice_detail.am_id' => $val->am_id, 'office_invoice_detail.lc_id' => $val->leather_id))->num_rows();
 
            $rs_qnty_total = $this->db->select('sum(packing_shipment_detail.article_quantity) as article_quantity, update_after_invoice')
-        ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $val->packing_shipment_id, 'packing_shipment_detail.co_id' => $val->co_id, 'packing_shipment_detail.am_id' => $val->am_id, 'packing_shipment_detail.lc_id' => $val->leather_id, 'packing_shipment_detail.status' => 1))->row();
+                ->get_where('packing_shipment_detail', array('packing_shipment_detail.packing_shipment_id' => $val->packing_shipment_id, 'packing_shipment_detail.co_id' => $val->co_id, 'packing_shipment_detail.am_id' => $val->am_id, 'packing_shipment_detail.lc_id' => $val->leather_id, 'packing_shipment_detail.status' => 1))->row();
 
         if(count($rs_qnty_total) > 0) {
             $qnty_total = $rs_qnty_total->article_quantity;
@@ -1032,9 +1032,10 @@ force_download($name, $path);
             $nestedData['gross_weight'] = $val->gross_weight;
             $nestedData['net_weight'] = $net_weight;
             if($inv_rows == 0 && $status == 1) {
-            $nestedData['status'] = '<button po-id="'.$val->packing_shipment_detail_id .'" type="button" class="add_btn btn btn-success"> Add </button>';
+                $nestedData['status'] = '<button po-id="'.$val->packing_shipment_detail_id .'" type="button" class="add_btn btn btn-success"> Add </button>';
             } else {
-            $nestedData['status'] = $update_after_invoice_text."<br/><a href='". $link_of_detail_page ."' target='_blank'><u>view details</u></a>";
+                $nestedData['status'] = "<button data-action='".$update_after_invoice_text."' data-psd_id = '".$val->packing_shipment_detail_id."' class='btn btn-sm btn-warning adjust'>Adjust</button>
+                    <br><a class='btn btn-sm btn-link' href='". $link_of_detail_page ."' target='_blank'><u>Details</u></a>";
             }
    //          if($val->invoice_status == 0) {
    //          $nestedData['action'] = '<a href="javascript:void(0)" packing_shipment_detail_id="'.$val->packing_shipment_detail_id.'" class="packing_shipment_detail_edit_btn btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
@@ -1059,6 +1060,58 @@ force_download($name, $path);
         return $json_data;
     }
 
+    public function adjust_invoice_from_shipment_details(){
+        $psd_id = $this->input->post('psd_id');
+        $row = $this->db->get_where('packing_shipment_detail', array('packing_shipment_detail_id' => $psd_id))->row();
+
+        $ps_id = $row->packing_shipment_id;
+        $operation = $row->update_after_invoice_text;
+        $qnty = $row->article_quantity;
+        $co_id = $row->co_id;
+        $am_id = $row->am_id;
+        $lc_id = $row->lc_id;
+        
+        $office_invoice_id = $this->db->get_where('office_invoice',array('packing_shipment_id' => $ps_id))->row()->office_invoice_id;
+
+        $invoice_quantity = $this->db->get_where('office_invoice_detail',
+            array(
+                'office_invoice_id' => $office_invoice_id, 
+                'co_id' => $co_id,
+                'am_id' => $am_id,
+                'lc_id' => $lc_id
+                )
+            )->row()->quantity;
+
+        if($operation == 'added'){
+            $new_qnty =  $qnty + $invoice_quantity;
+        }else if($operation == 'deleted'){
+            $new_qnty =  $invoice_quantity - $qnty;
+        }
+
+        $update_arr = array(
+            'quantity' => $new_qnty
+        );
+        $this->db->where(
+            array(
+                'office_invoice_id' => $office_invoice_id, 
+                'co_id' => $co_id,
+                'am_id' => $am_id,
+                'lc_id' => $lc_id
+            )
+        )->update('office_invoice_detail', $update_arr);
+       
+        // Update pack shipment table values to blank
+        $update_ps_arr = array(
+            'update_after_invoice_text' => '',
+            'update_after_invoice' => 0
+        );
+        $this->db->where('packing_shipment_detail_id', $psd_id)->update('packing_shipment_detail', $update_ps_arr);
+
+        $data['type'] = 'success';
+        $data['msg'] = 'Office Invoice details updated successfully.';
+        return $data;
+    }
+
     public function packing_list_changes_details($pack_id){
 
     $data = [];
@@ -1078,7 +1131,7 @@ force_download($name, $path);
 
     public function all_items_on_purchase_order_receive_detail($invoice_id){
         $data = [];
-    $this->db->select('office_invoice_detail.office_invoice_detail_id, office_invoice_detail.office_invoice_id, office_invoice_detail.co_id, office_invoice_detail.cod_id, office_invoice_detail.am_id, office_invoice_detail.fc_id, office_invoice_detail.lc_id, office_invoice_detail.item_no, office_invoice_detail.reference_no, office_invoice_detail.quantity, office_invoice_detail.rate_inr, office_invoice_detail.rate_foreign, office_invoice_detail.additional_charges, office_invoice_detail.net_rate, office_invoice_detail.amount, customer_order.co_no, article_master.art_no, colors.color, colors.c_code');
+        $this->db->select('office_invoice_detail.office_invoice_detail_id, office_invoice_detail.office_invoice_id, office_invoice_detail.co_id, office_invoice_detail.cod_id, office_invoice_detail.am_id, office_invoice_detail.fc_id, office_invoice_detail.lc_id, office_invoice_detail.item_no, office_invoice_detail.reference_no, office_invoice_detail.quantity, office_invoice_detail.rate_inr, office_invoice_detail.rate_foreign, office_invoice_detail.additional_charges, office_invoice_detail.net_rate, office_invoice_detail.amount, customer_order.co_no, article_master.art_no, colors.color, colors.c_code');
 		$this->db->join('customer_order', 'customer_order.co_id = office_invoice_detail.co_id', 'left');
 		$this->db->join('article_master', 'article_master.am_id = office_invoice_detail.am_id', 'left');
 		$this->db->join('colors', 'colors.c_id = office_invoice_detail.fc_id', 'left');
@@ -1276,6 +1329,65 @@ force_download($name, $path);
         }
 		
         return array('page'=>'office_invoice/office_invoice_print_hsncodewise_v', 'data'=>$data);
+    }
+
+    public function office_invoice_print_hsncheck($invoice_id){
+        $data = [];
+        if($this->input->post()){
+            
+            // $setup_array = array(
+            //     'front_page' => $this->input->post('first_page_row'),
+            //     'other_page' => $this->input->post('other_page_row'),
+            //     'module_id' => $this->input->post('module_id'),
+            //     'blank_row' => $this->input->post('blank_row'),
+            //     'user_id' => $this->input->post('user_id')
+            // );
+            
+            // $nr = $this->db->get_where('page_setup', array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')))->num_rows();
+            
+            // if($nr == 0){
+            //     #insert
+            //     $this->db->insert('page_setup', $setup_array);
+            // }else{   
+            //     #update
+            //     $this->db->update('page_setup',$setup_array,array('module_id' => $this->input->post('module_id'), 'user_id' => $this->input->post('user_id')));
+            // }
+            
+        }
+        
+        // $data['page_setup'] = $this->db->select('front_page,other_page,blank_row')->get_where('page_setup', array('module_id' => 8, 'user_id' => $this->session->user_id))->result(); #8 = office invoice
+		
+		$this->db->select('office_invoice_detail.office_invoice_detail_id, office_invoice_detail.office_invoice_id, office_invoice_detail.rate_inr, office_invoice_detail.co_id, office_invoice_detail.cod_id, office_invoice_detail.am_id, office_invoice_detail.fc_id, office_invoice_detail.lc_id, office_invoice_detail.item_no, office_invoice_detail.reference_no, office_invoice_detail.quantity, office_invoice_detail.rate_inr, office_invoice_detail.rate_foreign, office_invoice_detail.additional_charges, office_invoice_detail.net_rate, office_invoice_detail.amount, customer_order.co_no, customer_order.buyer_reference_no, article_master.art_no, colors.color, colors.c_code, ac1.name as acc_name, ac1.address as acc_address,
+		   ac2.name as acc_name2, ac2.address as acc_address2, office_invoice.office_invoice_number, DATE_FORMAT(office_invoice.office_invoice_date, "%d-%m-%Y") as office_invoice_date, office_invoice.terms_of_delivery_payment,
+			countries.country, office_invoice.pre_carriage_by, office_invoice.port_of_discharge, office_invoice.description_of_goods, office_invoice.mark_container, office_invoice.no_of_kind_of_package, office_invoice.terms_conditions, office_invoice.ex_rate, office_invoice.gross_weight, office_invoice.net_weight, office_invoice.volume_weight, office_invoice.cust_header_name, office_invoice.acc_master_declar_id, office_invoice.rate_type, currencies.currency, currencies.info,
+			article_master.art_no,article_master.alt_art_no, article_master.info as art_info, article_master.hand_machine, article_master.leather_type_info, article_master.remark, article_master.metal_fitting, article_master.size, article_master.brand, item_master.item as item_name, acc_master_declaration.declaration_subject, office_invoice.discount, office_invoice.hand_charge, item_groups.group_name');
+
+		$this->db->join('office_invoice', 'office_invoice.office_invoice_id = office_invoice_detail.office_invoice_id', 'left');
+        $this->db->join('article_master', 'article_master.am_id = office_invoice_detail.am_id', 'left');
+		$this->db->join('customer_order', 'customer_order.co_id = office_invoice_detail.co_id', 'left');
+		$this->db->join('item_master', 'item_master.im_id = article_master.carton_id', 'left');
+		$this->db->join('item_groups', 'item_groups.ig_id = item_master.ig_id', 'left');
+		$this->db->join('colors', 'colors.c_id = office_invoice_detail.lc_id', 'left');
+		$this->db->join('acc_master ac1', 'ac1.am_id = office_invoice.am_id', 'left');
+		$this->db->join('acc_master_declaration', 'acc_master_declaration.am_id = office_invoice.am_id', 'left');
+		$this->db->join('acc_master ac2', 'ac2.am_id = office_invoice.am_id_other', 'left');
+		$this->db->join('countries', 'countries.c_id = ac1.c_id', 'left');
+		$this->db->join('currencies', 'currencies.cur_id = office_invoice.cur_id', 'left');
+		// $this->db->order_by('`article_master`.`remark`', 'article_master.info, customer_order.buyer_reference_no');
+		
+        $data['print_hsn_check'] = $this->db->get_where('office_invoice_detail', array('office_invoice_detail.office_invoice_id' => $invoice_id))->result();
+		
+// 		echo $this->db->last_query(); die;
+// 		echo '<pre>', print_r($data['print_packing_list_groupwise']), '</pre>'; die();
+
+        // $var = $data['print_packing_list_groupwise'][0]->acc_master_declar_id;
+        
+        // if($var != '') {
+        //     $sql = "SELECT DECLARATION_DESCRIPTION, DECLARATION_SUBJECT FROM invoice_declaration WHERE INVOICE_DECLARATION_SEQ IN($var)";
+        //     $data['fetch_individual_declaration_details'] = $this->db->query($sql)->result();
+        // }
+		
+        return array('page'=>'office_invoice/office_invoice_print_hsncheck_v', 'data'=>$data);
     }
     
     

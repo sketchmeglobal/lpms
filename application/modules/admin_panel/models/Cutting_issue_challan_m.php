@@ -380,28 +380,28 @@ class Cutting_issue_challan_m extends CI_Model {
         }
             } else {
                 #module_permission contains the dept id now
-                $order_table = $this->db->select('co_id, co_no')
-        ->join('user_details','user_details.user_id = customer_order.user_id','left')
-        ->where('user_details.user_dept', $module_permission)
-        ->get_where('customer_order', array( 'customer_order.status' => 1))->result();
-        foreach($order_table as $o_t) {
-            $order_total = $this->db->select_sum('customer_order_dtl.co_quantity')->get_where('customer_order_dtl', array('customer_order_dtl.co_id' => $o_t->co_id))->row()->co_quantity;
-            $cutting_total_num = $this->db->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.co_id'))->num_rows();
-            if($cutting_total_num > 0) {
-            $cutting_total = $this->db->select_sum('cutting_issue_challan_details.cut_co_quantity')->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.co_id' => $o_t->co_id))->row()->cut_co_quantity;
-            } else {
-            $cutting_total = 0;   
+            $order_table = $this->db->select('co_id, co_no')
+                ->join('user_details','user_details.user_id = customer_order.user_id','left')
+                ->where('user_details.user_dept', $module_permission)
+                ->get_where('customer_order', array( 'customer_order.status' => 1))->result();
+            foreach($order_table as $o_t) {
+                $order_total = $this->db->select_sum('customer_order_dtl.co_quantity')->get_where('customer_order_dtl', array('customer_order_dtl.co_id' => $o_t->co_id))->row()->co_quantity;
+                $cutting_total_num = $this->db->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.co_id'))->num_rows();
+                if($cutting_total_num > 0) {
+                    $cutting_total = $this->db->select_sum('cutting_issue_challan_details.cut_co_quantity')->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.co_id' => $o_t->co_id))->row()->cut_co_quantity;
+                } else {
+                    $cutting_total = 0;   
+                }
+                if($order_total > $cutting_total) {
+                $arr = array(
+                    'co_id' => $o_t->co_id,
+                    'co_no' => $o_t->co_no
+                    );
+                    array_push($data['customer_order'], $arr);
+                }
+                
             }
-         if($order_total > $cutting_total) {
-             $arr = array(
-                 'co_id' => $o_t->co_id,
-                 'co_no' => $o_t->co_no
-                 );
-             array_push($data['customer_order'], $arr);
-         }
-            
         }
-            }
             
         $data['cutting_issue_challan_details'] = $this->db
                 ->select('cutting_issue_challan.*, acc_master.am_id, acc_master.name, acc_master.short_name')

@@ -1639,28 +1639,236 @@ $data['fetch_all_buyer'] = $this->db->get_where('acc_master', array('acc_type' =
 
         }
 
-        if($this->input->post('print') == 'Print (New)'){
-            // $la =$this->input->post('leather');
-            $item_dtl_ids = implode (",", $this->input->post('leather'));
-            // $data['result1'] = $this->_custom_leather_status_summary_on_co_id_for_pur_order($la);
-             
-            $costing_details = $this->db
-                ->select('article_costing.ac_id,article_costing_details.id_id,article_costing_details.quantity as costing_qnty, article_costing.am_id, combination_or_not')
-                ->join('article_costing', 'article_costing.ac_id = article_costing_details.ac_id', 'left')
-                ->where_in(array('id_id' => $item_dtl_ids))
-                ->get('article_costing_details')->result();
+        if($this->input->post('print_all') or $this->input->post('print_po')){
 
-            echo '<pre>';print_r($costing_details); die;
+            $this->db->query("SET sql_mode = ''");
+            $this->db->query("SET SQL_BIG_SELECTS=1");
 
-            $data['item_id'] = $item_dtl_ids;
-            $data['segment'] = 'leather_status';
-            $data['segment1'] = 'leather_status';
- 
-            // echo '<pre>',print_r($data['result1']),'</pre>'; die(); 
+            $item_dtl_ids = $this->input->post('leather');
+            // print_r($item_dtl_ids); 
+            foreach($item_dtl_ids as $key=>$idi){
 
-            
- 
-             return array('page'=>'reports/common_print_v','data'=>$data);
+                $item_colr = $this->db->get_where('item_dtl', array('id_id' => $idi))->row()->c_id;
+                $item_id = $this->db->get_where('item_dtl', array('id_id' => $idi))->row()->im_id;
+
+                $item_row = $this->db->get_where('item_dtl', array('im_id' => $item_id, 'c_id' => '1'))->row();
+                if(count($item_row) > 0){
+                    $item_id_in_black = $item_row->id_id;
+                }else{
+                    $item_id_in_black = $item_colr;
+                }
+
+                
+                $costing_consumption_sql = " 
+                SELECT
+                    $idi as org_id_id, co_id,co_no,
+                    SUM(co_qnty) AS co_qnty,
+                    SUM(cut_issue_qnty) AS cut_issue_qnty,
+                    SUM(cut_rcvd_qnty) AS cut_rcvd_qnty
+                    FROM
+                    (
+                    SELECT
+                        cut_iss.*,
+                        (costing_qnty * org_co_qnty) AS co_qnty,
+                        (costing_qnty * ci_qnty) AS cut_issue_qnty,
+                        (
+                        SELECT
+                            SUM(receive_cut_quantity) AS cr_qnty
+                        FROM
+                            `cutting_received_challan_detail` AS crcd
+                        WHERE
+                            crcd.co_id = cut_iss.co_id AND crcd.am_id = cut_iss.am_id AND crcd.lc_id = cut_iss.lc_id
+                        GROUP BY
+                            crcd.am_id,
+                            crcd.lc_id
+                    ) * costing_qnty AS cut_rcvd_qnty
+                    FROM
+                    (
+                    SELECT
+                        der.*,
+                        (
+                        SELECT
+                            SUM(cut_co_quantity) AS ci_qnty
+                        FROM
+                            `cutting_issue_challan_details` AS cicd
+                        WHERE
+                            cicd.co_id = der.co_id AND cicd.am_id = der.am_id AND cicd.lc_id = der.lc_id
+                        GROUP BY
+                            cicd.am_id,
+                            cicd.lc_id
+                    ) AS ci_qnty
+                    FROM
+                    (
+                    SELECT
+                        `article_costing`.`am_id`,
+                        `customer_order_dtl`.`co_id`,
+                        `customer_order_dtl`.`lc_id`,
+                        `article_costing`.`ac_id`,
+                        `article_costing_details`.`id_id`,
+                        `customer_order`.`co_no`,
+                        `article_costing_details`.`quantity` AS `costing_qnty`,
+                        `customer_order_dtl`.`co_quantity` AS org_co_qnty,
+                        `combination_or_not`
+                    FROM
+                        `article_costing_details`
+                    LEFT JOIN `article_costing` ON `article_costing`.`ac_id` = `article_costing_details`.`ac_id`
+                    LEFT JOIN `customer_order_dtl` ON `customer_order_dtl`.`am_id` = `article_costing`.`am_id`
+                    LEFT JOIN `customer_order` ON `customer_order`.`co_id` = `customer_order_dtl`.`co_id`
+                    WHERE
+                        `id_id` = $item_id_in_black AND(
+                            customer_order_dtl.lc_id = $item_colr /*customer_order_dtl.lc_id = 1 OR*/
+                        )
+                    ORDER BY
+                        customer_order_dtl.co_id,
+                        am_id,
+                        customer_order_dtl.lc_id
+                    ) AS der
+                    ) AS cut_iss
+                    ) AS cut_rcv
+                    GROUP BY
+                    co_id
+                "; 
+                $rv = $this->db->query($costing_consumption_sql)->num_rows();
+                if($rv > 0){
+                    $data['status_details'][$key] = $this->db->query($costing_consumption_sql)->result();
+                    $data['status_row'][$key] = $rv;
+                }
+                
+
+
+                // COMBINATION AREA
+                // echo
+                $combination_colors_sql = " 
+                SELECT GROUP_CONCAT(der_tbl.combination_id_id) AS combination_id_id
+                    FROM
+                        (
+                        SELECT
+                            org_costing_tbl.*,
+                            (
+                            SELECT
+                                id_id AS combination_id_id
+                            FROM
+                                `item_dtl`
+                            WHERE
+                                `item_dtl`.`im_id` = org_costing_tbl.im_id AND `item_dtl`.`c_id` = org_costing_tbl.combination_color_id
+                        ) AS combination_id_id
+                    FROM
+                        (
+                        SELECT
+                            `article_costing`.`am_id`,
+                            `customer_order_dtl`.`co_id`,
+                            `customer_order_dtl`.`lc_id`,
+                            `article_costing`.`ac_id`,
+                            `article_costing_details`.`id_id`,
+                            `item_dtl`.`im_id`,
+                            `customer_order_combination_article_colors`.`c_id` AS combination_color_id,
+                            `customer_order_dtl`.`co_quantity` AS org_co_qnty
+                        FROM
+                            `article_costing_details`
+                        LEFT JOIN `item_dtl` ON `item_dtl`.`id_id` = `article_costing_details`.`id_id`
+                        LEFT JOIN `article_costing` ON `article_costing`.`ac_id` = `article_costing_details`.`ac_id`
+                        LEFT JOIN `customer_order_dtl` ON `customer_order_dtl`.`am_id` = `article_costing`.`am_id`
+                        LEFT JOIN `customer_order` ON `customer_order`.`co_id` = `customer_order_dtl`.`co_id`
+                        LEFT JOIN `customer_order_combination_article_colors` ON `customer_order_combination_article_colors`.`cod_id` = `customer_order_dtl`.`cod_id`
+                        WHERE
+                            `article_costing_details`.`id_id` = $idi AND customer_order_dtl.co_id IS NOT NULL AND(
+                                `customer_order_combination_article_colors`.`c_id` = $item_colr 
+                            )
+                        ORDER BY
+                            combination_color_id
+                    ) AS org_costing_tbl
+                ) AS der_tbl
+                "; 
+                $combination_id_id = $this->db->query($combination_colors_sql)->row()->combination_id_id;
+
+                if(!empty($combination_id_id)){
+                    
+                    $costing_consumption_sql = " 
+                    SELECT
+                        co_id,
+                        lc_id,
+                        id_id as org_id_id,
+                        co_no,
+                        SUM(co_qnty) AS co_qnty,
+                        SUM(cut_issue_qnty) AS cut_issue_qnty,
+                        SUM(cut_rcvd_qnty) AS cut_rcvd_qnty
+                    FROM
+                        (
+                        SELECT
+                            cut_iss.*,
+                            (costing_qnty * org_co_qnty) AS co_qnty,
+                            (costing_qnty * ci_qnty) AS cut_issue_qnty,
+                            (
+                            SELECT
+                                SUM(receive_cut_quantity) AS cr_qnty
+                            FROM
+                                `cutting_received_challan_detail` AS crcd
+                            WHERE
+                                crcd.co_id = cut_iss.co_id AND crcd.am_id = cut_iss.am_id AND crcd.lc_id = cut_iss.lc_id
+                            GROUP BY
+                                crcd.am_id,
+                                crcd.lc_id
+                        ) * costing_qnty AS cut_rcvd_qnty
+                    FROM
+                        (
+                        SELECT
+                            der.*,
+                            (
+                            SELECT
+                                SUM(cut_co_quantity) AS ci_qnty
+                            FROM
+                                `cutting_issue_challan_details` AS cicd
+                            WHERE
+                                cicd.co_id = der.co_id AND cicd.am_id = der.am_id AND cicd.lc_id = der.lc_id
+                            GROUP BY
+                                cicd.am_id,
+                                cicd.lc_id
+                        ) AS ci_qnty
+                    FROM
+                        (
+                        SELECT
+                            `article_costing`.`am_id`,
+                            `customer_order_dtl`.`co_id`,
+                            `customer_order_dtl`.`lc_id`,
+                            `article_costing`.`ac_id`,
+                            `article_costing_details`.`id_id`,
+                            `customer_order`.`co_no`,
+                            `article_costing_details`.`quantity` AS `costing_qnty`,
+                            `customer_order_dtl`.`co_quantity` AS org_co_qnty,
+                            `combination_or_not`
+                        FROM
+                            `article_costing_details`
+                        LEFT JOIN `article_costing` ON `article_costing`.`ac_id` = `article_costing_details`.`ac_id`
+                        LEFT JOIN `customer_order_dtl` ON `customer_order_dtl`.`am_id` = `article_costing`.`am_id`
+                        LEFT JOIN `customer_order` ON `customer_order`.`co_id` = `customer_order_dtl`.`co_id`
+                        WHERE
+                            `id_id` IN($combination_id_id) AND customer_order_dtl.co_id IS NOT NULL
+                        ORDER BY
+                            customer_order_dtl.co_id,
+                            am_id,
+                            customer_order_dtl.lc_id
+                    ) AS der
+                    ) AS cut_iss
+                    ) AS cut_rcv
+                    GROUP BY
+                        co_id,
+                        lc_id
+                    "; 
+                                    
+                    $data['status_details_comb'][$key] = $this->db->query($costing_consumption_sql)->result();
+                    $data['status_row_comb'][$key] = $this->db->query($costing_consumption_sql)->num_rows();
+                    
+                }   
+
+
+                // COMBINATION AREA ENDS
+
+                // echo '<pre>';print_r($data['status_details']); die;
+                $data['item_id'][$key] = $idi;
+                
+            }
+            $data['search_type'] = isset($this->input->post()['print_all']) ? 'print_all' : 'print_po';
+            return array('page'=>'reports/leather_status_details','data'=>$data);
  
         }
         

@@ -516,6 +516,10 @@
             success: function(result){
                 console.log(JSON.stringify(result));
 				
+                if(result.entry_status == '0'){
+                    alert('Duplicate data exists. Please edit the existing value');
+                }
+
 				$('#lc_id_text').val(result.article.leather_color);
 				$('#fc_id_text').val(result.article.fitting_color);
 				$('#lc_id').val(result.article.lc_id);

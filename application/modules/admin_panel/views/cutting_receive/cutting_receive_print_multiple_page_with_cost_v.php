@@ -210,7 +210,7 @@ if(count($page_setup) > 0) {
                                         }
                                     }
 
-
+                                    $order_total = 0;
                                     $total_receive_cut_quantity = 0;
                                     $grand_total_receive_cut_quantity = 0;
                                     $grand_total_parts = 0;
@@ -327,7 +327,8 @@ if(count($page_setup) > 0) {
                                         ?></td>
                                         <td class="text-right">
                                             <?php
-                                            $total = $d->receive_cut_quantity * $d->quantity * $d->cutting_rate_a;
+                                            $total = $d->receive_cut_quantity * $quantity * $d->cutting_rate_a;
+                                            $order_total += $total;
                                             $total_amount = $total;
                                             echo $total;
                                             $grand_total_amount += $total_amount;
@@ -340,9 +341,9 @@ if(count($page_setup) > 0) {
                                         <tr>
                                             <td colspan="4" class="text-left"><b>Order Total For <?= $d->cut_rcv_number ?></b></td>
                                             <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?= $groups[$d->cut_rcv_number]['gr_sum'] ?></td>
-                                            <td class="text-right"><?= $groups[$d->cut_rcv_number]['gr_parts'] ?></td>
-                                            <td class="text-right"><?= number_format($groups[$d->cut_rcv_number]['gr_rate'], 2) ?></td>
-                                            <td class="text-right"><?= number_format($groups[$d->cut_rcv_number]['gr_amount'], 2) ?></td>
+                                            <td class="text-right"><?php #groups[$d->cut_rcv_number]['gr_parts'] ?></td>
+                                            <td class="text-right"><?php  #number_format($groups[$d->cut_rcv_number]['gr_rate'], 2) ?></td>
+                                            <td class="text-right"><?php echo number_format($order_total, 2); $order_total = 0; #number_format($groups[$d->cut_rcv_number]['gr_amount'], 2) ?></td>
                                         </tr>
                                         <?php
                                         
@@ -350,24 +351,24 @@ if(count($page_setup) > 0) {
                                     }
                                     
                                     
-                                        $last_iter = $iter;
-                            $last_page_no = $page_no;
-                            $iter++;
+                                    $last_iter = $iter;
+                                    $last_page_no = $page_no;
+                                    $iter++;
                                     }
                                 ?>
                                 
                                 
                                 <?php
-                        if ($last_page_no == 1) {
-                            $add_td = (9 - $last_iter);
-                        } else {
-                            $temp_add = ($last_iter - 12) % 9;  
-                            if ($temp_add == 0) {
-                                $add_td = 0;
-                            } else {
-                                $add_td = 12 - $temp_add;
-                            }
-                        }
+                                    if ($last_page_no == 1) {
+                                        $add_td = (9 - $last_iter);
+                                    } else {
+                                        $temp_add = ($last_iter - 12) % 9;  
+                                        if ($temp_add == 0) {
+                                            $add_td = 0;
+                                        } else {
+                                            $add_td = 12 - $temp_add;
+                                        }
+                                    }
 //                                echo $last_iter . ' => ' . $last_page_no;
 //                                echo 'td to be added. =>' . $add_td;die;
 
@@ -392,12 +393,12 @@ if(count($page_setup) > 0) {
                         ?>
                                 
                                 
-                             <tr>
+                                        <tr>
                                             <td colspan="4" class="text-left"><b>Grand total</b></td>
                                             <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?=  $grand_total_receive_cut_quantity  ?></td>
-                                            <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?=  $grand_total_parts  ?></td>
-                                            <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?=  $grand_total_rate  ?></td>
-                                            <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?=  $grand_total_amount  ?></td>
+                                            <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?php  #$grand_total_parts  ?></td>
+                                            <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?php #  $grand_total_rate  ?></td>
+                                            <td  class="text-right" style="font-weight: bold; font-size: 14px" class="text-right"><?= number_format($grand_total_amount, 2)  ?></td>
                                         </tr>
                                 
                                 

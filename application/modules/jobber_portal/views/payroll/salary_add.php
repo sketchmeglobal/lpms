@@ -934,7 +934,8 @@
            wages_earned = parseFloat(no_of_part) * parseFloat(rate_per_part);
            $("#wages_earned").val(wages_earned);
 
-           pay_for_holiday = Math.round(parseFloat(wages_earned) / parseFloat($("#adw").val()))
+           $sub_holidays = parseFloat($("#hol").val()) + parseFloat($("#cl").val()) + parseFloat($("#el").val()) + parseFloat($("#esil").val());
+           pay_for_holiday = Math.round((parseFloat(wages_earned) / parseFloat($("#adw").val()) * $sub_holidays))
            $("#pay_for_holiday").val(pay_for_holiday);
            
            total_wages_earned = parseFloat(pay_for_holiday) + parseFloat(pay_for_leave) + wages_earned

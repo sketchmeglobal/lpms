@@ -138,7 +138,7 @@
                                        </div>
                                        
                                        <div class="col-sm-6">
-                                            <label>PF?:</label>
+                                            <label>PF:</label>
                                            <span class="pf"></span>
                                        </div>
                                        

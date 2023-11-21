@@ -576,7 +576,7 @@ $('#copy_packing_details').prop('disabled', false);
             dataType: 'json',
             data: {'packing_shipment_id': $packing_shipment_id},  
             success: function(result){
-                console.log(JSON.stringify(result));
+                // console.log(JSON.stringify(result));
                 $("#detail_table").html("");
                 $table_str += '<table class="table">';
                   $table_str += '<thead>';
@@ -596,7 +596,14 @@ $('#copy_packing_details').prop('disabled', false);
                   $table_str += '<tbody>';
                   
                 $.each(result, function(index, item) {
-                    //console.log('item: '+item);
+                    console.log('item: '+item);
+
+                    $pack_edit = '';
+                    if(item.invoice_status == 1){
+                        $pack_edit = ' readonly ';
+                    }else{
+                        $pack_edit = ' ';
+                    }
 
                     $table_str += '<tr>';
                       $table_str += '<th scope="row"><input id="pack_detail_'+item.packing_shipment_detail_id+'" name="carton_number" class="carton_number" type="number" value="'+item.carton_number+'" style="width: 60%;"/><input id="pack_detail_'+item.packing_shipment_detail_id+'" name="pack_detail" class="pack_detail" type="hidden" value="'+item.packing_shipment_detail_id+'"/><input id="pack_id_'+item.packing_shipment_id+'" name="pack_id" class="pack_id" type="hidden" value="'+item.packing_shipment_id+'"/></th>';
@@ -606,7 +613,7 @@ $('#copy_packing_details').prop('disabled', false);
                       $table_str += '<td><input id="item_no_'+item.packing_shipment_detail_id+'" name="item_no" class="item_no" type="text" value="'+item.item+'" style="width: 100%;"/></td>';
                       $table_str += '<td><input id="refn_'+item.packing_shipment_detail_id+'" name="refn" class="refn" type="text" value="'+item.reference+'" style="width: 100%;"/></td>';
                       $table_str += '<td>'+item.box_size+'</td>';
-                      $table_str += '<td><input id="quantity_'+item.packing_shipment_detail_id+'" name="quantity" class="quantity" type="number" value="'+Math.round(item.article_quantity)+'" style="width: 60%;"/></td>';
+                      $table_str += '<td><input' + $pack_edit + 'id="quantity_'+item.packing_shipment_detail_id+'" name="quantity" class="quantity" type="number" value="'+Math.round(item.article_quantity)+'" style="width: 60%;"/></td>';
                       $table_str += '<td><input id="gross_'+item.packing_shipment_detail_id+'" name="gross" class="gross" type="number" value="'+item.gross_weight+'" style="width: 60%;"/></td>';
                       $table_str += '<td><input id="net_'+item.packing_shipment_detail_id+'" name="net" class="net" type="number" value="'+item.net_weight+'" style="width: 60%;" readonly/></td>';
                       $table_str += '<td><input id="update_'+item.packing_shipment_detail_id+'" name="update_btn" class="update_btn btn-success" type="submit" value="update"/></td>';

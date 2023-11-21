@@ -630,33 +630,43 @@ class Cutting_receive_m extends CI_Model {
         //$cod_id = $this->input->post('cod_id');
         
         $data = [];
-        
+        $data['entry_status']  = 1;
+
         $this->db->select('cutting_issue_challan_details.co_id, cutting_issue_challan_details.cod_id, cutting_issue_challan_details.cut_co_quantity, cutting_issue_challan_details.fc_id, cutting_issue_challan_details.lc_id, article_master.am_id as article_master_id, article_master.art_no, c1.color as fitting_color, c1.c_code as fitting_code, c1.c_id as fitting_id, c2.color as leather_color, c2.c_code as leather_code, c2.c_id as leather_id');
         $this->db->join('article_master', 'article_master.am_id = cutting_issue_challan_details.am_id', 'left');
         $this->db->join('colors c1', 'c1.c_id = cutting_issue_challan_details.fc_id', 'left');
         $this->db->join('colors c2', 'c2.c_id = cutting_issue_challan_details.lc_id', 'left');
-        $article = $this->db->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.cod_id' => $cod_id, 'cutting_issue_challan_details.cut_id' => $cut_id))->result()[0];
+        $article = $this->db->get_where('cutting_issue_challan_details', array('cutting_issue_challan_details.cod_id' => $cod_id, 'cutting_issue_challan_details.cut_id' => $cut_id))->result();
         
-        //cut_co_quantity
-        $co_id = $article->co_id;
-        $am_id = $article->article_master_id;
-        $lc_id = $article->leather_id;
-        
-        $cut_co_quantity = $this->db->select_sum('cut_co_quantity')->get_where('cutting_issue_challan_details', array('co_id' => $co_id, 'am_id' => $am_id, 'lc_id' => $lc_id, 'cut_id' => $cut_id))->result()[0]->cut_co_quantity;
-        $article->cut_co_quantity = $cut_co_quantity;
+        if(empty($article)){
+            $data['entry_status']  = 0;
+            $co_id = null;
+            $am_id = null;
+            $lc_id = null;
+            $cut_co_quantity = null;
+        } else{
+            //cut_co_quantity
+            $article = $article[0];
+            $co_id = $article->co_id;
+            $am_id = $article->article_master_id;
+            $lc_id = $article->leather_id;
+            
+            $cut_co_quantity = $this->db->select_sum('cut_co_quantity')->get_where('cutting_issue_challan_details', array('co_id' => $co_id, 'am_id' => $am_id, 'lc_id' => $lc_id, 'cut_id' => $cut_id))->result()[0]->cut_co_quantity;
+            $article->cut_co_quantity = $cut_co_quantity;
+        }
                 
         $data['article'] = $article;
         
         $num_rows = $this->db->select('receive_cut_quantity')->get_where('cutting_received_challan_detail', array('co_id' => $co_id, 'am_id' => $am_id, 'lc_id' => $lc_id, 'cut_id' => $cut_id))->num_rows();
         
-        if($num_rows > 0){      
+        if($num_rows > 0){      // duplicate entry
             $receive_quantity = $this->db->select_sum('receive_cut_quantity')->get_where('cutting_received_challan_detail', array('co_id' => $co_id, 'am_id' => $am_id, 'lc_id' => $lc_id, 'cut_id' => $cut_id))->result()[0]->receive_cut_quantity;
+            $data['entry_status']  = 0;
         }else{
             $receive_quantity = 0;
         }
         
         $remain_receive_quantity = ($cut_co_quantity - $receive_quantity);
-        
         $data['receive_quantity'] = $remain_receive_quantity;
         
         return $data;
@@ -1608,48 +1618,49 @@ class Cutting_receive_m extends CI_Model {
         
         for($i = 0; $i < sizeof($cut_rcv_id); $i++){
             
-            $rs = $this->db->get_where('cutter_bill_dtl', array('cutter_bill_dtl.cb_id' => $cutter_bill_id, 'cutter_bill_dtl.cut_id' => $cut_id[$i], 'cutter_bill_dtl.cut_rcv_id' => $cut_rcv_id[$i],
-            'cutter_bill_dtl.co_id' => $co_id[$i], 'cutter_bill_dtl.am_id' => $am_id[$i], 'cutter_bill_dtl.leather_color' => $lth_color[$i], 'cutter_bill_dtl.fitting_colour' => $fit_color[$i],
-            'cutter_bill_dtl.original_quantity' => $original_quantity[$i], 'cutter_bill_dtl.extra_quantity' => $extra_quantity[$i], 'cutter_bill_dtl.parts' => $parts[$i],
-            'cutter_bill_dtl.rate' => $rate[$i], 'cutter_bill_dtl.total_amount' => $total_amount[$i]))->num_rows();
+            // $rs = $this->db->get_where('cutter_bill_dtl', array('cutter_bill_dtl.cb_id' => $cutter_bill_id, 'cutter_bill_dtl.cut_id' => $cut_id[$i], 'cutter_bill_dtl.cut_rcv_id' => $cut_rcv_id[$i],
+            // 'cutter_bill_dtl.co_id' => $co_id[$i], 'cutter_bill_dtl.am_id' => $am_id[$i], 'cutter_bill_dtl.leather_color' => $lth_color[$i], 'cutter_bill_dtl.fitting_colour' => $fit_color[$i],
+            // 'cutter_bill_dtl.original_quantity' => $original_quantity[$i], 'cutter_bill_dtl.extra_quantity' => $extra_quantity[$i], 'cutter_bill_dtl.parts' => $parts[$i],
+            // 'cutter_bill_dtl.rate' => $rate[$i], 'cutter_bill_dtl.total_amount' => $total_amount[$i]))->num_rows();
             
-            if($rs == 0) {
-            
-            $cutter_total = $cutter_total + $total_amount[$i];
-            
-            $insertArray = array(
-                'cb_id' => $cutter_bill_id,
-                'cut_id' => $cut_id[$i],
-                'cut_rcv_id' => $cut_rcv_id[$i],
-                'co_id' => $co_id[$i],
-                'am_id' => $am_id[$i],
-                'leather_color' => $lth_color[$i],
-                'fitting_colour' => $fit_color[$i],
-                'original_quantity' => $original_quantity[$i],
-                'extra_quantity' => $extra_quantity[$i],
-                'parts' => $parts[$i],
-                'rate' => $rate[$i],
-                'total_amount' => $total_amount[$i],
-                'user_id' => $user_id
-            );
+            // if($rs == 0) {
+            //     // noc condition
+            // }
 
-            $this->db->insert('cutter_bill_dtl', $insertArray);
-            $insert_id = $this->db->insert_id();
-            }
+            $cutter_total = $cutter_total + $total_amount[$i];
+                
+                $insertArray = array(
+                    'cb_id' => $cutter_bill_id,
+                    'cut_id' => $cut_id[$i],
+                    'cut_rcv_id' => $cut_rcv_id[$i],
+                    'co_id' => $co_id[$i],
+                    'am_id' => $am_id[$i],
+                    'leather_color' => $lth_color[$i],
+                    'fitting_colour' => $fit_color[$i],
+                    'original_quantity' => $original_quantity[$i],
+                    'extra_quantity' => $extra_quantity[$i],
+                    'parts' => $parts[$i],
+                    'rate' => $rate[$i],
+                    'total_amount' => $total_amount[$i],
+                    'user_id' => $user_id
+                );
+
+                $this->db->insert('cutter_bill_dtl', $insertArray);
+                $insert_id = $this->db->insert_id();
             
         }//end for
         $data['insert_id'] = $insert_id;
         
         if($insert_id > 0){
-        $cutter_row = $this->db->get_where('cutter_bill', array('cb_id' => $cutter_bill_id))->row();
-        $prev_cutter_val = $cutter_row->cutter_bill_total;
-        $cutter_total_new = $prev_cutter_val+$cutter_total;
+            $cutter_row = $this->db->get_where('cutter_bill', array('cb_id' => $cutter_bill_id))->row();
+            $prev_cutter_val = $cutter_row->cutter_bill_total;
+            $cutter_total_new = $prev_cutter_val+$cutter_total;
 
-        $updateArray = array(
-            'cutter_bill_total' => $cutter_total_new,
-        );
-        $this->db->update('cutter_bill', $updateArray, array('cb_id' => $cutter_bill_id));
-                
+            $updateArray = array(
+                'cutter_bill_total' => $cutter_total_new,
+            );
+            $this->db->update('cutter_bill', $updateArray, array('cb_id' => $cutter_bill_id));
+                    
             $data['type'] = 'success';
             $data['cutter_total'] = $cutter_total_new;
             $data['msg'] = 'Cutter Bill details added successfully.';

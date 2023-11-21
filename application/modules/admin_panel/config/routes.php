@@ -97,6 +97,7 @@ $route['admin/get-all-emp-id-for-overtime'] = 'admin_panel/Master/get_all_emp_id
 $route['admin/form-add-overtime'] = 'admin_panel/Master/form_add_overtime';
 $route['admin/ajax-overtime-table-data'] = 'admin_panel/Master/ajax_overtime_table_data_m';
 $route['admin/del-overtime-list'] = 'admin_panel/Master/del_overtime_list_m';
+
 $route['admin/article_master'] = 'admin_panel/Master/article_master';
 $route['admin/add_article'] = 'admin_panel/Master/add_article';
 $route['admin/form_add_article'] = 'admin_panel/Master/form_add_article';
@@ -113,25 +114,15 @@ $route['ajax_fetch_article_color'] = 'admin_panel/Master/ajax_fetch_article_colo
 $route['ajax_fetch_article_part'] = 'admin_panel/Master/ajax_fetch_article_part';
 $route['ajax_unique_article_part_item_group'] = 'admin_panel/Master/ajax_unique_article_part_item_group';
 $route['admin/form_add_article_rate'] = 'admin_panel/Master/form_add_article_rate';
-
-
 $route['admin/form_add_article_rate_new'] = 'admin_panel/Master/form_add_article_rate_new';
-
-
 $route['admin/form_edit_article_rate'] = 'admin_panel/Master/form_edit_article_rate';
-
-
 $route['admin/form_edit_article_rate_new'] = 'admin_panel/Master/form_edit_article_rate_new';
-
-
 $route['ajax_fetch_article_rate'] = 'admin_panel/Master/ajax_fetch_article_rate';
-
-
 $route['ajax_fetch_article_rate_new'] = 'admin_panel/Master/ajax_fetch_article_rate_new';
-
-
 $route['ajax_unique_article_rate_date'] = 'admin_panel/Master/ajax_unique_article_rate_date';
 $route['ajax_unique_article_rate_date_new'] = 'admin_panel/Master/ajax_unique_article_rate_date_new';
+
+$route['admin/article_rate_stitch'] = 'admin_panel/Master/article_rate_stitch';
 
 $route['admin/courier-master'] = 'admin_panel/Master/courier';
 $route['admin/courier-master/(:any)'] = 'admin_panel/Master/courier';
@@ -549,6 +540,23 @@ $route['admin/del-skiving-receive-challan-details-list'] = 'admin_panel/Skiving_
 
 //Skiving Receive End
 
+// Stichting
+	$route['admin/stitching-bill'] = 'admin_panel/Stitching_issue/stitching_bill';
+	$route['admin/ajax-stitching-bill-table-data'] = 'admin_panel/Stitching_issue/ajax_stitching_bill_table_data';
+	$route['admin/ajax-stitching-bill-details-table-data'] = 'admin_panel/Stitching_issue/ajax_stitching_bill_details_table_data';
+	$route['admin/ajax-article-dtl-on-co_id'] = 'admin_panel/Stitching_issue/ajax_article_detail_on_co_id';
+	$route['admin/ajax-fetch-stitching-bill-pending-qnty'] = 'admin_panel/Stitching_issue/ajax_fetch_stitching_bill_pending_qnty';
+	//Bill add
+	$route['admin/add-stitching-bill'] = 'admin_panel/Stitching_issue/add_stitching_bill';
+	$route['admin/form-add-stitching-bill'] = 'admin_panel/Stitching_issue/form_add_stitching_bill';
+	$route['admin/form-add-stitching-bill-details'] = 'admin_panel/Stitching_issue/form_add_stitching_bill_details';
+	//Bill edit
+	$route['admin/edit-stitching-bill/(:num)'] = 'admin_panel/Stitching_issue/edit_stitching_bill/$1';
+	// Bill Delete
+	$route['admin/delete-stitching-list'] = 'admin_panel/Stitching_issue/delete_stitching_bill_list';	
+	$route['admin/del-stitching-bill-details'] = 'admin_panel/Stitching_issue/delete_stitching_bill_details';	
+	// Bill Print
+	$route['admin/print-stitching-bill/(:num)'] = 'admin_panel/Stitching_issue/print_stitching_bill/$1';
 //Jobber Challan Issue start
 
 	//List
@@ -901,6 +909,7 @@ $route['admin/form-edit-office-invoice'] = 'admin_panel/Office_invoice/form_edit
 $route['admin/ajax-get-shipment-list-details-on-packing-id'] = 'admin_panel/Office_invoice/ajax_get_shipment_list_details_on_packing_id';
 $route['admin/update-invoice-details-wrt-invoice-id'] = 'admin_panel/Office_invoice/update_invoice_details_wrt_invoice_id';
 $route['admin/get-rows-number-new-added-packing'] = 'admin_panel/Office_invoice/get_rows_number_new_added_packing';
+$route['admin/adjust-invoice-from-shipment-details'] = 'admin_panel/Office_invoice/adjust_invoice_from_shipment_details';
 
 $route['admin/office-invoice-jsonfile/(:num)'] = 'admin_panel/Office_invoice/office_invoice_jsonfile/$1';
 $route['admin/form-download-office-jsonfle'] = 'admin_panel/Office_invoice/form_download_office_jsonfle';
@@ -918,6 +927,7 @@ $route['admin/office-invoice-print-wo-info/(:num)'] = 'admin_panel/Office_invoic
 $route['admin/office-invoice-print-wo-seal/(:num)'] = 'admin_panel/Office_invoice/office_invoice_print_wo_seal/$1';
 $route['admin/office-invoice-print-wo-info-seal/(:num)'] = 'admin_panel/Office_invoice/office_invoice_print_wo_info_seal/$1';
 $route['admin/office-invoice-print-hsncodewise/(:num)'] = 'admin_panel/Office_invoice/office_invoice_print_hsncodewise/$1';
+$route['admin/office-invoice-print-hsncheck/(:num)'] = 'admin_panel/Office_invoice/office_invoice_print_hsncheck/$1';
 $route['admin/packing-list-changes-details/(:num)'] = 'admin_panel/Office_invoice/packing_list_changes_details/$1';
 
 $route['admin/ajax-get-latest-currency-values'] = 'admin_panel/Office_invoice/ajax_get_latest_currency_values';

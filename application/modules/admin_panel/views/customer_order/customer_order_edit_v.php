@@ -334,7 +334,7 @@
                                     <div class="form">
                                         <form id="form_add_customer_order_details" method="post" action="<?=base_url('admin/form_add_customer_order_details')?>" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="am_id" class="control-label text-danger">Article *</label>
                                                     <select id="am_id" name="am_id" required class="select2 form-control round-input">
                                                         <option value="">Select Article</option>
@@ -344,46 +344,58 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="lc_id" class="control-label text-danger">Leather Colour *</label>
                                                     <select id="lc_id" name="lc_id" required class="select2 form-control round-input">
                                                         <option value="">Select Leather Colour</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="fc_id" class="control-label text-danger">Fittings Colour *</label>
                                                     <select id="fc_id" name="fc_id" required class="select2 form-control round-input">
                                                         <option value="">Select Fittings Colour</option>
                                                     </select>
                                                 </div>
+
+                                                <div class="col-lg-3">
+                                                    <label for="cc_id" class="control-label cc_id_label">Combination Colour *</label>
+                                                    <select multiple id="cc_id" name="cc_id[]" class="select2 form-control round-input">
+                                                        <option value="">Select Combination Colour</option>
+                                                        <?php foreach($colors_details as $cd){
+                                                            echo '<option value='.$cd['c_id'].'>'.$cd['color'].'</option>';
+                                                        } ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group ">
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="article_quantity" class="control-label text-danger">Article Quantity*</label>
                                                     <input type="number" id="article_quantity" name="article_quantity" class="form-control" />
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="article_rate" class="control-label text-danger">Article Rate *</label>
                                                     <input type="number" id="article_rate" name="article_rate" class="form-control" />
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="article_amount" class="control-label">Amount</label>
                                                     <input type="number" id="article_amount" readonly name="article_amount" class="form-control" />
                                                 </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="col-lg-4">
+
+                                                <div class="col-lg-3">
                                                     <label for="buyer_reference" class="control-label">Buyer Reference </label>
                                                     <input type="text" id="buyer_reference" name="buyer_reference" class="form-control" />
                                                 </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                
                                                 <div class="col-lg-6">
                                                     <label for="article_remarks" class="control-label">Article Remarks </label>
                                                     <input type="text" id="article_remarks" name="article_remarks" class="form-control" />
                                                 </div>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
                                                 <label for="article_remarks" class="control-label">&nbsp;</label><br />
                                                 <button class="btn btn-success" type="submit" id="detail_add"><i class="fa fa-plus"></i> Add details</button>
                                                 </div>
@@ -398,7 +410,7 @@
                                     <div class="form">
                                         <form id="form_edit_customer_order_details" method="post" action="<?=base_url('admin/form_edit_customer_order_details')?>" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="am_id_edit" class="control-label text-danger">Article *</label>
                                                     <select id="am_id_edit" name="am_id" required class="select2 form-control round-input">
                                                         <option value="">Select Article</option>
@@ -408,7 +420,7 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="lc_id_edit" class="control-label text-danger">Leather Colour *</label>
                                                     <select id="lc_id_edit" name="lc_id" required class="select2 form-control round-input">
                                                         <option value="">Select Leather Colour</option>
@@ -418,7 +430,7 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="fc_id_edit" class="control-label text-danger">Fittings Colour *</label>
                                                     <select id="fc_id_edit" name="fc_id" required class="select2 form-control round-input">
                                                         <?php foreach($colors_details as $cval) { ?>
@@ -426,28 +438,40 @@
                                                         <?php } ?>
                                                     </select>
                                                 </div>
+
+                                                <div class="col-lg-3">
+                                                    <label for="cc_id" class="control-label cc_id_label_edit">Combination Colour *</label>
+                                                    <select multiple id="cc_id_edit" name="cc_id_edit[]" class="select2 form-control round-input">
+                                                        <option value="">Select Combination Colour</option>
+                                                        <?php foreach($colors_details as $cd){
+                                                            echo '<option value='.$cd['c_id'].'>'.$cd['color'].'</option>';
+                                                        } ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group ">
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="article_quantity_edit" class="control-label text-danger">Article Quantity*</label>
                                                     <input type="number" id="article_quantity_edit" name="article_quantity" class="form-control" />
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="article_rate_edit" class="control-label text-danger">Article Rate *</label>
                                                     <input type="number" id="article_rate_edit" name="article_rate" class="form-control" />
                                                 </div>
 
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
                                                     <label for="article_amount_edit" class="control-label">Amount</label>
                                                     <input type="number" id="article_amount_edit" readonly name="article_amount" class="form-control" />
                                                 </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="col-lg-4">
+
+                                                <div class="col-lg-3">
                                                     <label for="buyer_reference_edit" class="control-label">Buyer Reference </label>
                                                     <input type="text" id="buyer_reference_edit" name="buyer_reference" class="form-control" />
                                                 </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                
                                                 <div class="col-lg-6">
                                                     <label for="article_remarks_edit" class="control-label">Article Remarks </label>
                                                     <input type="text" id="article_remarks_edit" name="article_remarks" class="form-control" />
@@ -998,6 +1022,13 @@
             success: function(data){
                 console.log(data);
                 data = data[0];
+
+                combination_color=data.combination_colors
+                if(combination_color){
+                    combination_colors_array = combination_color.split(',')
+                    $('#cc_id_edit').select2('val',combination_colors_array).trigger('change')
+                }
+                
                 min_order_qnty = parseFloat(data.co_quantity);
                 $("#am_id_edit").select2("val", data.am_id).change();
                 $("#am_id_edit").select2("readonly", true);
@@ -1230,7 +1261,14 @@
                 dataType: 'json',
                 data: {'am_id': $am_id,'lc_id': $lc_id},
                 success: function(data){
-                        // console.log(data);
+                        console.log(data);
+                        if(data[0].combination_or_not == 1){
+                            $(".cc_id_label").addClass('text-danger')
+                            $("#cc_id").attr('required', 'true')
+                        }else{
+                            $(".cc_id_label").removeClass('text-danger')
+                            $("#cc_id").attr('required', false)
+                        }
                         if($lc_id == 'false'){
                             $("#lc_id").html("<option value=''>Select Leather Colour</option>");
                         }

@@ -552,25 +552,25 @@ $arr = array_unique(array_column($print_packing_list, 'ORD'));
                             <thead>
                                 <tr>
                                     <?php 
-$rate_type = $print_packing_list[0]->rate_type;
-if($rate_type == 1) {
-    $rate_type_text = 'Ex. Works';
-} else if($rate_type == 2) {
-    $rate_type_text = 'C&F';
-} else if($rate_type == 3) {
-    $rate_type_text = 'CIF';
-} else if($rate_type == 4) {
-    $rate_type_text = 'FOB';
-} else {
-   $rate_type_text = ''; 
-}
-                                                    ?>
-                                        <th style="width: 182px;">Order #</th>
-                                        <th>Style No, Description & Colour</th>
-                                        <th style="text-align: right;">Qnty in Pcs.</th>
-                                        <th style="text-align: right;">Rate in <?php if(isset($print_packing_list[0]->currency)){ ?><?=  $rate_type_text ?> / <?= $print_packing_list[0]->currency ?> <?php } ?></th>
-                                        <th style="text-align: right;">Amount in <?php if(isset($print_packing_list[0]->currency)){ ?><?=  $rate_type_text ?> / <?= $print_packing_list[0]->currency ?> <?php } ?></th>
-                                    </tr>
+                                        $rate_type = $print_packing_list[0]->rate_type;
+                                        if($rate_type == 1) {
+                                            $rate_type_text = 'Ex. Works';
+                                        } else if($rate_type == 2) {
+                                            $rate_type_text = 'C&F';
+                                        } else if($rate_type == 3) {
+                                            $rate_type_text = 'CIF';
+                                        } else if($rate_type == 4) {
+                                            $rate_type_text = 'FOB';
+                                        } else {
+                                        $rate_type_text = ''; 
+                                        }
+                                    ?>
+                                    <th style="width: 182px;">Order #</th>
+                                    <th>Style No, Description & Colour</th>
+                                    <th style="text-align: right;">Qnty in Pcs.</th>
+                                    <th style="text-align: right;">Rate in <?php if(isset($print_packing_list[0]->currency)){ ?><?=  $rate_type_text ?> / <?= $print_packing_list[0]->currency ?> <?php } ?></th>
+                                    <th style="text-align: right;">Amount in <?php if(isset($print_packing_list[0]->currency)){ ?><?=  $rate_type_text ?> / <?= $print_packing_list[0]->currency ?> <?php } ?></th>
+                                </tr>
                             </thead>
                             <tbody class="actual_table">
                             <?php } ?>

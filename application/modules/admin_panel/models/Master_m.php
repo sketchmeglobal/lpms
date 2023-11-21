@@ -1806,7 +1806,7 @@ class Master_m extends CI_Model {
             $crud->callback_before_delete(array($this,'check_and_log_before_delete'));
             // callback conditions
 
-            $crud->add_action('Permission', '', 'department-permission', 'fa-user');
+            $crud->add_action('Permission', '', 'admin/department-permission', 'fa-user');
 
             $crud->columns('department','status');
             $crud->fields('department','status','user_id');
@@ -2504,6 +2504,59 @@ class Master_m extends CI_Model {
         $data['type'] = 'success';
         $data['msg'] = 'Article part updated successfully.';
         return $data;
+    }
+
+    public function article_rate_stitch() {
+        $user_id = $this->session->user_id;
+        $unique_am_id = array();
+        
+        try{
+            $crud = new grocery_CRUD();
+            $crud->set_crud_url_path(base_url('admin_panel/Master/article_rate_stitch'));
+            $crud->set_theme('datatables');
+            $crud->set_subject('Stitching Rate');
+            $crud->set_table('stitching_rate');
+
+            $crud->unset_read();
+            $crud->unset_clone();
+
+            // permission setter 
+            $this->fetch_permission_matrix($user_id, $m_id = 47);            
+            // permission setter
+
+            $crud->unset_columns('created_date','modified_date');
+            $crud->unset_fields('user_id','created_date','modified_date');
+            $crud->required_fields('article_master_id','status');
+            $crud->callback_column('article_master_id',array($this,'_callback_article_master_id'));
+            
+            $where = "SELECT * FROM article_master WHERE am_id NOT IN (SELECT article_master_id FROM stitching_rate)";
+            $master_ids = $this->db->query($where)->result();
+            foreach($master_ids as $mi){
+                $unique_am_id[$mi->am_id] = $mi->art_no;
+            }
+            
+            $crud->field_type('article_master_id', 'dropdown', $unique_am_id);
+            $crud->field_type('status', 'true_false', array('0'=>'Disable','1'=>'Enable'));
+            $crud->field_type('user_id', 'hidden', $user_id);
+
+            // $crud->set_relation('article_master_id', 'article_master', 'art_no');
+            $crud->set_relation('user_id', 'users', 'username');
+
+            $output = $crud->render();
+            //rending extra value to $output
+            $output->tab_title = 'Stitching Rate';
+            $output->section_heading = 'Stitching Rate <small>(Add / Edit / Delete)</small>';
+            $output->menu_name = 'Stitching Rate';
+            $output->add_button = '';
+
+            return array('page'=>'common_v', 'data'=>$output); //loading common view page
+        } catch(Exception $e) {
+            show_error($e->getMessage().'<br>'.$e->getTraceAsString());
+        }
+    }
+    
+    public function _callback_article_master_id($value, $row) {
+      return $this->db->get_where('article_master', array('am_id' => $value))->row()->art_no;
     }
 
     public function ajax_unique_article_part_item_group() {
@@ -4362,43 +4415,43 @@ class Master_m extends CI_Model {
     }
 
     public function form_edit_article_master_clone() {
-      $am_id = $this->input->post('article_id');
-            $data_update['ag_id'] = $this->input->post('ag_id');
-            $data_update['art_no'] = $this->input->post('art_no');
-            $data_update['alt_art_no'] = $this->input->post('alt_art_no');
-            $data_update['info'] = $this->input->post('info');
-            $data_update['design'] = $this->input->post('design');
-            $data_update['pack_dtl'] = $this->input->post('pack_dtl');
-            $data_update['carton_id'] = $this->input->post('carton_id');
-            $data_update['gross_weight_per_carton'] = $this->input->post('gross_weight_per_carton');
-            $data_update['number_of_article_per_carton'] = $this->input->post('number_of_article_per_carton');
-            $data_update['customer_id'] = $this->input->post('customer_id');
-            $data_update['leather_type'] = $this->input->post('leather_type');
-            $data_update['emboss'] = $this->input->post('emboss');
-            $data_update['date'] = $this->input->post('date');
-            $data_update['exworks_amt'] = $this->input->post('exworks_amt');
-            $data_update['cf_amt'] = $this->input->post('cf_amt');
-            $data_update['fob_amt'] = $this->input->post('fob_amt');
-            $data_update['cutting_rate_a'] = $this->input->post('cutting_rate_a');
-            $data_update['cutting_rate_b'] = $this->input->post('cutting_rate_b');
-            $data_update['fabrication_rate_a'] = $this->input->post('fabrication_rate_a');
-            $data_update['fabrication_rate_b'] = $this->input->post('fabrication_rate_b');
-            $data_update['skiving_rate_a'] = $this->input->post('skiving_rate_a');
-            $data_update['skiving_rate_b'] = $this->input->post('skiving_rate_b');
-            $data_update['wl_rate_a'] = $this->input->post('wl_rate_a');
-            $data_update['wl_rate_b'] = $this->input->post('wl_rate_b');
-            $data_update['leather_type_info'] = $this->input->post('leather_type_info');
-            $data_update['metal_fitting'] = $this->input->post('metal_fitting');
-            $data_update['brand'] = $this->input->post('brand');
-            $data_update['hand_machine'] = $this->input->post('hand_machine');
-            $data_update['size'] = $this->input->post('size');
-            $data_update['credit_score'] = $this->input->post('credit_score');
-            $data_update['alter_score'] = $this->input->post('alter_score');
-            $data_update['remark'] = $this->input->post('remark');
-            $data_update['img'] = $this->input->post('img');
-            $data_update['status'] = $this->input->post('status');
-            $data_update['user_id'] = $this->session->user_id;
-            if (!empty($_FILES)) {
+        $am_id = $this->input->post('article_id');
+        $data_update['ag_id'] = $this->input->post('ag_id');
+        $data_update['art_no'] = $this->input->post('art_no');
+        $data_update['alt_art_no'] = $this->input->post('alt_art_no');
+        $data_update['info'] = $this->input->post('info');
+        $data_update['design'] = $this->input->post('design');
+        $data_update['pack_dtl'] = $this->input->post('pack_dtl');
+        $data_update['carton_id'] = $this->input->post('carton_id');
+        $data_update['gross_weight_per_carton'] = $this->input->post('gross_weight_per_carton');
+        $data_update['number_of_article_per_carton'] = $this->input->post('number_of_article_per_carton');
+        $data_update['customer_id'] = $this->input->post('customer_id');
+        $data_update['leather_type'] = $this->input->post('leather_type');
+        $data_update['emboss'] = $this->input->post('emboss');
+        $data_update['date'] = $this->input->post('date');
+        $data_update['exworks_amt'] = $this->input->post('exworks_amt');
+        $data_update['cf_amt'] = $this->input->post('cf_amt');
+        $data_update['fob_amt'] = $this->input->post('fob_amt');
+        $data_update['cutting_rate_a'] = $this->input->post('cutting_rate_a');
+        $data_update['cutting_rate_b'] = $this->input->post('cutting_rate_b');
+        $data_update['fabrication_rate_a'] = $this->input->post('fabrication_rate_a');
+        $data_update['fabrication_rate_b'] = $this->input->post('fabrication_rate_b');
+        $data_update['skiving_rate_a'] = $this->input->post('skiving_rate_a');
+        $data_update['skiving_rate_b'] = $this->input->post('skiving_rate_b');
+        $data_update['wl_rate_a'] = $this->input->post('wl_rate_a');
+        $data_update['wl_rate_b'] = $this->input->post('wl_rate_b');
+        $data_update['leather_type_info'] = $this->input->post('leather_type_info');
+        $data_update['metal_fitting'] = $this->input->post('metal_fitting');
+        $data_update['brand'] = $this->input->post('brand');
+        $data_update['hand_machine'] = $this->input->post('hand_machine');
+        $data_update['size'] = $this->input->post('size');
+        $data_update['credit_score'] = $this->input->post('credit_score');
+        $data_update['alter_score'] = $this->input->post('alter_score');
+        $data_update['remark'] = $this->input->post('remark');
+        $data_update['img'] = $this->input->post('img');
+        $data_update['status'] = $this->input->post('status');
+        $data_update['user_id'] = $this->session->user_id;
+        if (!empty($_FILES)) {
             $config['upload_path'] = 'assets/admin_panel/img/article_img/';
             $config['allowed_types'] = 'gif|jpg|jpeg|png|bmp';
             $config['max_size'] = 1024;
@@ -4414,7 +4467,7 @@ class Master_m extends CI_Model {
                 $data_update['img'] = $uploaded_data['file_name'];
 
                 //deleting old file from server
-                $old_img_name = $this->db->get_where('temp_article_master', array('tam_id' => $article_id))->row()->img;
+                $old_img_name = $this->db->get_where('temp_article_master', array('tam_id' => $am_id))->row()->img;
                 if ($old_img_name) {
                     $this->load->helper("file");
                     $path = 'assets/admin_panel/img/article_img/' . $old_img_name;

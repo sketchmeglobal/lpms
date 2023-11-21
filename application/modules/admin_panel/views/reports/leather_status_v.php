@@ -73,24 +73,32 @@
                     <section class="panel">
                         <div class="panel-body">
                             <form class="row" method="post" action="" target="_blank">
-                                <div class="col-sm-2">
+                                <div class="col-lg-2">
                                     <label>Select Group </label><br />
                                     <select id="group" name="group" class="form-control" required >
                                             <option value="1" selected>Leather</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-lg-5">
                                     <label>Select Item From The List</label><br />
                                     <a id="select-all" href="#">Select All</a>
-                                 /
-                                <a id="deselect-all" href="#">Deselect All</a>
-                                <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
+                                    /
+                                    <a id="deselect-all" href="#">Deselect All</a>
+                                    <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
                                     </select>
                                 </div>
-                                <input type="submit" name="print" value="Print(P.O. wise)" class="btn btn-sm btn-success" />
-                                <input type="submit" name="print" value="Print" class="btn btn-sm btn-success" />
-                                <input type="submit" name="print" value="Print(Pending Orders)" class="btn btn-sm btn-success" />
-                                <input type="submit" name="print" value="Print (New)" class="btn btn-sm btn-warning" />
+                                <div class="col-lg-5">
+                                    <label for="">Action</label><br>
+                                    <div class="row">
+                                        <input type="submit" name="print" value="Print(P.O. wise)" class="btn btn-sm btn-success" />
+                                        <input type="submit" name="print" value="Print" class="btn btn-sm btn-success" />
+                                        <input type="submit" name="print" value="Print(Pending Orders)" class="btn btn-sm btn-success" />
+                                    </div>
+                                    <div class="row">
+                                        <input type="submit" name="print_all" value="Print All" class="btn btn-sm btn-warning" />
+                                        <input type="submit" name="print_po" value="Print Pending Orders" class="btn btn-sm btn-warning" />
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </section>

@@ -5,7 +5,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Skiving Bill</title>
+        <title>Stitching Bill</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
@@ -95,7 +95,7 @@
                 <div class="clearfix"></div>
                 <div class="container">
                     <div class="row border_all text-center text-uppercase mar_bot_3">
-                        <h3 class="mar_0 head_font">Skiving Bill</h3>
+                        <h3 class="mar_0 head_font">Stitching Bill</h3>
                     </div>
                     <div class="row mar_bot_3">
                         <div class="col-sm-6 border_all header_left">
@@ -111,7 +111,7 @@
                                 <div class="col-sm-12 border_all height_60">
                                     <div class="">
                                         <p class="mar_0">Bill No. & Date</p>
-                                        <h5 class="mar_0"><strong><?= $skiving_bill_details[0]->bill_number ?><br /> dated, <?= $skiving_bill_details[0]->bill_date ?></strong></h5>
+                                        <h5 class="mar_0"><strong><?= $stitching_bill_details[0]->bill_number ?><br /> dated, <?= $stitching_bill_details[0]->bill_date ?></strong></h5>
                                     </div>
                                 </div>
                                 <!--<div class="col-sm-6 border_all height_60">-->
@@ -124,7 +124,7 @@
                             <div class="row border_all height_63 mar_bot_3">
                                 <div class="col-sm-12">
                                     <h4 class="mar_0">Employee Name: </h4>
-                                    <h4><b><?= $skiving_bill_details[0]->name ?></b></h4>
+                                    <h4><b><?= $stitching_bill_details[0]->name ?></b></h4>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                                         <th>#</th>
                                         <!-- <th>Bill No.</th> -->
                                         <th>Order No.</th>
-                                        <th>Skiving Iss. No.</th>
+                                        <!-- <th>Stitching Iss. No.</th> -->
                                         <th>Article No.</th>
                                         <th>Color</th>
                                         <th>Paid Qnty</th>
@@ -153,25 +153,25 @@
                                 <?php 
                                 $iter=1;
                                 $skv_total = 0;
-                                foreach($skiving_bill_details as $sbd){
+                                foreach($stitching_bill_details as $sbd){
                                 ?>
                                     <tr>
                                         <td><?=$iter++?></td>
                                         <!-- <td><?=$sbd->bill_number . ' ('.$sbd->bill_date.')'?></td> -->
-                                        <td nowrap><?=$sbd->co_no?></td>
-                                        <td nowrap><?=$sbd->skiving_issue_number?></td>
+                                        <td><?=$sbd->co_no?></td>
+                                        <!-- <td nowrap><?=$sbd->stitching_issue_number?></td> -->
                                         <td><?=$sbd->art_no?></td>
                                         <td><?=$sbd->color?></td>
-                                        <td style="text-align: right"><?=$sbd->skiving_paid_qnty?></td>
-                                        <td style="text-align: right"><?=number_format($sbd->skiving_rate, 2)?></td>
-                                        <td style="text-align: right"><?php echo number_format($sbd->skiving_amount, 2) ; $skv_total+=$sbd->skiving_amount?></td>
+                                        <td style="text-align: right"><?=$sbd->stitching_paid_qnty?></td>
+                                        <td style="text-align: right"><?=number_format($sbd->stitching_rate, 2)?></td>
+                                        <td style="text-align: right"><?php echo number_format($sbd->stitching_amount, 2) ; $skv_total+=$sbd->stitching_amount?></td>
                                     </tr>
                                 <?php    
                                 } 
                                 ?>
                                 </tbody>    
                                 <tr>
-                                    <th colspan="7">Total: </th>
+                                    <th colspan="6">Total: </th>
                                     <th><?=number_format($skv_total, 2)?></th>
                                 </tr>
                             </table>

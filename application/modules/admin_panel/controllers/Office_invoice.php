@@ -333,7 +333,14 @@ class Office_invoice extends My_Controller {
         }
     }
 	
-	
+	public function adjust_invoice_from_shipment_details(){
+        if($this->check_permission(array(1,2)) == true) {
+            $this->load->model('Office_invoice_m');
+            $data = $this->Office_invoice_m->adjust_invoice_from_shipment_details();
+            echo json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
+            exit();
+        }
+    }
     
     // ---------------------------------EDIT ENDS------------------------------
     
@@ -360,6 +367,14 @@ public function office_invoice_print_hsncodewise($invoice_id) {
     if($this->check_permission(array(1,2)) == true) {
         $this->load->model('Office_invoice_m');
         $data = $this->Office_invoice_m->office_invoice_print_hsncodewise($invoice_id);
+        $this->load->view($data['page'], $data['data']);
+    }
+}
+
+public function office_invoice_print_hsncheck($invoice_id) {
+    if($this->check_permission(array(1,2)) == true) {
+        $this->load->model('Office_invoice_m');
+        $data = $this->Office_invoice_m->office_invoice_print_hsncheck($invoice_id);
         $this->load->view($data['page'], $data['data']);
     }
 }

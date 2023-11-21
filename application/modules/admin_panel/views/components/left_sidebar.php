@@ -140,6 +140,11 @@ foreach($all_block_menu as $abm){
                         <li class="<?=(($class_name == 'Master') && ($method_name == 'article_master')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/article_master"><i class="fa fa-caret-right"></i> Article Master</a>
                         </li>
+                    <?php } ?>
+                    <?php if(!in_array(47, $final_array)){ ?>
+                        <li class="<?=(($class_name == 'Master') && ($method_name == 'article_rate_stitch')) ? 'active' : ''; ?>">
+                            <a href="<?=base_url();?>admin/article_rate_stitch"><i class="fa fa-caret-right"></i> Article Rate - Stitching</a>
+                        </li>
                     <?php } ?>    
                     <?php if(!in_array(28, $final_array)){ ?>
                         <li class="<?=(($class_name == 'Master') && ($method_name == 'account_groups')) ? 'active' : ''; ?>">
@@ -204,8 +209,10 @@ foreach($all_block_menu as $abm){
                         <li class="<?=(($class_name == 'Master') && ($method_name == 'departments')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/departments"><i class="fa fa-caret-right"></i> Departments</a>
                         </li>
-                        
                         <li class="<?=(($class_name == 'Master') && ($method_name == 'employees')) ? 'active' : ''; ?>">
+                            <a href="<?=base_url();?>admin/employees"><i class="fa fa-caret-right"></i> Employees' List</a>
+                        </li>
+                        <li class="<?=(($class_name == 'Master') && ($method_name == 'holiday_list')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/holiday-list"><i class="fa fa-caret-right"></i> Holiday List</a>
                         </li>
                 </ul>
@@ -289,11 +296,23 @@ foreach($all_block_menu as $abm){
                             <a href="<?=base_url();?>admin/checking"><i class="fa fa-caret-right"></i> Checking </a>
                         </li>
                     <?php } ?>
+                    
+                </ul>
+            </li>
+
+            <li class="menu-list <?=($class_name == 'Cutting_receive' or $class_name == 'Stitching' or $class_name == 'Skiving_issue' or $class_name == 'Jobber_bill' or $class_name == 'Sample_bill' ) ? 'active' : ''; ?>"><a href=""><i class="fa fa-file"></i> <span>Bills</span></a>
+                <ul class="child-list">
                     <?php if(!in_array(6, $final_array)){ ?>
                         <li class="<?=(($class_name == 'Cutting_receive') && ($method_name == 'cutter_bill')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/cutter-bill"><i class="fa fa-caret-right"></i> Cutter Bill</a>
                         </li>
-                    <?php } ?>    
+                    <?php } ?>   
+                    <?php if(!in_array(48, $final_array)){ ?>
+                        <li class="<?=(($class_name == 'Stitching') && ($method_name == 'stitching_bill')) ? 'active' : ''; ?>">
+                            <a href="<?=base_url();?>admin/stitching-bill"><i class="fa fa-caret-right"></i> Stitching Bill</a>
+                        </li>
+                    <?php } ?> 
+                    <!-- ONLY ADMIN -->
                     <?php if(!in_array(7, $final_array)){ ?>
                         <li class="<?=(($class_name == 'Skiving_issue') && ($method_name == 'skiving_bill')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/skiving-bill"><i class="fa fa-caret-right"></i> Skiving Bill</a>
@@ -308,11 +327,11 @@ foreach($all_block_menu as $abm){
                         <li class="<?=(($class_name == 'Sample_bill') && ($method_name == 'Sample_bill')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/sample-bill"><i class="fa fa-caret-right"></i> Sample Bill</a>
                         </li>
-                    <?php } ?>    
+                    <?php } ?>
                 </ul>
             </li>
-            
-            <li class="menu-list <?=($class_name == 'Office_proforma') ? 'active' : ''; ?>"><a href=""><i class="fa fa-file"></i> <span>Invoice/Packing List</span></a>
+
+            <li class="menu-list <?=($class_name == 'Office_proforma') ? 'active' : ''; ?>"><a href=""><i class="fa fa-truck"></i> <span>Invoice / Packing</span></a>
                 <ul class="child-list">
                     <?php if(!in_array(14, $final_array)){ ?>
                         <li class="<?=(($class_name == 'Office_proforma') && ($method_name == 'office_proforma')) ? 'active' : ''; ?>">
@@ -387,7 +406,7 @@ foreach($all_block_menu as $abm){
                     
                 </ul>
             </li>
-            <li class="menu-list <?=($class_name == 'Payroll') ? 'active' : ''; ?>"><a href=""><i class="fa fa-retweet"></i> <span>Payroll</span></a>
+            <li class="menu-list <?=($class_name == 'Payroll') ? 'active' : ''; ?>"><a href=""><i class="fa fa-dollar"></i> <span>Payroll</span></a>
                 <ul class="child-list">
                     <?php if(!in_array(22, $final_array)){ ?>
                      <li class="<?=(($class_name == 'Payroll') && ($method_name == 'Payroll')) ? 'active' : ''; ?>">
@@ -502,8 +521,7 @@ foreach($all_block_menu as $abm){
             </li>
             
             <!-- ONLY ADMIN RIGHTS -->
-            <?php if($user_type == 1){
-                ?>
+            <?php if($user_type == 1){ ?>
 
                 <li class="menu-list <?=($class_name == 'Settings') ? 'active' : ''; ?>"><a href=""><i class="fa fa-cog"></i> <span>Settings</span></a>
                     <ul class="child-list">

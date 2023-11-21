@@ -1883,7 +1883,7 @@ echo   round($res->total_quantity); $total_qntys += $res->total_quantity;
         // echo '<pre>', print_r($data_array1), '</pre>'; die();
         
         
-        if (!empty($data_array1))
+        if (!empty($data_array1) and !empty($data_array))
         {
         $this->db->empty_table('temp_leather_consumption');
         //inserting non combination article
@@ -1936,7 +1936,7 @@ echo   round($res->total_quantity); $total_qntys += $res->total_quantity;
         // ->group_by('temp_leather_consumption.cod_id')
         ->order_by('temp_leather_consumption.co_no')
         ->where('lc_id', $r->c_id)
-        ->or_where('item_color_id', $r->c_id)
+        ->where('item_color_id', $r->c_id)
         ->group_by('co_id, id_id')
         ->get('temp_leather_consumption')
         ->result();
@@ -3218,10 +3218,10 @@ ALTERED/REJECTED</th>
         ->get('temp_leather_consumption')->result_array();
         
         
-        // echo '<pre>', print_r($data_array1), '</pre>'; die();
+        // echo '<pre>', print_r($data_array), '</pre>'; die();
         
         
-        if (!empty($data_array1))
+        if (!empty($data_array1) and !empty($data_array))
         {
         $this->db->empty_table('temp_leather_consumption');
         //inserting non combination article
@@ -3274,7 +3274,7 @@ ALTERED/REJECTED</th>
         // ->group_by('temp_leather_consumption.cod_id')
         ->order_by('temp_leather_consumption.co_no')
         ->where('lc_id', $r->c_id)
-        ->or_where('item_color_id', $r->c_id)
+        ->where('item_color_id', $r->c_id) // ->or_where('item_color_id', $r->c_id)
         ->group_by('co_id, id_id')
         ->get('temp_leather_consumption')
         ->result();
@@ -8483,19 +8483,24 @@ hr {
 												</th>
                                                 <th nowrap>
                                                     <?php 
+                                                        $this->db->query("SET sql_mode = ''");
                                                         $skiving_bill_dtl = $this->db
-                                                        ->join('skiving_bill','skiving_bill.sb_id=skiving_bill_detail.sb_id','left')
-                                                        ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
-                                                        ->get_where('skiving_bill_detail', array(
-                                                            'cut_rcv_id' => $res->cutting_receive_id,
-                                                            'co_id' => $res->co_id,
-                                                            'am_id' => $res->am_id,
-                                                            'lc_id' => $res->c_id
-                                                        ))->result();
+                                                            ->select('bill_number, bill_date, name,SUM(skiving_paid_qnty) AS skiving_paid_qnty')
+                                                            ->join('skiving_bill','skiving_bill.sb_id=skiving_bill_detail.sb_id','left')
+                                                            ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
+                                                            ->group_by('name, bill_number')
+                                                            ->get_where('skiving_bill_detail', array(
+                                                                // 'cut_rcv_id' => $res->cutting_receive_id,
+                                                                'co_id' => $res->co_id,
+                                                                'am_id' => $res->am_id,
+                                                                'lc_id' => $res->c_id
+                                                            ))->result();
+                                                            // echo $this->db->last_query();
                                                         if(count($skiving_bill_dtl) > 0){
-                                                            echo $skiving_bill_dtl[0]->bill_number . ' ('. date('d-m-Y', strtotime($skiving_bill_dtl[0]->bill_date)) .')<br>';
                                                             foreach($skiving_bill_dtl as $sbd){
-                                                                echo $sbd->name . ': '.$sbd->skiving_paid_qnty .'<br>';
+                                                                echo $sbd->bill_number . ': ';
+                                                                // . ' ('. date('d-m-Y', strtotime($sbd->bill_date)) .')<br>';
+                                                                echo $sbd->name . ' - '.$sbd->skiving_paid_qnty .'<br>';
                                                             }
                                                         } else{
                                                             echo '-';

@@ -1121,6 +1121,34 @@ $('#add_office_invoice_packing_table').on('click', '.add_btn', function() {
         }
         
     });
+
+     // adjust if pck-list is changed afterwords
+     $(document).on('click','.adjust', function(){
+
+        $this = $(this);
+        psd_id = $this.data('psd_id');
+        $.ajax({
+            url: "<?= base_url('admin/adjust-invoice-from-shipment-details') ?>",
+            dataType: 'json',
+            type: 'POST',
+            data: {psd_id: psd_id},
+            success: function (returnData) {
+                // console.log(returnData);
+                //obj = JSON.parse(returnData);
+                notification(returnData);
+                
+                //refresh table
+                $('#add_office_invoice_details_list_table').DataTable().ajax.reload();
+
+            },
+            error: function (returnData) {
+                obj = JSON.parse(returnData);
+                notification(obj);
+            }
+        });
+
+    })
+
 	
     //toastr notification
     function notification(obj) {

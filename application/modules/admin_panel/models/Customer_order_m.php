@@ -294,16 +294,20 @@ public function ajax_fetch_customer_order_details_total_value() {
         if($lc_id == 'false'){
             return $this->db
                 ->select('c1.color as leather_color, c1.c_code as leather_code, c1.c_id as leather_id, 
-                    c2.color as fitting_color, c2.c_code as fitting_code, c2.c_id as fitting_id')
+                    c2.color as fitting_color, c2.c_code as fitting_code, c2.c_id as fitting_id, article_costing.combination_or_not')
                 ->join('colors c1', 'c1.c_id = article_dtl.lth_color_id', 'left')
                 ->join('colors c2', 'c2.c_id = article_dtl.fit_color_id', 'left')
+                ->join('article_master', 'article_master.am_id = article_dtl.am_id', 'left')
+                ->join('article_costing', 'article_costing.am_id = article_master.am_id', 'left')
                 ->get_where('article_dtl', array('article_dtl.am_id' => $am_id))
                 ->result();
         }else{
             return $this->db
-                ->select('c2.color as fitting_color, c2.c_code as fitting_code, c2.c_id as fitting_id')
+                ->select('c2.color as fitting_color, c2.c_code as fitting_code, c2.c_id as fitting_id, article_costing.combination_or_not')
                 ->join('colors c2', 'c2.c_id = article_dtl.fit_color_id', 'left')
                 ->get_where('article_dtl', array('article_dtl.am_id' => $am_id, 'article_dtl.lth_color_id' => $lc_id))
+                ->join('article_master', 'article_master.am_id = article_dtl.am_id', 'left')
+                ->join('article_costing', 'article_costing.am_id = article_master.am_id', 'left')
                 ->result();
         }
         
@@ -714,62 +718,78 @@ public function ajax_fetch_customer_order_details_total_value() {
         $rs = $this->db->get_where('customer_order_dtl', array('customer_order_dtl.co_id' => $this->input->post('order_id'), 'customer_order_dtl.am_id' => $this->input->post('am_id'), 'customer_order_dtl.lc_id' => $this->input->post('lc_id'), 'customer_order_dtl.fc_id' => $this->input->post('fc_id'), 'customer_order_dtl.co_quantity' => $this->input->post('article_quantity')))->num_rows();
         
         if($rs == 0) {
-        $insertArray = array(
-            'co_id' => $this->input->post('order_id'),
-            'am_id' => $this->input->post('am_id'),
-            'lc_id' => $this->input->post('lc_id'),
-            'fc_id' => $this->input->post('fc_id'),
-            'co_quantity' => $this->input->post('article_quantity'),
-            'co_price' => $this->input->post('article_rate'),
-            'co_buy_reference' => $this->input->post('buyer_reference'),
-            'co_remarks' => $this->input->post('article_remarks'),
-            'user_id' => $this->session->user_id
-        );
-        // echo '<pre>', print_r($insertArray), '</pre>';die;
-        $this->db->insert('customer_order_dtl', $insertArray);
-        $data['insert_id'] = $this->db->insert_id();
+            $insertArray = array(
+                'co_id' => $this->input->post('order_id'),
+                'am_id' => $this->input->post('am_id'),
+                'lc_id' => $this->input->post('lc_id'),
+                'fc_id' => $this->input->post('fc_id'),
+                'co_quantity' => $this->input->post('article_quantity'),
+                'co_price' => $this->input->post('article_rate'),
+                'co_buy_reference' => $this->input->post('buyer_reference'),
+                'co_remarks' => $this->input->post('article_remarks'),
+                'user_id' => $this->session->user_id,
+                'combination_colors' => implode(',',$this->input->post('cc_id'))
+            );
+            // echo '<pre>', print_r($insertArray), '</pre>';die;
+            $this->db->insert('customer_order_dtl', $insertArray);
+            $data['insert_id'] = $this->db->insert_id();
 
-        $data['total_qnty'] = $this->db->select_sum('co_quantity')->get_where('customer_order_dtl', array('co_id' => $this->input->post('order_id')))->result()[0]->co_quantity;
-        $data['total_amount'] = $this->db->select_sum('co_price')->get_where('customer_order_dtl', array('co_id' => $this->input->post('order_id')))->result()[0]->co_price;
-        
-        $co_id = $this->input->post('order_id');
-        $office_proforma_status = 0;
-        $updateArray = array(
-            'office_proforma_status' => $office_proforma_status,
-        );
-        $this->db->update('customer_order', $updateArray, array('co_id' => $co_id));
+            $data['total_qnty'] = $this->db->select_sum('co_quantity')->get_where('customer_order_dtl', array('co_id' => $this->input->post('order_id')))->result()[0]->co_quantity;
+            $data['total_amount'] = $this->db->select_sum('co_price')->get_where('customer_order_dtl', array('co_id' => $this->input->post('order_id')))->result()[0]->co_price;
+            
+            $co_id = $this->input->post('order_id');
+            $office_proforma_status = 0;
+            $updateArray = array(
+                'office_proforma_status' => $office_proforma_status,
+            );
+            $this->db->update('customer_order', $updateArray, array('co_id' => $co_id));
 
-        // update customer order table 
-        $updateArray= array(
-            'co_total_amount' => $data['total_amount'],
-            'co_total_quantity' => $data['total_qnty'],
-            'cutting_status' => 0
-        );
-        $this->db->update('customer_order', $updateArray, array('co_id' => $this->input->post('order_id')));
-        // echo $this->db->last_query();die;
-        
-        // Update proforma table if new entry found in existing proforma
-        
-        $office_proforma_status =  $this->db->get_where('customer_order', array('co_id' => $this->input->post('order_id')))->result()[0]->office_proforma_status;
-        $proforma_id_counts =  $this->db->get_where('office_proforma_detail', array('co_id' => $this->input->post('order_id')))->num_rows();
-        // echo $this->Db->last_query();die;
-        $data['msg'] = '';
-        if(count($proforma_id_counts) > 0) {
-            $insertArray1 = array(
-            'co_id' => $this->input->post('order_id'),
-            'comment' => 'Add',
-            'am_id' => $this->input->post('am_id'),
-            'lc_id' => $this->input->post('lc_id'),
-            'fc_id' => $this->input->post('fc_id'),
-            'co_quantity' => $this->input->post('article_quantity'),
-            'co_price' => $this->input->post('article_rate'),
-            'co_buy_reference' => $this->input->post('buyer_reference'),
-            'co_remarks' => $this->input->post('article_remarks'),
-            'user_id' => $this->session->user_id
-        );
-        // echo '<pre>', print_r($insertArray), '</pre>';die;
-        $this->db->insert('temp_customer_order_dtl', $insertArray1);
+            // update customer order table 
+            $updateArray= array(
+                'co_total_amount' => $data['total_amount'],
+                'co_total_quantity' => $data['total_qnty'],
+                'cutting_status' => 0
+            );
+            $this->db->update('customer_order', $updateArray, array('co_id' => $this->input->post('order_id')));
+            // echo $this->db->last_query();die;
+            
+            // Update proforma table if new entry found in existing proforma
+            
+            $office_proforma_status =  $this->db->get_where('customer_order', array('co_id' => $this->input->post('order_id')))->result()[0]->office_proforma_status;
+            $proforma_id_counts =  $this->db->get_where('office_proforma_detail', array('co_id' => $this->input->post('order_id')))->num_rows();
+            // echo $this->Db->last_query();die;
+            $data['msg'] = '';
+            if(count($proforma_id_counts) > 0) {
+                $insertArray1 = array(
+                'co_id' => $this->input->post('order_id'),
+                'comment' => 'Add',
+                'am_id' => $this->input->post('am_id'),
+                'lc_id' => $this->input->post('lc_id'),
+                'fc_id' => $this->input->post('fc_id'),
+                'co_quantity' => $this->input->post('article_quantity'),
+                'co_price' => $this->input->post('article_rate'),
+                'co_buy_reference' => $this->input->post('buyer_reference'),
+                'co_remarks' => $this->input->post('article_remarks'),
+                'user_id' => $this->session->user_id
+            );
+            // echo '<pre>', print_r($insertArray), '</pre>';die;
+            $this->db->insert('temp_customer_order_dtl', $insertArray1);
         }
+
+        // Insert combination colour table
+        if(!empty($this->input->post('cc_id'))){
+            // $this->db->where('cod_id',$data['insert_id'])->delete('customer_order_combination_article_colors');
+            foreach($this->input->post('cc_id') as $c_id){
+                $comb_insert_arr = array(
+                    'co_id' => $this->input->post('order_id'),
+                    'cod_id' => $data['insert_id'],
+                    'c_id' => $c_id
+                );
+                $this->db->insert('customer_order_combination_article_colors', $comb_insert_arr);   
+            }
+        }
+
+
     //     if($office_proforma_status){
 
     //         $proforma_id =  $this->db->get_where('office_proforma_detail', array('co_id' => $this->input->post('order_id')))->result()[0]->office_proforma_id;
@@ -834,18 +854,20 @@ public function ajax_fetch_customer_order_details_total_value() {
 
     public function ajax_fetch_customer_order_details_on_pk(){
         $cod_id = $this->input->post('cod_id');
-        return $this->db->select('article_master.am_id, customer_order_dtl.cod_id, customer_order_dtl.co_quantity,customer_order_dtl.co_price,
-        customer_order_dtl.co_buy_reference,customer_order_dtl.co_remarks, 
-        c1.color as leather_color, c1.c_code as leather_code, c1.c_id as leather_id, 
-        c2.color as fitting_color, c2.c_code as fitting_code, c2.c_id as fitting_id,
-        article_master.art_no, article_master.alt_art_no, customer_order.cutting_status')
-        // ->join('colors c1', 'c1.c_id = article_dtl.fc_id', 'left')
-        ->join('article_master', 'article_master.am_id = customer_order_dtl.am_id', 'left')
-        ->join('colors c1', 'c1.c_id = customer_order_dtl.fc_id', 'left')
-        ->join('colors c2', 'c2.c_id = customer_order_dtl.lc_id', 'left')
-        ->join('customer_order', 'customer_order.co_id = customer_order_dtl.co_id', 'left')
-        ->get_where('customer_order_dtl', array('customer_order_dtl.cod_id' => $cod_id))->result();
-        // echo $this->db->get_compiled_select('customer_order_dtl');
+        return 
+        $this->db
+            ->select('article_master.am_id, customer_order_dtl.cod_id, customer_order_dtl.co_quantity,customer_order_dtl.co_price,
+            customer_order_dtl.co_buy_reference,customer_order_dtl.co_remarks, customer_order_dtl.combination_colors,
+            c1.color as leather_color, c1.c_code as leather_code, c1.c_id as leather_id, 
+            c2.color as fitting_color, c2.c_code as fitting_code, c2.c_id as fitting_id,
+            article_master.art_no, article_master.alt_art_no, customer_order.cutting_status')
+            // ->join('colors c1', 'c1.c_id = article_dtl.fc_id', 'left')
+            ->join('article_master', 'article_master.am_id = customer_order_dtl.am_id', 'left')
+            ->join('colors c1', 'c1.c_id = customer_order_dtl.fc_id', 'left')
+            ->join('colors c2', 'c2.c_id = customer_order_dtl.lc_id', 'left')
+            ->join('customer_order', 'customer_order.co_id = customer_order_dtl.co_id', 'left')
+            ->get_where('customer_order_dtl', array('customer_order_dtl.cod_id' => $cod_id))->result();
+            // echo $this->db->get_compiled_select('customer_order_dtl');
     }
 
     public function ajax_fetch_customer_order_details_brkup_edit(){
@@ -882,6 +904,7 @@ public function ajax_fetch_customer_order_details_total_value() {
             'co_price' => $this->input->post('article_rate'),
             'co_buy_reference' => $this->input->post('buyer_reference'),
             'co_remarks' => $this->input->post('article_remarks'),
+            'combination_colors' => (!empty($this->input->post('cc_id_edit'))) ? implode(',',$this->input->post('cc_id_edit')) : NULL,
             'user_id' => $this->session->user_id
         );
         $cod_id = $this->input->post('order_details_id');
@@ -936,6 +959,19 @@ public function ajax_fetch_customer_order_details_total_value() {
             );
             // echo '<pre>', print_r($insertArray), '</pre>';die;
             $this->db->insert('temp_customer_order_dtl', $insertArray1);
+        }
+
+        // Update combination colour table - del and insert all
+        if(!empty($this->input->post('cc_id_edit'))){
+            $this->db->where('cod_id',$cod_id)->delete('customer_order_combination_article_colors');
+            foreach($this->input->post('cc_id_edit') as $c_id){
+                $comb_insert_arr = array(
+                    'co_id' => $this->input->post('order_id'),
+                    'cod_id' => $cod_id,
+                    'c_id' => $c_id
+                );
+                $this->db->insert('customer_order_combination_article_colors', $comb_insert_arr);   
+            }
         }
 
         return $data;

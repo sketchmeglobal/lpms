@@ -11,8 +11,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Office Invoice List | <?=WEBSITE_NAME;?></title>
-    <meta name="description" content="article costing">
+    <title>Stitching Bill List | <?=WEBSITE_NAME;?></title>
+    <meta name="description" content="">
 
     <!--Data Table-->
     <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/admin_panel/js/DataTables/DataTables-1.10.18/css/dataTables.bootstrap.min.css"/>
@@ -23,13 +23,15 @@
     <?php $this->load->view('components/_common_head'); ?>
     <!-- /common head -->
     
-    
     <style>
-        table tr td:last-child {
-            width: 400px;
-}
-    </style>
+        
+        tr td:last-child {
     
+          white-space: nowrap;
+    
+        }
+        
+    </style>
     
 </head>
 
@@ -49,11 +51,11 @@
 
         <!-- page head start-->
         <div class="page-head">
-            <h3 class="m-b-less">Office Invoice</h3>
+            <h3 class="m-b-less">Stitching Bill</h3>
             <div class="state-information">
                 <ol class="breadcrumb m-b-less bg-less">
                     <li><a href="<?=base_url('admin/dashboard');?>">Home</a></li>
-                    <li class="active"> Office Invoice</li>
+                    <li class="active"> Stitching Bill </li>
                 </ol>
             </div>
         </div>
@@ -66,25 +68,16 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <div class="panel-body">
-                            <?php 
-                                if($view_permission != 'block'){
-                                    ?>
-                            <a href="<?= base_url('admin/office-invoice-add') ?>" class="btn btn-success"><i class="fa fa-plus"></i> Add Office Invoice</a>
-                                <?php
-                            } 
-                            ?>
+                            <a href="<?= base_url('admin/add-stitching-bill') ?>" class="btn btn-success"><i class="fa fa-plus"></i> Add Stitching Bill</a>
 
-                            <table id="reveive_purchase_order_table" class="table data-table dataTable">
+                            <table id="stitching_bill_table" class="table data-table dataTable">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Date</th>
-                                        <th>Type</th>
-                                        <th>Buyer</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Gross Wt.</th>
-                                        <th>Net Wt.</th>
+                                        <th>Stitching Bill #</th>
+                                        <th>Stitching Bill Date</th>
+                                        <th>Employee Name</th>
+                                        <th>Stitching bill type</th>
+                                        <th>Total Amount</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -133,137 +126,52 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#reveive_purchase_order_table').DataTable( {
+        $('#stitching_bill_table').DataTable( {
             "processing": true,
             "language": {
                 processing: '<img src="<?=base_url('assets/img/ellipsis.gif')?>"><span class="sr-only">Processing...</span>',
             },
             "serverSide": true,
             "ajax": {
-                "url": "<?=base_url('admin/ajax-office-invoice-table-data')?>",
+                "url": "<?=base_url('admin/ajax-stitching-bill-table-data')?>",
                 "type": "POST",
                 "dataType": "json",
             },
             //will get these values from JSON 'data' variable
             "columns": [
-                { "data": "office_invoice_name" },
-                { "data": "office_invoice_date" },
-                { "data": "rate_type" },
-				{ "data": "buyer_name" },
-                { "data": "quantity" },
-                { "data": "total" },
-                { "data": "gross_weight" },
-                { "data": "net_weight" },
+                { "data": "stitching_bill_number" },
+                { "data": "stitching_bill_date" },
+                { "data": "employee_name" },
+                { "data": "bill_type" },
+                { "data": "total_amount" },
                 { "data": "action" },
             ],
             //column initialisation properties
             "columnDefs": [{
-                "targets": [2,3,4,5,6,7,8], //disable 'Image','Actions' column sorting
-                "orderable": false,
-                "targets": -1, // targets last column, use 0 for first column
-                "className": 'nowrap'
+                "targets": [4], //disable 'Image','Actions' column sorting
+                "orderable": false
             }]
         } );
     } );
-
-
-    $(document).on('click', '.print_all',function(){
-
-        $poi = $(this).attr('po-id');
-        $.confirm({
-            title: 'Choose!',
-            content: 'Choose printing methods from the below options',
-            buttons: {
-                print: {
-                    text: 'Print',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        window.open("<?= base_url() ?>admin/office-invoice-print/"+ $poi, "_blank");
-                    }
-                },
-                printWoSeal: {
-                    text: 'Print w/o Seal',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        window.open("<?= base_url() ?>admin/office-invoice-print-wo-seal/"+ $poi, "_blank");
-                    }
-                },                
-                printWoInfo: {
-                    text: 'Print w/o Info',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        window.open("<?= base_url() ?>admin/office-invoice-print-wo-info/"+ $poi, "_blank");
-                    }
-                },
-                
-                printWoInfoAndSeal: {
-                    text: 'Print w/o Info & seal',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        window.open("<?= base_url() ?>admin/office-invoice-print-wo-info-seal/"+ $poi, "_blank");
-                    }
-                },
-                
-                groupwisePrint: {
-                    text: 'Groupwise Print',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        window.open("<?= base_url() ?>admin/office-invoice-print-groupwise/"+ $poi, "_blank");
-                    }
-                }, 
-                hsncodewisePrint: {
-                    text: 'Hsncodewise Print',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        window.open("<?= base_url() ?>admin/office-invoice-print-hsncodewise/"+ $poi, "_blank");
-                    }
-                },
-                
-                hsnemptyPrint: {
-                    text: 'HSN Check',
-                    btnClass: 'btn-blue',
-                    keys: ['enter', 'shift'],
-                    action: function(){
-                        window.open("<?= base_url() ?>admin/office-invoice-print-hsncheck/"+ $poi, "_blank");
-                    }
-                },
-                
-
-                cancel: function () {}
-
-            }
-
-        });
-
-    });
-	
-	
 	
 	// delete area 
     $(document).on('click', '.delete', function(){
         if(confirm('Are you sure?')){
             $tab = $(this).attr('tab');
-			$ref_tab = $(this).attr('ref-tab');
+			$ref_table = $(this).attr('ref-table');
             $pk_name = $(this).attr('pk-name');
             $pk_value = $(this).attr('pk-value');
-            $ref_value = $(this).attr('ref-value');
             
             
             $.ajax({
-                url: "<?= base_url('admin/delete-office-invoice-header') ?>",
+                url: "<?= base_url('admin/delete-stitching-list') ?>",
                 type: 'POST',
                 dataType: 'json',
-                data:{tab: $tab, pk_name: $pk_name, pk_value: $pk_value, ref_tab: $ref_tab, ref_value: $ref_value},
+                data:{tab: $tab, pk_name: $pk_name, pk_value: $pk_value, ref_table: $ref_table},
                 success: function(returnData){
                     console.log(JSON.stringify(returnData));
                     notification(returnData);
-                    $('#reveive_purchase_order_table').DataTable().ajax.reload();
+                    $('#stitching_bill_table').DataTable().ajax.reload();
                 },
                 error: function(e,v){
                     console.log(e + v);
@@ -271,7 +179,9 @@
             });
         }
     })
-    // delete area ends 
+    // delete area ends
+    
+    
     //toastr notification
     function notification(obj) {
         // console.log(obj);

@@ -83,89 +83,94 @@
                         <?php #print_r($purchase_order_details); die;?>
                             <form id="form_edit_receive_purchase_order" method="post" action="<?=base_url('admin/form-edit-material-issue')?>" class="cmxform form-horizontal tasi-form">
                             <div class="form-group ">
-                                	<div class="col-lg-3">
+                                <div class="col-lg-3">
                                     <label for="material_issue_slip_number" class="control-label text-danger">Issue Slip Number*</label>
                                     <input id="material_issue_slip_number" name="material_issue_slip_number" value="<?= $material_issue_data[0]->material_issue_slip_number ?>" type="text" placeholder="Purchase Receive Number" class="form-control round-input" />
-                                    </div>
-                                    <div class="col-lg-3">
+                                </div>
+                                <div class="col-lg-3">
                                     <label for="material_issue_date" class="control-label text-danger">Issue Date*: </label>
                                     <br/>
                                     <input id="material_issue_date" name="material_issue_date" type="date" placeholder="Issue Date" value="<?= $material_issue_data[0]->material_issue_date ?>" class="form-control round-input" />
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label for="material_issue_to_form" class="control-label text-danger">Issue To / From*</label>
-                                        <select id="material_issue_to_form" name="material_issue_to_form" class="form-control select2">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="material_issue_to_form" class="control-label text-danger">Issue To / From*</label>
+                                    <select id="material_issue_to_form" name="material_issue_to_form" class="form-control select2">
                                         <option value="">Issue To / From</option>
                                         <option value="1" <?php if($material_issue_data[0]->material_issue_to_form == '1'){?> selected <?php } ?>>Godown</option>
                                         <option value="2" <?php if($material_issue_data[0]->material_issue_to_form == '2'){?> selected <?php } ?>>Fabricator</option>
                                         <option value="3" <?php if($material_issue_data[0]->material_issue_to_form == '3'){?> selected <?php } ?>>Stock Out</option>
                                         <option value="3" <?php if($material_issue_data[0]->material_issue_to_form == '4'){?> selected <?php } ?>>Stock Return</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-3" <?php if($material_issue_data[0]->jobber_challan_receipt_id == 0){?> style="display:none" <?php } ?> id="challan_div">
-                                        <label for="jobber_challan_receipt_id" class="control-label text-danger">Challan No*</label>
-                                        <select id="jobber_challan_receipt_id" name="jobber_challan_receipt_id" class="form-control select2">
+                                    </select>
+                                </div>
+                                <div class="col-lg-3" <?php if($material_issue_data[0]->jobber_challan_receipt_id == 0){?> style="display:none" <?php } ?> id="challan_div">
+                                    <label for="jobber_challan_receipt_id" class="control-label text-danger">Challan No*</label>
+                                    <select id="jobber_challan_receipt_id" name="jobber_challan_receipt_id" class="form-control select2">
                                         <option value="">Challan No</option>
                                         <?php
-											foreach($jobber_challan_details as $jcd){
-											    foreach($jobber_challan_details1 as $jcd1) {
-											        if($material_issue_data[0]->jobber_challan_receipt_id != $jcd->jobber_issue_id && $jcd->jobber_issue_id == $jcd1->jobber_challan_receipt_id) {
-											            continue 2;
-											        }
-											    }
-											?> 
-												<option value="<?= $jcd->jobber_issue_id ?>" <?php if($material_issue_data[0]->jobber_challan_receipt_id == $jcd->jobber_issue_id){?> selected <?php } ?>><?= $jcd->jobber_challan_number ?></option>
-										<?php
-											}
-										?>
-                                        </select>
-                                    </div>   
-                                                                    
-                                    <div class="col-lg-3" <?php if($material_issue_data[0]->am_id == 0){?> style="display:none" <?php } ?> id="supplier_div">
-                                        <label for="am_id" class="control-label text-danger">Supplier*</label>
-                                        <select id="am_id" name="am_id" class="form-control select2">
-                                        <option value="">Select Supplier</option>
-                                                <?php
-                                                foreach($buyer_details as $bd){
-                                                    $sn = ($bd->short_name == '' ? '-' : $bd->short_name);
-                                                ?> 
-                                                    <option value="<?= $bd->am_id ?>" <?php if($material_issue_data[0]->am_id == $bd->am_id){?> selected <?php } ?>><?= $bd->name . ' ['. $sn .']' ?></option>
-                                                    <?php
+                                        foreach($jobber_challan_details as $jcd){
+                                            foreach($jobber_challan_details1 as $jcd1) {
+                                                if($material_issue_data[0]->jobber_challan_receipt_id != $jcd->jobber_issue_id && $jcd->jobber_issue_id == $jcd1->jobber_challan_receipt_id) {
+                                                    continue 2;
                                                 }
-                                                ?>
-                                        </select>
-                                    </div>
+                                            }
+                                        ?> 
+                                        <option value="<?= $jcd->jobber_issue_id ?>" <?php if($material_issue_data[0]->jobber_challan_receipt_id == $jcd->jobber_issue_id){?> selected <?php } ?>><?= $jcd->jobber_challan_number ?></option>
+                                        <?php
+                                            }
+                                        ?>
+                                    </select>
+                                </div>   
+                            </div>
+                            <div class="form-group ">                                        
+                                <div class="col-lg-3" <?php if($material_issue_data[0]->am_id == 0){?> style="display:none" <?php } ?> id="supplier_div">
+                                    <label for="am_id" class="control-label text-danger">Supplier*</label>
+                                    <select id="am_id" name="am_id" class="form-control select2">
+                                    <option value="">Select Supplier</option>
+                                        <?php
+                                        foreach($buyer_details as $bd){
+                                            $sn = ($bd->short_name == '' ? '-' : $bd->short_name);
+                                        ?> 
+                                            <option value="<?= $bd->am_id ?>" <?php if($material_issue_data[0]->am_id == $bd->am_id){?> selected <?php } ?>><?= $bd->name . ' ['. $sn .']' ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                                     
-                                    <div class="col-lg-3">
-                                        <label for="terms_condition" class="control-label">Terms and Conditions</label>
-
-                                        <textarea id="terms_condition" name="terms_condition" placeholder="Terms and Conditions" class="form-control round-input"><?= $material_issue_data[0]->terms_condition ?></textarea>
-                                    </div>
+                                <div class="col-lg-3">
+                                    <label for="terms_condition" class="control-label">Terms and Conditions</label>
+                                    <textarea id="terms_condition" name="terms_condition" placeholder="Terms and Conditions" class="form-control round-input"><?= $material_issue_data[0]->terms_condition ?></textarea>
+                                </div>
                                     
-                                    <div class="col-lg-3">
-                                        <label for="remarks" class="control-label">Remarks</label>
-
-                                        <textarea id="remarks" name="remarks" placeholder="Remarks" class="form-control round-input"><?= $material_issue_data[0]->remarks ?></textarea>
-                                    </div>
-                                    
-                                    <div class="col-lg-3">
+                                <div class="col-lg-3">
+                                    <label for="remarks" class="control-label">Remarks</label>
+                                    <textarea id="remarks" name="remarks" placeholder="Remarks" class="form-control round-input"><?= $material_issue_data[0]->remarks ?></textarea>
+                                </div>
+                                
+                                <div class="col-lg-3">
                                     <label for="total_value" class="control-label text-danger">Total value*</label>
                                     <input id="total_value" name="total_value" value="<?= $material_issue_data[0]->total_value ?>" type="text" placeholder="Total value" class="form-control round-input" />
-                                    
-                                    </div>
-                                    
-                                </div>                               
-                            
+                                </div>
 
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-4">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update Material Issue</i></button>
-                                    </div>
-                                    <!--<div class="col-sm-4">
-                                        <button id="print_all" type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
-                                    </div>-->
+                                <div class="col-lg-3">
+                                    <label for="virtual_status" class="control-label text-danger">Virtual Status*</label>
+                                    <select required class="form-control" name="virtual_status" id="virtual_status">
+                                        <option <?= ($material_issue_data[0]->virtual_status == 1) ? 'selected': '' ?> value="1">True</option>
+                                        <option <?= ($material_issue_data[0]->virtual_status == 0) ? 'selected' : '' ?> value="0">False</option>
+                                    </select>
                                 </div> 
-                                <input type="hidden" id="material_issue_id_add" name="material_issue_id" class="hidden" value="<?= $material_issue_data[0]->material_issue_id ?>" />
+                                    
+                            </div>                               
+                            
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-4">
+                                    <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update Material Issue</i></button>
+                                </div>
+                                <!--<div class="col-sm-4">
+                                    <button id="print_all" type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
+                                </div>-->
+                            </div> 
+                            <input type="hidden" id="material_issue_id_add" name="material_issue_id" class="hidden" value="<?= $material_issue_data[0]->material_issue_id ?>" />
                                 
                             </form>
                         </div>

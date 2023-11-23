@@ -73,42 +73,42 @@
                     <section class="panel">
                         <div class="panel-body">
                             <form class="row" method="post" target="_blank">
-                <div class="col-sm-6">
-                    <label>Select Group </label><br />
-                    <a id="select-all" href="#">Select All</a>
-                 /
-                <a id="deselect-all" href="#">Deselect All</a>
-                    <select id="items" class="form-control" name="items[]" required multiple="multiple">
-                      <?php
-                    foreach ($fetch_all_group as $val) {
-                        ?>
-                        <option value="<?= $val->ig_id ?>"><?= $val->group_name ?></option>
-                        <?php
-                    }
-                    ?>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <label>From date</label>
-                    <input autocomplete="off" type="date" id="myDate1" name="fromdate" required class="form-control date" value="" />
-                </div>
-                <div class="col-sm-2">
-                    <label>To date</label>
-                    <?php 
+                                <div class="col-sm-6">
+                                    <label>Select Group </label><br />
+                                    <a id="select-all" href="#">Select All</a>
+                                    /
+                                    <a id="deselect-all" href="#">Deselect All</a>
+                                    <select id="items" class="form-control" name="items[]" required multiple="multiple">
+                                        <?php
+                                        foreach ($fetch_all_group as $val) {
+                                        ?>
+                                        <option value="<?= $val->ig_id ?>"><?= $val->group_name ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>From date</label>
+                                    <input autocomplete="off" type="date" id="myDate1" name="fromdate" required class="form-control date" value="" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>To date</label>
+                                    <?php 
+                                    $month = date('m');
+                                    $day = date('d');
+                                    $year = date('Y');
 
-$month = date('m');
-$day = date('d');
-$year = date('Y');
-
-$today = $year . '-' . $month . '-' . $day;
-?>
-                    <input autocomplete="off" type="date" id="myDate2" name="todate" required class="form-control date" value="<?php echo $today; ?>" />
-                </div>
-                <br />
-                <br>
-                <input type="submit" name="supplier_wise_item_position" value="Print" class="btn btn-sm btn-success col-sm-2" />
-            </form>
-                <br>
+                                    $today = $year . '-' . $month . '-' . $day;
+                                    ?>
+                                    <input autocomplete="off" type="date" id="myDate2" name="todate" required class="form-control date" value="<?php echo $today; ?>" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" name="supplier_wise_item_position" value="Print" class="btn btn-sm btn-success col-sm-12" />
+                                    <input type="submit" name="supplier_wise_item_position_v" value="Print (V)" class="btn btn-sm btn-success col-sm-12" />
+                                </div>
+                            </form>
+                            <br>
                         </div>
                     </section>
                 </div>

@@ -73,49 +73,52 @@
                     <section class="panel">
                         <div class="panel-body">
                             <form class="row" method="post" target="_blank">
-                <div class="col-sm-2">
-                    <label>Select Group </label><br />
-                    <select id="group" name="group" class="form-control" required >
-                        <option value="">Select From The List</option>
-                        <?php
-                        foreach ($fetch_all_group as $fcbl) {
-                            ?>
-                            <option value="<?= $fcbl->ig_id ?>"><?= $fcbl->group_name ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-sm-4">
-                    <label>Select Itemes </label><br />
-                    <a id="select-all" href="#">Select All</a>
-                 /
-                <a id="deselect-all" href="#">Deselect All</a>
-                    <select id="items" class="form-control" name="items[]" required multiple="multiple">
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <label>From date</label>
-                    <input autocomplete="off" type="date" id="myDate1" name="fromdate" required class="form-control date" value="" />
-                </div>
-                <div class="col-sm-2">
-                    <label>To date</label>
-                    <?php 
+                                <div class="col-sm-2">
+                                    <label>Select Group </label><br />
+                                    <select id="group" name="group" class="form-control" required >
+                                        <option value="">Select From The List</option>
+                                        <?php
+                                        foreach ($fetch_all_group as $fcbl) {
+                                            ?>
+                                            <option value="<?= $fcbl->ig_id ?>"><?= $fcbl->group_name ?></option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label>Select Items </label><br />
+                                    <a id="select-all" href="#">Select All</a>
+                                    /
+                                    <a id="deselect-all" href="#">Deselect All</a>
+                                    <select id="items" class="form-control" name="items[]" required multiple="multiple">
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="row">
+                                        <label>From date</label>
+                                        <input autocomplete="off" type="date" id="myDate1" name="fromdate" required class="form-control date" value="" />
+                                    </div>
+                                    <div class="row">
+                                        <label>To date</label>
+                                        <?php 
 
-$month = date('m');
-$day = date('d');
-$year = date('Y');
+                                        $month = date('m');
+                                        $day = date('d');
+                                        $year = date('Y');
 
-$today = $year . '-' . $month . '-' . $day;
-?>
-                   
-                    <input autocomplete="off" type="date" id="myDate2" name="todate" required class="form-control date" value="<?php echo $today; ?>" />
-                </div>
-                <br />
-                <br>
-                <input type="submit" name="check_stock_detail_ledger" value="Print" class="btn btn-sm btn-success col-sm-2" />
-            </form>
-                <br>
+                                        $today = $year . '-' . $month . '-' . $day;
+                                        ?>
+                                    
+                                        <input autocomplete="off" type="date" id="myDate2" name="todate" required class="form-control date" value="<?php echo $today; ?>" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" name="check_stock_detail_ledger" value="Print" class="btn btn-sm btn-success col-sm-12" />    
+                                    <input type="submit" name="check_stock_detail_ledger_v" value="Print (V)" class="btn btn-sm btn-success col-sm-12" />    
+                                </div>
+                            </form>
+                        <br>
                         </div>
                     </section>
                 </div>

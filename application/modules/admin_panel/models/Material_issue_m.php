@@ -231,6 +231,7 @@ class Material_issue_m extends CI_Model {
             'am_id' => $this->input->post('am_id'),
             'terms_condition' => $this->input->post('terms_condition'),
             'remarks' => $this->input->post('remarks'),
+            'virtual_status' => $this->input->post('virtual_status'),
             'user_id' => $this->session->user_id
         );
 
@@ -261,7 +262,7 @@ class Material_issue_m extends CI_Model {
          ->get_where('customer_order', array( 'customer_order.status' => 1))->result();
 
 
-        $data['material_issue_data'] = $this->db->select('material_issue.material_issue_id, material_issue.material_issue_slip_number, material_issue.material_issue_to_form, material_issue.jobber_challan_receipt_id, material_issue.am_id, material_issue.terms_condition, material_issue.remarks, material_issue.total_value, acc_master.name as acc_master_name, acc_master.short_name as acc_master_short_name, jobber_challan_receipt.jobber_receipt_challan_number, material_issue.material_issue_date, jobber_issue.jobber_issue_id, jobber_issue.jobber_challan_number')
+        $data['material_issue_data'] = $this->db->select('material_issue.material_issue_id, material_issue.material_issue_slip_number, material_issue.material_issue_to_form, material_issue.jobber_challan_receipt_id, material_issue.am_id, material_issue.terms_condition, material_issue.remarks,material_issue.virtual_status,material_issue.total_value, acc_master.name as acc_master_name, acc_master.short_name as acc_master_short_name, jobber_challan_receipt.jobber_receipt_challan_number, material_issue.material_issue_date, jobber_issue.jobber_issue_id, jobber_issue.jobber_challan_number')
                         ->join('acc_master', 'acc_master.am_id = material_issue.am_id', 'left')
                         ->join('jobber_challan_receipt', 'jobber_challan_receipt.jobber_challan_receipt_id = material_issue.jobber_challan_receipt_id', 'left')
                         ->join('jobber_challan_receipt_details', 'jobber_challan_receipt_details.jobber_challan_receipt_id = jobber_challan_receipt.jobber_challan_receipt_id', 'left')
@@ -298,6 +299,7 @@ class Material_issue_m extends CI_Model {
             'am_id' => $this->input->post('am_id'),
             'terms_condition' => $this->input->post('terms_condition'),
             'remarks' => $this->input->post('remarks'),
+            'virtual_status' => $this->input->post('virtual_status'),
             'user_id' => $this->session->user_id
         );
         $material_issue_id = $this->input->post('material_issue_id');
@@ -455,6 +457,7 @@ class Material_issue_m extends CI_Model {
         $issue_date_add = $this->input->post('issue_date_add');
         $item_dtl_id = $this->input->post('item_dtl_id');
         $purc_rcv_id = $this->input->post('purc_rcv_id');
+        $sum_stock_in = 0;
         $data = array();
 
         $result1 = $this->db->select('purchase_order_receive_detail.*, item_master.im_id, item_master.item, colors.c_id, colors.color, item_dtl.opening_stock')

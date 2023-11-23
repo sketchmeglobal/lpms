@@ -812,6 +812,8 @@ class Master_m extends CI_Model {
         $data_insert['opn_qnty_for_leather_status'] = $this->input->post('opn_qnty_for_leather_status');
         $data_insert['plating_rate'] = $this->input->post('plating_rate_add');
         $data_insert['reorder_qnty'] = $this->input->post('reorder');
+        $data_insert['virtual_opng_stock'] = $this->input->post('virtual_opng_stock_add');
+        $data_insert['virtual_opng_rate'] = $this->input->post('virtual_opng_rate_add');
         $data_insert['status'] = $this->input->post('status');
         $data_insert['user_id'] = $this->session->user_id;
         //if image uploaded
@@ -847,8 +849,11 @@ class Master_m extends CI_Model {
         $data_update['opening_rate'] = $this->input->post('opening_rate_edit');
         $data_update['reorder_qnty'] = $this->input->post('reorder');
         $data_update['plating_rate'] = $this->input->post('plating_rate_edit');
+        $data_update['virtual_opng_stock'] = $this->input->post('virtual_opng_stock_edit');
+        $data_update['virtual_opng_rate'] = $this->input->post('virtual_opng_rate_edit');
         $data_update['status'] = $this->input->post('status');
         $data_update['user_id'] = $this->session->user_id;
+
         //if image uploaded
         if (!empty($_FILES)) {
             $config['upload_path'] = 'assets/admin_panel/img/item_img/';
@@ -877,6 +882,8 @@ class Master_m extends CI_Model {
 
         $this->db->where('id_id', $item_dtl_id);
         $this->db->update('item_dtl', $data_update);
+
+        // echo $this->db->last_query();
 
         $data['type'] = 'success';
         $data['msg'] = 'Item color updated successfully.';
@@ -991,7 +998,7 @@ class Master_m extends CI_Model {
     public function ajax_fetch_item_color() {
         $item_dtl_id = $this->input->post('item_dtl_id');
 
-        $this->db->select('id_id,item_dtl.c_id,opening_stock,opn_qnty_for_leather_status,reorder_qnty,item_dtl.status,colors.color, item_dtl.opening_rate, item_dtl.plating_rate');
+        $this->db->select('id_id,item_dtl.c_id,opening_stock,opn_qnty_for_leather_status,reorder_qnty,item_dtl.status,colors.color, item_dtl.opening_rate, item_dtl.plating_rate,virtual_opng_stock,virtual_opng_rate');
         $this->db->join('colors', 'colors.c_id = item_dtl.c_id', 'left');
         $item_dtl_row = $this->db->get_where('item_dtl', array('id_id'=>$item_dtl_id))->row();
 

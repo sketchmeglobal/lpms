@@ -64,21 +64,21 @@
                             <form id="form_add_receive_purchase_order" method="post" action="<?=base_url('admin/form-add-material-issue')?>" class="cmxform form-horizontal tasi-form">
                             	<div class="form-group ">
                                 	<div class="col-lg-3">
-                                    <label for="material_issue_slip_number" class="control-label text-danger">Issue Slip Number*</label>
-                                    <input id="material_issue_slip_number" name="material_issue_slip_number" type="text" placeholder="Issue Slip Number" class="form-control round-input" />
+                                        <label for="material_issue_slip_number" class="control-label text-danger">Issue Slip Number*</label>
+                                        <input id="material_issue_slip_number" name="material_issue_slip_number" type="text" placeholder="Issue Slip Number" class="form-control round-input" />
                                     </div>
                                     <div class="col-lg-3">
-                                    <label for="material_issue_date" class="control-label text-danger">Issue Date*</label>
-                                    <input id="material_issue_date" name="material_issue_date" type="date" placeholder="Issue Date" class="form-control round-input" />
+                                        <label for="material_issue_date" class="control-label text-danger">Issue Date*</label>
+                                        <input id="material_issue_date" name="material_issue_date" type="date" placeholder="Issue Date" class="form-control round-input" />
                                     </div>
                                     <div class="col-lg-3">
                                         <label for="material_issue_to_form" class="control-label text-danger">Issue To / From*</label>
                                         <select id="material_issue_to_form" name="material_issue_to_form" class="form-control select2">
-                                        <option value="">Issue To / From</option>
-                                        <option value="1">Godown</option>
-                                        <option value="2">Fabricator</option>
-                                        <option value="3">Stock Out</option>
-                                        <option value="4">Stock Return</option>
+                                            <option value="">Issue To / From</option>
+                                            <option value="1">Godown</option>
+                                            <option value="2">Fabricator</option>
+                                            <option value="3">Stock Out</option>
+                                            <option value="4">Stock Return</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3" style="display:none" id="challan_div">
@@ -98,8 +98,16 @@
 											}
 										?>
                                         </select>
-                                    </div>   
-                                                                    
+                                    </div> 
+                                    <div class="col-lg-3">
+                                        <label for="virtual_status" class="control-label text-danger">Virtual Status*</label>
+                                        <select required class="form-control" name="virtual_status" id="virtual_status">
+                                            <option value="1">True</option>
+                                            <option selected value="0">False</option>
+                                        </select>
+                                    </div>  
+                                </div>
+                                <div class="form-group ">                     
                                     <div class="col-lg-3" style="display:none" id="supplier_div">
                                         <label for="am_id" class="control-label text-danger">Supplier*</label>
                                         <select id="am_id" name="am_id" class="form-control select2">
@@ -123,7 +131,6 @@
                                     
                                     <div class="col-lg-3">
                                         <label for="remarks" class="control-label">Remarks</label>
-
                                         <textarea id="remarks" name="remarks" placeholder="Remarks" class="form-control round-input"></textarea>
                                     </div>
                                     

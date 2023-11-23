@@ -79,8 +79,8 @@
                             <div class="form">
                                 <form id="form_edit_item" method="post" action="<?=base_url('admin/form_edit_item')?>" class="cmxform form-horizontal tasi-form">
                                     <div class="form-group ">
-                                        <label for="item_group" class="control-label col-lg-2 text-danger">Item Group *</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
+                                            <label for="item_group" class="control-label text-danger">Item Group *</label>
                                             <select id="item_group" name="item_group" required class="select2 form-control round-input">
                                                 <option value="" group_code="">Select Item Group</option>
                                                 <?php
@@ -93,15 +93,13 @@
                                             </select>
                                         </div>
 
-                                        <label for="item_code" class="control-label col-lg-2 text-danger">Item Code *</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
+                                            <label for="item_code" class="control-label text-danger">Item Code *</label>
                                             <input value="<?=$item->im_code?>" id="item_code" name="item_code" type="text" placeholder="Item code" required class="form-control round-input" />
                                         </div>
-                                    </div>
 
-                                    <div class="form-group ">
-                                        <label for="size" class="control-label col-lg-2 text-danger">Size *</label>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
+                                            <label for="size" class="control-label text-danger">Size *</label>
                                             <select id="size" name="size" required class="select2 form-control round-input">
                                                 <option value="" size="">Select size</option>
                                                 <?php
@@ -114,8 +112,8 @@
                                             </select>
                                         </div>
 
-                                        <label for="size" class="control-label col-lg-2 text-danger">Shape *</label>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
+                                            <label for="size" class="control-label text-danger">Shape *</label>
                                             <select id="shape" name="shape" required class="select2 form-control round-input">
                                                 <option value="" shape="">Select shape</option>
                                                 <?php
@@ -127,9 +125,11 @@
                                                 <?php } ?>
                                             </select>
                                         </div>
+                                    </div>
 
-                                        <label for="size" class="control-label col-lg-2 text-danger">Unit *</label>
-                                        <div class="col-lg-2">
+                                    <div class="form-group ">
+                                        <div class="col-lg-3">
+                                            <label for="size" class="control-label text-danger">Unit *</label>
                                             <select id="unit" name="unit" required class="select2 form-control round-input">
                                                 <option value="" unit="">Select unit</option>
                                                 <?php
@@ -141,29 +141,23 @@
                                                 <?php } ?>
                                             </select>
                                         </div>
-
-                                    </div>
-
-                                    <div class="form-group ">
-                                        <label for="desc1" class="control-label col-lg-2">Description I</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
+                                            <label for="desc1" class="control-label">Description I</label>
                                             <input value="<?=$item->info_1?>" id="desc1" name="desc1" type="text" placeholder="First description" class="form-control round-input" />
-                                        </div>
-
-                                        <label for="desc2" class="control-label col-lg-2">Description II</label>
-                                        <div class="col-lg-4">
+                                        </div>            
+                                        <div class="col-lg-3">
+                                            <label for="desc2" class="control-label">Description II</label>
                                             <input value="<?=$item->info_2?>" id="desc2" name="desc2" type="text" placeholder="Second description" class="form-control round-input" />
                                         </div>
+                                        <div class="col-lg-3">
+                                            <label for="item_name" class="control-label text-danger">Item Name *</label>
+                                            <input value="<?=$item->item?>" id="item_name" name="item_name" type="text" placeholder="Name of the item" required class="form-control round-input" />
+                                        </div>
                                     </div>
 
                                     <div class="form-group ">
-                                        <label for="item_name" class="control-label col-lg-2 text-danger">Item Name *</label>
-                                        <div class="col-lg-4">
-                                            <input value="<?=$item->item?>" id="item_name" name="item_name" type="text" placeholder="Name of the item" required class="form-control round-input" />
-                                        </div>
-
-                                        <label for="item_type" class="control-label col-lg-2 text-danger">Item Type *</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
+                                            <label for="item_type" class="control-label text-danger">Item Type *</label>
                                             <select id="item_type" name="item_type" required class="select2 form-control round-input">
                                                 <option value="" <?php if($item->type == ''){echo 'selected';} ?>>Select type</option>
                                                 <option value="None" <?php if($item->type == 'None'){echo 'selected';} ?>>None</option>
@@ -171,33 +165,23 @@
                                                 <option value="Import" <?php if($item->type == 'Import'){echo 'selected';} ?>>Import</option>
                                             </select>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group ">
-                                        <label for="thick" class="control-label col-lg-1">Thickness</label>
                                         <div class="col-lg-3">
+                                            <label for="thick" class="control-label">Thickness</label>
                                             <input value="<?=$item->thick?>" id="thick" name="thick" type="text" placeholder="Thickness" class="form-control round-input" />
                                         </div>
-
-                                        <label for="buy_code" class="control-label col-lg-1">Buy Code</label>
                                         <div class="col-lg-3">
+                                            <label for="buy_code" class="control-label">Buy Code</label>
                                             <input value="<?=$item->buy_code?>" id="buy_code" name="buy_code" type="text" placeholder="Buy code" class="form-control round-input" />
                                         </div>
-                                        
-                                        <label for="hsn_code" class="control-label col-lg-1">HSN Code</label>
-                                    <div class="col-lg-3">
-                                        <input value="<?=$item->hsn_code?>" id="hsn_code" name="hsn_code" type="text" placeholder="HSN Code" class="form-control round-input" />
-                                    </div>
-
-                                        <!-- <label for="sell_code" class="control-label col-lg-2">Sell Code</label>
-                                        <div class="col-lg-2">
-                                            <input value="< ?=$item->sell_code?>" id="sell_code" name="sell_code" type="text" placeholder="Sell code" class="form-control round-input" />
-                                        </div> -->
+                                        <div class="col-lg-3">
+                                            <label for="hsn_code" class="control-label">HSN Code</label>
+                                            <input value="<?=$item->hsn_code?>" id="hsn_code" name="hsn_code" type="text" placeholder="HSN Code" class="form-control round-input" />
+                                        </div>
                                     </div>
 
                                     <div class="form-group ">
-                                        <label class="control-label col-lg-2 text-danger">Enlist in Jobber? *</label>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
+                                            <label class="control-label text-danger">Enlist in Jobber? *</label><br>
                                             <input <?php if($item->enlist_jobber == '1'){echo 'checked';} ?> type="radio" name="jobber" id="yes" value="1" required class="iCheck-square-green">
                                             <label for="yes" class="control-label">Yes</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -205,8 +189,8 @@
                                             <label for="no" class="control-label">No</label>
                                         </div>
                                         
-                                        <label class="control-label col-lg-2 text-danger">Enlist in Costing? *</label>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
+                                            <label class="control-label text-danger">Enlist in Costing? *</label><br>
                                             <input <?php if($item->enlist_costing == '1'){echo 'checked';} ?> type="radio" name="show_in_costing" id="yes1" value="1" required class="iCheck-square-green">
                                             <label for="yes1" class="control-label">Yes</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -214,28 +198,23 @@
                                             <label for="no1" class="control-label">No</label>
                                         </div>
 
-                                        <label class="control-label col-lg-2 text-danger">Status *</label>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
+                                            <label class="control-label text-danger">Status *</label> <br>
                                             <input <?php if($item->status == '1'){echo 'checked';} ?> type="radio" name="status" id="enable1" value="1" required class="iCheck-square-green">
                                             <label for="enable1" class="control-label">Enable</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
                                             <input <?php if($item->status == '0'){echo 'checked';} ?> type="radio" name="status" id="disable1" value="0" required class="iCheck-square-red">
                                             <label for="disable1" class="control-label">Disable</label>
                                         </div>
+                                        <div class="col-lg-3">
+                                            <label for="img" class="control-label">Image</label>
+                                            <input type="file" id="imgg" name="img" accept=".jpg,.jpeg,.png" class="file" >
+                                        </div>
                                     </div>
-                                    
-                                    <label for="img" class="control-label col-lg-2">Image</label>
-                                    <div class="col-lg-4">
-                                        <input type="file" id="imgg" name="img" accept=".jpg,.jpeg,.png" class="file" >
-                                    </div>
-                                    
-                                    <br/>
-                                    <br/>
-
-                                    <input type="hidden" id="item_id" name="item_id" class="item_id" value="<?=$item->im_id?>">
 
                                     <div class="form-group">
-                                        <div class="col-lg-offset-2 col-lg-10">
+                                        <div class="text-center" style="display:block;margin:auto;">
+                                            <input type="hidden" id="item_id" name="item_id" class="item_id" value="<?=$item->im_id?>">
                                             <button class="btn btn-success" type="submit"><i class="fa fa-refresh"></i> Update Item</button>
                                         </div>
                                     </div>
@@ -292,8 +271,8 @@
                                     <div class="form">
                                         <form id="form_add_item_color" method="post" action="<?=base_url('admin/form_add_item_color')?>" enctype="multipart/form-data" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
-                                                <label for="color" class="control-label col-lg-1 text-danger">Color *</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="color" class="control-label text-danger">Color *</label>
                                                     <select id="color" name="color" required class="select2 form-control round-input">
                                                         <option value="">Select Color</option>
                                                         <?php
@@ -303,54 +282,55 @@
                                                         <?php } ?>
                                                     </select>
                                                 </div>
-
-                                                <label for="opening_stock" class="control-label col-lg-2">Enter Opening Stock</label>
-                                                <div class="col-lg-2">
-                                                    <input id="opening_stock" name="opening_stock" type="number" min="0" placeholder="Enter Opening Stock" class="form-control round-input" />
+                                                <div class="col-lg-3">
+                                                    <label for="opening_stock" class="control-label">Opening Stock</label>
+                                                    <input id="opening_stock" name="opening_stock" type="number" min="0" placeholder="Opening Stock" class="form-control round-input" />
                                                 </div>
-
-                                                <label for="opn_qnty_for_leather_status" class="control-label col-lg-3">Opening Quantity For Leather Status</label>
-                                                <div class="col-lg-2">
-                                                    <input id="opn_qnty_for_leather_status" name="opn_qnty_for_leather_status" type="number" placeholder="Opening Quantity For Leather Status" class="form-control round-input" />
+                                                <div class="col-lg-3">
+                                                    <label for="opn_qnty_for_leather_status" class="control-label">Opening Rate</label>
+                                                    <input id="opening_rate" name="opening_rate" type="number" placeholder="Opening Rate" class="form-control round-input" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="plating_rate_add" class="control-label">Plating Rate</label><br>
+                                                    <input id="plating_rate_add" name="plating_rate_add" type="number" placeholder="Plating Rate" class="form-control round-input" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="opn_qnty_for_leather_status" class="control-label col-lg-2">Opening Rate</label>
-                                                <div class="col-lg-2">
-                                                    <input id="opening_rate" name="opening_rate" type="number" placeholder="Opening Rate" class="form-control round-input" />
+                                                <div class="col-lg-3">
+                                                    <label for="opn_qnty_for_leather_status" class="control-label">Opening Quantity For Leather Status</label>
+                                                    <input id="opn_qnty_for_leather_status" name="opn_qnty_for_leather_status" type="number" placeholder="Opening Quantity For Leather Status" class="form-control round-input" />
                                                 </div>
-                                                
-                                                <label for="plating_rate_add" class="control-label col-lg-2">Plating Rate</label>
-                                                <div class="col-lg-2">
-                                                    <input id="plating_rate_add" name="plating_rate_add" type="number" placeholder="Plating Rate" class="form-control round-input" />
+                                                <div class="col-lg-3">
+                                                    <label for="virtual_opng_stock_add" class="control-label">Virtual Opening Stock</label><br>
+                                                    <input id="virtual_opng_stock_add" name="virtual_opng_stock_add" type="number" placeholder="Virtual Opening Stock" class="form-control round-input" />
                                                 </div>
-                                                
-                                                <label for="reorder" class="control-label col-lg-2">Reorder if Below</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="virtual_opng_rate_add" class="control-label">Virtual Opening Rate</label><br>
+                                                    <input id="virtual_opng_rate_add" name="virtual_opng_rate_add" type="number" min="0" placeholder="Virtual Opening Rate" class="form-control round-input" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="reorder" class="control-label">Reorder if Below</label><br>
                                                     <input id="reorder" name="reorder" type="number" min="0" placeholder="Reorder when stock quantity is less than" class="form-control round-input" />
-                                                </div>
-
+                                                </div>           
                                             </div>
-
-                                            <input type="hidden" name="item_id" class="item_id" value="<?=$item->im_id?>">
-
                                             <div class="form-group">
-                                                
-                                                <label for="img" class="control-label col-lg-1">Image</label>
                                                 <div class="col-lg-3">
+                                                    <label for="img" class="control-label">Image</label><br>
                                                     <input type="file" id="img" name="img" accept=".jpg,.jpeg,.png" class="file" >
-                                                </div>
-                                                
-                                                <label class="control-label col-lg-1 text-danger">Status *</label>
+                                                </div> 
                                                 <div class="col-lg-3">
+                                                    <label class="control-label text-danger">Status *</label><br>
                                                     <input type="radio" name="status" id="enable2" value="1" checked required class="iCheck-square-green">
                                                     <label for="enable2" class="control-label">Enable</label>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input type="radio" name="status" id="disable2" value="0" required class="iCheck-square-red">
                                                     <label for="disable2" class="control-label">Disable</label>
                                                 </div>
-                                                <div class="col-lg-offset-2 col-lg-4">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="text-center" style="display:block;margin:auto;">
+                                                    <input type="hidden" name="item_id" class="item_id" value="<?=$item->im_id?>">
                                                     <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Add Item Color</button>
                                                 </div>
                                             </div>
@@ -363,8 +343,8 @@
                                     <div class="form">
                                         <form id="form_edit_item_color" method="post" action="<?=base_url('admin/form_edit_item_color')?>" enctype="multipart/form-data" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
-                                                <label for="color2" class="control-label col-lg-1 text-danger">Color *</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="color2" class="control-label text-danger">Color *</label>
                                                     <select disabled id="color2" name="color" required class="select2 form-control round-input">
                                                         <option value="">Select Color</option>
                                                         <?php
@@ -375,46 +355,48 @@
                                                     </select>
                                                 </div>
 
-                                                <label for="opening_stock_edit" class="control-label col-lg-2">Enter Opening Stock</label>
-                                                <div class="col-lg-2">
-                                                    <input id="opening_stock_edit" name="opening_stock_edit" type="number" min="0" placeholder="Enter Opening Stock" class="form-control round-input" />
+                                                <div class="col-lg-3">
+                                                    <label for="opening_stock_edit" class="control-label">Opening Stock</label>
+                                                    <input id="opening_stock_edit" name="opening_stock_edit" type="number" min="0" placeholder="Opening Stock" class="form-control round-input" />
                                                 </div>
 
-                                                <label for="opening_stock_edit" class="control-label col-lg-2">Enter Opening Rate</label>
-                                                <div class="col-lg-2">
-                                                    <input id="opening_rate_edit" name="opening_rate_edit" type="number" placeholder="Enter Opening Rate" class="form-control round-input" />
+                                                <div class="col-lg-3">
+                                                    <label for="opening_stock_edit" class="control-label">Opening Rate</label>
+                                                    <input id="opening_rate_edit" name="opening_rate_edit" type="number" placeholder="Opening Rate" class="form-control round-input" />
                                                 </div>
-
+                                                <div class="col-lg-3">
+                                                    <label for="plating_rate_edit" class="control-label">Plating Rate</label>
+                                                    <input id="plating_rate_edit" name="plating_rate_edit" type="number" placeholder="Plating Rate" class="form-control round-input" />
+                                                </div>
                                             </div>
 
                                             <div class="form-group ">
-                                                
-                                                <label for="plating_rate_edit" class="control-label col-lg-2">Enter Plating Rate</label>
-                                                <div class="col-lg-2">
-                                                    <input id="plating_rate_edit" name="plating_rate_edit" type="number" placeholder="Enter Plaing Rate" class="form-control round-input" />
-                                                </div>
-                                                
-                                                <label for="opn_qnty_for_leather_status_edit" class="control-label col-lg-3">Opening Quantity For Leather Status</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="opn_qnty_for_leather_status_edit" class="control-label">Opening Quantity For Leather Status</label>
                                                     <input id="opn_qnty_for_leather_status_edit" name="opn_qnty_for_leather_status_edit" type="number" placeholder=" Enter Opening Quantity For Leather Status" class="form-control round-input" />
                                                 </div>
-
-                                                <label for="reorder2" class="control-label col-lg-1">Reorder if Below</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="virtual_opng_stock_edit" class="control-label">Virtual Opening Stock</label><br>
+                                                    <input id="virtual_opng_stock_edit" name="virtual_opng_stock_edit" type="number" placeholder="Virtual Opening Stock" class="form-control round-input" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="virtual_opng_rate_edit" class="control-label">Virtual Opening Rate</label><br>
+                                                    <input id="virtual_opng_rate_edit" name="virtual_opng_rate_edit" type="number" min="0" placeholder="Virtual Opening Rate" class="form-control round-input" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="reorder2" class="control-label">Reorder if Below</label>
                                                     <input id="reorder2" name="reorder" type="number" min="0" placeholder="Reorder when stock quantity is less than" class="form-control round-input" />
                                                 </div>
-
                                             </div>
-                                            
-                                            <div class="form-group ">
-                                                
-                                                <label for="img2" class="control-label col-lg-1">Image</label>
+
+                                            <div class="form-group">
                                                 <div class="col-lg-3">
+                                                    <label for="img2" class="control-label">Image</label>
                                                     <input type="file" id="img2" name="img" accept=".jpg,.jpeg,.png" class="file" >
                                                 </div>
                                                 
-                                            <label class="control-label col-lg-1 text-danger">Status *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label class="control-label text-danger">Status *</label><br>
                                                     <input type="radio" name="status" id="enable3" value="1" required class="iCheck-square-green">
                                                     <label for="enable3" class="control-label">Enable</label>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -422,11 +404,9 @@
                                                     <label for="disable3" class="control-label">Disable</label>
                                                 </div>
                                             </div>
-
-                                            <input type="hidden" id="item_dtl_id" name="item_dtl_id" value="">
-
                                             <div class="form-group">
-                                                <div class="col-lg-offset-2 col-lg-10">
+                                                <div class="text-center" style="display:block;margin:auto;">
+                                                    <input type="hidden" id="item_dtl_id" name="item_dtl_id" value="">
                                                     <button class="btn btn-success" type="submit"><i class="fa fa-refresh"></i> Update Item Color</button>
                                                 </div>
                                             </div>
@@ -483,8 +463,8 @@
                                     <div class="form">
                                         <form id="form_add_item_color_rate" method="post" action="<?=base_url('admin/form_add_item_color_rate')?>" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
-                                                <label for="supplier" class="control-label col-lg-2 text-danger">Supplier Name *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label for="supplier" class="control-label text-danger">Supplier Name *</label>
                                                     <select id="supplier" name="supplier" required class="select2 form-control round-input">
                                                         <option value="">Select Supplier</option>
                                                         <?php
@@ -495,38 +475,34 @@
                                                     </select>
                                                 </div>
 
-                                                <label for="eff_date" class="control-label col-lg-2 text-danger">Effective Date *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label for="eff_date" class="control-label text-danger">Effective Date *</label>
                                                     <input id="eff_date" name="eff_date" type="date" value="<?= date('Y-m') ?>-01" max="<?= date('Y-m-d') ?>" required class="form-control round-input" />
                                                 </div>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label for="pur_rate" class="control-label col-lg-2 text-danger">Purchase Rate *</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="pur_rate" class="control-label text-danger">Purchase Rate *</label>
                                                     <input id="pur_rate" name="pur_rate" type="number" min="0" placeholder="Purchase rate" required class="form-control round-input" />
                                                 </div>
 
-                                                <label for="cost_rate" class="control-label col-lg-2 text-danger">Cost Rate *</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="cost_rate" class="control-label text-danger">Cost Rate *</label>
                                                     <input id="cost_rate" name="cost_rate" type="number" min="0" placeholder="Cost rate" required class="form-control round-input" />
                                                 </div>
-                                                
-                                                <label for="plating_rate_add1" class="control-label col-lg-2">Plating Rate</label>
-                                                <div class="col-lg-2">
-                                                    <input id="plating_rate_add1" name="plating_rate_add1" type="number" min="0" placeholder="Plating rate" required class="form-control round-input" />
-                                                </div>
-                                                
                                             </div>
 
                                             <div class="form-group ">
-                                            <label for="gst" class="control-label col-lg-1 text-danger">GST (%) *</label>
-                                                <div class="col-lg-2">
+                                                
+                                                <div class="col-lg-3">
+                                                    <label for="plating_rate_add1" class="control-label">Plating Rate</label>
+                                                    <input id="plating_rate_add1" name="plating_rate_add1" type="number" min="0" placeholder="Plating rate" required class="form-control round-input" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="gst" class="control-label text-danger">GST (%) *</label>
                                                     <input id="gst" name="gst" type="number" min="0" placeholder="GST percentage" required class="form-control round-input" />
                                                 </div>
 
-                                                <label class="control-label col-lg-2 text-danger">Status *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label class="control-label text-danger">Status *</label> <br>
                                                     <input type="radio" name="status" id="enable4" value="1" checked required class="iCheck-square-green">
                                                     <label for="enable4" class="control-label">Enable</label>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -535,10 +511,9 @@
                                                 </div>
                                             </div>
 
-                                            <input type="hidden" name="item_dtl_id" class="item_dtl_id" value="">
-
                                             <div class="form-group">
-                                                <div class="col-lg-offset-2 col-lg-10">
+                                                <div class="text-center" style="margin:auto;display:block">
+                                                    <input type="hidden" name="item_dtl_id" class="item_dtl_id" value="">
                                                     <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> Add Item Color Rate</button>
                                                 </div>
                                             </div>
@@ -551,8 +526,8 @@
                                     <div class="form">
                                         <form id="form_edit_item_color_rate" method="post" action="<?=base_url('admin/form_edit_item_color_rate')?>" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
-                                                <label for="supplier2" class="control-label col-lg-2 text-danger">Supplier Name *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label for="supplier2" class="control-label text-danger">Supplier Name *</label>
                                                     <select id="supplier2" name="supplier" required class="select2 form-control round-input">
                                                         <option value="">Select Supplier</option>
                                                         <?php
@@ -563,38 +538,34 @@
                                                     </select>
                                                 </div>
 
-                                                <label for="eff_date2" class="control-label col-lg-2 text-danger">Effective Date *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label for="eff_date2" class="control-label text-danger">Effective Date *</label>
                                                     <input id="eff_date2" name="eff_date" type="date" max="<?= date('Y-m-d') ?>" required class="form-control round-input" />
                                                 </div>
-                                            </div>
 
-                                            <div class="form-group ">
-                                                <label for="pur_rate2" class="control-label col-lg-2 text-danger">Purchase Rate *</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="pur_rate2" class="control-label text-danger">Purchase Rate *</label>
                                                     <input id="pur_rate2" name="pur_rate" type="number" min="0" placeholder="Purchase rate" required class="form-control round-input" />
                                                 </div>
 
-                                                <label for="cost_rate2" class="control-label col-lg-2 text-danger">Cost Rate *</label>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
+                                                    <label for="cost_rate2" class="control-label text-danger">Cost Rate *</label>
                                                     <input id="cost_rate2" name="cost_rate" type="number" min="0" placeholder="Cost rate" required class="form-control round-input" />
                                                 </div>
-                                                
-                                                <label for="plating_rate_edit1" class="control-label col-lg-2">Plating Rate</label>
-                                                <div class="col-lg-2">
-                                                    <input id="plating_rate_edit1" name="plating_rate_edit1" type="number" min="0" placeholder="Plating rate" class="form-control round-input" />
-                                                </div>
-                                                
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="gst2" class="control-label col-lg-2 text-danger">GST (%) *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label for="plating_rate_edit1" class="control-label">Plating Rate</label>
+                                                    <input id="plating_rate_edit1" name="plating_rate_edit1" type="number" min="0" placeholder="Plating rate" class="form-control round-input" />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="gst2" class="control-label text-danger">GST (%) *</label>
                                                     <input id="gst2" name="gst" type="number" min="0" placeholder="GST percentage" required class="form-control round-input" />
                                                 </div>
 
-                                                <label class="control-label col-lg-2 text-danger">Status *</label>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-3">
+                                                    <label class="control-label text-danger">Status *</label> <br>
                                                     <input type="radio" name="status" id="enable5" value="1" required class="iCheck-square-green">
                                                     <label for="enable5" class="control-label">Enable</label>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -603,10 +574,9 @@
                                                 </div>
                                             </div>
 
-                                            <input type="hidden" id="item_rate_id" name="item_rate_id" value="">
-
                                             <div class="form-group">
-                                                <div class="col-lg-offset-2 col-lg-10">
+                                                <div class="text-center" style="margin:auto;display:block">
+                                                    <input type="hidden" id="item_rate_id" name="item_rate_id" value="">
                                                     <button class="btn btn-success" type="submit"><i class="fa fa-refresh"></i> Update Item Color Rate</button>
                                                 </div>
                                             </div>
@@ -1233,6 +1203,8 @@
                 $("#plating_rate_edit").val(data.plating_rate);
                 $("#opn_qnty_for_leather_status_edit").val(data.opn_qnty_for_leather_status);
                 $("#reorder2").val(data.reorder_qnty);
+                $("#virtual_opng_stock_edit").val(data.virtual_opng_stock);
+                $("#virtual_opng_rate_edit").val(data.virtual_opng_rate);
                 $('#img2').fileinput('reset');
                 if(data.status == '1'){$("#enable3").iCheck('check');} else if(data.status == '0'){$("#disable3").iCheck('check');}
 

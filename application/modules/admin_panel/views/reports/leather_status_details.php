@@ -23,7 +23,7 @@ if(isset($status_details_comb)){
             // pending P.O. area
             if($search_type == 'print_po' and (round($sd->cut_rcvd_qnty, 2) == round($sd->cut_issue_qnty, 2))){
                 if(!empty($sd->cut_issue_qnty) or !empty($sd->cut_rcvd_qnty)){
-                    $status_row_comb[$key] = $status_row[$key]-1;
+                    $status_row_comb[$key] = $status_row_comb[$key]-1;
                 }
             }
         }
@@ -252,19 +252,18 @@ function fetch_po_pending($id_id){
                                 $co_array = array();
                                 $inner_iter = 1;
                                 $iter = 1; 
-                                $fin_cur_stock = $fin_po_pend = $row_cur_stock = $row_po_pend = 0;
-                                $fin_ord_pend = $fin_cut_iss = $fin_cut_rcv = $sub_ord_pend = $sub_cut_iss = $sub_cut_rcv = 0;
+                                $fin_cur_stock = $fin_po_pend = $row_cur_stock = $row_po_pend = $sub_ord_pend = $sub_cut_iss = $sub_cut_rcv = 0;
+                                $fin_ord_pend = $fin_cut_iss = $fin_cut_rcv = 0;
                                 if(isset($status_details)){
                                     foreach($status_details as $key=>$inner_leather){
                                         foreach($inner_leather as $sd){ 
-
                                             // pending P.O. area
-                                            if($search_type == 'print_po' and (round($sd->cut_rcvd_qnty, 2) == round($sd->cut_issue_qnty, 2))){
-                                                if(!empty($sd->cut_issue_qnty) or !empty($sd->cut_rcvd_qnty)){
-                                                    continue;   
-                                                }
-                                            }
-                                            // pending P.O. area
+                                            // echo $sd->cut_rcvd_qnty . ' ' . $sd->cut_issue_qnty . '<br>';
+                                            // if($search_type == 'print_po' and (round($sd->cut_rcvd_qnty, 2) == round($sd->cut_issue_qnty, 2))){
+                                            //     if(!empty($sd->cut_issue_qnty) or !empty($sd->cut_rcvd_qnty)){
+                                            //         continue;   
+                                            //     }
+                                            // }
 
                                             if(!in_array($sd->org_id_id, $co_array)){
                                                 array_push($co_array, $sd->org_id_id);
@@ -277,6 +276,8 @@ function fetch_po_pending($id_id){
                                                 </tr>
                                                 <?php
                                             }
+                                            if($search_type == 'print_po' and (round($sd->cut_rcvd_qnty, 2) != round($sd->cut_issue_qnty, 2)) and (!empty($sd->cut_issue_qnty) or !empty($sd->cut_rcvd_qnty))){
+                                                // if(!empty($sd->cut_issue_qnty) or !empty($sd->cut_rcvd_qnty)){
                                             ?>
                                             <tr>
                                                 <td class="text-right"><?=$iter++?>.</td>
@@ -303,6 +304,8 @@ function fetch_po_pending($id_id){
                                                 </td>
                                             </tr>
                                             <?php 
+                                                // }
+                                            }
                                             $inner_iter++;
                                             if($status_row[$key] == ($inner_iter - 1)){
                                                 ?>
@@ -313,7 +316,8 @@ function fetch_po_pending($id_id){
                                                         <b>P.O. Pending:</b> <?php echo $row_po_pend = fetch_po_pending($sd->org_id_id); $fin_po_pend += $row_po_pend?> || 
                                                         <b>Balance:</b> 
                                                         <?php 
-                                                            $rv = ($row_ord_pend + $row_cut_iss) - ($row_cut_rcv + $row_cur_stock + $row_po_pend); 
+                                                            // echo '$row_ord_pend '. $sub_ord_pe   nd . '<br>$row_cut_iss '. $sub_cut_iss . '<br>$row_cut_rcv'. $sub_cut_rcv . '<br>$row_cur_stock'. $row_cur_stock . '<br>$row_po_pend'. $row_po_pend;
+                                                            $rv = ($sub_ord_pend + $sub_cut_iss) - ($sub_cut_rcv + $row_cur_stock + $row_po_pend); 
                                                             if($rv > 0){
                                                                 echo '<label style="color: red">'.$rv.'</label>';
                                                             }else{
@@ -326,6 +330,7 @@ function fetch_po_pending($id_id){
                                                     <th class="text-right"><?php echo $sub_cut_rcv; $fin_cut_rcv += $sub_cut_rcv;?></th>
                                                 </tr>
                                                 <?php
+                                                $sub_ord_pend = $sub_cut_iss = $sub_cut_rcv = 0;
                                             }
                                             // GRAND TOTAL
                                             if($iter == (array_sum($status_row) + 1)){
@@ -418,6 +423,7 @@ function fetch_po_pending($id_id){
                                                     ?>
                                                 </td>
                                             </tr>
+                                            
                                             <?php 
                                             $inner_iter++;
                                             if($status_row_comb[$key] == ($inner_iter - 1)){
@@ -426,14 +432,16 @@ function fetch_po_pending($id_id){
                                                     <td colspan="2">
                                                         <!-- <b>Total For</b> < ?=fetch_item_details($sd->org_id_id)?>:<br> -->
                                                         <b>Current Stock:</b> <?php echo $row_cur_stock = fetch_current_stock($sd->org_id_id); $fin_cur_stock += $row_cur_stock?> || 
-                                                        <b>P.O. Pending:</b> <?php echo $row_po_pend = fetch_po_pending($sd->org_id_id); $fin_po_pend += $row_po_pend?> || 
+                                                        <b>P.O. Pending:</b> <?php echo $row_po_pend = fetch_po_pending($sd->org_id_id); $fin_po_pend += $row_po_pend?> 
+                                                        <br>
                                                         <b>Balance:</b> 
                                                         <?php 
-                                                            $rv = ($row_ord_pend + $row_cut_iss) - ($row_cut_rcv + $row_cur_stock + $row_po_pend); 
+                                                            // $rv = ($row_ord_pend + $row_cut_iss) - ($row_cut_rcv + $row_cur_stock + $row_po_pend); 
+                                                            $rv = ($sub_ord_pend + $sub_cut_iss) - ($sub_cut_rcv + $row_cur_stock + $row_po_pend); 
                                                             if($rv > 0){
                                                                 echo '<label style="color: red">'.$rv.'</label>';
                                                             }else{
-                                                                echo '<label style="color: blue">'.$rv.'</label>';
+                                                                echo '<label style="color: blue">' . $rv.'</label>';
                                                             }
                                                         ?>
                                                     </td>

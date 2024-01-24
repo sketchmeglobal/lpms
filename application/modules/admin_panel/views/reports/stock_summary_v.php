@@ -87,7 +87,7 @@
                                 <div class="col-sm-3">
                                     <div class="row">
                                         <label>From date</label>
-                                        <input autocomplete="off" type="date" id="myDate1" name="fromdate" required class="form-control date" value="" required/>
+                                        <input autocomplete="off" type="date" id="" name="fromdate" required class="form-control date" value="<?=YEAR_START_DATE?>" required/>
                                     </div>
                                     <div class="row">
                                         <label>To date</label>
@@ -99,6 +99,18 @@
                                             $today = $year . '-' . $month . '-' . $day;
                                         ?>
                                         <input autocomplete="off" type="date" id="myDate2" name="todate" required class="form-control date" value="<?php echo $today; ?>" required/>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <h5><b>Select print type</b></h5>
+                                        <div class="col-sm-6">
+                                            <input type="radio" name="bal_qnty" class="" value="1" />
+                                            <label for="zero">With Zero</label><br>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="radio" name="bal_qnty" class="" checked value="0" />
+                                            <label for="non-zero">Without Zero</label><br>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
@@ -237,18 +249,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

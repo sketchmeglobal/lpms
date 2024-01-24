@@ -39,6 +39,14 @@ class Report extends My_Controller {
             redirect(base_url('admin/dashboard'));
         }
     }
+
+    public function report_list($uri) {
+      if($this->check_permission(array(1,2)) == true) {
+          $this->load->model('Report_order_status_m');
+          $data = $this->Report_order_status_m->report_list($uri);
+          $this->load->view($data['page'], $data['data']);
+      }
+    }
 	
 	public function report_item() {
         if($this->check_permission(array(1,2)) == true) {
@@ -95,6 +103,14 @@ class Report extends My_Controller {
             $data = $this->Report_order_status_m->report_order_status_details();
             $this->load->view($data['page'], $data['data']);
         }
+    }
+
+    public function report_buyer_wise_article(){
+      if($this->check_permission(array(1,2)) == true) {
+          $this->load->model('Report_order_status_m');
+          $data = $this->Report_order_status_m->report_buyer_wise_article();
+          $this->load->view($data['page'], $data['data']);
+      }
     }
     
     public function report_material_status_details() {
@@ -378,6 +394,13 @@ public function fetch_items_on_item_group(){
         $data = $this->Report_order_status_m->invoice_hsn_summary();
         $this->load->view($data['page'], $data['data']);
         // $this->load->view('report/stock_detail_ledger', $data)
+    }
+
+    public function invoice_sales_reconcilation() {
+      $this->load->model('Report_order_status_m');
+      $data = $this->Report_order_status_m->invoice_sales_reconcilation();
+      $this->load->view($data['page'], $data['data']);
+      // $this->load->view('report/stock_detail_ledger', $data)
     }
     
     public function yearly_stock_update(){
@@ -3567,4 +3590,3 @@ public function fetch_items_on_item_group(){
     
 }//end ctrl
 
-?>

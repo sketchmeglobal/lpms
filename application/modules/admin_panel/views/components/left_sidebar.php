@@ -281,6 +281,11 @@ foreach($all_block_menu as $abm){
                             <a href="<?=base_url();?>admin/jobber-challan-receipt"><i class="fa fa-caret-right"></i> Jobber Receive</a>
                         </li>
                     <?php } ?>
+                    <?php if(!in_array(51, $final_array)){ ?>
+                        <li class="<?=(($class_name == 'Finishing') && ($method_name == 'finishing')) ? 'active' : ''; ?>">
+                            <a href="<?=base_url();?>admin/finishing"><i class="fa fa-caret-right"></i> Finishing </a>
+                        </li>
+                    <?php } ?>
                     <?php if(!in_array(9, $final_array)){ ?>    
                         <li class="<?=(($class_name == 'sample-challan-issue') && ($method_name == 'sample-challan-issue')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/sample-challan-issue"><i class="fa fa-caret-right"></i>Sample Issue</a>
@@ -291,6 +296,11 @@ foreach($all_block_menu as $abm){
                             <a href="<?=base_url();?>admin/sample-challan-receive"><i class="fa fa-caret-right"></i>Sample Receive</a>
                         </li>
                     <?php } ?>    
+                    <?php if(!in_array(50, $final_array)){ ?>
+                        <li class="<?=(($class_name == 'Lining') && ($method_name == 'lining')) ? 'active' : ''; ?>">
+                            <a href="<?=base_url();?>admin/lining"><i class="fa fa-caret-right"></i> Lining </a>
+                        </li>
+                    <?php } ?>
                     <?php if(!in_array(13, $final_array)){ ?>
                         <li class="<?=(($class_name == 'Checking') && ($method_name == 'checking')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/checking"><i class="fa fa-caret-right"></i> Checking </a>
@@ -434,88 +444,22 @@ foreach($all_block_menu as $abm){
                 </ul>
             </li>
             
-            <li class="menu-list <?=($class_name == 'Report_item') ? 'active' : ''; ?>"><a href=""><i class="fa fa-houzz"></i> <span>Report</span></a>
+            <li class="menu-list <?=($class_name == 'Report_item') ? 'active' : ''; ?>"><a href=""><i class="fa fa-houzz"></i> <span>Reports</span></a>
                 <ul class="child-list">
                     <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-item"><i class="fa fa-caret-right"></i> Item Information </a>
+                        <a href="<?=base_url();?>admin/report-list/master"><i class="fa fa-caret-right"></i> Master Reports </a>
                     </li>
                     <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-order-status"><i class="fa fa-caret-right"></i> Order Status </a>
+                        <a href="<?=base_url();?>admin/report-list/order"><i class="fa fa-caret-right"></i> Order Reports </a>
                     </li>
                     <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/purchase-order-audit-report"><i class="fa fa-caret-right"></i> Customer Order Wise Item Purchase Details </a>
+                        <a href="<?=base_url();?>admin/report-list/production"><i class="fa fa-caret-right"></i> Production Reports </a>
                     </li>
                     <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-shipment-buyerwise-status"><i class="fa fa-caret-right"></i>  Shipment Report  </a>
+                        <a href="<?=base_url();?>admin/report-list/stock"><i class="fa fa-caret-right"></i> Inventory Reports </a>
                     </li>
                     <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-material-status-details"><i class="fa fa-caret-right"></i> Material Issue Status </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-shipment-status"><i class="fa fa-caret-right"></i> Shipment Status Details </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-article-costing-details"><i class="fa fa-caret-right"></i>  Article Costing  </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-leather-status"><i class="fa fa-caret-right"></i> Leather Status </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/report-item-status"><i class="fa fa-caret-right"></i> Item Status </a>
-                    </li> 
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/jobber-ledger"><i class="fa fa-caret-right"></i> Jobber Ledger </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/checking-summary-status"><i class="fa fa-caret-right"></i> Checking Summary </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/article-master-report"><i class="fa fa-caret-right"></i> Article Rate Report</a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/checking-entry-sheet"><i class="fa fa-caret-right"></i> Checking Entry Sheet </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/stock-summary-details"><i class="fa fa-caret-right"></i> Stock Summary </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/stock-detail-ledger"><i class="fa fa-caret-right"></i> Stock Detail Ledger </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/supplier-wise-item-position"><i class="fa fa-caret-right"></i> Supplier Wise Item Position </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/supplier-purchase-ledger"><i class="fa fa-caret-right"></i> Supplier Purchase Ledger </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/supplier-wise-purchase-position"><i class="fa fa-caret-right"></i>Supplier Wise Purchase Position </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/group-stock-summary"><i class="fa fa-caret-right"></i>Group Stock Summary </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/jobber-bill-summary"><i class="fa fa-caret-right"></i>Jobber Bill Summary </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/cutter-bill-summary"><i class="fa fa-caret-right"></i>Cutter Bill Summary </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/monthly-production-status"><i class="fa fa-caret-right"></i>Buyer Wise Shipment Report </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/production-register"><i class="fa fa-caret-right"></i>Production Register </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/outstanding-report"><i class="fa fa-caret-right"></i>Outstanding Report </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/payroll-reports"><i class="fa fa-caret-right"></i>Payroll Reports </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/checking-overtime-reports"><i class="fa fa-caret-right"></i>Checking Details Reports </a>
-                    </li>
-                    <li class="<?=(($class_name == 'Report_item') && ($method_name == 'report_item')) ? 'active' : ''; ?>">
-                        <a href="<?=base_url();?>admin/invoice-hsn-summary"><i class="fa fa-caret-right"></i>HSN Summary (Invoice) </a>
+                        <a href="<?=base_url();?>admin/report-list/payroll"><i class="fa fa-caret-right"></i>Misc. Reports </a>
                     </li>
                 </ul>
             </li>

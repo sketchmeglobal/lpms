@@ -259,26 +259,26 @@ class Material_issue_m extends CI_Model {
 
 
         $data['customer_order'] = $this->db->select('co_id, co_no')
-         ->get_where('customer_order', array( 'customer_order.status' => 1))->result();
+            ->get_where('customer_order', array( 'customer_order.status' => 1))->result();
 
 
         $data['material_issue_data'] = $this->db->select('material_issue.material_issue_id, material_issue.material_issue_slip_number, material_issue.material_issue_to_form, material_issue.jobber_challan_receipt_id, material_issue.am_id, material_issue.terms_condition, material_issue.remarks,material_issue.virtual_status,material_issue.total_value, acc_master.name as acc_master_name, acc_master.short_name as acc_master_short_name, jobber_challan_receipt.jobber_receipt_challan_number, material_issue.material_issue_date, jobber_issue.jobber_issue_id, jobber_issue.jobber_challan_number')
-                        ->join('acc_master', 'acc_master.am_id = material_issue.am_id', 'left')
-                        ->join('jobber_challan_receipt', 'jobber_challan_receipt.jobber_challan_receipt_id = material_issue.jobber_challan_receipt_id', 'left')
-                        ->join('jobber_challan_receipt_details', 'jobber_challan_receipt_details.jobber_challan_receipt_id = jobber_challan_receipt.jobber_challan_receipt_id', 'left')
-                        ->join('jobber_issue', 'jobber_issue.jobber_issue_id = jobber_challan_receipt_details.jobber_challan_number', 'left')
-                        ->get_where('material_issue', array('material_issue.material_issue_id' => $material_issue_id))->result();
+            ->join('acc_master', 'acc_master.am_id = material_issue.am_id', 'left')
+            ->join('jobber_challan_receipt', 'jobber_challan_receipt.jobber_challan_receipt_id = material_issue.jobber_challan_receipt_id', 'left')
+            ->join('jobber_challan_receipt_details', 'jobber_challan_receipt_details.jobber_challan_receipt_id = jobber_challan_receipt.jobber_challan_receipt_id', 'left')
+            ->join('jobber_issue', 'jobber_issue.jobber_issue_id = jobber_challan_receipt_details.jobber_challan_number', 'left')
+            ->get_where('material_issue', array('material_issue.material_issue_id' => $material_issue_id))->result();
 
     $data['item_details'] = $this->db->select('purchase_order_receive_detail.purchase_order_receive_detail_id, purchase_order_receive_detail.remain_quantity_for_material_issue, item_dtl.id_id, item_master.item, item_master.im_id, item_master.im_code, item_master.u_id, units.unit, colors.c_id, colors.color, purchase_order_receive_detail.material_issue_status')
-                        ->join('purchase_order_receive_detail', 'purchase_order_receive_detail.id_id = item_dtl.id_id', 'left')
-                        ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
-                        ->join('units', 'units.u_id = item_master.u_id', 'left')
-                        ->join('colors', 'colors.c_id = item_dtl.c_id', 'left')
-                        ->join('purchase_order_receive', 'purchase_order_receive.purchase_order_receive_id = purchase_order_receive_detail.purchase_order_receive_id', 'left')
-                        // ->where('item_dtl.opening_stock >', 0)
-                        ->order_by('item_master.item, colors.color')
-                        ->group_by('item_dtl.id_id')
-                        ->get_where('item_dtl', array('item_dtl.status' => 1))->result();
+            ->join('purchase_order_receive_detail', 'purchase_order_receive_detail.id_id = item_dtl.id_id', 'left')
+            ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
+            ->join('units', 'units.u_id = item_master.u_id', 'left')
+            ->join('colors', 'colors.c_id = item_dtl.c_id', 'left')
+            ->join('purchase_order_receive', 'purchase_order_receive.purchase_order_receive_id = purchase_order_receive_detail.purchase_order_receive_id', 'left')
+            // ->where('item_dtl.opening_stock >', 0)
+            ->order_by('item_master.item, colors.color')
+            ->group_by('item_dtl.id_id')
+            ->get_where('item_dtl', array('item_dtl.status' => 1))->result();
 
         return array('page' => 'material_issue/material_issue_edit_v', 'data' => $data);
     }

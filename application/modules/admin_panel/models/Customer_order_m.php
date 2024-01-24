@@ -718,6 +718,9 @@ public function ajax_fetch_customer_order_details_total_value() {
         $rs = $this->db->get_where('customer_order_dtl', array('customer_order_dtl.co_id' => $this->input->post('order_id'), 'customer_order_dtl.am_id' => $this->input->post('am_id'), 'customer_order_dtl.lc_id' => $this->input->post('lc_id'), 'customer_order_dtl.fc_id' => $this->input->post('fc_id'), 'customer_order_dtl.co_quantity' => $this->input->post('article_quantity')))->num_rows();
         
         if($rs == 0) {
+            $combination_colors = null;
+            if(!empty($this->input->post('cc_id'))) { $combination_colors = implode(',',$this->input->post('cc_id')); }
+
             $insertArray = array(
                 'co_id' => $this->input->post('order_id'),
                 'am_id' => $this->input->post('am_id'),
@@ -728,7 +731,7 @@ public function ajax_fetch_customer_order_details_total_value() {
                 'co_buy_reference' => $this->input->post('buyer_reference'),
                 'co_remarks' => $this->input->post('article_remarks'),
                 'user_id' => $this->session->user_id,
-                'combination_colors' => implode(',',$this->input->post('cc_id'))
+                'combination_colors' => $combination_colors,
             );
             // echo '<pre>', print_r($insertArray), '</pre>';die;
             $this->db->insert('customer_order_dtl', $insertArray);

@@ -734,6 +734,8 @@ force_download($name, $path);
                 'volume_weight' => $this->input->post('volume_weight'),
                 'ex_rate' => $this->input->post('ex_rate'),
                 'conversion_rate' => $this->input->post('conversion_rate'),
+                'realisation_date' => $this->input->post('realisation_date'),
+                'realisation_ex_rate' => $this->input->post('realisation_ex_rate'),
                 'acc_master_declar_id' => rtrim($dtemp, ","),
                 'net_quantity' => $all_quantity_vals,
                 'net_amount' => $total_invoice_vals,

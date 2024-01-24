@@ -147,10 +147,10 @@
                 { "data": "action" },
             ],
             //column initialisation properties
-            "columnDefs": [{
-                "targets": [4], //disable 'Image','Actions' column sorting
-                "orderable": false
-            }]
+            "columnDefs": [
+                {"targets": [4], "orderable": false},
+                {"targets": [0], "order": 'desc'},
+            ]
         } );
     } );
 	

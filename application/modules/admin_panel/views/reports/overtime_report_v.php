@@ -56,69 +56,56 @@
 
         <!--body wrapper start-->
         <div class="wrapper">
-
             <div class="row">
                 <div class="col-lg-12">
                     <section class="panel">
                         <div class="panel-body">
-                <form class="row" method="post" target="_blank">
-                <div class = "row">
-                <div class="col-sm-2">
-                        <label>Date - From</label><br />
-                        <?php 
-$month = date('m');
-$day = '01';
-$year = date('Y');
-
-$newdate = $year . '-' . $month . '-' . $day;
-
-    ?>
-                        <input name="from" type="date" value="<?php echo $newdate; ?>" class="form-control" id="myDate1" required>
-                    </div>
-                    <div class="col-sm-2">
-                        <label>Date - To</label><br />
-                        <input name="to" type="date" value="<?php echo $year . '-' . $month . '-' . date('d'); ?>" class="form-control" id="myDate2" required>
-                    </div>
-                    <div class="col-sm-2">
-                    <label>Select Department </label><br />
-                    <select id="group" name="group[]" multiple="multiple" class="form-control select2" required>
-                        <option value="">Select From The List</option>
-                        <?php
-                        foreach ($departments as $fcbl) {
-                            ?>
-                            <option value="<?= $fcbl->d_id ?>"><?= $fcbl->department ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-sm-5">
-                  <label> Select Employee From The List </label><br />
-                    <a id="select-all" href="#">Select All</a>
-                 /
-                <a id="deselect-all" href="#">Deselect All</a>
-                <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
-                    </select>
-                </div>
-                    
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-sm-2">
-                        <input type="submit" name="overtime_checking" class="btn btn-success btn-sm" value="Overtime With Checking Entry Report" target="_blank" />
-                        <input type="submit" name="overtime_checking_with_picture" class="btn btn-success btn-sm" value="Overtime With Checking Entry ( With Picture )" target="_blank" />
-                        <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
-                    </div>
-                </div>
-                <br />
-                <br>
-            </form>
-                <br>
+                            <form class="row" method="post" target="_blank">
+                                <div class = "row">
+                                    <div class="col-sm-2">
+                                        <label>Date - From</label><br />
+                                        <?php 
+                                        $month = date('m');
+                                        $day = '01';
+                                        $year = date('Y');
+                                        $newdate = $year . '-' . $month . '-' . $day;
+                                        ?>
+                                        <input name="from" type="date" value="<?php echo $newdate; ?>" class="form-control" id="myDate1" required>
+                                        <label>Date - To</label><br />
+                                        <input name="to" type="date" value="<?php echo $year . '-' . $month . '-' . date('d'); ?>" class="form-control" id="myDate2" required>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>Select Department </label><br />
+                                        <select id="group" name="group[]" multiple="multiple" class="form-control select2" required>
+                                            <option value="">Select From The List</option>
+                                            <?php
+                                            foreach ($departments as $fcbl) {
+                                                ?>
+                                                <option value="<?= $fcbl->d_id ?>"><?= $fcbl->department ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label> Select Employee From The List </label><br />
+                                        <a id="select-all" href="#">Select All</a>
+                                        /
+                                        <a id="deselect-all" href="#">Deselect All</a>
+                                        <select id="leather_status" name="leather[]" multiple="multiple" style="width: 100%">
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="submit" name="overtime_checking" class="btn btn-success btn-sm" value="Overtime (Checking Entry)" target="_blank" />
+                                        <input type="submit" name="overtime_checking_with_picture" class="btn btn-success btn-sm" value="Overtime (Checking Entry - Picture)" target="_blank" />
+                                        <!--<input type="submit" name="reg" class="btn btn-success btn-sm preg" value="Print Register" />-->
+                                    </div>    
+                                </div>
+                            </form>
                         </div>
                     </section>
                 </div>
             </div>
-
         </div>
         <!--body wrapper end-->
 
@@ -249,18 +236,3 @@ $newdate = $year . '-' . $month . '-' . $day;
        </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

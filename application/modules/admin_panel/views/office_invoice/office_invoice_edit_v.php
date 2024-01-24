@@ -102,29 +102,29 @@
 
             <!--Edit Article Costing-->
             <form id="form_edit_receive_purchase_order" method="post" action="<?=base_url('admin/form-edit-office-invoice')?>" class="cmxform form-horizontal tasi-form">
-            <div class="row">
-                <div class="col-md-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            Edit <?= $office_invoice_data[0]->office_invoice_number ?>
-                            <span class="tools pull-right">
-                                <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
-                            </span>
-                        </header>
-                        <div class="panel-body">
-                        <?php #print_r($purchase_order_details); die;?>
-                            	<div class="form-group ">
-                                	<div class="col-lg-3">
-                                    <label for="office_invoice_number" class="control-label text-danger">Invoice Number*</label>
-                                    <input id="office_invoice_number" name="office_invoice_number" type="text" placeholder="Invoice Number" class="form-control round-input" value="<?= $office_invoice_data[0]->office_invoice_number ?>" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Edit <?= $office_invoice_data[0]->office_invoice_number ?>
+                                <span class="tools pull-right">
+                                    <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
+                                </span>
+                            </header>
+                            <div class="panel-body">
+                                <?php #print_r($purchase_order_details); die;?>
+                                <div class="form-group ">
+                                    <div class="col-lg-3">
+                                        <label for="office_invoice_number" class="control-label text-danger">Invoice Number*</label>
+                                        <input id="office_invoice_number" name="office_invoice_number" type="text" placeholder="Invoice Number" class="form-control round-input" value="<?= $office_invoice_data[0]->office_invoice_number ?>" />
                                     </div>
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-3">
                                         <label for="office_invoice_date" class="control-label text-danger">Date *</label>
                                         <input id="office_invoice_date" name="office_invoice_date" type="date" placeholder="Date" class="form-control round-input" value="<?= date('Y-m-d', strtotime($office_invoice_data[0]->office_invoice_date)) ?>" />
                                     </div>
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-3">
                                         <label for="rate_type" class="control-label text-danger">Rate Type *</label>
                                         <select id="rate_type" name="rate_type" class="form-control select2">
                                             <option value="">Rate Type</option>
@@ -134,13 +134,13 @@
                                             <option value="4" <?php if($office_invoice_data[0]->rate_type == '4'){ ?> selected <?php } ?>> FOB</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="col-lg-3">
                                         <label for="am_id" class="control-label text-danger">Select Buyer*</label>
                                         <span class="select_buyer_val hidden"><?= $office_invoice_data[0]->am_id ?></span>
                                         <select id="am_id" name="am_id" class="form-control select2">
                                         <option value="">Select Buyer</option>
-											<?php
+                                            <?php
                                             foreach($buyer_details as $bd){
                                                 $sn = ($bd->short_name == '' ? '-' : $bd->short_name);
                                             ?> 
@@ -150,12 +150,15 @@
                                             ?>
                                         </select>
                                     </div>
+                                </div>
+
+                                <div class="form-group ">    
                                     
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-3">
                                         <label for="currency" class="control-label text-danger">Select Currency</label>
                                         <select id="currency" name="currency" class="form-control select2">
                                         <option value="">Select Currency</option>
-											<?php
+                                            <?php
                                             foreach($currency_list as $cl){
                                             ?> 
                                                 <option value="<?= $cl->cur_id ?>" <?php if($office_invoice_data[0]->cur_id == $cl->cur_id){ ?> selected <?php } ?> ><?= $cl->currency ?></option>
@@ -164,17 +167,14 @@
                                             ?>
                                         </select>
                                     </div>
-                                 </div>
-                                 
-                                <div class="form-group ">    
-                                    
+
                                     <div class="col-lg-3">
                                         <label for="office_proforma_id" class="control-label">Select Proforma</label>
                                         <span class="hidden select_pro_val"><?= $office_invoice_data[0]->office_proforma_id ?></span>
                                         <?php 
-            $office_proforma = $office_invoice_data[0]->office_proforma_id;
-            $office_proforma_ar = explode(",", $office_proforma);
-                                         ?>
+                                            $office_proforma = $office_invoice_data[0]->office_proforma_id;
+                                            $office_proforma_ar = explode(",", $office_proforma);
+                                            ?>
                                         <select id="office_proforma_id" name="office_proforma_id[]" class="form-control select2" multiple>
                                         <option value="">Select Proforma</option>
                                         <?php
@@ -188,41 +188,23 @@
                                         ?>
                                         </select>
                                     </div>
-                                
-                                	<div class="col-lg-3">
-                                    <label for="pre_carriage_by" class="control-label">Pre-Carriage by:</label>
-                                    <select id="pre_carriage_by" name="pre_carriage_by" class="form-control select2" required>
-                                        <option value="">Pre-Carriage</option>
-                                        <option value="1" <?php if($office_invoice_data[0]->pre_carriage_by == '1'){ ?> selected <?php } ?>>By Air</option>
-                                        <option value="2" <?php if($office_invoice_data[0]->pre_carriage_by == '2'){ ?> selected <?php } ?>>By Ship </option>
-                                        <option value="3" <?php if($office_invoice_data[0]->pre_carriage_by == '3'){ ?> selected <?php } ?>>By Road</option>
-                                    </select>
-                                </div>
-                                    
-                                    <div class="col-lg-3">
-                                        <label for="port_of_discharge" class="control-label">Port of Discharge</label>
-                                        <textarea id="port_of_discharge" name="port_of_discharge" placeholder="Port of Discharge" class="form-control round-input"><?=$office_invoice_data[0]->port_of_discharge?></textarea>
-                                    </div>
-                                    
-                                    <div class="col-lg-3">
-                                        <label for="port_of_loading" class="control-label">Port of Loading</label>
 
-                                        <textarea id="port_of_loading" name="port_of_loading" placeholder="Port of Loading" class="form-control round-input"><?= trim($office_invoice_data[0]->port_of_loading) == '' ? 'Kolkata': $office_invoice_data[0]->port_of_loading ?></textarea>
-                                    </div>
-                                    
                                     <div class="col-lg-3">
-                                        <label for="terms_conditions" class="control-label">Terms and Conditions</label>
-
-                                        <textarea id="terms_conditions" name="terms_conditions" placeholder="Terms and Conditions" class="form-control round-input"><?=$office_invoice_data[0]->terms_conditions?></textarea>
+                                        <label for="pre_carriage_by" class="control-label">Pre-Carriage by:</label>
+                                        <select id="pre_carriage_by" name="pre_carriage_by" class="form-control select2" required>
+                                            <option value="">Pre-Carriage</option>
+                                            <option value="1" <?php if($office_invoice_data[0]->pre_carriage_by == '1'){ ?> selected <?php } ?>>By Air</option>
+                                            <option value="2" <?php if($office_invoice_data[0]->pre_carriage_by == '2'){ ?> selected <?php } ?>>By Ship </option>
+                                            <option value="3" <?php if($office_invoice_data[0]->pre_carriage_by == '3'){ ?> selected <?php } ?>>By Road</option>
+                                        </select>
                                     </div>
-                                    
-                                    
+
                                     <div class="col-lg-3">
                                         <label for="tr_id" class="control-label text-danger">Select transporter*</label>
                                         <span class="select_tranporter_val hidden"><?= $office_invoice_data[0]->tr_id ?></span>
                                         <select id="tr_id" name="tr_id" class="form-control select2" required>
                                         <option value="">Select Transporter</option>
-											<?php
+                                            <?php
                                             foreach($transport_details as $tr_de){
                                             ?> 
                                                 <option value="<?= $tr_de->tr_id ?>" <?php if($office_invoice_data[0]->tr_id == $tr_de->tr_id){ ?> selected <?php } ?>><?= $tr_de->name ?></option>
@@ -231,18 +213,173 @@
                                             ?>
                                         </select>
                                     </div>
+
+                                </div>
                                     
+                                <div class="form-group ">    
+                                    
+                                    <div class="col-lg-3">
+                                        <label for="port_of_discharge" class="control-label">Port of Discharge</label>
+                                        <input type="text" class="form-control round-input" id="port_of_discharge" name="port_of_discharge" value="<?=$office_invoice_data[0]->port_of_discharge?>">
+                                        <!-- <textarea id="port_of_discharge" name="port_of_discharge" placeholder="Port of Discharge" class="form-control round-input">< ?=$office_invoice_data[0]->port_of_discharge?></textarea> -->
+                                    </div>
+                                    
+                                    <div class="col-lg-3">
+                                        <label for="port_of_loading" class="control-label">Port of Loading</label>
+                                        <input type="text" class="form-control round-input" id="port_of_loading" name="port_of_loading" value="<?= trim($office_invoice_data[0]->port_of_loading) == '' ? 'Kolkata': $office_invoice_data[0]->port_of_loading ?>">
+                                        <!-- <textarea id="port_of_loading" name="port_of_loading" placeholder="Port of Loading" class="form-control round-input"></textarea> -->
+                                    </div>
+                                    
+                                    <div class="col-lg-3">
+                                        <label for="terms_conditions" class="control-label">Terms and Conditions</label>
+                                        <input type="text" class="form-control round-input" id="terms_conditions" name="terms_conditions" value="<?=$office_invoice_data[0]->terms_conditions?>">
+                                        <!-- <textarea id="terms_conditions" name="terms_conditions" placeholder="Terms and Conditions" class="form-control round-input">< ?=$office_invoice_data[0]->terms_conditions?></textarea> -->
+                                    </div>
                                     
                                     <div class="col-lg-3">
                                         <label for="distance" class="control-label text-danger">Distance*</label>
-
                                         <input type="number" id="distance" name="distance" placeholder="Distance" class="form-control round-input" value="<?=$office_invoice_data[0]->distance?>" required>
+                                    </div>                                    
+                                    
+                                </div>
+                                    
+                                <div class="form-group ">          
+                                    <div class="col-lg-4">
+                                        <label for="terms_of_delivery_payment" class="control-label">Terms of Delivery & Payment</label>
+                                        <textarea rows="3" id="terms_of_delivery_payment" name="terms_of_delivery_payment" placeholder="Terms of Delivery & Payment" class="form-control"><?=$office_invoice_data[0]->terms_of_delivery_payment?></textarea>
                                     </div>
+                                    <div class="col-lg-4">
+                                        <label for="mark_container" class="control-label">Mark & Container</label>
+                                        <textarea rows="3" id="mark_container" name="mark_container" placeholder="Mark & Container" class="form-control"><?=$office_invoice_data[0]->mark_container?></textarea>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="notify" class="control-label">Notify</label>
+                                        <textarea rows="3" id="notify" name="notify" placeholder="Notify" class="form-control"><?=$office_invoice_data[0]->notify?></textarea>
+                                    </div>
+                                </div>
                                     
-                                    
-                                 </div>
-                                 
                                 <div class="form-group ">
+                                    <div class="col-lg-4">
+                                        <label for="no_of_kind_of_package" class="control-label">No. & Kind of Pkgs</label>
+                                        <textarea rows="3" id="no_of_kind_of_package" name="no_of_kind_of_package" placeholder="No. & Kind of Pkgs" class="form-control"><?=$office_invoice_data[0]->no_of_kind_of_package?></textarea>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label for="description_of_goods" class="control-label">Description of Goods</label>
+                                        <textarea rows="3" id="description_of_goods" name="description_of_goods" placeholder="Description of Goods" class="form-control"><?=$office_invoice_data[0]->description_of_goods?></textarea>
+                                    </div>                                    
+                                    <div class="col-lg-4">
+                                        <label for="acc_master_declar_id" class="control-label">Select Declaration</label>
+                                        <span class="hidden select_dec_val"><?= $office_invoice_data[0]->acc_master_declar_id ?></span>
+                                        <?php 
+                                            $declaration = $office_invoice_data[0]->acc_master_declar_id;
+                                            $declaration_ar = explode(",", $declaration);
+                                        ?>                        
+                                        <select id="acc_master_declar_id" name="acc_master_declar_id[]" class="form-control select2" multiple>
+                                        <?php
+                                            foreach($acc_master_declaration as $bd){
+                                            ?> 
+                                                <option value="<?=$bd->INVOICE_DECLARATION_SEQ?>" <?php 
+                                            foreach($declaration_ar as $o_p_a) {
+                                            if($o_p_a == $bd->INVOICE_DECLARATION_SEQ){ ?> selected <?php }} ?>><?=$bd->DECLARATION_SUBJECT?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group ">
+                                    <div class="col-lg-3">
+                                        <label for="gross_weight" class="control-label">Gross Weight</label>
+                                        <input id="gross_weight" name="gross_weight" type="number" placeholder="Gross Weight" class="form-control round-input" value="<?=$office_invoice_data[0]->gross_weight?>"/>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="net_weight" class="control-label">Net Weight</label>
+                                        <input id="net_weight" name="net_weight" type="number" placeholder="Net Weight" class="form-control round-input" value="<?=$office_invoice_data[0]->net_weight?>"/>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="volume_weight" class="control-label">Volume Weight</label>
+                                        <input id="volume_weight" name="volume_weight" type="number" placeholder="Volume Weight" class="form-control round-input" value="<?=$office_invoice_data[0]->volume_weight?>" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="ex_rate" class="control-label text-danger">Ex. Rate (Checklist)*</label>
+                                        <input id="ex_rate" name="ex_rate" type="number" placeholder="EX Rate" required class="form-control round-input" value="<?=$office_invoice_data[0]->ex_rate?>" />
+                                    </div>                                     
+                                </div>
+
+                                <div class="form-group ">
+                                    <div class="col-lg-3">
+                                        <label for="conversion_rate" class="control-label">Conversion Rate</label>
+                                        <input id="conversion_rate" name="conversion_rate" type="number" placeholder="Conversion Rate" class="form-control round-input" value="<?=$office_invoice_data[0]->conversion_rate?>" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="net_qnty" class="control-label">Net Quantity</label>
+                                        <input id="net_qnty" name="net_qnty" type="number" placeholder="Net Quantity" class="form-control round-input" value="<?=$office_invoice_data[0]->net_quantity?>" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="net_amnt" class="control-label">Net Amount</label>
+                                        <input id="net_amnt" name="net_amnt" type="number" placeholder="Net Amount" class="form-control round-input" value="<?=$office_invoice_data[0]->net_amount?>" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="net_amnt" class="control-label">Net Amount(INR)</label>
+                                        <input id="net_amnt_inr" name="net_amnt_inr" type="number" placeholder="Net Amount" class="form-control round-input" value="<?=$office_invoice_data[0]->net_amount_inr?>" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    <div class="col-lg-3">
+                                        <label for="volume_weight" class="control-label">Discount %</label>
+                                        <input id="disc" name="disc" type="number" placeholder="discount" class="form-control round-input" value="<?=$office_invoice_data[0]->discount?>" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="hand_charge" class="control-label">Handling Charges</label>
+                                        <input id="hand_charge" name="hand_charge" type="number" placeholder="Handling Charges" class="form-control round-input" value="<?=$office_invoice_data[0]->hand_charge?>" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="grand_total" class="control-label">Grand Total</label>
+                                        <input id="grand_total" name="grand_total" type="number" placeholder="Grand Total" class="form-control round-input" value="<?=$office_invoice_data[0]->grand_total?>" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="grand_total" class="control-label">Grand Total (INR)</label>
+                                        <input id="grand_total_inr" name="grand_total_inr" type="number" placeholder="Grand Total" class="form-control round-input" value="<?=$office_invoice_data[0]->grand_total_inr?>" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+
+                                    <div class="col-lg-3">
+                                        <label for="cust_header_name" class="control-label">Custom Header Name</label>
+                                        <input id="cust_header_name" name="cust_header_name" type="text" placeholder="Custom Header Name" class="form-control round-input" value="<?=$office_invoice_data[0]->cust_header_name?>" />
+                                    </div> 
+
+                                    <div class="col-lg-3">
+                                        <label for="net_qnty" class="control-label">Buyer (if other than consignee)</label>
+                                        <select id="am_id_other" name="am_id_other" class="form-control select2">
+                                            <option value="">Select Buyer</option>
+                                            <?php
+                                            foreach($buyer_details as $bd){
+                                                $sn = ($bd->short_name == '' ? '-' : $bd->short_name);
+                                            ?> 
+                                                <option value="<?= $bd->am_id ?>" <?php if($office_invoice_data[0]->am_id_other == $bd->am_id){ ?> selected <?php } ?>><?= $bd->name . ' ['. $sn .']' ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label for="realisation_ex_rate" class="control-label">Realisation Exchange Rate</label>
+                                        <input id="realisation_ex_rate" name="realisation_ex_rate" type="text" placeholder="Realisation Exchange Rate" class="form-control round-input" value="<?=$office_invoice_data[0]->realisation_ex_rate?>" />
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label for="realisation_date" class="control-label">Realisation Date</label>
+                                        <input id="realisation_date" name="realisation_date" type="date" placeholder="Realisation Date" class="form-control round-input" value="<?=$office_invoice_data[0]->realisation_date?>" />
+                                    </div>
+                                        
+                                </div>
+
+                                <div class="form-group">
                                     <div class="col-lg-3">
                                         <label for="packing_shipment_id" class="control-label text-danger">Select Packing List*</label>
                                         <select id="packing_shipment_id" name="packing_shipment_id" class="form-control select2" disabled>
@@ -255,178 +392,42 @@
                                             }
                                         ?>
                                         </select>
-                                    </div>   
-                                                                    
-                                    <div class="col-lg-3">
-                                        <label for="terms_of_delivery_payment" class="control-label">Terms of Delivery & Payment</label>
-                                        <textarea rows="6" id="terms_of_delivery_payment" name="terms_of_delivery_payment" placeholder="Terms of Delivery & Payment" class="form-control"><?=$office_invoice_data[0]->terms_of_delivery_payment?></textarea>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label for="mark_container" class="control-label">Mark & Container</label>
-                                        <textarea rows="6" id="mark_container" name="mark_container" placeholder="Mark & Container" class="form-control"><?=$office_invoice_data[0]->mark_container?></textarea>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <label for="notify" class="control-label">Notify</label>
-                                        <textarea rows="6" id="notify" name="notify" placeholder="Notify" class="form-control"><?=$office_invoice_data[0]->notify?></textarea>
-                                    </div>
-                                 </div>
-                                 
-                                <div class="form-group ">
-                                    <div class="col-lg-6">
-                                        <label for="no_of_kind_of_package" class="control-label">No. & Kind of Pkgs</label>
-
-                                        <textarea id="no_of_kind_of_package" name="no_of_kind_of_package" placeholder="No. & Kind of Pkgs" class="form-control round-input"><?=$office_invoice_data[0]->no_of_kind_of_package?></textarea>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="description_of_goods" class="control-label">Description of Goods</label>
-
-                                        <textarea id="description_of_goods" name="description_of_goods" placeholder="Description of Goods" class="form-control round-input"><?=$office_invoice_data[0]->description_of_goods?></textarea>
-                                    </div>                                    
-                                </div>
-                                
-                                <div class="form-group ">
-                                	<div class="col-lg-2">
-                                    <label for="gross_weight" class="control-label">Gross Weight</label>
-                                    <input id="gross_weight" name="gross_weight" type="number" placeholder="Gross Weight" class="form-control round-input" value="<?=$office_invoice_data[0]->gross_weight?>"/>
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="net_weight" class="control-label">Net Weight</label>
-                                    <input id="net_weight" name="net_weight" type="number" placeholder="Net Weight" class="form-control round-input" value="<?=$office_invoice_data[0]->net_weight?>"/>
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="volume_weight" class="control-label">Volume Weight</label>
-                                    <input id="volume_weight" name="volume_weight" type="number" placeholder="Volume Weight" class="form-control round-input" value="<?=$office_invoice_data[0]->volume_weight?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="ex_rate" class="control-label text-danger">EX Rate*</label>
-                                    <input id="ex_rate" name="ex_rate" type="number" placeholder="EX Rate" required class="form-control round-input" value="<?=$office_invoice_data[0]->ex_rate?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="conversion_rate" class="control-label">Conversion Rate</label>
-                                    <input id="conversion_rate" name="conversion_rate" type="number" placeholder="Conversion Rate" class="form-control round-input" value="<?=$office_invoice_data[0]->conversion_rate?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label for="acc_master_declar_id" class="control-label">Select Declaration</label>
-                                        <span class="hidden select_dec_val"><?= $office_invoice_data[0]->acc_master_declar_id ?></span>
-                <?php 
-            $declaration = $office_invoice_data[0]->acc_master_declar_id;
-            $declaration_ar = explode(",", $declaration);
-                                         ?>                        
-                                        <select id="acc_master_declar_id" name="acc_master_declar_id[]" class="form-control select2" multiple>
-                                        <?php
-                                            foreach($acc_master_declaration as $bd){
-                                            ?> 
-                                                <option value="<?=$bd->INVOICE_DECLARATION_SEQ?>" <?php 
-                                            foreach($declaration_ar as $o_p_a) {
-                                            if($o_p_a == $bd->INVOICE_DECLARATION_SEQ){ ?> selected <?php }} ?>><?=$bd->DECLARATION_SUBJECT?></option>
-                                                <?php
-                                            }
-                                            ?>
-                                        </select>
                                     </div> 
-                                </div>
-                                <div class="form-group ">
-                                    <div class="col-lg-2">
-                                    <label for="net_qnty" class="control-label">Net Quantity</label>
-                                    <input id="net_qnty" name="net_qnty" type="number" placeholder="Net Quantity" class="form-control round-input" value="<?=$office_invoice_data[0]->net_quantity?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="net_amnt" class="control-label">Net Amount</label>
-                                    <input id="net_amnt" name="net_amnt" type="number" placeholder="Net Amount" class="form-control round-input" value="<?=$office_invoice_data[0]->net_amount?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="net_amnt" class="control-label">Net Amount(INR)</label>
-                                    <input id="net_amnt_inr" name="net_amnt_inr" type="number" placeholder="Net Amount" class="form-control round-input" value="<?=$office_invoice_data[0]->net_amount_inr?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="volume_weight" class="control-label">Discount %</label>
-                                    <input id="disc" name="disc" type="number" placeholder="discount" class="form-control round-input" value="<?=$office_invoice_data[0]->discount?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="hand_charge" class="control-label">Handling Charges</label>
-                                    <input id="hand_charge" name="hand_charge" type="number" placeholder="Handling Charges" class="form-control round-input" value="<?=$office_invoice_data[0]->hand_charge?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="grand_total" class="control-label">Grand Total</label>
-                                    <input id="grand_total" name="grand_total" type="number" placeholder="Grand Total" class="form-control round-input" value="<?=$office_invoice_data[0]->grand_total?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="grand_total" class="control-label">Grand Total (INR)</label>
-                                    <input id="grand_total_inr" name="grand_total_inr" type="number" placeholder="Grand Total" class="form-control round-input" value="<?=$office_invoice_data[0]->grand_total_inr?>" />
-                                    </div>
-                                    <div class="col-lg-2">
-                                    <label for="cust_header_name" class="control-label">Custom Header Name</label>
-                                    <input id="cust_header_name" name="cust_header_name" type="text" placeholder="Custom Header Name" class="form-control round-input" value="<?=$office_invoice_data[0]->cust_header_name?>" />
-                                    </div> 
-                                </div>
-                                <div class="form-group ">
+
                                     <div class="col-lg-3">
-                                    <label for="net_qnty" class="control-label">Buyer (if other than consignee)</label>
-                                    <select id="am_id_other" name="am_id_other" class="form-control select2">
-                                        <option value="">Select Buyer</option>
-                                            <?php
-                                            foreach($buyer_details as $bd){
-                                                $sn = ($bd->short_name == '' ? '-' : $bd->short_name);
-                                            ?> 
-                                                <option value="<?= $bd->am_id ?>" <?php if($office_invoice_data[0]->am_id_other == $bd->am_id){ ?> selected <?php } ?>><?= $bd->name . ' ['. $sn .']' ?></option>
-                                                <?php
-                                            }
-                                            ?>
-                                        </select>
+                                        <input type="checkbox" id="print_hand_ratio" name="print_hand_ratio" value="<?= $office_invoice_data[0]->print_hand_ratio ?>" <?php echo ($office_invoice_data[0]->print_hand_ratio==1 ? 'checked' : '');?>> &nbsp;&nbsp;
+                                        <label for="print_hand_ratio"> Show hand-machine ratio(Uncheck to hide from print) </label><br>
                                     </div>
-                                    
-                                    <div class="col-lg-6">
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                        <br/>
-                                    <input type="checkbox" id="print_hand_ratio" name="print_hand_ratio" value="<?= $office_invoice_data[0]->print_hand_ratio ?>" <?php echo ($office_invoice_data[0]->print_hand_ratio==1 ? 'checked' : '');?>> &nbsp;&nbsp;
-                                    <label for="print_hand_ratio"> Show hand-machine ratio(Uncheck to hide from print) </label><br>
-                                    </div>
-                                     
-                                </div>
-                                
-                                
-                        </div>
-                    <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-4">
-                                    <a class="btn btn-success" data-toggle="modal" data-target="#myModal">
-                                    <i class="fa fa-refresh"> Update Office Invoice </i>
-                                    </a>
-                                            <div class="modal" id="myModal">
+                                    <div class="col-lg-3">
+                                        <label for="submit">Action</label><br>
+                                        <a class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                                            <i class="fa fa-refresh"> Update Office Invoice </i>
+                                        </a>
+                                        <div class="modal" id="myModal">
                                             <div class="modal-dialog">
-                                            <div class="modal-content">
-                                            
-                                            <!-- Modal body -->
-                                            <div class="modal-body">
-                                            <p class="text-center"><b>All detail level item's exchange rate will be updated.<br/>
-                                            Are you sure to proceed?</b></p>
+                                                <div class="modal-content">
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        <p class="text-center"><b>All detail level item's exchange rate will be updated.<br/> Are you sure to proceed?</b></p>
+                                                    </div>
+                                                    
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update </i></button>
+                                                        <a class="btn btn-danger" data-dismiss="modal">Close</a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                            <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update </i></button>
-                                            <a class="btn btn-danger" data-dismiss="modal">Close</a>
-                                            </div>
-                                            
-                                            </div>
-                                            </div>
-                                            </div>
-                                        <!--<button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update Office Invoice </i></button>-->
-                                        <!--<button id="allot_roll_no_btn" class="btn btn-info addon-btn m-b-10"><i class="fa fa-magic"></i> Test</button>-->
-                                    </div>
-                                    
+                                        </div>
+                                        <input type="hidden" id="office_invoice_id_edit" name="office_invoice_id_edit" class="hidden" value="<?= $office_invoice_data[0]->office_invoice_id ?>" />
+                                    </div>            
                                 </div> 
-                                <input type="hidden" id="office_invoice_id_edit" name="office_invoice_id_edit" class="hidden" value="<?= $office_invoice_data[0]->office_invoice_id ?>" />
-                    </section>
+                            </div>
+                        </section>
+                    </div> 
                 </div>
-               </form> 
+            </form> 
+
             <div class="row">
                 <div class="col-md-12">
                     <section class="panel">

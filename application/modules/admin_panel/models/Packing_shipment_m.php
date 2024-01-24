@@ -1395,6 +1395,7 @@ class Packing_shipment_m extends CI_Model {
     }
     
     public function print_customer_order_consumption_for_packing_shipment_details($co_id, $vals, $packing_id){
+        $this->db->query("SET SQL_BIG_SELECTS=1");
             $query = "SELECT
                 customer_order.co_no,
                 customer_order.co_date,

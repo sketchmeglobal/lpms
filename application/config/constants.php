@@ -90,8 +90,9 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 define('YEAR', '2023-24');
 define('YEAR_START', '2023');
 define('YEAR_START_DATE', '2023-04-01');
+define('YEAR_FIRST_MONTH_END', '2023-04-30');
 define('YEAR_END', '2024');
-define('YEAR_END_DATE', '2024-04-01');
+define('YEAR_END_DATE', '2024-03-31');
 
 define('WEBSITE_NAME', 'Shilpa Overseas');
 define('WEBSITE_NAME_SHORT', 'SOPL');

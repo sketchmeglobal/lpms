@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label>From date</label>
-                                    <input autocomplete="off" type="date" id="myDate1" name="fromdate" required class="form-control date" value="" />
+                                    <input autocomplete="off" type="date" id="" name="fromdate" required class="form-control date" value="<?=YEAR_START_DATE?>" />
                                 </div>
                                 <div class="col-sm-2">
                                     <label>To date</label>
@@ -217,18 +217,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

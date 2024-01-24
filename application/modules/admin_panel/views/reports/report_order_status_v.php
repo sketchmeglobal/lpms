@@ -113,25 +113,41 @@
 
                             <form id="buyer_wise_order_details" method="post" action="<?= base_url('admin/report-order-status-details') ?>" class="cmxform form-horizontal tasi-form" novalidate="novalidate" target="_blank">
                                 <div class="form-group ">
-                                    <label class="control-label col-lg-2 text-danger">Select Buyer*</label>
-                                    <div class="col-lg-3">
-                                        <select id="buyer_wise_order_details" name="buyer_wise_order_details[]" multiple="" class="form-control select2">
-                                            <option value="">Select Buyer</option>
-                                            <?php foreach ($buyers as $buyer) {
-                                                ?>
-                                                <option value="<?= $buyer->am_id ?>"><?= $buyer->name . '['. $buyer->short_name .']' ?></option>
-                                                <?php
-                                            } ?>
-                                         </select>
+                                    <div class="col-lg-5">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label class="control-label text-danger">Select Buyer*</label>
+                                                <select id="buyer_wise_order_details" name="buyer_wise_order_details[]" multiple="" class="form-control select2">
+                                                    <option value="">Select Buyer</option>
+                                                    <?php foreach ($buyers as $buyer) {
+                                                        ?>
+                                                        <option value="<?= $buyer->am_id ?>"><?= $buyer->name . ' ['. $buyer->short_name .']' ?></option>
+                                                        <?php
+                                                    } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-sm-6">
+                                                <label class="control-label">Select From Date</label>
+                                                <input type="date" name="buyer_wise_from_date" id="buyer_wise_from_date" class="form-control" value="<?=YEAR_START_DATE?>">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="control-label">Select To Date</label>
+                                                <input type="date" name="buyer_wise_to_date" id="buyer_wise_to_date" class="form-control" value="<?=YEAR_END_DATE?>">
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-6 col-md-offset-1">
                                         <div class="row">
-                                        <button name="submit" value="buyer_wise_order_details" class="btn btn-success" type="submit"><i class="fa fa-search"> Buyer Wise Order Details</i></button>
-                                        <button name="submit" value="buyer_wise_order_details_pending" class="btn btn-success" type="submit"><i class="fa fa-search"> Buyer Wise Order Details(Pending)</i></button>
+                                            <label class="control-label">Action</label><br> 
+                                            <button name="submit" value="buyer_wise_order_details_pending" class="btn btn-success" type="submit"><i class="fa fa-search"> Buyer Wise (Pending)</i></button>
+                                            <button name="submit" value="buyer_and_article_wise_order_details_pending" class="btn btn-success" type="submit"><i class="fa fa-search"> Buyer & Article Wise (Pending)</i></button>
                                         </div>
-                                        <div class="row" style="margin-top: 6px;">
-                                        <button name="submit" value="buyer_and_article_wise_order_details_pending" class="btn btn-success" type="submit"><i class="fa fa-search"> Buyer & Article Wise Order Details(Pending)</i></button>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <br>
+                                            <button name="submit" id="buyer_wise_cust_ord_status" value="buyer_wise_order_details" class="btn btn-success" type="submit"><i class="fa fa-search"> Buyer Wise (Date)</i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -216,6 +232,12 @@
             var win = window.open($url, '_blank');
         });
     });
+
+    $("#buyer_wise_cust_ord_status").click(function(){
+        if($("#buyer_wise_from_date").val() === '' || $("#buyer_wise_to_date").val() === ''){
+            return false;
+        }
+    })
     
 </script>
 

@@ -132,9 +132,9 @@ class Skiving_issue_m extends CI_Model {
         } else {
                 #module_permission contains the dept id now
         $rs = $this->db
-        ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
-        ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
-        ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
+            ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
+            ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
+            ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
         }
 
         // $rs = $this->db->get('cutting_received_challan_detail')->result();
@@ -199,9 +199,9 @@ class Skiving_issue_m extends CI_Model {
         } else {
                 #module_permission contains the dept id now
         $rs = $this->db
-        ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
-        ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
-        ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
+            ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
+            ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
+            ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
         }
         
 
@@ -223,9 +223,9 @@ class Skiving_issue_m extends CI_Model {
         } else {
                 #module_permission contains the dept id now
         $rs = $this->db
-        ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
-        ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
-        ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
+            ->order_by('customer_order.co_no,cutting_issue_challan.cut_number,article_master.art_no,c2.color')
+            ->join('user_details','user_details.user_id = cutting_received_challan_detail.user_id','left')
+            ->get_where('cutting_received_challan_detail', array('user_details.user_dept' => $module_permission, 'cutting_received_challan_detail.cut_rcv_id' => $cut_rcv_id))->result();
         }
 
             $this->db->flush_cache();
@@ -1032,10 +1032,10 @@ class Skiving_issue_m extends CI_Model {
             0 => 'employees.name',
             1 => 'skiving_bill.bill_number',
             2 => 'skiving_bill.bill_date',
-            3 => 'skiving_bill.bill_type',
+            3 => 'skiving_bill.bill_rate_type',
         );
         // Set searchable column fields
-        $column_search = array('employee.name', 'skiving_bill.bill_number', 'skiving_bill.bill_date', 'skiving_bill.bill_type');
+        $column_search = array('employees.name', 'skiving_bill.bill_number', 'skiving_bill.bill_date', 'skiving_bill.bill_rate_type');
 
         $limit = $this->input->post('length');
         $start = $this->input->post('start');
@@ -1060,7 +1060,8 @@ class Skiving_issue_m extends CI_Model {
         //if not searching for anything
         if(empty($search)) {
             $this->db->limit($limit, $start);
-            $this->db->order_by($order, $dir);
+            // $this->db->order_by($order, $dir);
+            $this->db->order_by('skiving_bill.bill_number');
             $this->db->select('skiving_bill.*, DATE_FORMAT(skiving_bill.bill_date, "%d-%m-%Y") as bill_date, employees.name');
             $this->db->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left');
 
@@ -1069,6 +1070,7 @@ class Skiving_issue_m extends CI_Model {
             } else {
                 #module_permission contains the dept id now
                 $rs = $this->db
+                    ->order_by('skiving_bill.bill_number')
                     ->join('user_details','user_details.user_id = skiving_bill.user_id','left')
                     ->get_where('skiving_bill', array('user_details.user_dept' => $module_permission, 'skiving_bill.status' => 1))->result();
             }
@@ -1099,11 +1101,12 @@ class Skiving_issue_m extends CI_Model {
             $this->db->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left');
             
             if($module_permission == 'show'){
-                $rs = $this->db->get_where('skiving_bill', array('skiving_bill.status' => 1))->result();
+                $rs = $this->db->order_by('skiving_bill.bill_number')->get_where('skiving_bill', array('skiving_bill.status' => 1))->result();
             } else {
                     #module_permission contains the dept id now
                 $rs = $this->db
                     ->join('user_details','user_details.user_id = skiving_bill.user_id','left')
+                    ->order_by('skiving_bill.bill_number')
                     ->get_where('skiving_bill', array('user_details.user_dept' => $module_permission, 'skiving_bill.status' => 1))->result();
             }
 
@@ -1112,14 +1115,16 @@ class Skiving_issue_m extends CI_Model {
             $this->db->limit($limit, $start);
             $this->db->order_by($order, $dir);
             $this->db->select('skiving_bill.*, DATE_FORMAT(skiving_bill.bill_date, "%d-%m-%Y") as bill_date, employees.name');
-            $this->db->join('acc_master', 'acc_master.am_id = skiving_bill.am_id', 'left');
+            // $this->db->join('acc_master', 'acc_master.am_id = skiving_bill.am_id', 'left');
+            $this->db->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left');
 
             if($module_permission == 'show'){
-                $rs = $this->db->get_where('skiving_bill', array('skiving_bill.status' => 1))->result();
+                $rs = $this->db->order_by('skiving_bill.bill_number')->get_where('skiving_bill', array('skiving_bill.status' => 1))->result();
             } else {
                 #module_permission contains the dept id now
                 $rs = $this->db
                     ->join('user_details','user_details.user_id = skiving_bill.user_id','left')
+                    ->order_by('skiving_bill.bill_number')
                     ->get_where('skiving_bill', array('user_details.user_dept' => $module_permission, 'skiving_bill.status' => 1))->result();
             }
 
@@ -1201,10 +1206,33 @@ class Skiving_issue_m extends CI_Model {
             ->get_where('skiving_bill', array('skiving_bill.sb_id' => $skiving_bill_id))->result();
 
         $data['skiving_issue_list'] = $this->db->get_where('cutting_received_challan',array('skiving_issue_status' => 1 ))->result();
-			
-        $query = "SELECT DISTINCT(skiving_receive_challan_details.co_id), customer_order.co_no FROM `skiving_receive_challan_details` LEFT JOIN customer_order ON customer_order.co_id = skiving_receive_challan_details.co_id WHERE customer_order.cutting_status = 1";
-        $data['co_ids'] = $this->db
-            ->query($query)->result();
+		
+        // fetch department-wisemodule permission
+        $session_user_id = $this->session->user_id;
+        # if id is returned then filter else show all
+        $module_permission = $this->_dept_wise_module_permission(3, $session_user_id); 
+
+        if($module_permission == 'show'){
+            $query = "SELECT DISTINCT(skiving_receive_challan_details.co_id), customer_order.co_no FROM `skiving_receive_challan_details` LEFT JOIN customer_order ON customer_order.co_id = skiving_receive_challan_details.co_id"; //WHERE customer_order.cutting_status = 1
+            $data['co_ids'] = $this->db->query($query)->result();
+        } else {
+            #module_permission contains the dept id now
+            // ECHO 
+            $query = "
+            SELECT DISTINCT
+                (skiving_receive_challan_details.co_id),customer_order.co_no
+            FROM
+                `skiving_receive_challan_details`
+            LEFT JOIN customer_order ON customer_order.co_id = skiving_receive_challan_details.co_id
+            LEFT JOIN user_details ON user_details.user_id = skiving_receive_challan_details.user_id
+            WHERE user_dept = $module_permission
+            "; 
+            // DIE;
+            $data['co_ids'] = $this->db->query($query)->result();
+        }
+
+        
+        
 
         return array('page'=>'skiving_bill/skiving_bill_edit_v', 'data'=>$data);
         

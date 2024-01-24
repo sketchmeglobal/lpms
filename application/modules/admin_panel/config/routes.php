@@ -686,30 +686,57 @@ $route['admin/del-skiving-receive-challan-details-list'] = 'admin_panel/Skiving_
 	
 //Sample Bill end
 
-//Checking Start
+//Lining Start
+
 	//List
-	$route['admin/checking'] = 'admin_panel/Checking/checking_list';
-	$route['admin/ajax-checking-table-data'] = 'admin_panel/Checking/ajax_checking_table_data';
+	$route['admin/lining'] = 'admin_panel/Lining/lining_list';
+	$route['admin/ajax-lining-table-data'] = 'admin_panel/Lining/ajax_lining_table_data';
 	
 	//Add
-	$route['admin/checking-list-add'] = 'admin_panel/Checking/checking_list_add';
-	$route['admin/form-checking-list-add'] = 'admin_panel/Checking/form_checking_list_add';
+	$route['admin/lining-list-add'] = 'admin_panel/Lining/lining_list_add';
+	$route['admin/form-lining-list-add'] = 'admin_panel/Lining/form_lining_list_add';
 	
 	//Edit
-	$route['admin/checking-list-edit/(:num)'] = 'admin_panel/Checking/checking_list_edit/$1';
-	$route['admin/ajax-checking-list-details-table-data'] = 'admin_panel/Checking/ajax_checking_list_details_table_data';
-	$route['admin/form-checking-list-edit'] = 'admin_panel/Checking/form_checking_list_edit';
-	$route['admin/get-customer-order-dtl-for-checking'] = 'admin_panel/Checking/get_customer_order_dtl_for_checking';
-	$route['admin/get-customer-order-dtl-for-checking-am-id'] = 'admin_panel/Checking/get_customer_order_dtl_for_checking_am_id';
-	$route['admin/form-add-checking-listn-details'] = 'admin_panel/Checking/form_add_checking_list_details';
-	$route['admin/ajax-fetch-checking-details-for-edit'] = 'admin_panel/Checking/ajax_fetch_checking_details_for_edit';
-	$route['admin/form-edit-checking-list-details'] = 'admin_panel/Checking/form_edit_checking_list_details';
+	$route['admin/lining-list-edit/(:num)'] = 'admin_panel/Lining/lining_list_edit/$1';
+	$route['admin/ajax-lining-list-details-table-data'] = 'admin_panel/Lining/ajax_lining_list_details_table_data';
+	$route['admin/form-lining-list-edit'] = 'admin_panel/Lining/form_lining_list_edit';
+	$route['admin/get-customer-order-dtl-for-lining'] = 'admin_panel/Lining/get_customer_order_dtl_for_lining';
+	$route['admin/get-customer-order-dtl-for-lining-am-id'] = 'admin_panel/Lining/get_customer_order_dtl_for_lining_am_id';
+	$route['admin/form-add-lining-listn-details'] = 'admin_panel/Lining/form_add_lining_list_details';
+	$route['admin/ajax-fetch-lining-details-for-edit'] = 'admin_panel/Lining/ajax_fetch_lining_details_for_edit';
+	$route['admin/form-edit-lining-list-details'] = 'admin_panel/Lining/form_edit_lining_list_details';
 
 	//Delete
-	$route['admin/delete-checking-list-header'] = 'admin_panel/Checking/checking_list_delete';
-	$route['admin/del-checking-details-list'] = 'admin_panel/Checking/del_checking_details_list';
+	$route['admin/delete-lining-list-header'] = 'admin_panel/Lining/lining_list_delete';
+	$route['admin/del-lining-details-list'] = 'admin_panel/Lining/del_lining_details_list';
 	
-//Checking End
+//Lining End
+
+//Finishing Start
+
+    //List
+    $route['admin/finishing'] = 'admin_panel/Finishing/finishing_list';
+    $route['admin/ajax-finishing-table-data'] = 'admin_panel/Finishing/ajax_finishing_table_data';
+    
+    //Add
+    $route['admin/finishing-list-add'] = 'admin_panel/Finishing/finishing_list_add';
+    $route['admin/form-finishing-list-add'] = 'admin_panel/Finishing/form_finishing_list_add';
+    
+    //Edit
+    $route['admin/finishing-list-edit/(:num)'] = 'admin_panel/Finishing/finishing_list_edit/$1';
+    $route['admin/ajax-finishing-list-details-table-data'] = 'admin_panel/Finishing/ajax_finishing_list_details_table_data';
+    $route['admin/form-finishing-list-edit'] = 'admin_panel/Finishing/form_finishing_list_edit';
+    $route['admin/get-customer-order-dtl-for-finishing'] = 'admin_panel/Finishing/get_customer_order_dtl_for_finishing';
+    $route['admin/get-customer-order-dtl-for-finishing-am-id'] = 'admin_panel/Finishing/get_customer_order_dtl_for_finishing_am_id';
+    $route['admin/form-add-finishing-listn-details'] = 'admin_panel/Finishing/form_add_finishing_list_details';
+    $route['admin/ajax-fetch-finishing-details-for-edit'] = 'admin_panel/Finishing/ajax_fetch_finishing_details_for_edit';
+    $route['admin/form-edit-finishing-list-details'] = 'admin_panel/Finishing/form_edit_finishing_list_details';
+
+    //Delete
+    $route['admin/delete-finishing-list-header'] = 'admin_panel/Finishing/finishing_list_delete';
+    $route['admin/del-finishing-details-list'] = 'admin_panel/Finishing/del_finishing_details_list';
+    
+//Finishing End
 
 //Office Proforma start
 	//List Header
@@ -966,11 +993,14 @@ $route['admin/del-platting-issue-details-list'] = 'admin_panel/Platting_issue/de
 //REPORT SECTION
 
 // list
+$route['admin/report-list/(:any)'] = 'admin_panel/Report/report_list/$1';
+
 $route['admin/report-item'] = 'admin_panel/Report/report_item';
 $route['admin/ajax-item-detail-table-data'] = 'admin_panel/Report/ajax_item_detail_table_data';
 
 // ORDER STATUS STARTS
 $route['admin/report-order-status'] = 'admin_panel/Report/report_order_status';
+$route['admin/report-buyer-wise-article'] = 'admin_panel/Report/report_buyer_wise_article';
 $route['admin/material-issue-status'] = 'admin_panel/Report/material_issue_status';
 $route['admin/report-shipment-status'] = 'admin_panel/Report/report_shipment_status';
 $route['admin/report-order-status-details'] = 'admin_panel/Report/report_order_status_details';
@@ -1044,6 +1074,7 @@ $route['admin/checking-overtime-reports'] = 'admin_panel/Report/overtime_reports
 
 //INVOICE
 $route['admin/invoice-hsn-summary'] = 'admin_panel/Report/invoice_hsn_summary';
+$route['admin/invoice-sales-reconcilation'] = 'admin_panel/Report/invoice_sales_reconcilation';
 
 //********************
 // Payroll starts

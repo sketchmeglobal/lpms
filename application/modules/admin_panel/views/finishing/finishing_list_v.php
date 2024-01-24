@@ -3,17 +3,16 @@
  * Coded by: Pran Krishna Das
  * Social: www.fb.com/pran93
  * CI: 3.0.6
- * Date: 21-02-2020
- * Time: 11:30 am
- * Last updated on 25-Feb-2022 at 11:30 am
+ * Date: 11-03-2020
+ * Time: 09:15
  */
  ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Outstanding Report | <?=WEBSITE_NAME;?></title>
-    <meta name="description" content="Order Status">
+    <title>Finishing List | <?=WEBSITE_NAME;?></title>
+    <meta name="description" content="article costing">
 
     <!--Data Table-->
     <link rel="stylesheet" type="text/css" href="<?=base_url()?>assets/admin_panel/js/DataTables/DataTables-1.10.18/css/dataTables.bootstrap.min.css"/>
@@ -23,18 +22,6 @@
     <!-- common head -->
     <?php $this->load->view('components/_common_head'); ?>
     <!-- /common head -->
-    <!--Select2-->
-    <link href="<?=base_url();?>assets/admin_panel/css/select2.css" rel="stylesheet">
-    <link href="<?=base_url();?>assets/admin_panel/css/select2-bootstrap.css" rel="stylesheet">
-<style>
-    .jobber_type {
-    border: 1px solid #cac8c8;
-    padding: 6px;
-    }
-    input[type="submit"] {
-        margin-top: 26px;
-    }
-</style>
 </head>
 
 <body class="sticky-header">
@@ -53,11 +40,11 @@
 
         <!-- page head start-->
         <div class="page-head">
-            <h3 class="m-b-less">Report - Outstanding Report</h3>
+            <h3 class="m-b-less">Finishing</h3>
             <div class="state-information">
                 <ol class="breadcrumb m-b-less bg-less">
                     <li><a href="<?=base_url('admin/dashboard');?>">Home</a></li>
-                    <li class="active"> Outstanding Report </li>
+                    <li class="active"> Finishing </li>
                 </ol>
             </div>
         </div>
@@ -70,50 +57,29 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <div class="panel-body">
-                            <form class="row" method="post" target="_blank">
-                <div class="col-sm-3">
-                    <label>Select From The List</label><br />
-                    <select id="cut_rcpt_challan" name="fab1" style="width: 100%">
-                        <?php
-                        foreach ($fetch_all_buyer as $fcbl) {
-                            ?>
-                            <option value="<?= $fcbl->am_id ?>"><?= $fcbl->name ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-sm-3">
-                    <label>Select From The List</label><br />
-                    <select id="department_values" name="department_values[]" multiple="multiple" style="width: 100%">
-                        <?php
-                        foreach ($fetch_department as $f_d) {
-                            ?>
-                            <option value="<?= $f_d->d_id ?>"><?= $f_d->department ?></option>
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <label>From</label><br />
-                    <input type="date" name="from" class="form-control" id="" value="<?=YEAR_START_DATE?>" />
-                </div>
-                <div class="col-sm-2">
-                    <label>To</label><br />
-                    <?php 
-$month = date('m');
-$day = date('d');
-$year = date('Y');
+                            <?php 
+                                if($view_permission != 'block'){
+                                    ?>
+                                    <a href="<?= base_url('admin/finishing-list-add') ?>" class="btn btn-success"><i class="fa fa-plus"></i> Add Finishing List</a>
+                                <?php
+                                } 
+                                ?>
 
-$today = $year . '-' . $month . '-' . $day;
-    ?>
-                    <input type="date" name="to" class="form-control date" id="myDate2" value="<?php echo $today; ?>"/>
-                </div>
-                
-                <input type="submit" name="print" value="Print" class="btn btn-sm btn-success" />
-                <input type="submit" name="print_groupwise" value="Print(Groupwise)" class="btn btn-sm btn-success" />
-            </form>
+                            <table id="cutting_receive_table" class="table data-table dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Finishing Entry Date</th>
+                                        <th>Extra Time</th>
+                                        <th>Order No.</th>
+                                        <th>Quantity</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                     </section>
                 </div>
@@ -153,15 +119,88 @@ $today = $year . '-' . $month . '-' . $day;
 <!--data table init-->
 <script src="<?=base_url()?>assets/admin_panel/js/data-table-init.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<!--Select2-->
-<script src="<?=base_url();?>assets/admin_panel/js/select2.js" type="text/javascript"></script>
-
 <script>
-    $('#cut_rcpt_challan').select2();
-    $('#department_values').select2();
-    const d = new Date();
-    let year = d.getFullYear();
-    document.getElementById("myDate1").defaultValue = year+"-04-01";  
+    $(document).ready(function() {
+        $('#cutting_receive_table').DataTable( {
+            "processing": true,
+            "language": {
+                processing: '<img src="<?=base_url('assets/img/ellipsis.gif')?>"><span class="sr-only">Processing...</span>',
+            },
+            "serverSide": true,
+            "ajax": {
+                "url": "<?=base_url('admin/ajax-finishing-table-data')?>",
+                "type": "POST",
+                "dataType": "json",
+            },
+            //will get these values from JSON 'data' variable
+            "columns": [
+                { "data": "employee_name" },
+                { "data": "finishing_start_date" },
+                { "data": "extra_time" }, 
+                { "data": "order_no" },
+                { "data": "tots_vals" },
+                { "data": "action" },
+            ],
+            //column initialisation properties
+            "columnDefs": [{
+                "targets": [4], //disable 'Image','Actions' column sorting
+                "orderable": false,
+            }]
+        } );
+    } );
+    
+    
+    
+    // delete area 
+    $(document).on('click', '.delete', function(){
+        if(confirm('Are you sure?')){
+            $tab = $(this).attr('tab');
+            $pk_name = $(this).attr('pk-name');
+            $pk_value = $(this).attr('pk-value');
+            
+            $ref_table = $(this).attr('ref-tab');
+            $ref_pk_name = $(this).attr('ref-pk-name');
+            
+            
+            $.ajax({
+                url: "<?= base_url('admin/delete-finishing-list-header') ?>",
+                type: 'POST',
+                dataType: 'json',
+                data:{tab: $tab, pk_name: $pk_name, pk_value: $pk_value, ref_table: $ref_table, ref_pk_name: $ref_pk_name},
+                success: function(returnData){
+                    console.log(JSON.stringify(returnData));
+                    notification(returnData);
+                    $('#cutting_receive_table').DataTable().ajax.reload();
+                },
+                error: function(e,v){
+                    console.log(e + v);
+                }
+            });
+        }
+    })
+    // delete area ends 
+    //toastr notification
+    function notification(obj) {
+        // console.log(obj);
+        toastr[obj.type](obj.msg, obj.title, {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "500",
+            "timeOut": "10000",
+            "extendedTimeOut": "5000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        })
+    }
+
 </script>
 
 </body>

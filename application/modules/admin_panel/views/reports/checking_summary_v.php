@@ -110,7 +110,7 @@ $year = date('Y');
 $today = $year . '-' . $month . '-' . $day;
 ?>
                         <label>Date - From</label><br />
-                        <input name="from" type="date" value="" class="form-control" id="myDate1" required>
+                        <input name="from" type="date" class="form-control" id="" required value="<?=YEAR_START_DATE?>" />
                     </div>
                     <div class="col-sm-3">
                         <label>Date - To</label><br />

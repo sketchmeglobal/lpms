@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-sm-2">
                     <label>From</label><br />
-                    <input type="date" name="from" class="form-control" id="myDate1" />
+                    <input type="date" name="from" class="form-control" id="" value="<?=YEAR_START_DATE?>" />
                 </div>
                 <div class="col-sm-2">
                     <label>To</label><br />

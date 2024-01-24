@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-sm-2">
                     <label>From date</label>
-                    <input autocomplete="off" type="date" id="myDate1" name="fromdate" class="form-control date" required value="" />
+                    <input autocomplete="off" type="date" id="" name="fromdate" class="form-control date" required value="<?=YEAR_START_DATE?>" />
                 </div>
                 <div class="col-sm-2">
                     <label>To date</label>
@@ -151,7 +151,7 @@ $today = $year . '-' . $month . '-' . $day;
                 </div>
                 <div class="col-sm-2">
                     <label>From date</label>
-                    <input autocomplete="off" type="date" id="myDate2" name="fromdate1" class="form-control date" required value="2022-04-01" />
+                    <input autocomplete="off" type="date" id="" name="fromdate1" class="form-control date" required value="<?=YEAR_START_DATE?>" />
                 </div>
                 <div class="col-sm-2">
                     <label>To date</label>
@@ -371,18 +371,3 @@ $today = $year . '-' . $month . '-' . $day;
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

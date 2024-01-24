@@ -732,11 +732,14 @@ else
 										<?php
     $show_iter = 1;
     $co_array[] = '';
+    $buyer_arr = array();
+    $sub_total_arr = array();
     $new_show_iter = 26;
     // echo $array_size = count($result);
     $order_sum = 0;
     $order_iter = 1;
-    $ord_qnty_sum = 0;
+    $sub_total_qnty_stck = $sub_total_qnty_remn = $sub_total_qnty_shpd = $sub_total_fab_balc = $sub_total_fab_rcv = $sub_total_fab_isu = $ord_qnty_sum = $sub_total_co_qnty = $sub_total_cut_issue = $sub_total_cut_rcv = $sub_total_cut_balc = $sub_total_skv_isu = $sub_total_skv_rcv = $sub_total_skv_balc = 0;
+    $sub_total_qnty_stck_arr = $sub_total_qnty_remn_arr = $sub_total_qnty_shpd_arr = $sub_total_fab_balc_arr = $sub_total_fab_rcv_arr = $sub_total_fab_isu_arr = $sub_total_co_qnty_arr = $sub_total_cut_issue_arr = $sub_total_cut_rcv_arr = $sub_total_cut_balc_arr = $sub_total_skv_isu_arr = $sub_total_skv_rcv_arr = $sub_total_skv_balc_arr = array();
     $grand_total_co_qnty = array();
     $grand_total1_co_qnty = array();
     $grand_total_cut_issue = array();
@@ -768,15 +771,114 @@ else
     $qnty_stck = 0;
     $grand_total_qnty_stck = array();
     $grand_total1_qnty_stck = array();
+    $sub_total_iter = 1;
     foreach ($result as $res)
     {
-        if (!in_array($res->co_no, $co_array))
-        {
+        if (!in_array($res->co_no, $co_array)) {
             array_push($co_array, $res->co_no);
-            if ($order_iter++ == 1)
-            {
-                // continue;
-                
+            if ($order_iter++ == 1){
+                // continue;                
+            }
+        }
+        if (!in_array($res->name, $buyer_arr)){
+            array_push($buyer_arr, $res->name);
+            if($sub_total_iter++ != 1){
+            ?>
+            <tr style="background-color: #4b9de3;color: white;">
+                <th colspan="2">Sub Total</th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_co_qnty = array_sum($grand_total_co_qnty) - $sub_total_co_qnty; 
+                    echo $sub_total_co_qnty;
+                    array_push($sub_total_co_qnty_arr, $sub_total_co_qnty);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_cut_issue = array_sum($grand_total_cut_issue) - $sub_total_cut_issue; 
+                    echo $sub_total_cut_issue;
+                    array_push($sub_total_cut_issue_arr, $sub_total_cut_issue);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_cut_rcv = array_sum($grand_total_cut_rcv) - $sub_total_cut_rcv; 
+                    echo $sub_total_cut_rcv;
+                    array_push($sub_total_cut_rcv_arr, $sub_total_cut_rcv);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_cut_balc = array_sum($grand_total_cut_balc) - $sub_total_cut_balc; 
+                    echo $sub_total_cut_balc;
+                    array_push($sub_total_cut_balc_arr, $sub_total_cut_balc);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_skv_isu = array_sum($grand_total_skv_isu) - $sub_total_skv_isu; 
+                    echo $sub_total_skv_isu;
+                    array_push($sub_total_skv_isu_arr, $sub_total_skv_isu);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_skv_rcv = array_sum($grand_total_skv_rcv) - $sub_total_skv_rcv; 
+                    echo $sub_total_skv_rcv;
+                    array_push($sub_total_skv_rcv_arr, $sub_total_skv_rcv);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_skv_balc = array_sum($grand_total_skv_balc) - $sub_total_skv_balc; 
+                    echo $sub_total_skv_balc;
+                    array_push($sub_total_skv_balc_arr, $sub_total_skv_balc);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_fab_isu = array_sum($grand_total_fab_isu) - $sub_total_fab_isu; 
+                    echo $sub_total_fab_isu;
+                    array_push($sub_total_fab_isu_arr, $sub_total_fab_isu);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_fab_rcv = array_sum($grand_total_fab_rcv) - $sub_total_fab_rcv; 
+                    echo $sub_total_fab_rcv;
+                    array_push($sub_total_fab_rcv_arr, $sub_total_fab_rcv);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_fab_balc = array_sum($grand_total_fab_balc) - $sub_total_fab_balc; 
+                    echo $sub_total_fab_balc;
+                    array_push($sub_total_fab_balc_arr, $sub_total_fab_balc);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_qnty_shpd = array_sum($grand_total_qnty_shpd) - $sub_total_qnty_shpd; 
+                    echo $sub_total_qnty_shpd;
+                    array_push($sub_total_qnty_shpd_arr, $sub_total_qnty_shpd);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_qnty_remn = array_sum($grand_total_qnty_remn) - $sub_total_qnty_remn; 
+                    echo $sub_total_qnty_remn;
+                    array_push($sub_total_qnty_remn_arr, $sub_total_qnty_remn);
+                    ?>
+                </th>
+                <th class="text-right">
+                    <?php 
+                    $sub_total_qnty_stck = array_sum($grand_total_qnty_stck) - $sub_total_qnty_stck; 
+                    echo $sub_total_qnty_stck;
+                    array_push($sub_total_qnty_stck_arr, $sub_total_qnty_stck);
+                    ?>
+                </th>
+            </tr>
+            <?php
             }
         }
         if ($show_iter == 26 or $show_iter == $new_show_iter)
@@ -848,85 +950,84 @@ else
         } ?>
 
 											<tr>
-												<th nowrap style="font-size: 12px"><?=$res->name
-?></th>
-												<th nowrap style="font-size: 12px"><?=$res->co_no
-?></th>
+												<th nowrap style="font-size: 12px"><?=$res->name?></th>
+												<th nowrap style="font-size: 12px">
+                                                <?=$res->co_no . ' ('.date("d-m-Y", strtotime($res->co_date)).')'?></th>
 												<td class="text-right">
 												<?php
-        $ord_qnty_sum += $res->co_quantity;
-        echo $res->co_quantity;
-        array_push($grand_total_co_qnty, $res->co_quantity);
-        array_push($grand_total1_co_qnty, $res->co_quantity);
-?>
+                                                        $ord_qnty_sum += $res->co_quantity;
+                                                        echo $res->co_quantity;
+                                                        array_push($grand_total_co_qnty, $res->co_quantity);
+                                                        array_push($grand_total1_co_qnty, $res->co_quantity);
+                                                ?>
 														</td>
 												<td class="text-right">
 												    <?php
-        echo $res->cutting_issued_qnty;
-        array_push($grand_total_cut_issue, $res->cutting_issued_qnty);
-        array_push($grand_total1_cut_issue, $res->cutting_issued_qnty);
-?>
+                                                            echo $res->cutting_issued_qnty;
+                                                            array_push($grand_total_cut_issue, $res->cutting_issued_qnty);
+                                                            array_push($grand_total1_cut_issue, $res->cutting_issued_qnty);
+                                                    ?>
 												</td>
 												<td class="text-right">
 												    <?php
-        echo $res->cutting_received_qnty;
-        array_push($grand_total_cut_rcv, $res->cutting_received_qnty);
-        array_push($grand_total1_cut_rcv, $res->cutting_received_qnty);
-?>
+                                                            echo $res->cutting_received_qnty;
+                                                            array_push($grand_total_cut_rcv, $res->cutting_received_qnty);
+                                                            array_push($grand_total1_cut_rcv, $res->cutting_received_qnty);
+                                                    ?>
 												</td>
 												<td class="text-right">
 												    <?php
-        $cut_balc = $res->cutting_issued_qnty - $res->cutting_received_qnty;
-        echo $cut_balc;
-        array_push($grand_total_cut_balc, $cut_balc);
-        array_push($grand_total1_cut_balc, $cut_balc);
-?>
-												</td>
-
-												<td class="text-right">
-												    <?php
-        echo $res->cutting_received_qnty;
-        array_push($grand_total_skv_isu, $res->cutting_received_qnty);
-        array_push($grand_total1_skv_isu, $res->cutting_received_qnty);
-?>
-												</td>
-												<td class="text-right">
-												    <?php
-        echo $res->skiving_receive_qnty;
-        array_push($grand_total_skv_rcv, $res->skiving_receive_qnty);
-        array_push($grand_total1_skv_rcv, $res->skiving_receive_qnty);
-?>
-												</td>
-												<td class="text-right">
-												    <?php
-        $skv_balc = $res->cutting_received_qnty - $res->skiving_receive_qnty;
-        echo $skv_balc;
-        array_push($grand_total_skv_balc, $skv_balc);
-        array_push($grand_total1_skv_balc, $skv_balc);
-?>
+                                                            $cut_balc = $res->cutting_issued_qnty - $res->cutting_received_qnty;
+                                                            echo $cut_balc;
+                                                            array_push($grand_total_cut_balc, $cut_balc);
+                                                            array_push($grand_total1_cut_balc, $cut_balc);
+                                                    ?>
 												</td>
 
 												<td class="text-right">
 												    <?php
-        echo $res->jobber_issue_qnty;
-        array_push($grand_total_fab_isu, $res->jobber_issue_qnty);
-        array_push($grand_total1_fab_isu, $res->jobber_issue_qnty);
-?>
+                                                            echo $res->cutting_received_qnty;
+                                                            array_push($grand_total_skv_isu, $res->cutting_received_qnty);
+                                                            array_push($grand_total1_skv_isu, $res->cutting_received_qnty);
+                                                    ?>
 												</td>
 												<td class="text-right">
 												    <?php
-        echo $res->jobber_receive_qnty;
-        array_push($grand_total_fab_rcv, $res->jobber_receive_qnty);
-        array_push($grand_total1_fab_rcv, $res->jobber_receive_qnty);
-?>
+                                                            echo $res->skiving_receive_qnty;
+                                                            array_push($grand_total_skv_rcv, $res->skiving_receive_qnty);
+                                                            array_push($grand_total1_skv_rcv, $res->skiving_receive_qnty);
+                                                    ?>
 												</td>
 												<td class="text-right">
 												    <?php
-        $fab_balc = $res->jobber_issue_qnty - $res->jobber_receive_qnty;
-        echo $fab_balc;
-        array_push($grand_total_fab_balc, $fab_balc);
-        array_push($grand_total1_fab_balc, $fab_balc);
-?>
+                                                            $skv_balc = $res->cutting_received_qnty - $res->skiving_receive_qnty;
+                                                            echo $skv_balc;
+                                                            array_push($grand_total_skv_balc, $skv_balc);
+                                                            array_push($grand_total1_skv_balc, $skv_balc);
+                                                    ?>
+												</td>
+
+												<td class="text-right">
+												    <?php
+                                                            echo $res->jobber_issue_qnty;
+                                                            array_push($grand_total_fab_isu, $res->jobber_issue_qnty);
+                                                            array_push($grand_total1_fab_isu, $res->jobber_issue_qnty);
+                                                    ?>
+												</td>
+												<td class="text-right">
+												    <?php
+                                                            echo $res->jobber_receive_qnty;
+                                                            array_push($grand_total_fab_rcv, $res->jobber_receive_qnty);
+                                                            array_push($grand_total1_fab_rcv, $res->jobber_receive_qnty);
+                                                    ?>
+												</td>
+												<td class="text-right">
+												    <?php
+                                                            $fab_balc = $res->jobber_issue_qnty - $res->jobber_receive_qnty;
+                                                            echo $fab_balc;
+                                                            array_push($grand_total_fab_balc, $fab_balc);
+                                                            array_push($grand_total1_fab_balc, $fab_balc);
+                                                    ?>
 												</td>
 												
 												<?php if($res->pack_status == 1) { 
@@ -937,51 +1038,68 @@ else
 
 												<td class="text-right">
 												    <?php
-        echo $qtty;
-        array_push($grand_total_qnty_shpd, $qtty);
-        array_push($grand_total1_qnty_shpd, $qtty);
+                                                            echo $qtty;
+                                                            array_push($grand_total_qnty_shpd, $qtty);
+                                                            array_push($grand_total1_qnty_shpd, $qtty);
+                                                    ?>
+												</td>
+												<td class="text-right">
+												    <?php
+                                                    $qnty_remn = $res->co_quantity - $qtty;
+                                                    echo $qnty_remn;
+                                                    array_push($grand_total_qnty_remn, $qnty_remn);
+                                                    array_push($grand_total1_qnty_remn, $qnty_remn);
 ?>
 												</td>
 												<td class="text-right">
 												    <?php
-        $qnty_remn = $res->co_quantity - $qtty;
-        echo $qnty_remn;
-        array_push($grand_total_qnty_remn, $qnty_remn);
-        array_push($grand_total1_qnty_remn, $qnty_remn);
-?>
-												</td>
-												<td class="text-right">
-												    <?php
-        $qnty_stck = $res->jobber_receive_qnty - $qtty;
-        echo $qnty_stck;
-        array_push($grand_total_qnty_stck, $qnty_stck);
-        array_push($grand_total1_qnty_stck, $qnty_stck);
+                                                    $qnty_stck = $res->jobber_receive_qnty - $qtty;
+                                                    echo $qnty_stck;
+                                                    array_push($grand_total_qnty_stck, $qnty_stck);
+                                                    array_push($grand_total1_qnty_stck, $qnty_stck);
 ?>
 												</td>
 											</tr>
 											<?php
         $show_iter++;
+        
     }
     if (end($result))
     {
 ?>
-													<tr style="background-color: #445767;
-													color: white;">
-														<th colspan="2">Grand Total</th>
-														<th class="text-right"><?=array_sum($grand_total_co_qnty) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_cut_issue) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_cut_rcv) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_cut_balc) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_skv_isu) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_skv_rcv) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_skv_balc) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_fab_isu) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_fab_rcv) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_fab_balc) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_qnty_shpd) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_qnty_remn) ?></th>
-														<th class="text-right"><?=array_sum($grand_total_qnty_stck) ?></th>
-													</tr>
+            <tr style="background-color: #4b9de3;color: white;">
+                <th colspan="2">Sub Total</th>
+                <th class="text-right"><?=array_sum($grand_total_co_qnty) - array_sum($sub_total_co_qnty_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_cut_issue) - array_sum($sub_total_cut_issue_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_cut_rcv) - array_sum($sub_total_cut_rcv_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_cut_balc) - array_sum($sub_total_cut_balc_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_skv_isu) - array_sum($sub_total_skv_isu_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_skv_rcv) - array_sum($sub_total_skv_rcv_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_skv_balc) - array_sum($sub_total_skv_balc_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_fab_isu) - array_sum($sub_total_fab_isu_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_fab_rcv) - array_sum($sub_total_fab_rcv_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_fab_balc) - array_sum($sub_total_fab_balc_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_qnty_shpd) - array_sum($sub_total_qnty_shpd_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_qnty_remn) - array_sum($sub_total_qnty_remn_arr) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_qnty_stck) - array_sum($sub_total_qnty_stck_arr) ?></th>
+            </tr>
+            <tr style="background-color: #445767;
+            color: white;">
+                <th colspan="2">Grand Total</th>
+                <th class="text-right"><?=array_sum($grand_total_co_qnty) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_cut_issue) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_cut_rcv) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_cut_balc) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_skv_isu) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_skv_rcv) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_skv_balc) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_fab_isu) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_fab_rcv) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_fab_balc) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_qnty_shpd) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_qnty_remn) ?></th>
+                <th class="text-right"><?=array_sum($grand_total_qnty_stck) ?></th>
+            </tr>
 													<?php
     }
 ?>
@@ -2198,7 +2316,7 @@ echo   round($res->total_quantity); $total_qntys += $res->total_quantity;
 						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
 					</div>
 					<div class="col-sm-6 border_all header_right">
-					    <p>Date: <?=   date('d-m-Y', strtotime($from))  ?> to <?=  date('d-m-Y', strtotime($to))  ?></p>
+					    <p>Date: <?= date('d-m-Y', strtotime($from))  ?> to <?=  date('d-m-Y', strtotime($to))  ?></p>
 					</div>
 				</div>
 				<!--table data-->
@@ -4855,7 +4973,7 @@ GROUP BY
 			<div class="clearfix"></div>
 			<div class="container">
 				<div class="row border_all text-center text-uppercase mar_bot_3">
-					<h3 class="mar_0 head_font">Stock Summary Ledger</h3>
+                <h3 class="mar_0 head_font">Stock Summary Ledger <?= ($virtual == 'false') ? '' : '<label style="color:blue"> - Supplementary</label>' ?></h3>
 				</div>
 				<div class="row mar_bot_3">
 					<div class="col-sm-6 border_all header_left">
@@ -4888,58 +5006,57 @@ GROUP BY
                         </thead>
 									<tbody>
 										<?php
-    $prev_item = '';
-    foreach ($result as $f)
-    {
+                                            $prev_item = '';
+                                            foreach ($result as $f)
+                                            {
+                                                $crnt_item = $f['item'] . ' (' . $f['color'] . ')';
+                                                if ($crnt_item != $prev_item)
+                                                {
+                                                    $bal_qnty = 0;
+                                                    $bal_val = 0;
+                                                    $prev_item = $crnt_item;
+                                                }
 
-        $crnt_item = $f['item'] . ' (' . $f['color'] . ')';
-        if ($crnt_item != $prev_item)
-        {
-            $bal_qnty = 0;
-            $bal_val = 0;
-            $prev_item = $crnt_item;
-        }
-
-        if ($f['remark'] == 'Opening')
-        {
-            $bal_qnty += $f['qnty'];
-            $bal_val += $f['val'];
-        }
-        elseif ($f['remark'] == 'Purchase')
-        {
-            $bal_qnty += $f['qnty'];
-            $bal_val += $f['val'];
-        }
-        elseif ($f['remark'] == 'Stock In')
-        {
-            $bal_qnty += $f['qnty'];
-            $bal_val += $f['val'];
-        }
-        elseif ($f['remark'] == 'Issue')
-        {
-            $bal_qnty -= $f['qnty'];
-            $bal_val -= $f['val'];
-        }
-        elseif ($f['remark'] == 'Plating')
-        {
-            $bal_qnty -= $f['qnty'];
-            $bal_val -= $f['val'];
-        }
-?>
-                            <tr>
-                        <td><?=$f['item'] . ' (' . $f['color'] . ')' ?></td>
-                        <td><?=$f['remark'] ?></td>
-                        <td><?=$f['sl_no'] ?></td>
-                        <td style="text-align:center"><?=date('d-m-Y', strtotime($f['date'])) ?></td>
-                        <td style="text-align:right"><?=number_format($f['qnty'], 2) ?></td>
-                        <td style="text-align:right"><?=number_format($f['rate'], 2) ?></td>
-                        <td style="text-align:right"><?=number_format($f['val'], 2) ?></td>
-                        <td style="text-align:right"><?=number_format($bal_qnty, 2) ?></td>
-                        <td style="text-align:right"><?=number_format($bal_val, 2) ?></td>
-                    </tr>
-                            <?php
-    }
-?>
+                                                if ($f['remark'] == 'Opening')
+                                                {
+                                                    $bal_qnty += $f['qnty'];
+                                                    $bal_val += $f['val'];
+                                                }
+                                                elseif ($f['remark'] == 'Purchase')
+                                                {
+                                                    $bal_qnty += $f['qnty'];
+                                                    $bal_val += $f['val'];
+                                                }
+                                                elseif ($f['remark'] == 'Stock In')
+                                                {
+                                                    $bal_qnty += $f['qnty'];
+                                                    $bal_val += $f['val'];
+                                                }
+                                                elseif ($f['remark'] == 'Issue')
+                                                {
+                                                    $bal_qnty -= $f['qnty'];
+                                                    $bal_val -= $f['val'];
+                                                }
+                                                elseif ($f['remark'] == 'Plating')
+                                                {
+                                                    $bal_qnty -= $f['qnty'];
+                                                    $bal_val -= $f['val'];
+                                                }
+                                        ?>
+                                                <tr>
+                                                    <td><?=$f['item'] . ' (' . $f['color'] . ')' ?></td>
+                                                    <td><?=$f['remark'] ?></td>
+                                                    <td><?=$f['sl_no'] ?></td>
+                                                    <td style="text-align:center"><?=date('d-m-Y', strtotime($f['date'])) ?></td>
+                                                    <td style="text-align:right"><?=number_format($f['qnty'], 2) ?></td>
+                                                    <td style="text-align:right"><?=number_format($f['rate'], 2) ?></td>
+                                                    <td style="text-align:right"><?=number_format($f['val'], 2) ?></td>
+                                                    <td style="text-align:right"><?=number_format($bal_qnty, 2) ?></td>
+                                                    <td style="text-align:right"><?=number_format($bal_val, 2) ?></td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        ?>
 									</tbody>
 								</table>
 							</div>
@@ -5094,8 +5211,9 @@ $total_tot = 0;?>
 						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
 					</div>
 					<div class="col-sm-6 border_all header_right">
-					    </br><br/>
-					  From <b><?=date("d-m-Y", strtotime($from)) ?></b> To <b><?=date("d-m-Y", strtotime($to)) ?></b>
+                    <h3 class="mar_0 head_font">Group Stock Summary <?= ($virtual == 'false') ? '' : '<label style="color:blue"> - Supplementary</label>' ?></h3>
+                    <br/>
+					From <b><?=date("d-m-Y", strtotime($from)) ?></b> To <b><?=date("d-m-Y", strtotime($to)) ?></b>
 					</div>
 				</div>
 				<!--table data-->
@@ -8483,6 +8601,7 @@ hr {
 												</th>
                                                 <th nowrap>
                                                     <?php 
+                                                        $total_qnty = 0;
                                                         $this->db->query("SET sql_mode = ''");
                                                         $skiving_bill_dtl = $this->db
                                                             ->select('bill_number, bill_date, name,SUM(skiving_paid_qnty) AS skiving_paid_qnty')
@@ -8501,11 +8620,13 @@ hr {
                                                                 echo $sbd->bill_number . ': ';
                                                                 // . ' ('. date('d-m-Y', strtotime($sbd->bill_date)) .')<br>';
                                                                 echo $sbd->name . ' - '.$sbd->skiving_paid_qnty .'<br>';
+                                                                $total_qnty += $sbd->skiving_paid_qnty;
                                                             }
                                                         } else{
                                                             echo '-';
                                                         }
                                                     ?>
+                                                    <span><?=$total_qnty?></span>
                                                 </th>
 
 												<th class="mycell2" height="60" nowrap class="">
@@ -16882,203 +17003,356 @@ if($check_consumption_list == 0) {
 		
 		<style>
 			@media print{@page {size: landscape}}
-			.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    padding: 5px;
-    text-align: left;
-    font-size: 13px;
-         }
-         
-         
-         @media print {
-         .print-me {
-             display: none;
-         }
-         }
-         
-         
+			.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th { padding: 5px;text-align: left;font-size: 13px;}
+            @media print {
+                .print-me { display: none; }
+            }
 		</style>
-		
 		<body class="A3 landscape" style="overflow-x: auto; padding-top: 2px;">
-		    
-		    
-		    <div class="text-center">
-        <a id="dlink" style="display:none;"></a>
-        <input type="button" onclick="tablesToExcel(array1, 'Sheet1', 'SOPL-<?=mt_rand()?>.xls')" value="Export to Excel" class="btn btn-success print-me" >
+            <div class="text-center">
+                <a id="dlink" style="display:none;"></a>
+                <input type="button" onclick="tablesToExcel(array1, 'Sheet1', 'SOPL-<?=mt_rand()?>.xls')" value="Export to Excel" class="btn btn-success print-me" >
+            </div>
+    
+    
+    <div id="page-content">
+        <section class="sheet padding-5mm" style="height: auto">
+    
+            <?php $table_no=1; ?>
+            
+            <!--<header class="pull-right">-->
+            <!--    <small>Page No. </small>-->
+            <!--</header>-->
+
+            <div class="clearfix"></div>
+            <div class="container">
+                <div class="row border_all text-center text-uppercase mar_bot_3">
+                    <h3 class="mar_0 head_font">Stock Summary Details <?= ($virtual == 'false') ? '' : '<label style="color:blue"> - Supplementary</label>' ?></h3>
+                </div>
+                <div class="row mar_bot_3">
+                    <div class="col-sm-6 border_all header_left">
+                        <h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
+                        <p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
+                    </div>
+                    <div class="col-sm-6 border_all header_right">
+                      <b><?=implode(', ', $temp_co_name_array1) ?></b>
+                      <br/>
+                      From <b><?=date("d-m-Y", strtotime($from)) ?></b> To <b><?=date("d-m-Y", strtotime($to)) ?></b>
+                    </div>
+                </div>
+                <!--table data-->
+                <div class="row">
+                    <div class="container">
+                        <!-- Local area -->
+                        <div class="row">
+                            <h3 style="background: lavender;padding: 0.7%;margin-bottom:0" class="text-center">------------------------------------- Local Items -------------------------------------</h3>
+                            <div class="table-responsive">
+                                <table id="export_table_to_excel<?=$table_no?>" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="display: none;"></th>
+                                            <th rowspan="2" style="text-align:right">#</th>
+                                            <th rowspan="2" style="text-align:center">Item</th>
+                                            <th colspan="2" style="text-align:center">Opening Information</th>
+                                            <th colspan="2" style="text-align:center">Purchase Information</th>
+                                            <th colspan="2" style="text-align:center">Issue Information</th>
+                                            <th colspan="2" style="text-align:center">Plating Information</th>
+                                            <th colspan ="2" style="text-align:center">Stock In Information</th>
+                                            <th colspan ="2" style="text-align:center">Balance Information</th>
+                                            <th rowspan="2">Closing<br>Rate</th>
+                                            <th rowspan="2" style="text-align:center">Unit</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="display: none;"></th>
+                                            <th style="text-align:center">Opn Qnty</th>
+                                            <th style="text-align:center">Opn Val</th>
+                                            <th style="text-align:center">Pur Qnty</th>
+                                            <th style="text-align:center">Pur Val</th>
+                                            <th style="text-align:center">Issue Qnty</th>
+                                            <th style="text-align:center">Issue Val</th>
+                                            <th style="text-align:center">Plating Qnty</th>
+                                            <th style="text-align:center">Plating Val</th>
+                                            <th style="text-align:center">Stock In Qnty</th>
+                                            <th style="text-align:center">Stock In Val</th>
+                                            <th style="text-align:center">Bal Qnty</th>
+                                            <th style="text-align:center">Bal Val</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $iter = $all_bal_qty = $all_opn_qty = $all_pur_qty = $all_issue_qty = $all_plating_qty = $all_stockin_qty = $all_bal_rate = $all_opn_rate = $all_pur_rate = $all_issue_rate = $all_plating_rate = $all_stockin_rate = $closing_rate = 0;
+                                        foreach ($result as $f){
+                                            if($f['type'] == 'Import'){
+                                                continue;
+                                            }
+                                            if ($f['opening_val'] == 0 && $f['opening_qnty'] == 0 && $f['purchase_qnty'] == 0 && $f['issue_qnty'] == 0) {
+                                                continue;
+                                            }
+
+                                            $bal_qty = $f['opening_qnty'] + $f['purchase_qnty'] - ($f['issue_qnty'] + $f['plating_qnty']) + $f['stock_in_qnty'];
+                                            if(($bal_qnty == 0) and ($bal_qty == 0)){
+                                                continue;
+                                            }
+
+                                            $bal_rate = $f['opening_val'] + $f['purchase_val'] - ($f['issue_val'] + $f['plating_val']) + $f['stock_in_val'];
+
+                                            $all_opn_qty += $f['opening_qnty'];
+                                            $all_opn_rate += $f['opening_val'];
+                                            $all_pur_qty += $f['purchase_qnty'];
+                                            $all_pur_rate += $f['purchase_val'];
+                                            $all_issue_qty += $f['issue_qnty'];
+                                            $all_issue_rate += $f['issue_val'];
+                                            $all_plating_qty += $f['plating_qnty'];
+                                            $all_plating_rate += $f['plating_val'];
+                                            $all_stockin_qty += $f['stock_in_qnty'];
+                                            $all_stockin_rate += $f['stock_in_val'];
+                                            $all_bal_qty += $bal_qty;
+                                            $all_bal_rate += $bal_rate;
+                                        ?>
+                                        <tr>
+                                            <th style="display: none;"><?= $f['id_id'] ?></th>
+                                            <th style="text-align:right"><?=++$iter;?></th>
+                                            <th><?=$f['item'] . '(' . $f['color'] . ')' ?></th>
+                                            <td style="text-align:right"><?=number_format($f['opening_qnty'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['opening_val'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['purchase_qnty'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['purchase_val'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['issue_qnty'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['issue_val'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['plating_qnty'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['plating_val'], 2) ?></td>
+                                            <td style="text-align:right"><?= number_format($f['stock_in_qnty'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($f['stock_in_val'], 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($bal_qty, 2, '.', '')?></td>
+                                            <td style="text-align:right"><?=number_format($bal_rate, 2) ?></td>
+                                            <?php 
+                                            if ($bal_qty != 0) {
+                                                $closing_rate += ($bal_rate / $bal_qty);
+                                            ?>
+                                            <td style="text-align:right"><?=number_format(($bal_rate / $bal_qty), 2, '.', '')?></td>
+                                            <?php
+                                            } else {
+                                                $closing_rate += 0;
+                                            ?>
+                                            <td style="text-align:right">0</td>
+                                            <?php } ?>
+                                            <td style="text-align:center"><?= $f['unit'] ?></td>
+                                        </tr>
+                                        <?php } ?>
+                                        <tr style="background:thistle">
+                                            <th style="display: none;"></th>
+                                            <th colspan="2">Total</th>
+                                            <td style="text-align:right"><?=number_format($all_opn_qty, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_opn_rate, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_pur_qty, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_pur_rate, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_issue_qty, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_issue_rate, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_plating_qty, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_plating_rate, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_stockin_qty, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_stockin_rate, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_bal_qty, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($all_bal_rate, 2) ?></td>
+                                            <td style="text-align:right"><?=number_format($closing_rate, 2) ?></td>
+                                            <td></td>  
+                                        </tr>
+                                    </tbody>
+                                </table>    
+                            </div>
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </section>       
+
+        <section class="sheet padding-5mm" style="height: auto">
+    
+            <?php $table_no=2; ?>
+            
+            <!--<header class="pull-right">-->
+            <!--    <small>Page No. </small>-->
+            <!--</header>-->
+
+            <div class="clearfix"></div>
+            <div class="container"> 
+                <div class="row border_all text-center text-uppercase mar_bot_3">
+                    <h3 class="mar_0 head_font">Stock Summary Details <?= ($virtual == 'false') ? '' : '<label style="color:blue"> - Supplementary</label>' ?></h3>
+                </div>
+                <div class="row mar_bot_3">
+                    <div class="col-sm-6 border_all header_left">
+                        <h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
+                        <p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
+                    </div>
+                    <div class="col-sm-6 border_all header_right">
+                      <b><?=implode(', ', $temp_co_name_array1) ?></b>
+                      <br/>
+                      From <b><?=date("d-m-Y", strtotime($from)) ?></b> To <b><?=date("d-m-Y", strtotime($to)) ?></b>
+                    </div>
+                </div>
+                <div class="row">
+                    <h3 style="background: burlywood;padding: 0.7%;margin-bottom:0" class="text-center">------------------------------------- Import Items -------------------------------------</h3>
+                    <div class="table-responsive">
+                        <table id="export_table_to_excel<?=$table_no?>" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="display: none;"></th>
+                                    <th rowspan="2" style="text-align:right">#</th>
+                                    <th rowspan="2" style="text-align:center">Item</th>
+                                    <th colspan="2" style="text-align:center">Opening Information</th>
+                                    <th colspan="2" style="text-align:center">Purchase Information</th>
+                                    <th colspan="2" style="text-align:center">Issue Information</th>
+                                    <th colspan="2" style="text-align:center">Plating Information</th>
+                                    <th colspan ="2" style="text-align:center">Stock In Information</th>
+                                    <th colspan ="2" style="text-align:center">Balance Information</th>
+                                    <th rowspan="2">Closing<br>Rate</th>
+                                    <th rowspan="2" style="text-align:center">Unit</th>
+                                </tr>
+                                <tr>
+                                    <th style="display: none;"></th>
+                                    <th style="text-align:center">Opn Qnty</th>
+                                    <th style="text-align:center">Opn Val</th>
+                                    
+                                    <th style="text-align:center">Pur Qnty</th>
+                                    <th style="text-align:center">Pur Val</th>
+                                    
+                                    <th style="text-align:center">Issue Qnty</th>
+                                    <th style="text-align:center">Issue Val</th>
+                                    
+                                    <th style="text-align:center">Plating Qnty</th>
+                                    <th style="text-align:center">Plating Val</th>
+                                    
+                                    <th style="text-align:center">Stock In Qnty</th>
+                                    <th style="text-align:center">Stock In Val</th>
+                                    
+                                    <th style="text-align:center">Bal Qnty</th>
+                                    <th style="text-align:center">Bal Val</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // keep old value for grand total - starts
+                                $old_all_bal_qty = $all_bal_qty; 
+                                $old_all_opn_qty = $all_opn_qty;
+                                $old_all_pur_qty = $all_pur_qty; 
+                                $old_all_issue_qty = $all_issue_qty; 
+                                $old_all_plating_qty = $all_plating_qty;
+                                $old_all_stockin_qty = $all_stockin_qty;
+                                $old_all_bal_rate = $all_bal_rate;
+                                $old_all_opn_rate = $all_opn_rate;
+                                $old_all_pur_rate = $all_pur_rate; 
+                                $old_all_issue_rate = $all_issue_rate;
+                                $old_all_plating_rate = $all_plating_rate;
+                                $old_all_stockin_rate = $all_stockin_rate;
+                                $old_closing_rate = $closing_rate;
+                                // keep old value for grand total - ends
+                                $iter = $all_bal_qty = $all_opn_qty = $all_pur_qty = $all_issue_qty = $all_plating_qty = $all_stockin_qty = $all_bal_rate = $all_opn_rate = $all_pur_rate = $all_issue_rate = $all_plating_rate = $all_stockin_rate = $closing_rate = 0;
+                                foreach ($result as $f){
+                                    if($f['type'] == 'Local'){
+                                        continue;
+                                    }
+                                    if ($f['opening_val'] == 0 && $f['opening_qnty'] == 0 && $f['purchase_qnty'] == 0 && $f['issue_qnty'] == 0) {
+                                        continue;
+                                    }
+
+                                    $bal_qty = $f['opening_qnty'] + $f['purchase_qnty'] - ($f['issue_qnty'] + $f['plating_qnty']) + $f['stock_in_qnty'];
+                                    if(($bal_qnty == 0) and ($bal_qty == 0)){
+                                        continue;
+                                    }
+                                    $bal_rate = $f['opening_val'] + $f['purchase_val'] - ($f['issue_val'] + $f['plating_val']) + $f['stock_in_val'];
+
+                                    $all_opn_qty += $f['opening_qnty'];
+                                    $all_opn_rate += $f['opening_val'];
+                                    $all_pur_qty += $f['purchase_qnty'];
+                                    $all_pur_rate += $f['purchase_val'];
+                                    $all_issue_qty += $f['issue_qnty'];
+                                    $all_issue_rate += $f['issue_val'];
+                                    $all_plating_qty += $f['plating_qnty'];
+                                    $all_plating_rate += $f['plating_val'];
+                                    $all_stockin_qty += $f['stock_in_qnty'];
+                                    $all_stockin_rate += $f['stock_in_val'];
+                                    $all_bal_qty += $bal_qty;
+                                    $all_bal_rate += $bal_rate;
+                                ?>
+                                <tr>
+                                    <th style="display: none;"><?= $f['id_id'] ?></th>
+                                    <th style="text-align:right"><?=++$iter?></th>
+                                    <th><?=$f['item'] . '(' . $f['color'] . ')' ?></th>
+                                    <td style="text-align:right"><?=number_format($f['opening_qnty'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['opening_val'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['purchase_qnty'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['purchase_val'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['issue_qnty'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['issue_val'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['plating_qnty'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['plating_val'], 2) ?></td>
+                                    <td style="text-align:right"><?= number_format($f['stock_in_qnty'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($f['stock_in_val'], 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($bal_qty, 2, '.', '')?></td>
+                                    <td style="text-align:right"><?=number_format($bal_rate, 2) ?></td>
+                                    <?php 
+                                    if ($bal_qty != 0) {
+                                        $closing_rate += ($bal_rate / $bal_qty);
+                                    ?>
+                                    <td style="text-align:right"><?=number_format(($bal_rate / $bal_qty), 2, '.', '')?></td>
+                                    <?php
+                                    } else {
+                                        $closing_rate += 0;
+                                    ?>
+                                    <td style="text-align:right">0</td>
+                                    <?php } ?>
+                                    <td style="text-align:center"><?= $f['unit'] ?></td>
+                                </tr>
+                                <?php } ?>
+                                <tr style="background:thistle">
+                                    <th style="display: none;"></th>
+                                    <th colspan="2">Total</th>
+                                    <td style="text-align:right"><?=number_format($all_opn_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_opn_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_pur_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_pur_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_issue_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_issue_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_plating_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_plating_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_stockin_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_stockin_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_bal_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($all_bal_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($closing_rate, 2) ?></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="background:#faeda6">
+                                    <th style="display: none;"></th>
+                                    <th colspan="2">Grand Total</th>
+                                    <td style="text-align:right"><?=number_format(($old_all_opn_qty + $all_opn_qty), 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_opn_rate+$all_opn_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_pur_qty+$all_pur_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_pur_rate+$all_pur_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_issue_qty+$all_issue_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_issue_rate+$all_issue_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_plating_qty+$all_plating_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_plating_rate+$all_plating_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_stockin_qty+$all_stockin_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_stockin_rate+$all_stockin_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_bal_qty+$all_bal_qty, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_all_bal_rate+$all_bal_rate, 2) ?></td>
+                                    <td style="text-align:right"><?=number_format($old_closing_rate+$closing_rate, 2) ?></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>    
+                    </div>
+                </div>
+                <?php #} ?>
+            </div>
+        </section>
     </div>
-		    
-		    
-        <div id="page-content">
-		<section class="sheet padding-5mm" style="height: auto">
-		    
-		    
-		    <?php 
-		    
-		    
-		    $table_no=1;
-		    
-		    
-		    ?>
-		    
-		    
-		<div>
-			<!--<header class="pull-right">-->
-			<!--    <small>Page No. </small>-->
-			<!--</header>-->
-			<div class="clearfix"></div>
-			<div class="container">
-				<div class="row border_all text-center text-uppercase mar_bot_3">
-					<h3 class="mar_0 head_font">Stock Summary Details</h3>
-				</div>
-				<div class="row mar_bot_3">
-					<div class="col-sm-6 border_all header_left">
-						<h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
-						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
-					</div>
-					<div class="col-sm-6 border_all header_right">
-					  <b><?=implode(', ', $temp_co_name_array1) ?></b>
-					  <br/>
-					  From <b><?=date("d-m-Y", strtotime($from)) ?></b> To <b><?=date("d-m-Y", strtotime($to)) ?></b>
-					</div>
-				</div>
-				<!--table data-->
-				<div class="row">
-					<div class="container">
-						<div class="row">
-							<div class="table-responsive">
-								<!--<h5>Retrieve Table</h5>-->
-								<table id="export_table_to_excel<?=$table_no?>" class="table table-bordered">
-									<thead>
-                        <tr>
-                            <th style="display: none;"></th>
-                            <th rowspan="2" style="text-align:center">Item</th>
-                            <th colspan="2" style="text-align:center">Opening Information</th>
-                            <th colspan="2" style="text-align:center">Purchase Information</th>
-                            <th colspan="2" style="text-align:center">Issue Information</th>
-                            <th colspan="2" style="text-align:center">Plating Information</th>
-                            <th colspan ="2" style="text-align:center">Stock In Information</th>
-                            <th colspan ="2" style="text-align:center">Balance Information</th>
-                            <th rowspan="2">Closing Rate</th>
-                        </tr>
-                        <tr>
-                            <th style="display: none;"></th>
-                            <th style="text-align:center">Opn Qnty</th>
-                            <th style="text-align:center">Opn Val</th>
-                            <th style="text-align:center">Pur Qnty</th>
-                            <th style="text-align:center">Pur Val</th>
-                            <th style="text-align:center">Issue Qnty</th>
-                            <th style="text-align:center">Issue Val</th>
-                            <th style="text-align:center">Plating Qnty</th>
-                            <th style="text-align:center">Plating Val</th>
-                            <th style="text-align:center">Stock In Qnty</th>
-                            <th style="text-align:center">Stock In Val</th>
-                            <th style="text-align:center">Bal Qnty</th>
-                            <th style="text-align:center">Bal Val</th>
-                        </tr>
-                        </thead>
-									<tbody>
-										<?php
-    $all_bal_qty = 0;
-    $all_opn_qty = 0;
-    $all_pur_qty = 0;
-    $all_issue_qty = 0;
-    $all_plating_qty = 0;
-    $all_stockin_qty = 0;
-    $all_bal_rate = 0;
-    $all_opn_rate = 0;
-    $all_pur_rate = 0;
-    $all_issue_rate = 0;
-    $all_plating_rate = 0;
-    $all_stockin_rate = 0;
-    $closing_rate = 0;
-    foreach ($result as $f)
-    {
-
-        if ($f['opening_qnty'] == 0 && $f['purchase_qnty'] == 0 && $f['issue_qnty'] == 0)
-        {
-            continue;
-        }
-
-        $bal_qty = $f['opening_qnty'] + $f['purchase_qnty'] - ($f['issue_qnty'] + $f['plating_qnty']) + $f['stock_in_qnty'];
-        $bal_rate = $f['opening_val'] + $f['purchase_val'] - ($f['issue_val'] + $f['plating_val']) + $f['stock_in_val'];
-
-        $all_opn_qty += $f['opening_qnty'];
-        $all_opn_rate += $f['opening_val'];
-        $all_pur_qty += $f['purchase_qnty'];
-        $all_pur_rate += $f['purchase_val'];
-        $all_issue_qty += $f['issue_qnty'];
-        $all_issue_rate += $f['issue_val'];
-        $all_plating_qty += $f['plating_qnty'];
-        $all_plating_rate += $f['plating_val'];
-        $all_stockin_qty += $f['stock_in_qnty'];
-        $all_stockin_rate += $f['stock_in_val'];
-        $all_bal_qty += $bal_qty;
-        $all_bal_rate += $bal_rate;
-?>
-                            <tr>
-                                <th style="display: none;"><?= $f['id_id'] ?></th>
-                                <th><?=$f['item'] . '(' . $f['color'] . ')' ?></th>
-                                <td style="text-align:right"><?=number_format($f['opening_qnty'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['opening_val'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['purchase_qnty'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['purchase_val'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['issue_qnty'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['issue_val'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['plating_qnty'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['plating_val'], 2) ?></td>
-                                <td style="text-align:right"><?= number_format($f['stock_in_qnty'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($f['stock_in_val'], 2) ?></td>
-                                <td style="text-align:right"><?=number_format($bal_qty, 2, '.', '')?></td>
-                                <td style="text-align:right"><?=number_format($bal_rate, 2) ?></td>
-                                <?php if ($bal_qty != 0)
-        {
-            $closing_rate += ($bal_rate / $bal_qty);
-?>
-                                <td style="text-align:right"><?=number_format(($bal_rate / $bal_qty), 2, '.', '')?></td>
-                            <?php
-        }
-        else
-        {
-            $closing_rate += 0;
-?>
-                                <td style="text-align:right">0</td>
-                            <?php
-        } ?>
-                            </tr>
-                            <?php
-    }
-?>
-                        <tr>
-                            
-                            
-                            <th style="display: none;"></th>
-                            
-                            
-                        	<th>Total</th>
-                        	<td style="text-align:right"><?=number_format($all_opn_qty, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_opn_rate, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_pur_qty, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_pur_rate, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_issue_qty, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_issue_rate, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_plating_qty, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_plating_rate, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_stockin_qty, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_stockin_rate, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_bal_qty, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($all_bal_rate, 2) ?></td>
-                        	<td style="text-align:right"><?=number_format($closing_rate, 2) ?></td>
-                        </tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	</div>
-	</body>
+</body>
+		
 		<?php
 } ?>
 	

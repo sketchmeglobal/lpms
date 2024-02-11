@@ -534,7 +534,7 @@ class Purchase_order_m extends CI_Model {
             // 8 => 'status',
         );
         // Set searchable column fields
-        $column_search = array('purchase_order_details.item');
+        $column_search = array('item_master.item');
         // $column_search = array('co_no');
 
         $limit = $this->input->post('length');

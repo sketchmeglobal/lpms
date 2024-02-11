@@ -188,81 +188,67 @@
                                         <form id="form_add_lining_list_details" method="post" action="<?=base_url('admin/form-add-lining-listn-details')?>" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
                                                 <div class="row">
-                                                <div class="col-lg-4">
-                                                    <label for="co_id" class="control-label text-danger">Customer Order No*</label>
-                                                    <select id="co_id" name="co_id" class="form-control select2">
-                                                        <option value="">Select Customer Order</option>
-                                                        <?php
-                                                        foreach($customer_order as $co){
-                                                        ?> 
-                                                        <option value="<?= $co->co_id ?>"><?=$co->co_no?></option>
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                     </select>
+                                                    <div class="col-lg-3">
+                                                        <label for="co_id" class="control-label text-danger">Customer Order No*</label>
+                                                        <select id="co_id" name="co_id" class="form-control select2">
+                                                            <option value="">Select Customer Order</option>
+                                                            <?php
+                                                            foreach($customer_order as $co){
+                                                            ?> 
+                                                            <option value="<?= $co->co_id ?>"><?=$co->co_no?></option>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-3"><!-- It is showing Article Number[Atricle Details] but calculating with the customer order detail PK -->
+                                                        <label for="am_id_add" class="control-label text-danger">Article Number*</label>
+                                                        <select id="am_id_add" name="am_id_add" class="form-control select2">
+                                                            <option value="">Select Article Number</option>
+                                                            
+                                                        </select>
+                                                    </div>
+                                                    <input type="hidden" id="new_am_id_add_hidden" name="new_am_id_add_hidden" class="form-control" value="" />
+                                                    <div class="col-lg-3">
+                                                        <label for="remarks_for_other_quantity" class="control-label text-danger">Lining Type</label>
+                                                        <select id="remarks_for_other_quantity" name="remarks_for_other_quantity" class="form-control select2">
+                                                            <option value="LINING CUTTING">LINING CUTTING</option>
+                                                            <option value="OTHERS">OTHERS</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="lc_id_text" class="control-label text-danger">Leather Colour</label>
+                                                        <input type="text" id="lc_id_text" name="lc_id_text" required class="form-control" readonly />
+                                                        <input type="hidden" id="lc_id" name="lc_id" required class="form-control" readonly />
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4"><!-- It is showing Article Number[Atricle Details] but calculating with the customer order detail PK -->
-                                                    <label for="am_id_add" class="control-label text-danger">Article Number*</label>
-                                                    <select id="am_id_add" name="am_id_add" class="form-control select2">
-                                                        <option value="">Select Article Number</option>
+                                                <hr/>
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <label for="fc_id_text" class="control-label text-danger">Fitting Colour</label>
+                                                        <input type="text" id="fc_id_text" name="fc_id_text" required class="form-control" readonly />
+                                                        <input type="hidden" id="fc_id" name="fc_id" required class="form-control" readonly />
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="checked_alter_add" class="control-label text-danger">Lining Cut Quantity</label>
+                                                        <input type="text" id="checked_quantity_add" value="0" name="checked_quantity_add" required class="form-control" />
                                                         
-                                                     </select>
-                                                </div>
-                                                <input type="hidden" id="new_am_id_add_hidden" name="new_am_id_add_hidden" class="form-control" value="" />
-                                                <div class="col-lg-2">
-                                                    <label for="remarks_for_other_quantity" class="control-label text-danger">Lining Type</label>
-                                                    <select id="remarks_for_other_quantity" name="remarks_for_other_quantity" class="form-control select2">
-                                                        <option value="LINING CUTTING">LINING CUTTING</option>
-                                                        <option value="OTHERS">OTHERS</option>
-                                                     </select>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label for="lc_id_text" class="control-label text-danger">Leather Colour</label>
-                                                    <input type="text" id="lc_id_text" name="lc_id_text" required class="form-control" readonly />
-                                                    <input type="hidden" id="lc_id" name="lc_id" required class="form-control" readonly />
-                                                </div>
-                                                </div>
-                                                <br/>
-                                                <br/>
-                                                <!--<div class="row">-->
-                                                <!--<div class="col-lg-4"></div>-->
-                                                <!--<div class="col-lg-4">-->
-                                                <!--<input type="checkbox" name="for_checked" id="for_checked" checked value="1">-->
-                                                <!--<label for="enable" class="control-label">Checked</label>-->
-                                                
-                                                <!--<input type="checkbox" name="for_others" id="for_others" value="0">-->
-                                                <!--<label for="disable" class="control-label">Others</label>-->
-                                                <!--</div>-->
-                                                <!--<div class="col-lg-4"></div>-->
-                                                <!--</div>-->
-                                                <!--<br/>-->
-                                                <!--<br/>-->
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                                    <label for="fc_id_text" class="control-label text-danger">Fitting Colour</label>
-                                                    <input type="text" id="fc_id_text" name="fc_id_text" required class="form-control" readonly />
-                                                    <input type="hidden" id="fc_id" name="fc_id" required class="form-control" readonly />
-                                                </div>
-                                        <div class="col-lg-3">
-                                                    <label for="checked_alter_add" class="control-label text-danger">Lining Cut Qunatity</label>
-                                                    <input type="text" id="checked_quantity_add" value="0" name="checked_quantity_add" required class="form-control" />
-                                                    
-                                                    <input type="hidden" id="cod_id_add_hidden" name="cod_id_add_hidden" required class="form-control" />
-                                                    
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label for="checked_quantity_add" class="control-label text-danger">Other Qunatity</label>
-                                                    <input type="text" id="checked_alter_add" value="0" name="checked_alter_add" class="form-control" />
-                                                    
-                                                    <input type="hidden" id="remaining_lining_quantity_hidden" name="remaining_lining_quantity_hidden" required class="form-control" />
-                                                    <input type="hidden" id="cod_id_add_hidden" name="cod_id_add_hidden" required class="form-control" />
-                                                    
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <label for="remarks_add" class="control-label text-danger">Remarks</label>
-                                                    <input type="text" id="remarks_add" name="remarks_add" class="form-control" />
-                                                    
-                                                </div>
+                                                        <input type="hidden" id="cod_id_add_hidden" name="cod_id_add_hidden" required class="form-control" />
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="checked_quantity_add" class="control-label text-danger">Other Quantity</label>
+                                                        <input type="text" id="checked_alter_add" value="0" name="checked_alter_add" class="form-control" />
+                                                        
+                                                        <input type="hidden" id="remaining_lining_quantity_hidden" name="remaining_lining_quantity_hidden" required class="form-control" />
+                                                        <input type="hidden" id="cod_id_add_hidden" name="cod_id_add_hidden" required class="form-control" />
+                                                        
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="remarks_add" class="control-label text-danger">Remarks</label>
+                                                        <input type="text" id="remarks_add" name="remarks_add" class="form-control" />
+                                                        
+                                                    </div>
                                                 </div>
                                                 
                                             </div>
@@ -284,65 +270,65 @@
                                     <form id="form_edit_lining_list_details" method="post" action="<?=base_url('admin/form-edit-lining-list-details')?>" class="cmxform form-horizontal tasi-form">
                                         <div class="form-group ">
                                             <div class="row">
-                                          <div class="col-lg-4">
-                                                <label for="co_id_edit" class="control-label text-danger">Customer Order No*</label>
-                                                <select id="co_id_edit" name="co_id_edit" class="form-control select2">
-                                                    <option value="">Select Customer Order</option>
-                                                    <?php
-                                                    foreach($customer_order as $co){
-                                                    ?> 
-                                                    <option value="<?= $co->co_id ?>"><?=$co->co_no?></option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                 </select>
+                                                <div class="col-lg-3">
+                                                    <label for="co_id_edit" class="control-label text-danger">Customer Order No*</label>
+                                                    <select id="co_id_edit" name="co_id_edit" class="form-control select2">
+                                                        <option value="">Select Customer Order</option>
+                                                        <?php
+                                                        foreach($customer_order as $co){
+                                                        ?> 
+                                                        <option value="<?= $co->co_id ?>"><?=$co->co_no?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-3"><!-- It is showing Article Number[Atricle Details] but calculating with the customer order detail PK -->
+                                                    <label for="am_id_edit" class="control-label text-danger">Article Number*</label>
+                                                    <select id="am_id_edit" name="am_id_edit" class="form-control select2">
+                                                        <option value="">Select Article Number</option>
+                                                        
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                        <label for="remarks_for_other_quantity_edit" class="control-label text-danger">Lining Type</label>
+                                                        <select id="remarks_for_other_quantity_edit" name="remarks_for_other_quantity_edit" class="form-control select2">
+                                                            <option value="LINING CUTTING">LINING CUTTING</option>
+                                                            <option value="OTHERS">OTHERS</option>
+                                                        </select>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="lc_id_text_edit" class="control-label text-danger">Leather Colour</label>
+                                                    <input type="text" id="lc_id_text_edit" name="lc_id_text_edit" required class="form-control" readonly />
+                                                    <input type="hidden" id="lc_id_edit" name="lc_id_edit" required class="form-control" readonly />
+                                                </div>
                                             </div>
-                                          <div class="col-lg-4"><!-- It is showing Article Number[Atricle Details] but calculating with the customer order detail PK -->
-                                                <label for="am_id_edit" class="control-label text-danger">Article Number*</label>
-                                                <select id="am_id_edit" name="am_id_edit" class="form-control select2">
-                                                    <option value="">Select Article Number</option>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <label for="fc_id_text_edit" class="control-label text-danger">Fitting Colour</label>
+                                                    <input type="text" id="fc_id_text_edit" name="fc_id_text_edit" required class="form-control" readonly />
+                                                    <input type="hidden" id="fc_id_edit" name="fc_id_edit" required class="form-control" readonly />
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <label for="checked_quantity_edit" class="control-label text-danger">Checked Quantity</label>
+                                                    <input type="text" id="checked_quantity_edit" name="checked_quantity_edit" required class="form-control" />
                                                     
-                                                 </select>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                    <label for="remarks_for_other_quantity_edit" class="control-label text-danger">Lining Type</label>
-                                                    <select id="remarks_for_other_quantity_edit" name="remarks_for_other_quantity_edit" class="form-control select2">
-                                                        <option value="LINING CUTTING">LINING CUTTING</option>
-                                                        <option value="OTHERS">OTHERS</option>
-                                                     </select>
-                                            </div>
-                                          <div class="col-lg-2">
-                                                <label for="lc_id_text_edit" class="control-label text-danger">Leather Colour</label>
-                                                <input type="text" id="lc_id_text_edit" name="lc_id_text_edit" required class="form-control" readonly />
-                                                <input type="hidden" id="lc_id_edit" name="lc_id_edit" required class="form-control" readonly />
-                                            </div>
-                                            </div>
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                                <label for="fc_id_text_edit" class="control-label text-danger">Fitting Colour</label>
-                                                <input type="text" id="fc_id_text_edit" name="fc_id_text_edit" required class="form-control" readonly />
-                                                <input type="hidden" id="fc_id_edit" name="fc_id_edit" required class="form-control" readonly />
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <label for="checked_quantity_edit" class="control-label text-danger">Checked Quantity</label>
-                                                <input type="text" id="checked_quantity_edit" name="checked_quantity_edit" required class="form-control" />
+                                                    <input type="hidden" id="remaining_lining_quantity_hidden_edit" name="remaining_lining_quantity_hidden_edit" required class="form-control" />
+                                                    <input type="hidden" id="cod_id_edit_hidden" name="cod_id_edit_hidden" required class="form-control" />
+                                                </div>
                                                 
-                                                <input type="hidden" id="remaining_lining_quantity_hidden_edit" name="remaining_lining_quantity_hidden_edit" required class="form-control" />
-                                                <input type="hidden" id="cod_id_edit_hidden" name="cod_id_edit_hidden" required class="form-control" />
+                                                <div class="col-lg-3">
+                                                    <label for="checked_alter_edit" class="control-label text-danger">Other Quantity</label>
+                                                    <input type="text" id="checked_alter_edit" value="0" name="checked_alter_edit" required class="form-control" />
+                                                </div>
+                                                    
+                                                <div class="col-lg-3">
+                                                        <label for="remarks_edit" class="control-label text-danger">Remarks</label>
+                                                        <input type="text" id="remarks_edit" name="remarks_edit" class="form-control" />
+                                                        
+                                                </div>
                                             </div>
-                                            
-                                            <div class="col-lg-3">
-                                                <label for="checked_alter_edit" class="control-label text-danger">Other Quantity</label>
-                                                <input type="text" id="checked_alter_edit" value="0" name="checked_alter_edit" required class="form-control" />
-                                            </div>
-                                            
-                                            
-                                          <div class="col-lg-3">
-                                                <label for="remarks_edit" class="control-label text-danger">Remarks</label>
-                                                <input type="text" id="remarks_edit" name="remarks_edit" class="form-control" />
-                                                
-                                          </div>
-                                      </div>
                                         </div>
                                         
                                         <div class="form-group">
@@ -504,40 +490,13 @@ $("#am_id").change(function(){
         
     });//end function
     
-//  $("#co_id_edit").change(function(){
-//         $co_id_edit = $(this).val();
-        
-//      $.ajax({
-//          url: "<?= base_url('admin/get-customer-order-dtl-for-lining') ?>",
-//          method: "post",
-//          dataType: 'json',
-//          data: {'co_id': $co_id_edit},
-//          success: function(result){
-//              console.log('Length:'+result.length);           
-//              console.log(JSON.stringify(result));
-//              $article_details = result;
-                
-//              $("#am_id_edit").html("");
-//              $("#am_id_edit").append('<option value="">Select Article Number</option>');
-//                 $.each($article_details, function(index, item) {
-//                     $str = '<option value=' + item.am_id + ' co_id=' + item.co_id + ' cod_id=' + item.cod_id +' fc_id='+item.fitting_id+' lc_id='+item.leather_id+' fitting_color='+item.fitting_color+' leather_color='+item.leather_color+' checked_quantity='+item.checked_quantity+' remaining_lining_quantity='+item.remaining_lining_quantity+'> '+ item.art_no + '['+ item.leather_color + ']</option>';
-//                     $("#am_id_edit").append($str);
-//                 });
-//                 // open the challan list 
-//                 // $('#am_id_edit').select2('open');
-                
-//          },
-//          error: function(e){console.log(e);}
-//      });
-        
-//     });//end function
     
     //Jobber 3
     
-    $("#am_id_add").change(function(){
+    $(document).on('change','#am_id_add',function(){
         $cod_id = $(this).val();
-        $remarks_for_other_quantity = $("#remarks_for_other_quantity").val();
-        // alert();
+        $remarks_for_other_quantity = $("#remarks_for_other_quantity :selected").val();
+        // alert($remarks_for_other_quantity);
         
         $.ajax({
             url: "<?= base_url('admin/get-customer-order-dtl-for-lining-am-id') ?>",
@@ -549,48 +508,37 @@ $("#am_id").change(function(){
                 // console.log(JSON.stringify(result));
                 $article_details = result;
                 
-                   $co_id = $article_details.co_id;
-        $cod_id = $article_details.cod_id;
-        //$skiving_receive_detail_id = $('option:selected', this).attr('skiving_receive_detail_id');
-        $fc_id = $article_details.fc_id;
-        $lc_id = $article_details.lc_id;
-        $fitting_color = $article_details.fitting_color;
-        $leather_color = $article_details.leather_color;
-        $checked_quantity = $article_details.checked_quantity;
-        $remaining_lining_quantity = $article_details.remaining_lining_quantity;
-        $cod_id_add_hidden = $article_details.cod_id;
-        
-        $('#lc_id_text').val($leather_color);
-        $('#lc_id').val($lc_id);
-        $('#fc_id_text').val($fitting_color);
-        $('#fc_id').val($fc_id);
-//      if($("#for_others").is(":checked")){
-//      $('#checked_quantity_add').val(0);    
-//      } else {
-//      $('#checked_quantity_add').val($remaining_lining_quantity);    
-//      }
-        if($remarks_for_other_quantity == 'OTHERS'){
-        $('#checked_quantity_add').val(0);
-        $('#checked_alter_add').val(0);
-        $("#checked_quantity_add").prop("readonly", true);
-        $("#checked_alter_add").prop("readonly", false);
-        } 
-        // else if($remarks_for_other_quantity == 'CHECKING'){
-        // $('#checked_quantity_add').val($remaining_lining_quantity);
-        // $('#checked_alter_add').val(0);
-        // $("#checked_alter_add").prop("readonly", true);
-        // $("#checked_quantity_add").prop("readonly", false);
-        // } 
-        else {
-        $('#checked_quantity_add').val(0);
-        $('#checked_alter_add').val($remaining_lining_quantity);
-        $("#checked_quantity_add").prop("readonly", true);
-        $("#checked_alter_add").prop("readonly", false);
-        }
-        $('#remaining_lining_quantity_hidden').val($remaining_lining_quantity);
-        $('#cod_id_add_hidden').val($cod_id_add_hidden);
-        $('#new_am_id_add_hidden').val($article_details.am_id);
-                // open the challan list 
+                $co_id = $article_details.co_id;
+                $cod_id = $article_details.cod_id;
+                //$skiving_receive_detail_id = $('option:selected', this).attr('skiving_receive_detail_id');
+                $fc_id = $article_details.fc_id;
+                $lc_id = $article_details.lc_id;
+                $fitting_color = $article_details.fitting_color;
+                $leather_color = $article_details.leather_color;
+                $checked_quantity = $article_details.checked_quantity;
+                $remaining_lining_quantity = $article_details.remaining_lining_quantity;
+                $cod_id_add_hidden = $article_details.cod_id;
+                
+                $('#lc_id_text').val($leather_color);
+                $('#lc_id').val($lc_id);
+                $('#fc_id_text').val($fitting_color);
+                $('#fc_id').val($fc_id);
+
+                if($remarks_for_other_quantity == 'OTHERS'){
+                    $('#checked_quantity_add').val(0);
+                    $('#checked_alter_add').val($remaining_lining_quantity);
+                    $("#checked_quantity_add").prop("readonly", true);
+                    $("#checked_alter_add").prop("readonly", false);
+                } else {
+                    $('#checked_alter_add').val(0);
+                    $('#checked_quantity_add').val($remaining_lining_quantity);
+                    $("#checked_quantity_add").prop("readonly", false);
+                    $("#checked_alter_add").prop("readonly", true);
+                }
+
+                $('#remaining_lining_quantity_hidden').val($remaining_lining_quantity);
+                $('#cod_id_add_hidden').val($cod_id_add_hidden);
+                $('#new_am_id_add_hidden').val($article_details.am_id);
 
             },
             error: function(e){console.log(e);}
@@ -599,7 +547,7 @@ $("#am_id").change(function(){
     });
     $("#remarks_for_other_quantity").change(function(){
         $cod_id = $("#am_id_add").val();
-        $remarks_for_other_quantity = $("#remarks_for_other_quantity").val();
+        $remarks_for_other_quantity = $("#remarks_for_other_quantity :selected").val();
         // alert();
         
         if($cod_id != '') {
@@ -613,48 +561,38 @@ $("#am_id").change(function(){
                 // console.log(JSON.stringify(result));
                 $article_details = result;
                 
-                   $co_id = $article_details.co_id;
-        $cod_id = $article_details.cod_id;
-        //$skiving_receive_detail_id = $('option:selected', this).attr('skiving_receive_detail_id');
-        $fc_id = $article_details.fc_id;
-        $lc_id = $article_details.lc_id;
-        $fitting_color = $article_details.fitting_color;
-        $leather_color = $article_details.leather_color;
-        $checked_quantity = $article_details.checked_quantity;
-        $remaining_lining_quantity = $article_details.remaining_lining_quantity;
-        $cod_id_add_hidden = $article_details.cod_id;
+                $co_id = $article_details.co_id;
+                $cod_id = $article_details.cod_id;
+                //$skiving_receive_detail_id = $('option:selected', this).attr('skiving_receive_detail_id');
+                $fc_id = $article_details.fc_id;
+                $lc_id = $article_details.lc_id;
+                $fitting_color = $article_details.fitting_color;
+                $leather_color = $article_details.leather_color;
+                $checked_quantity = $article_details.checked_quantity;
+                $remaining_lining_quantity = $article_details.remaining_lining_quantity;
+                $cod_id_add_hidden = $article_details.cod_id;
         
-        $('#lc_id_text').val($leather_color);
-        $('#lc_id').val($lc_id);
-        $('#fc_id_text').val($fitting_color);
-        $('#fc_id').val($fc_id);
-//      if($("#for_others").is(":checked")){
-//      $('#checked_quantity_add').val(0);    
-//      } else {
-//      $('#checked_quantity_add').val($remaining_lining_quantity);    
-//      }
-        if($remarks_for_other_quantity == 'OTHERS'){
-        $('#checked_quantity_add').val(0);
-        $('#checked_alter_add').val(0);
-        $("#checked_quantity_add").prop("readonly", true);
-        $("#checked_alter_add").prop("readonly", false);
-        } 
-        // else if($remarks_for_other_quantity == 'CHECKING'){
-        // $('#checked_quantity_add').val($remaining_lining_quantity);
-        // $('#checked_alter_add').val(0);
-        // $("#checked_alter_add").prop("readonly", true);
-        // $("#checked_quantity_add").prop("readonly", false);
-        // } 
-        else {
-        $('#checked_quantity_add').val(0);
-        $('#checked_alter_add').val($remaining_lining_quantity);
-        $("#checked_quantity_add").prop("readonly", true);
-        $("#checked_alter_add").prop("readonly", false);
-        }
-        $('#remaining_lining_quantity_hidden').val($remaining_lining_quantity);
-        $('#cod_id_add_hidden').val($cod_id_add_hidden);
-        $('#new_am_id_add_hidden').val($article_details.am_id);
-                // open the challan list 
+                $('#lc_id_text').val($leather_color);
+                $('#lc_id').val($lc_id);
+                $('#fc_id_text').val($fitting_color);
+                $('#fc_id').val($fc_id);
+
+                if($remarks_for_other_quantity == 'OTHERS'){
+                    $('#checked_quantity_add').val(0);
+                    $('#checked_alter_add').val($remaining_lining_quantity);
+                    $("#checked_quantity_add").prop("readonly", true);
+                    $("#checked_alter_add").prop("readonly", false);
+                } else {
+                    $('#checked_alter_add').val(0);
+                    $('#checked_quantity_add').val($remaining_lining_quantity);
+                    $("#checked_quantity_add").prop("readonly", false);
+                    $("#checked_alter_add").prop("readonly", true);
+                }
+        
+                $('#remaining_lining_quantity_hidden').val($remaining_lining_quantity);
+                $('#cod_id_add_hidden').val($cod_id_add_hidden);
+                $('#new_am_id_add_hidden').val($article_details.am_id);
+                
 
             },
             error: function(e){console.log(e);}
@@ -663,31 +601,16 @@ $("#am_id").change(function(){
          alert('Select customer order and article no first');   
         }
     });
-//     $("#am_id_add").change(function(){
-//         $am_id_add = $(this).val();
-//      $co_id = $('option:selected', this).attr('co_id');
-//      $cod_id = $('option:selected', this).attr('cod_id');
-//      //$skiving_receive_detail_id = $('option:selected', this).attr('skiving_receive_detail_id');
-//      $fc_id = $('option:selected', this).attr('fc_id');
-//      $lc_id = $('option:selected', this).attr('lc_id');
-//      $fitting_color = $('option:selected', this).attr('fitting_color');
-//      $leather_color = $('option:selected', this).attr('leather_color');
-//      $checked_quantity = $('option:selected', this).attr('checked_quantity');
-//      $remaining_lining_quantity = $('option:selected', this).attr('remaining_lining_quantity');
-//      $cod_id_add_hidden = $('option:selected', this).attr('cod_id');
-        
-//      $('#lc_id_text').val($leather_color);
-//      $('#lc_id').val($lc_id);
-//      $('#fc_id_text').val($fitting_color);
-//      $('#fc_id').val($fc_id);
-//      $('#checked_quantity_add').val($remaining_lining_quantity);
-//      $('#remaining_lining_quantity_hidden').val($remaining_lining_quantity);
-//      $('#cod_id_add_hidden').val($cod_id_add_hidden);
-        
-//     });
     
     $("#am_id_edit").change(function(){
         $am_id_edit = $(this).val();
+
+        $remarks_for_other_quantity_edit = $("#remarks_for_other_quantity_edit").val();
+        if($remarks_for_other_quantity_edit == "OTHERS"){
+            $("#checked_quantity_edit").attr('readonly', true)
+        }else{
+            $("#checked_alter_edit").attr('readonly', true)
+        }
         
         $co_id = $('option:selected', this).attr('co_id');
         $cod_id = $('option:selected', this).attr('cod_id');

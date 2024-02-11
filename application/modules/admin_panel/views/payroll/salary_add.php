@@ -578,13 +578,16 @@ if(gross_salary <= 10000) {
                         dataType: 'json',
                         data:{id: $emp_id},
                         success: function(emp_advance_taken){
+                            console.log("EMP advance ----");
                             console.log(emp_advance_taken);
+                            console.log("---- EMP advance ends");
                             if(emp_advance_taken.length == 0){
                                 $('#loan_taken').val('0'); 
                                 $('#loan_mon_adj').val('0'); 
                             }else{
                                 $('#loan_taken').val(Math.round(emp_advance_taken[0].amount_total));    
                                 $('#loan_mon_adj').val(Math.round(emp_advance_taken[0].monthly_advance_adjustment)); 
+                                $('#loan_adj').val(Math.round(emp_advance_taken[0].monthly_advance_adjustment));
                             }
                         },
                         error: function(e){
@@ -605,7 +608,7 @@ if(gross_salary <= 10000) {
                                 $('#loan_adj_till').val(0);    
                                 $paid = 0;
                             }else{
-                                $('#loan_adj_till').val(Math.round(emp_advance_paid[0].loan_paid));    
+                                $('#loan_adj_till').val(Math.round(emp_advance_paid[0].loan_paid));
                                 $paid = emp_advance_paid[0].loan_paid;
                             }
                             
@@ -1067,12 +1070,6 @@ var ded = +$("#pfamnt").val() + +$("#esiamnt").val() + +$("#ptax").val() + +$("#
             </script>
             <script>
         $(document).on('keyup keypress', 'input[type="text"]', function(e) {
-          if(e.which == 13) {
-          e.preventDefault();
-          return false;
-          }
-        });
-        $(document).on('keyup keypress', 'input[type="number"]', function(e) {
           if(e.which == 13) {
           e.preventDefault();
           return false;

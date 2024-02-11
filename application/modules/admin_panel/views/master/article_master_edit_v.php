@@ -322,6 +322,18 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group ">
+                                    <label for="no_of_part" class="control-label col-lg-2">Parts</label>
+                                    <div class="col-lg-4">
+                                        <input id="no_of_part" name="no_of_part" type="number" min="0" placeholder="Parts" class="form-control round-input" value="<?=$article->no_of_part?>" />
+                                    </div>
+
+                                    <label for="no_of_handle" class="control-label col-lg-2">Handle</label>
+                                    <div class="col-lg-4">
+                                        <input id="no_of_handle" name="no_of_handle" type="number" min="0" placeholder="Handle" class="form-control round-input" value="<?=$article->no_of_handle?>" />
+                                    </div>
+                                </div>
+
                                 <input type="hidden" id="article_id" name="article_id" class="article_id" value="<?=$article->am_id?>">
 
                                 <div class="form-group">

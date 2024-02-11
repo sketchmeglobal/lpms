@@ -1231,9 +1231,6 @@ class Skiving_issue_m extends CI_Model {
             $data['co_ids'] = $this->db->query($query)->result();
         }
 
-        
-        
-
         return array('page'=>'skiving_bill/skiving_bill_edit_v', 'data'=>$data);
         
     }

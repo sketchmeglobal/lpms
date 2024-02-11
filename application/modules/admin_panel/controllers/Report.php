@@ -47,6 +47,22 @@ class Report extends My_Controller {
           $this->load->view($data['page'], $data['data']);
       }
     }
+
+    public function report_inking_summary() {
+      if($this->check_permission(array(1,2)) == true) {
+          $this->load->model('Report_order_status_m');
+          $data = $this->Report_order_status_m->report_inking_summary();
+          $this->load->view($data['page'], $data['data']);
+      }
+    }
+
+    public function most_ordered_article() {
+      if($this->check_permission(array(1,2)) == true) {
+          $this->load->model('Report_order_status_m');
+          $data = $this->Report_order_status_m->most_ordered_article();
+          $this->load->view($data['page'], $data['data']);
+      }
+    }
 	
 	public function report_item() {
         if($this->check_permission(array(1,2)) == true) {

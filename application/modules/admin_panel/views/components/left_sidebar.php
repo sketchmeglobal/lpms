@@ -282,6 +282,11 @@ foreach($all_block_menu as $abm){
                         </li>
                     <?php } ?>
                     <?php if(!in_array(51, $final_array)){ ?>
+                        <li class="<?=(($class_name == 'Inking') && ($method_name == 'inking')) ? 'active' : ''; ?>">
+                            <a href="<?=base_url();?>admin/inking"><i class="fa fa-caret-right"></i> Inking </a>
+                        </li>
+                    <?php } ?>
+                    <?php if(!in_array(51, $final_array)){ ?>
                         <li class="<?=(($class_name == 'Finishing') && ($method_name == 'finishing')) ? 'active' : ''; ?>">
                             <a href="<?=base_url();?>admin/finishing"><i class="fa fa-caret-right"></i> Finishing </a>
                         </li>

@@ -69,6 +69,7 @@
                                         <button name="submit" value="order_details" class="btn btn-success" type="submit"><i class="fa fa-search"> Order Summary</i></button>
                                         <button name="submit" id="consumption_btn" value="consumption_details" class="btn btn-success" type="submit"><i class="fa fa-search"> Consumption Details</i></button>
                                         <button name="submit" value="order_summary" class="btn btn-success" type="submit"><i class="fa fa-search"> Order Details</i></button>
+                                        <button name="submit" value="bill_summary" class="btn btn-success" type="submit"><i class="fa fa-search"> Bill Summary</i></button>
                                         <!--<button name="submit" value="order_details_with_brkup_anty_details" class="btn btn-success" type="submit"><i class="fa fa-search"> Order Summary (With Brkup Details) </i></button>-->
                                     </div>
                                 </div>

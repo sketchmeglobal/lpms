@@ -328,9 +328,9 @@ class Checking_m extends CI_Model {
 				
 				
 				if($remarks_for_other_quantity == 'CHECKING') {
-				$checked_quantity = $this->db->select_sum('checked_quantity')->get_where('checking_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->checked_quantity;
+				    $checked_quantity = $this->db->select_sum('checked_quantity')->get_where('checking_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->checked_quantity;
 				} else {
-				$checked_quantity = $this->db->select_sum('rejection_quantity')->get_where('checking_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->rejection_quantity;    
+				    $checked_quantity = $this->db->select_sum('rejection_quantity')->get_where('checking_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->rejection_quantity;    
 				}
 				 
 				 

@@ -8333,7 +8333,7 @@ hr {
 	</div>
 	
 	
-<?php if ($segment == 'order_summary')
+	<?php if ($segment == 'order_summary')
 {
     // echo '<pre>',print_r($result),'</pre>';
     $temp_co_name_array = array();
@@ -8399,21 +8399,21 @@ hr {
 											<th rowspan="2">Order No.</th>
 											<th rowspan="2">Article</th>
 											<th rowspan="2">Ord <br/> Qnty</th>
-											<th colspan="2" class="text-center">Cutting Information</th>
-											<th colspan="2" class="text-center">Skiving Information</th>
-											<th colspan="2" class="text-center">Fabricator Information</th>
+											<th colspan="3" class="text-center">Cutting Information</th>
+											<th colspan="3" class="text-center">Skiving Information</th>
+											<th colspan="3" class="text-center">Fabricator Information</th>
 											<th rowspan="2" class="text-center">Shipping<br>Information</th>
 										</tr>
 										<tr>
 											<th height="30">Cut Issue</th>
 											<th>Cut Rcv.</th>
-											<!-- <th>Cut Bill</th> -->
+											<th>Cut Bill</th>
 											<th>Skiv Issue</th>
 											<th>Skiv Rcv.</th>
-                                            <!-- <th>Skiv Bill</th> -->
+                                            <th>Skiv Bill</th>
 											<th>Fab Issue</th>
 											<th>Fab Rcv.</th>
-											<!-- <th>Job Bill</th> -->
+											<th>Job Bill</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -8444,79 +8444,87 @@ hr {
         if (!in_array($res->co_no, $summary_co_names))
         {
             array_push($summary_co_names, $res->co_no);
-            if ($summary_co_iter++ == 1){
+            if ($summary_co_iter++ == 1)
+            {
                 // continue;
+                
             }
-            else{
-            ?>
-            <tr style="background-color: #d9e2ea;">
-                <th colspan="2">Total</th>
-                <th class="text-right">
-                <?php
+            else
+            {
+?>
+													<tr style="background-color: #d9e2ea;">
+														<th colspan="2">Total</th>
+														<th class="text-right">
+															<?php
                 echo abs($sub_co - $grand_co);
                 $sub_co = $grand_co;
                 // array_push($last_co_qnty, var)
-                ?>
-				</th>
-                <th class="text-right">
-                    <?php
-                        echo abs($sub_ci - $grand_ci);
-                        $sub_ci = $grand_ci;
-                    ?>
-                </th>
-                <th class="text-right">
-                    <?php
-                    echo abs($sub_cr - $grand_cr);
-                    // $sub_cr = $grand_cr;
-                    ?>
-                </th>
-                <!-- <th></th> -->
-                <th class="text-right">
-                <?php
+                
+?>
+														</th>
+														<th class="text-right">
+															<?php
+                echo abs($sub_ci - $grand_ci);
+                $sub_ci = $grand_ci;
+?>
+														</th>
+														<th class="text-right">
+															<?php
+                echo abs($sub_cr - $grand_cr);
+                // $sub_cr = $grand_cr;
+                
+?>
+														</th>
+														<th></th>
+														<th class="text-right">
+															<?php
                 echo abs($sub_cr - $grand_cr);
                 $sub_cr = $grand_cr;
-                ?>
-				</th>
-				<th class="text-right">
-				<?php
+?>
+														</th>
+														<th class="text-right">
+															<?php
                 echo abs($sub_sr - $grand_sr);
                 $sub_sr = $grand_sr;
-                ?>
-				</th>
-                <!-- <th></th> -->
-				<th class="text-right">
-				<?php
+?>
+														</th>
+                                                        <th></th>
+														<th class="text-right">
+															<?php
                 echo abs($sub_ji - $grand_ji);
                 $sub_ji = $grand_ji;
-                ?>
-				</th>
-                <th class="text-right">
-				<?php
+?>
+														</th>
+                                                        
+														<th class="text-right">
+															<?php
                 echo abs($sub_jr - $grand_jr);
                 $sub_jr = $grand_jr;
-                ?>
-				</th>
-				<!-- <th class="text-right"> -->
-				<?php 
-                    // $get_jobber_bill_det_total_togethers = $this
-                    //     ->db->select('*, SUM(quantity) as total_quantity')
-                    //     ->get_where('jobber_bill_detail', array(
-                    //     'co_id' => $res->co_id,
-                    //     'am_id' => $res->am_id,
-                    //     'lc_id' => $res->c_id
-                    // ))
-                    // ->row();
-                    // echo $get_jobber_bill_det_total_togethers->total_quantity;
-				?>
-				<!-- </th> -->
-				<th class="text-right">
-				<?php
+?>
+														</th>
+														
+														<th class="text-right">
+														    <?php 
+		$get_jobber_bill_det_total_togethers = $this
+            ->db->select('*, SUM(quantity) as total_quantity')
+            ->get_where('jobber_bill_detail', array(
+            'co_id' => $res->co_id,
+            'am_id' => $res->am_id,
+            'lc_id' => $res->c_id
+        ))
+            ->row();
+            echo $get_jobber_bill_det_total_togethers->total_quantity;
+														    ?>
+														</th>
+														
+														<th class="text-right">
+															<?php
                 echo abs($sub_shp - $grand_shp);
                 $sub_shp = $grand_shp;
-                ?>
-				</th>
-			</tr>
-			<?php
+?>
+														</th>
+													</tr>
+														<?php
             }
         }
 ?>
@@ -8554,27 +8562,27 @@ hr {
                                                         ))->row();
                                                 ?>
 													
-													<!-- <th class="mycell2" height="60" nowrap class=""> -->
+													<th class="mycell2" height="60" nowrap class="">
 													<?php
-                                                        // if (count($get_cutter_bill_det) > 0)
-                                                        // {
-                                                        //     $get_cutter_bill_detail_id = $get_cutter_bill_det->cb_id;
-                                                        //     $get_cutter_bill_details = $this
-                                                        //         ->db
-                                                        //         ->get_where('cutter_bill', array(
-                                                        //         'cb_id' => $get_cutter_bill_detail_id
-                                                        //     ))->row();
-                                                        //     if (count($get_cutter_bill_details) > 0)
-                                                        //     {
-                                                        //         echo $get_cutter_bill_details->cutter_bill_name . "<br/>" . date("d-m-Y", strtotime($get_cutter_bill_details->cutter_bill_date));
-                                                        //     }
-                                                        // }
-                                                        // else
-                                                        // {
-                                                        //     echo '';
-                                                        // }
-                                                    ?>
-													<!-- </th> -->
+        if (count($get_cutter_bill_det) > 0)
+        {
+            $get_cutter_bill_detail_id = $get_cutter_bill_det->cb_id;
+            $get_cutter_bill_details = $this
+                ->db
+                ->get_where('cutter_bill', array(
+                'cb_id' => $get_cutter_bill_detail_id
+            ))->row();
+            if (count($get_cutter_bill_details) > 0)
+            {
+                echo $get_cutter_bill_details->cutter_bill_name . "<br/>" . date("d-m-Y", strtotime($get_cutter_bill_details->cutter_bill_date));
+            }
+        }
+        else
+        {
+            echo '';
+        }
+?>
+													</th>
 												<th class="mycell2" height="60" nowrap class="">
 													<?php if ($res->cr != '')
         {
@@ -8591,35 +8599,35 @@ hr {
         } ?>
 													<br><br>
 												</th>
-                                                <!-- <th nowrap> -->
+                                                <th nowrap>
                                                     <?php 
-                                                        // $total_qnty = 0;
-                                                        // $this->db->query("SET sql_mode = ''");
-                                                        // $skiving_bill_dtl = $this->db
-                                                        //     ->select('bill_number, bill_date, name,SUM(skiving_paid_qnty) AS skiving_paid_qnty')
-                                                        //     ->join('skiving_bill','skiving_bill.sb_id=skiving_bill_detail.sb_id','left')
-                                                        //     ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
-                                                        //     ->group_by('name, bill_number')
-                                                        //     ->get_where('skiving_bill_detail', array(
-                                                        //         // 'cut_rcv_id' => $res->cutting_receive_id,
-                                                        //         'co_id' => $res->co_id,
-                                                        //         'am_id' => $res->am_id,
-                                                        //         'lc_id' => $res->c_id
-                                                        //     ))->result();
-                                                        //     // echo $this->db->last_query();
-                                                        // if(count($skiving_bill_dtl) > 0){
-                                                        //     foreach($skiving_bill_dtl as $sbd){
-                                                        //         echo $sbd->bill_number . ': ';
-                                                        //         // . ' ('. date('d-m-Y', strtotime($sbd->bill_date)) .')<br>';
-                                                        //         echo $sbd->name . ' - '.$sbd->skiving_paid_qnty .'<br>';
-                                                        //         $total_qnty += $sbd->skiving_paid_qnty;
-                                                        //     }
-                                                        // } else{
-                                                        //     echo '-';
-                                                        // }
+                                                        $total_qnty = 0;
+                                                        $this->db->query("SET sql_mode = ''");
+                                                        $skiving_bill_dtl = $this->db
+                                                            ->select('bill_number, bill_date, name,SUM(skiving_paid_qnty) AS skiving_paid_qnty')
+                                                            ->join('skiving_bill','skiving_bill.sb_id=skiving_bill_detail.sb_id','left')
+                                                            ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
+                                                            ->group_by('name, bill_number')
+                                                            ->get_where('skiving_bill_detail', array(
+                                                                // 'cut_rcv_id' => $res->cutting_receive_id,
+                                                                'co_id' => $res->co_id,
+                                                                'am_id' => $res->am_id,
+                                                                'lc_id' => $res->c_id
+                                                            ))->result();
+                                                            // echo $this->db->last_query();
+                                                        if(count($skiving_bill_dtl) > 0){
+                                                            foreach($skiving_bill_dtl as $sbd){
+                                                                echo $sbd->bill_number . ': ';
+                                                                // . ' ('. date('d-m-Y', strtotime($sbd->bill_date)) .')<br>';
+                                                                echo $sbd->name . ' - '.$sbd->skiving_paid_qnty .'<br>';
+                                                                $total_qnty += $sbd->skiving_paid_qnty;
+                                                            }
+                                                        } else{
+                                                            echo '-';
+                                                        }
                                                     ?>
-                                                    <!-- <span>< ?=$total_qnty?></span> -->
-                                                <!-- </th> -->
+                                                    <span><?=$total_qnty?></span>
+                                                </th>
 
 												<th class="mycell2" height="60" nowrap class="">
 													<?php if ($res->jobi != '')
@@ -8652,36 +8660,39 @@ hr {
 
 ?>
 													
-							<!-- <th class="mycell2" height="60" nowrap class=""> -->
-							<?php
-                            // if (count($get_jobber_bill_det) > 0){
-                            //     $get_jobber_bill_det_total_togethers = $this
-                            //     ->db->select('*, SUM(quantity) as total_quantity')
-                            //     ->get_where('jobber_bill_detail', array(
-                            //         'co_id' => $res->co_id,
-                            //         'am_id' => $res->am_id,
-                            //         'lc_id' => $res->c_id
-                            //     ))->row()->total_quantity;
-                                
-                            //     foreach($get_jobber_bill_det as $g_j_b_d) {
-                            //     $get_jobber_bill_details_id = $g_j_b_d->jobber_bill_id;
-                            //     $get_jobber_bill_details = $this
-                            //         ->db
-                            //         ->get_where('jobber_bill', array(
-                            //         'jobber_bill_id' => $get_jobber_bill_details_id
-                            //     ))->row();
-                            //     if (count($get_jobber_bill_details) > 0)
-                            //     {
-                            //         echo $get_jobber_bill_details->jobber_bill_number . "-(" . date("d-m-Y", strtotime($get_jobber_bill_details->jobber_bill_date)) . ")-".$g_j_b_d->total_quantity."<br/><span>" . $get_jobber_bill_det_total_togethers . "</span>";
-                            //     }
-                            //     }
-                            // }else{
-                            //     echo '';
-                            // }
-                            ?>
-							<!-- </th> -->
+							<th class="mycell2" height="60" nowrap class="">
+													<?php
+        if (count($get_jobber_bill_det) > 0)
+        {
+            $get_jobber_bill_det_total_togethers = $this
+            ->db->select('*, SUM(quantity) as total_quantity')
+            ->get_where('jobber_bill_detail', array(
+            'co_id' => $res->co_id,
+            'am_id' => $res->am_id,
+            'lc_id' => $res->c_id
+        ))
+            ->row()->total_quantity;
+            foreach($get_jobber_bill_det as $g_j_b_d) {
+            $get_jobber_bill_details_id = $g_j_b_d->jobber_bill_id;
+            $get_jobber_bill_details = $this
+                ->db
+                ->get_where('jobber_bill', array(
+                'jobber_bill_id' => $get_jobber_bill_details_id
+            ))->row();
+            if (count($get_jobber_bill_details) > 0)
+            {
+                echo $get_jobber_bill_details->jobber_bill_number . "-(" . date("d-m-Y", strtotime($get_jobber_bill_details->jobber_bill_date)) . ")-".$g_j_b_d->total_quantity."<br/><span>" . $get_jobber_bill_det_total_togethers . "</span>";
+            }
+            }
+        }
+        else
+        {
+            echo '';
+        }
+?>
+													</th>
 												
-							<?php $pack_shipment_num = $this
+												<?php $pack_shipment_num = $this
             ->db
             ->join('packing_shipment', 'packing_shipment.packing_shipment_id = packing_shipment_detail.packing_shipment_id', 'left')
             ->group_by('packing_shipment_detail.packing_shipment_id')->get_where('packing_shipment_detail', array(
@@ -8761,24 +8772,25 @@ hr {
 												<th class="text-right"><?=$grand_co - $sub_co ?></th>
 												<th class="text-right"><?=$grand_ci - $sub_ci ?></th>
 												<th class="text-right"><?=$grand_cr - $sub_cr ?></th>
-												<!-- <th></th>-->
+												<th></th>										
 												<th class="text-right"><?=$grand_cr - $sub_cr ?></th>
 												<th class="text-right"><?=$grand_sr - $sub_sr ?></th>
-                                                <!-- <th></th>-->
+                                                <th></th>										
 												<th class="text-right"><?=$grand_ji - $sub_ji ?></th>
 												<th class="text-right"><?=$grand_jr - $sub_jr ?></th>
-												<!-- <th class="text-right"> -->
-												<?php 
-                                                // $get_jobber_bill_det_total_togethers = $this
-                                                //     ->db->select('*, SUM(quantity) as total_quantity')
-                                                //     ->get_where('jobber_bill_detail', array(
-                                                //     'co_id' => $res->co_id,
-                                                //     'am_id' => $res->am_id,
-                                                //     'lc_id' => $res->c_id
-                                                // ))->row();
-                                                // echo $get_jobber_bill_det_total_togethers->total_quantity;
-												?>
-												<!-- </th> -->
+												<th class="text-right">
+												    <?php 
+		$get_jobber_bill_det_total_togethers = $this
+            ->db->select('*, SUM(quantity) as total_quantity')
+            ->get_where('jobber_bill_detail', array(
+            'co_id' => $res->co_id,
+            'am_id' => $res->am_id,
+            'lc_id' => $res->c_id
+        ))
+            ->row();
+            echo $get_jobber_bill_det_total_togethers->total_quantity;
+														    ?>
+												</th>
 												<th class="text-right"><?=$grand_shp ?></th>
 											</tr>
 											<?php
@@ -8786,28 +8798,37 @@ hr {
 ?>
 										<tr style="background-color: #445767;color: white;">
 											<th colspan="2">Grand Total</th>
-											<th class="text-right"><?=$grand_co?></th>
-											<th class="text-right"><?=$grand_ci?></th>
-											<th class="text-right"><?=$grand_cr?></th>
-											<!-- <th></th> -->
-											<th class="text-right"><?=$grand_cr?></th>
-											<th class="text-right"><?=$grand_sr?></th>
-                                            <!-- <th></th> -->
-											<th class="text-right"><?=$grand_ji?></th>
-											<th class="text-right"><?=$grand_jr?></th>
-											<!-- <th class="text-right"> -->
-											<?php 
-                                            // $get_jobber_bill_det_total_togethers = $this
-                                            //     ->db->select('*, SUM(quantity) as total_quantity')
-                                            //     ->get_where('jobber_bill_detail', array(
-                                            //     'co_id' => $res->co_id,
-                                            //     'am_id' => $res->am_id,
-                                            //     'lc_id' => $res->c_id
-                                            // ))->row();
-                                            // echo $get_jobber_bill_det_total_togethers->total_quantity;
-                                            ?>
-											<!-- </th> -->
-											<th class="text-right"><?=$grand_shp?></th>
+											<th class="text-right"><?=$grand_co
+?></th>
+											<th class="text-right"><?=$grand_ci
+?></th>
+											<th class="text-right"><?=$grand_cr
+?></th>
+											<th></th>
+											<th class="text-right"><?=$grand_cr
+?></th>
+											<th class="text-right"><?=$grand_sr
+?></th>
+                                            <th></th>
+											<th class="text-right"><?=$grand_ji
+?></th>
+											<th class="text-right"><?=$grand_jr
+?></th>
+											<th class="text-right">
+											    <?php 
+		$get_jobber_bill_det_total_togethers = $this
+            ->db->select('*, SUM(quantity) as total_quantity')
+            ->get_where('jobber_bill_detail', array(
+            'co_id' => $res->co_id,
+            'am_id' => $res->am_id,
+            'lc_id' => $res->c_id
+        ))
+            ->row();
+            echo $get_jobber_bill_det_total_togethers->total_quantity;
+														    ?>
+											</th>
+											<th class="text-right"><?=$grand_shp
+?></th>
 										</tr>
 									</tbody>
 								</table>
@@ -8820,296 +8841,8 @@ hr {
 	</section>
 	</div>
 		<?php
-} 
-?>
-
-<?php if ($segment == 'bill_summary')
-{
-    // echo '<pre>',print_r($result),'</pre>'; die;
-    $temp_co_name_array = array();
-    foreach ($result as $co_name)
-    {
-        if (!in_array($co_name->co_no, $temp_co_name_array))
-        {
-            array_push($temp_co_name_array, $co_name->co_no);
-        }
-    }
-?>
-		<style>
-            .extra_td_space:after{content: ''; display:block;margin-bottom:25px}
-			@media print{
-			    thead{margin-top: 15px;}
-			    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {font-size: 14px!important;padding:0!important;}
-			    
-			    table.order-summary th {position: unset;}		            
-		        table.order-summary span{display:none;}
-			}
-			
-            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-                padding: 5px;text-align: left;font-size: 14px;
-            }
-		</style>
-		<div class="A4" id="page-content">
-		<section class="sheet padding-5mm" style="height: auto;">
-		<div>
-			<!--<header class="pull-right">-->
-			<!--    <small>Page No. </small>-->
-			<!--</header>-->
-			<div class="clearfix"></div>
-			<div class="container">
-				<div class="row border_all text-center text-uppercase mar_bot_3">
-					<h3 class="mar_0 head_font">Bill Summary</h3>
-				</div>
-				<div class="row mar_bot_3">
-					<div class="col-sm-6 border_all header_left">
-						<h4 class=""><strong>SHILPA OVERSEAS PVT. LTD. </strong></h4>
-						<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
-					</div>
-					<div class="col-sm-6 border_all header_right">Customer Order Number :
-						<br />
-						<h5><?=implode(', ', $temp_co_name_array) ?></h5>
-					</div>
-				</div>
-				<!--table data-->
-				<div class="row">
-					<div class="container">
-						<div class="row">
-							<div class="table-responsive">
-								<!--<h5>Retrieve Table</h5>-->
-								<table id="all_det" class="table table-bordered order-summary" style="width: 100%;">
-									<thead>
-										<tr>
-											<th rowspan="2">Order No.</th>
-											<th rowspan="2">Article</th>
-											<th rowspan="2">Ord <br/> Qnty</th>
-											<th colspan="1" class="text-center">Cutting Information</th>
-											<th colspan="1" class="text-center">Skiving Information</th>
-											<th colspan="1" class="text-center">Fabricator Information</th>
-											<th rowspan="2" class="text-center">Stitching<br>Information</th>
-										</tr>
-										<tr>
-											<!-- <th height="30">Cut Issue</th> -->
-											<!-- <th>Cut Rcv.</th> -->
-											<th>Cut Bill</th>
-											<!-- <th>Skiv Issue</th> -->
-											<!-- <th>Skiv Rcv.</th> -->
-                                            <th>Skiv Bill</th>
-											<!-- <th>Fab Issue</th> -->
-											<!-- <th>Fab Rcv.</th> -->
-											<th>Job Bill</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php
-    $sub_co = 0;
-    $sub_ci = 0;
-    $sub_cr = 0;
-    $sub_sr = 0;
-    $sub_ji = 0;
-    $sub_jr = 0;
-    $sub_shp = 0;
-
-    $grand_co = 0;
-    $grand_ci = 0;
-    $grand_cr = 0;
-    $grand_sr = 0;
-    $grand_ji = 0;
-    $grand_jr = 0;
-    $grand_shp = 0;
-
-    $summary_co_names[] = '';
-    $summary_co_iter = 1;
-
-    // $last_co_qnty[] = '';
-    foreach ($result as $res)
-    {
-
-        if (!in_array($res->co_no, $summary_co_names))
-        {
-            array_push($summary_co_names, $res->co_no);
-            if ($summary_co_iter++ == 1)
-            {
-                // continue;
-                
-            }
-            else
-            {
-        ?>
-        <tr style="background-color: #d9e2ea;">
-            <th colspan="2">Total</th>
-            <th class="text-right">
-                <?php
-                echo abs($sub_co - $grand_co);
-                $sub_co = $grand_co;
-                // array_push($last_co_qnty, var)
-                ?>
-			</th>
-			<th colspan="4" class="text-right"></th>
-            <?php
-            }
-        }
-?>
-											<tr>
-												<th class="mycell1"><?=$res->co_no . '<br>(' . date('d-m-Y', strtotime($res->co_date)) . ')' ?></th>
-												<th class="mycell"><?=$res->art_no . ' [' . $res->color . ']' ?></th>
-												<th class="mycell2 text-right print-text-center" nowrap>
-													<?php echo $res->co_quantity; $grand_co += $res->co_quantity; ?>
-												</th>
-												
-												<?php
-                                                $get_cutter_bill_det = $this->db
-                                                    ->get_where('cutter_bill_dtl', array(
-                                                        'cut_id' => $res->cutting_issue_id,
-                                                        'cut_rcv_id' => $res->cutting_receive_id,
-                                                        'co_id' => $res->co_id,
-                                                        'am_id' => $res->am_id,
-                                                        'leather_color' => $res->c_id
-                                                    ))->row();
-                                                ?>
-													
-													<th class="mycell2" nowrap class="">
-													<?php
-                                                    if (count($get_cutter_bill_det) > 0){
-                                                        $get_cutter_bill_detail_id = $get_cutter_bill_det->cb_id;
-                                                        $get_cutter_bill_details = $this
-                                                            ->db
-                                                            ->get_where('cutter_bill', array(
-                                                            'cb_id' => $get_cutter_bill_detail_id
-                                                        ))->row();
-                                                        if (count($get_cutter_bill_details) > 0)
-                                                        {
-                                                            echo $get_cutter_bill_details->cutter_bill_name . "<br/>" . date("d-m-Y", strtotime($get_cutter_bill_details->cutter_bill_date));
-                                                        }
-                                                    } else{
-                                                        echo '';
-                                                    }
-                                                    ?>
-													</th>
-                                                    <th nowrap class="extra_td_space">
-                                                    <?php 
-                                                        $total_stitching_qnty = $total_qnty = 0;
-                                                        $this->db->query("SET sql_mode = ''");
-                                                        $skiving_bill_dtl = $this->db
-                                                            ->select('bill_number, bill_date, name,SUM(skiving_paid_qnty) AS skiving_paid_qnty')
-                                                            ->join('skiving_bill','skiving_bill.sb_id=skiving_bill_detail.sb_id','left')
-                                                            ->join('employees', 'employees.e_id = skiving_bill.bill_employee_id', 'left')
-                                                            ->group_by('name, bill_number')
-                                                            ->get_where('skiving_bill_detail', array(
-                                                                // 'cut_rcv_id' => $res->cutting_receive_id,
-                                                                'co_id' => $res->co_id,
-                                                                'am_id' => $res->am_id,
-                                                                'lc_id' => $res->c_id
-                                                            ))->result();
-                                                            // echo $this->db->last_query();
-                                                        if(count($skiving_bill_dtl) > 0){
-                                                            foreach($skiving_bill_dtl as $sbd){
-                                                                echo $sbd->bill_number . ': ';
-                                                                // . ' ('. date('d-m-Y', strtotime($sbd->bill_date)) .')<br>';
-                                                                echo $sbd->name . ' - '.$sbd->skiving_paid_qnty .'<br>';
-                                                                $total_qnty += $sbd->skiving_paid_qnty;
-                                                            }
-                                                        } else{
-                                                            echo '-';
-                                                        }
-                                                    ?>
-                                                    <span><?=$total_qnty?></span>
-                                                </th>
-
-												<?php
-                                                $get_jobber_bill_det = $this
-                                                    ->db->select('*, SUM(quantity) as total_quantity')
-                                                    ->group_by('jobber_challan_receipt_id')->get_where('jobber_bill_detail', array(
-                                                    'co_id' => $res->co_id,
-                                                    'am_id' => $res->am_id,
-                                                    'lc_id' => $res->c_id
-                                                ))->result();
-                                                ?>
-													
-							<th class="mycell2" nowrap class="">
-													<?php
-                                if (count($get_jobber_bill_det) > 0)
-                                {
-                                    $get_jobber_bill_det_total_togethers = $this
-                                    ->db->select('*, SUM(quantity) as total_quantity')
-                                    ->get_where('jobber_bill_detail', array(
-                                    'co_id' => $res->co_id,
-                                    'am_id' => $res->am_id,
-                                    'lc_id' => $res->c_id
-                                ))->row()->total_quantity;
-                                    foreach($get_jobber_bill_det as $g_j_b_d) {
-                                        $get_jobber_bill_details_id = $g_j_b_d->jobber_bill_id;
-                                        $get_jobber_bill_details = $this
-                                            ->db
-                                            ->get_where('jobber_bill', array(
-                                            'jobber_bill_id' => $get_jobber_bill_details_id
-                                        ))->row();
-                                        if (count($get_jobber_bill_details) > 0)
-                                        {
-                                            echo $get_jobber_bill_details->jobber_bill_number . "-(" . date("d-m-Y", strtotime($get_jobber_bill_details->jobber_bill_date)) . ")-".$g_j_b_d->total_quantity."<br/><span>" . $get_jobber_bill_det_total_togethers . "</span>";
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    echo '';
-                                }
-?>
-							</th>
-                            <th>
-                            <?php
-                                $get_stiching_bill_det = $this->db
-                                    ->join('stitching_bill','stitching_bill.sb_id=stitching_bill_detail.sb_id','left')
-                                    ->join('employees', 'employees.e_id = stitching_bill.bill_employee_id', 'left')
-                                    ->get_where('stitching_bill_detail', array(
-                                        'co_id' => $res->co_id,
-                                        'am_id' => $res->am_id,
-                                        'lc_id' => $res->c_id
-                                    ))->result();
-
-                                if(count($get_stiching_bill_det) > 0){
-                                    foreach($get_stiching_bill_det as $sbd){
-                                        echo $sbd->bill_number . ': ';
-                                        // . ' ('. date('d-m-Y', strtotime($sbd->bill_date)) .')<br>';
-                                        echo $sbd->name . ' - '.$sbd->stitching_paid_qnty .'<br>';
-                                        $total_stitching_qnty += $sbd->stitching_paid_qnty;
-                                    }
-                                } else{
-                                    echo '-';
-                                }
-                                ?>
-                                <span><?=$total_stitching_qnty?></span>
-                            </th>
-												
-											</tr>
-											<?php
-    }
-    if (end($result))
-    {
-?>
-        <tr style="background-color: #d9e2ea;">
-            <th colspan="2">Total</th>
-            <th class="text-right"><?=$grand_co - $sub_co ?></th>
-            <th colspan="4"></th>
-        </tr>
-        <?php } ?>
-										<tr style="background-color: #445767;color: white;">
-											<th colspan="2">Grand Total</th>
-											<th class="text-right"><?=$grand_co?></th>
-											<th colspan="4"></th>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	</div>
-		<?php
-} 
-?>
+} ?>
+	
 	
 </body>
 
@@ -12616,7 +12349,8 @@ if($check_consumption_list == 0) {
         	<p class="mar_0">KAIKHALI, CHIRIAMORE,P.O. : R.GOPALPUR, KOLKATA - 700 136</p>
         </div>
         <div class="col-sm-6 border_all header_left" style="height: 68px; text-align: left;">
-        	<b>Month: <?=$mont ?><br />Date: <?=date('d-m-Y') ?><br /></b>
+        	<b>Month: <?=$mont ?><br />
+                            Date: <?=date('d-m-Y') ?><br /></b>
         </div>
         </div>
         <!--table data-->
@@ -12625,23 +12359,16 @@ if($check_consumption_list == 0) {
         	<div class="row">
         		<div class="table-responsive">
         			<!--<h5>Retrieve Table</h5>-->
-                    <?php 
-                    if($mont == 'January' or $mont == 'February' or $mont == 'March'){
-                        $show_year = YEAR_END;
-                    }else{
-                        $show_year = YEAR_START;
-                    }
-                    ?>
         			<table id="all_det" class="table table-bordered">
         				<thead>
-                            <tr>
-                                <th class="text-center" align="center" colspan="26">PAYMENT FOR THE MONTH OF <?= $mont . ' ' . $show_year  ?> </th>
-                            </tr>
+        <tr>
+                        <th class="text-center" align="center" colspan="26">PAYMENT FOR THE MONTH OF <?= $mont . ' ' . date('Y')  ?> </th>
+                    </tr>
                     <tr>
                         <th style="text-align: center;">SN</th>
                         <th style="text-align: center; width: 300px;">EMPLOYEE <br/> NAME</th>
-                        <th style="text-align: center;">LEAVE <br/> TAKEN <br/> IN <br/> <?= $mont ?> - <?=$show_year?></th>
-                        <th style="text-align: center;">ABSENT <br/> IN <br/> <?= $mont ?> - <?=$show_year?></th>
+                        <th style="text-align: center;">LEAVE <br/> TAKEN <br/> IN <br/> <?= $mont ?>-22</th>
+                        <th style="text-align: center;">ABSENT <br/> IN <br/> <?= $mont ?>-22</th>
                         <th style="text-align: center;">TOTAL <br/> ABSENT <br/> SO FAR</th>
                         <th style="text-align: center;">GROSS <br/> AMOUNT</th>
                         <th style="text-align: center;">LOAN <br/> AMOUNT</th>

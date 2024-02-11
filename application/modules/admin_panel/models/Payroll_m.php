@@ -194,9 +194,20 @@ function set_print_path($primary_key , $row)
         $salary_rowss = $this->db->get_where('salary', array('MON' =>  $this->input->post('month'), 'EMPCODE' => $this->input->post('emp_id')))->num_rows();
         if($this->input->post()){
             if($salary_rowss == 0) {
-            $salary_det = array(
+
+                $master_salary_data = $this->db->get_where('employees', array('e_id' => $this->input->post('emp_id')))->row();
+
+                $salary_det = array(
                 'MON' =>  $this->input->post('month'),
                 'EMPCODE' => $this->input->post('emp_id'),
+
+                'MASTER_BASIC' => $master_salary_data->basic_pay,
+                'MASTER_DA' => $master_salary_data->da_amout,
+                'MASTER_HRA' => $master_salary_data->hra_amount,
+                'MASTER_CONV' => $master_salary_data->convenience,
+                'MASTER_MED' => $master_salary_data->medical_allowance,
+                'MASTER_OA' => $master_salary_data->special_allowance,
+
                 'BASIC' => $this->input->post('abasic'),
                 'DA' => $this->input->post('ada'),
                 'HRA' => $this->input->post('ahra'),
@@ -228,6 +239,9 @@ function set_print_path($primary_key , $row)
                 'NET' => $this->input->post('net'),
                 'USER_ID' => $this->session->user_id
             );
+
+            // echo '<pre>', print_r($salary_det), '</pre>'; die;
+
             $this->db->insert('salary', $salary_det);
             // echo $this->db->last_query(); die();
             $data['error'] = false;
@@ -284,8 +298,12 @@ function set_print_path($primary_key , $row)
 
     public function emp_advance_on_id_m(){
         $id = $this->input->post('id');
-        $res = $this->db->select('*, SUM(amount) as amount_total')
-                    ->get_where('advance', array('emp_id' => $id))->result();
+        // $res = $this->db->select('*, SUM(amount) as amount_total')
+        //             ->get_where('advance', array('emp_id' => $id))->result();
+        $query = "SELECT *, (SELECT SUM(amount) FROM `advance` WHERE `emp_id` = $id ORDER BY `advance_id` DESC) as amount_total 
+        FROM `advance` WHERE emp_id = $id
+        ORDER BY advance_id DESC";
+        $res = $this->db->query($query)->result();
         return $res;
     }
 
@@ -367,7 +385,9 @@ function set_print_path($primary_key , $row)
     }
 
     public function emp_salary_print_m(){
-       $data[] = '';
+
+        $user_id = $this->session->user_id;
+        $data[] = '';
         $sal_id = $this->uri->segment(3);
         
         $this->load->model('Payroll_m');
@@ -386,6 +406,7 @@ function set_print_path($primary_key , $row)
                     ->get_where('salary', array('salary.CODE' => $sal_id))->result();
 
         return array('page'=>'payroll/salary_print', 'data'=>$data);
+
     }
     
     public function multiple_emp_pay_slip(){

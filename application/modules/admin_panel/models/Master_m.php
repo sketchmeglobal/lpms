@@ -2134,6 +2134,8 @@ class Master_m extends CI_Model {
         $data_insert['remark'] = $this->input->post('remark');
         $data_insert['credit_score'] = $this->input->post('credit_score');
         $data_insert['alter_score'] = $this->input->post('alter_score');
+        $data_insert['no_of_part'] = $this->input->post('no_of_part');
+        $data_insert['no_of_handle'] = $this->input->post('no_of_handle');
         $data_insert['status'] = $this->input->post('status');
         $data_insert['user_id'] = $this->session->user_id;
         //if image uploaded
@@ -2229,6 +2231,8 @@ class Master_m extends CI_Model {
         $data_update['size'] = $this->input->post('size');
         $data_update['credit_score'] = $this->input->post('credit_score');
         $data_update['alter_score'] = $this->input->post('alter_score');
+        $data_update['no_of_part'] = $this->input->post('no_of_part');
+        $data_update['no_of_handle'] = $this->input->post('no_of_handle');
         $data_update['remark'] = $this->input->post('remark');
         $data_update['status'] = $this->input->post('status');
         $data_update['user_id'] = $this->session->user_id;
@@ -4454,6 +4458,8 @@ class Master_m extends CI_Model {
         $data_update['size'] = $this->input->post('size');
         $data_update['credit_score'] = $this->input->post('credit_score');
         $data_update['alter_score'] = $this->input->post('alter_score');
+        $data_update['no_of_part'] = $this->input->post('no_of_part');
+        $data_update['no_of_handle'] = $this->input->post('no_of_handle');
         $data_update['remark'] = $this->input->post('remark');
         $data_update['img'] = $this->input->post('img');
         $data_update['status'] = $this->input->post('status');

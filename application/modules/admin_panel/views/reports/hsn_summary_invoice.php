@@ -103,15 +103,16 @@
                         <th colspan="6">Detailed</th>
                     </tr>
                     <tr>
-                        <th>Sr#</th>
+                        <th style="text-align:right">Sr#</th>
                         <!--<th>HSN Code</th>-->
                         <th>Desciption</th>
                         <th>Invoice No.</th>
-                        <th>Qnty</th>
+                        <th style="text-align:right">Qnty</th>
                         <!--<th>Rate (INR)</th>-->
                         <!--<th>Rate (FOR)</th>-->
                         <!--<th>Ex rate</th>-->
-                        <th>Amount Total</th>
+                        <th style="text-align:right">INR amnt as per Checklist</th>
+                        <th style="text-align:right">INR amnt as per Bank</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,6 +122,7 @@
                     $hsn_group = array();
                     $summary = array();
                     $sum_qnty = 0;
+                    $realisation_total = 0;
                     // echo '<pre>',print_r($invoice_hsn_detailed),'</pre>';
                     $this->db->empty_table('temp_invoice_hsn_code');
                     
@@ -133,13 +135,13 @@
                             $iter=1;
                             ?>
                             <tr>
-                                <th colspan="6">HSN Code: <?=$ihs->hsn_code?></th>
+                                <th colspan="7">HSN Code: <?=$ihs->hsn_code?></th>
                             </tr>
                             <?php
                         }
                     ?>
                     <tr>
-                        <td><?=$iter++?></td>
+                        <td style="text-align:right"><?=$iter++?></td>
                         <!--<td>< ?=$ihs->hsn_code?></td>-->
                         <td><?=$ihs->info?></td>
                         <td><?=$ihs->office_invoice_number . ' (' . $ihs->office_invoice_date . ')'?></td>
@@ -155,6 +157,14 @@
                                 echo number_format(($amount),2)
                             ?>
                         </td>
+                        <td style="text-align:right">
+                            <?php 
+                                // $rate_inr = $ihs->ex_rate * $ihs->rate_foreign;
+                                // $amount = $ihs->quantity * $rate_inr;
+                                $sum_amount_realisation = $ihs->sum_amount_realisation;
+                                echo number_format(($sum_amount_realisation),2)
+                            ?>
+                        </td>
                     </tr>   
                     <?php
                         
@@ -162,7 +172,8 @@
                             'hsn_code' => $ihs->hsn_code,
                             'inv_no' => $ihs->office_invoice_number . ' (' . $ihs->office_invoice_date . ')',
                             'qnty' => $ihs->sum_quantity,
-                            'amount' => $amount
+                            'amount' => $amount,
+                            'realisation_amount' => (($sum_amount_realisation == '') ? 0 : $sum_amount_realisation)
                         );
                         
                         $this->db->insert('temp_invoice_hsn_code', $summary);
@@ -179,29 +190,35 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th colspan="4">Summary</th>
+                        <th colspan="5">Summary</th>
                     </tr>
                     <tr>
-                        <th>Sr#</th>
+                        <th style="text-align:right">Sr#</th>
                         <th>HSN Code</th>
-                        <th>Qnty</th>
-                        <th>Amount</th>
+                        <th style="text-align:right">Qnty</th>
+                        <th style="text-align:right">INR amnt as per Checklist</th>
+                        <th style="text-align:right">INR amnt as per Bank</th>
                     </tr>
                 </thead>
                 <tbody>
                     
                     <?php
-                        $summary = $this->db->select('hsn_code, (SUM(qnty)) AS qnty, (SUM(amount)) AS amnt')->group_by('hsn_code')->get('temp_invoice_hsn_code')->result();
+                        $summary = $this->db
+                            ->select('hsn_code, (SUM(qnty)) AS qnty, (SUM(amount)) AS amnt, SUM(realisation_amount) as realisation_amount')
+                            ->group_by('hsn_code')
+                            ->get('temp_invoice_hsn_code')->result();
                         $sr=1;
                         $grand_qnty = 0;
                         $grand_amnt = 0;
+                        $grand_realisation_qnty = 0;
                         foreach($summary as $sm){
                             ?>
                             <tr>
-                                <td><?=$sr++?></td>
+                                <td style="text-align:right"><?=$sr++?></td>
                                 <td><?= $sm->hsn_code ?></td>
                                 <td style="text-align:right"><?php echo number_format($sm->qnty, 2); $grand_qnty += $sm->qnty ?></td>
                                 <td style="text-align:right"><?php echo number_format($sm->amnt, 2); $grand_amnt += $sm->amnt ?></td>
+                                <td style="text-align:right"><?php echo number_format($sm->realisation_amount, 2); $grand_realisation_qnty += $sm->realisation_amount ?></td>
                             </tr>
                             <?php
                         }
@@ -214,6 +231,7 @@
                         <th colspan="2">Total</th>
                         <th style="text-align:right"><?= number_format($grand_qnty,2) ?></th>
                         <th style="text-align:right"><?= number_format($grand_amnt,2) ?></th>
+                        <th style="text-align:right"><?= number_format($grand_realisation_qnty,2) ?></th>
                     </tr>
                 </tfoot>
             </table>

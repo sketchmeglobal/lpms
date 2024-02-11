@@ -308,40 +308,43 @@ class Finishing_m extends CI_Model {
         $cod_id = $this->input->post('cod_id');
         $remarks_for_other_quantity = $this->input->post('remarks_for_other_quantity');
         $this->db->select('customer_order.co_no,customer_order.co_date,customer_order_dtl.co_id,customer_order_dtl.am_id,customer_order_dtl.fc_id,customer_order_dtl.lc_id,customer_order_dtl.cod_id, customer_order_dtl.co_quantity,customer_order_dtl.co_price,customer_order_dtl.co_buy_reference,customer_order_dtl.co_remarks, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, article_master.art_no, article_master.alt_art_no');
-            $this->db->join('customer_order', 'customer_order.co_id = customer_order_dtl.co_id', 'left');
-            $this->db->join('article_master', 'article_master.am_id = customer_order_dtl.am_id', 'left');
-            $this->db->join('colors c1', 'c1.c_id = customer_order_dtl.fc_id', 'left');
-            $this->db->join('colors c2', 'c2.c_id = customer_order_dtl.lc_id', 'left');
-            $rs = $this->db->get_where('customer_order_dtl', array('customer_order_dtl.cod_id' => $cod_id))->row();
-            //print_r($rs); die();
-            
-                $cod_id = 0;
-                $am_id = 0;
-                $co_quantity = 0;
-                $checked_quantity = 0;
-                $remaining_finishing_quantity = 0;
-                
-                $cod_id = $rs->cod_id;
-                $am_id = $rs->am_id;
-                $co_quantity = $rs->co_quantity;
-                
-                
-                if($remarks_for_other_quantity == 'CHECKING') {
-                $checked_quantity = $this->db->select_sum('checked_quantity')->get_where('finishing_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->checked_quantity;
-                } else {
-                $checked_quantity = $this->db->select_sum('rejection_quantity')->get_where('finishing_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->rejection_quantity;    
-                }
-                 
-                 
-                $remaining_finishing_quantity = ($co_quantity - $checked_quantity);
-                
-                
-                
-                $rs->checked_quantity = $checked_quantity;
-                $rs->remaining_finishing_quantity = $remaining_finishing_quantity;
-            
-            //echo json_encode($rs);
-            return $rs;
+        $this->db->join('customer_order', 'customer_order.co_id = customer_order_dtl.co_id', 'left');
+        $this->db->join('article_master', 'article_master.am_id = customer_order_dtl.am_id', 'left');
+        $this->db->join('colors c1', 'c1.c_id = customer_order_dtl.fc_id', 'left');
+        $this->db->join('colors c2', 'c2.c_id = customer_order_dtl.lc_id', 'left');
+        $rs = $this->db->get_where('customer_order_dtl', array('customer_order_dtl.cod_id' => $cod_id))->row();
+        //print_r($rs); die();
+        
+        $cod_id = 0;
+        $am_id = 0;
+        $co_quantity = 0;
+        $checked_quantity = 0;
+        $remaining_finishing_quantity = 0;
+        
+        $cod_id = $rs->cod_id;
+        $am_id = $rs->am_id;
+        $co_quantity = $rs->co_quantity;
+                    
+        if($remarks_for_other_quantity == 'OTHERS') { 
+            $checked_quantity = $this->db
+                ->select_sum('rejection_quantity')
+                ->get_where('finishing_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))
+                ->result()[0]->rejection_quantity;  
+        } else {
+            $checked_quantity = $this->db
+                ->select_sum('checked_quantity')
+                ->get_where('finishing_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))
+                ->result()[0]->checked_quantity;   
+        }
+
+        // ECHO $this->db->last_query();  die;
+
+        $remaining_finishing_quantity = ($co_quantity - $checked_quantity);
+        $rs->checked_quantity = $checked_quantity;
+        $rs->remaining_finishing_quantity = $remaining_finishing_quantity;
+        
+        //echo json_encode($rs);
+        return $rs;
     }
 
     public function ajax_finishing_list_details_table_data() {

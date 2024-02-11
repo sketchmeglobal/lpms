@@ -19,8 +19,8 @@
     <link href="<?=base_url();?>assets/admin_panel/css/select2.css" rel="stylesheet">
     <link href="<?=base_url();?>assets/admin_panel/css/select2-bootstrap.css" rel="stylesheet">
 <style>
-    .link { border: 1px solid #cac8c8; padding: 1rem; background: #5ebacf;margin-right: 10px;}
-    .link a{color: #000;font-size: 16px;} 
+    .link { border: 1px solid #cac8c8; padding: 1rem; background: #5ebacf;color: #000;}
+    .link a,.link:hover{color:#000}
 </style>
 </head>
 
@@ -56,49 +56,55 @@
             <div class="row">
                 <div class="panel">
                     <?php if($segment == 'master'){ ?>
-                    <div class="panel-heading">
-                        Master Related Reports
-                        <span class="tools pull-right">
-                            <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
-                        </span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/report-item"><i class="fa fa-caret-right"></i> Item Information                             </a>
+                        <div class="panel-heading">
+                            Master Related Reports
+                            <span class="tools pull-right">
+                                <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
+                            </span>
                         </div>
+                        <div class="panel-body">
+                            <div class="col-lg-3 link">
+                                <a target="_new" href="<?=base_url();?>admin/report-item"><i class="fa fa-caret-right"></i> Item Information                             </a>
+                            </div>
 
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/report-article-costing-details"><i class="fa fa-caret-right"></i>  Article Costing  </a>
-                        </div>
+                            <div class="col-lg-3 link">
+                                <a target="_new" href="<?=base_url();?>admin/report-article-costing-details"><i class="fa fa-caret-right"></i>  Article Costing  </a>
+                            </div>
 
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/article-master-report"><i class="fa fa-caret-right"></i> Article Rate Report</a>
+                            <div class="col-lg-3 link">
+                                <a target="_new" href="<?=base_url();?>admin/article-master-report"><i class="fa fa-caret-right"></i> Article Rate Report</a>
+                            </div>
                         </div>
-                    </div>
                     <?php } else if($segment == 'order'){ ?>
-                    <div class="panel-heading">
-                        Customer Order Related Reports
-                        <span class="tools pull-right">
-                            <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
-                        </span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/report-order-status"><i class="fa fa-caret-right"></i> Order Status </a>
+                        <div class="panel-heading">
+                            Customer Order Related Reports
+                            <span class="tools pull-right">
+                                <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
+                            </span>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/purchase-order-audit-report"><i class="fa fa-caret-right"></i> Item Purchase Details </a>
+                        <div class="panel-body">
+                            <div class="col-lg-3 link" style="margin:0">
+                                <a target="_new" href="<?=base_url();?>admin/report-order-status"><i class="fa fa-caret-right"></i> Order Status </a>
+                            </div>
+                            <div class="col-lg-3 link" style="margin:0">
+                                <a target="_new" href="<?=base_url();?>admin/purchase-order-audit-report"><i class="fa fa-caret-right"></i> Item Purchase Details </a>
+                            </div>
+                            <div class="col-lg-3 link" style="margin:0">
+                                <a target="_new" href="<?=base_url();?>admin/monthly-production-status"><i class="fa fa-caret-right"></i>Buyer Wise Shipment Report </a>
+                            </div>
+                            <div class="col-lg-3 link" style="margin:0">
+                                <a target="_new" href="<?=base_url();?>admin/report-buyer-wise-article"><i class="fa fa-caret-right"></i> Buyer Wise Article </a>
+                            </div>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/monthly-production-status"><i class="fa fa-caret-right"></i>Buyer Wise Shipment Report </a>
+                        <hr>
+                        <div class="panel-body">
+                            <div class="col-lg-3 link" style="margin:0">
+                                <a target="_new" href="<?=base_url();?>admin/outstanding-report"><i class="fa fa-caret-right"></i>Outstanding Report </a>
+                            </div>
+                            <div class="col-lg-3 link" style="margin:0">
+                                <a target="_new" href="<?=base_url();?>admin/most-ordered-article"><i class="fa fa-caret-right"></i>Most Ordered Article </a>
+                            </div>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/report-buyer-wise-article"><i class="fa fa-caret-right"></i> Buyer Wise Article </a>
-                        </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/outstanding-report"><i class="fa fa-caret-right"></i>Outstanding Report </a>
-                        </div>
-                    </div>
                     <?php } else if($segment == 'production'){ ?>
                     <div class="panel-heading">
                         Production Related Reports
@@ -107,32 +113,35 @@
                         </span>
                     </div>
                     <div class="panel-body">
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/report-shipment-buyerwise-status"><i class="fa fa-caret-right"></i>  Shipment Report  </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/report-shipment-buyerwise-status"><i class="fa fa-caret-right"></i>  Shipment Report  </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/report-shipment-status"><i class="fa fa-caret-right"></i> Shipment Status Details </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/report-shipment-status"><i class="fa fa-caret-right"></i> Shipment Status Details </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/jobber-ledger"><i class="fa fa-caret-right"></i> Jobber Ledger </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/jobber-ledger"><i class="fa fa-caret-right"></i> Jobber Ledger </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/checking-summary-status"><i class="fa fa-caret-right"></i> Checking Summary </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/checking-summary-status"><i class="fa fa-caret-right"></i> Checking Summary </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/jobber-bill-summary"><i class="fa fa-caret-right"></i>Jobber Bill Summary </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/jobber-bill-summary"><i class="fa fa-caret-right"></i>Jobber Bill Summary </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/cutter-bill-summary"><i class="fa fa-caret-right"></i>Cutter Bill Summary </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/cutter-bill-summary"><i class="fa fa-caret-right"></i>Cutter Bill Summary </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/production-register"><i class="fa fa-caret-right"></i>Production Register </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/production-register"><i class="fa fa-caret-right"></i>Production Register </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/checking-overtime-reports"><i class="fa fa-caret-right"></i>Checking Details Reports </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/checking-overtime-reports"><i class="fa fa-caret-right"></i>Checking Details Reports </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
-                            <a target="_new" href="<?=base_url();?>admin/checking-entry-sheet"><i class="fa fa-caret-right"></i> Checking Entry Sheet </a>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/checking-entry-sheet"><i class="fa fa-caret-right"></i> Checking Entry Sheet </a>
+                        </div>
+                        <div class="col-lg-3" style="margin-top:5px">
+                            <a style="display:block;margin:auto" class="col-sm-11 link" target="_new" href="<?=base_url();?>admin/reports-inking-summary"><i class="fa fa-caret-right"></i> Inking Summary </a>
                         </div>
                     </div>
                     <?php } else if($segment == 'stock'){ ?>
@@ -143,34 +152,34 @@
                         </span>
                     </div>
                     <div class="panel-body">
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/purchase-order-audit-report"><i class="fa fa-caret-right"></i> Item Purchase Details </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/report-material-status-details"><i class="fa fa-caret-right"></i> Material Issue Status </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/report-leather-status"><i class="fa fa-caret-right"></i> Leather Status </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/report-item-status"><i class="fa fa-caret-right"></i> Item Status </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/stock-summary-details"><i class="fa fa-caret-right"></i> Stock Summary </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/stock-detail-ledger"><i class="fa fa-caret-right"></i> Stock Detail Ledger </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/supplier-wise-item-position"><i class="fa fa-caret-right"></i> Supplier Wise Item Position </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/supplier-purchase-ledger"><i class="fa fa-caret-right"></i> Supplier Purchase Ledger </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/supplier-wise-purchase-position"><i class="fa fa-caret-right"></i>Supplier Wise Purchase Position </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/group-stock-summary"><i class="fa fa-caret-right"></i>Group Stock Summary </a>
                         </div>
                     </div>
@@ -182,13 +191,13 @@
                         </span>
                     </div>
                     <div class="panel-body">
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/payroll-reports"><i class="fa fa-caret-right"></i>Payroll Reports </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/invoice-hsn-summary"><i class="fa fa-caret-right"></i>HSN Summary (Invoice) </a>
                         </div>
-                        <div class="col-sm-3 col-xs-6 link">
+                        <div class="col-lg-3 link">
                             <a target="_new" href="<?=base_url();?>admin/invoice-sales-reconcilation"><i class="fa fa-caret-right"></i>Sales Reconcilation</a>
                         </div>
                     </div>

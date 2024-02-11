@@ -73,6 +73,39 @@ class Report_order_status_m extends CI_Model {
         $data['segment'] = $uri;
         return array('page'=>'reports/report_list', 'data'=>$data);
     }
+
+    public function most_ordered_article(){
+
+        $session_user_id = $this->session->user_id;
+            # if id is returned then filter else show all
+        $module_permission = $this->_dept_wise_module_permission(15, $session_user_id); #15 = customer order 
+        
+        if($module_permission == 'show'){
+            $data['article_ids'] = $this->db
+                ->select('article_groups.group_name,article_master.art_no,alt_art_no,SUM(customer_order_dtl.co_quantity) as co_quantity')
+                ->join('article_master','article_master.am_id = customer_order_dtl.am_id','left')
+                ->join('article_groups','article_groups.ag_id=article_master.ag_id','left')
+                ->order_by('co_quantity desc, art_no asc')
+                ->group_by('customer_order_dtl.am_id')
+                ->get_where('customer_order_dtl', array('customer_order_dtl.status' => 1))
+                ->result();  
+        }else{
+            $data['article_ids'] = $this->db
+                ->select('article_groups.group_name,article_master.art_no,alt_art_no,SUM(customer_order_dtl.co_quantity) as co_quantity')
+                ->join('article_master','article_master.am_id = customer_order_dtl.am_id','left')
+                ->join('article_groups','article_groups.ag_id=article_master.ag_id','left')
+                ->join('user_details','user_details.user_id = customer_order_dtl.user_id','left')
+                ->order_by('co_quantity','desc')
+                ->group_by('customer_order_dtl.am_id')
+                ->get_where('customer_order_dtl', array('customer_order_dtl.status' => 1, 'user_details.user_dept' => $module_permission))
+                ->result();
+        }
+
+        // echo '<pre>';print_r($data);'</pre>';
+        
+        return array('page'=>'reports/most_ordered_article', 'data'=>$data);
+
+    }
     public function report_order_status() {
         $session_user_id = $this->session->user_id;
             # if id is returned then filter else show all
@@ -422,6 +455,16 @@ class Report_order_status_m extends CI_Model {
 
             $data['result'] = $this->_custom_order_summary_on_co_id($cos);
             $data['segment'] = 'order_summary';
+
+            return array('page'=>'reports/common_print_v','data'=>$data);
+        }
+
+        if($this->input->post('submit') == 'bill_summary'){
+            // echo '<h1>DEVELOPMENT GOING ON</h1>';
+            $cos = implode (",", $this->input->post('customer_order'));
+
+            $data['result'] = $this->_custom_order_summary_on_co_id($cos);
+            $data['segment'] = 'bill_summary';
 
             return array('page'=>'reports/common_print_v','data'=>$data);
         }
@@ -5800,9 +5843,9 @@ EOD;
             
             $new_iter = implode(",", $it_arr);
             
-            $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
-                            employees.hra_amount AS HRA1,employees.convenience AS CONV1,employees.medical_allowance AS MA1,employees.special_allowance AS OA1,
-                    CAST((employees.basic_pay+employees.da_amout+employees.hra_amount+employees.convenience+employees.medical_allowance+employees.special_allowance) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
+            $sql="SELECT employees.e_id,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,
+                    salary.MASTER_BASIC AS BASIC1,salary.MASTER_DA AS DA1,salary.MASTER_HRA AS HRA1,salary.MASTER_CONV AS CONV1,salary.MASTER_MED AS MA1,salary.MASTER_OA AS OA1,CAST((salary.MASTER_BASIC+salary.MASTER_DA+salary.MASTER_HRA+salary.MASTER_CONV+salary.MASTER_MED+salary.MASTER_OA) AS DECIMAL(11,2)) AS TOTAL1,
+                    salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
                     salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET
                     FROM salary
                     INNER JOIN(employees)
@@ -6159,27 +6202,27 @@ EOD;
         
         if($user_id == 13) {
         
-        $sql="SELECT employees.name,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
-                employees.hra_amount AS HRA1,employees.convenience AS CONV1,employees.medical_allowance AS MA1,employees.special_allowance AS OA1,
-    CAST((employees.basic_pay+employees.da_amout+employees.hra_amount+employees.convenience+employees.medical_allowance+employees.special_allowance) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
-    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET,salary.MON,employees.e_id,employees.d_id, employees.basic_pay
-        FROM salary
-        INNER JOIN(employees)
-        ON(salary.EMPCODE=employees.e_id)
-        WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN('".$i_a."')
-        ORDER BY employees.name";
+            $sql="SELECT employees.name,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,
+            salary.MASTER_BASIC AS BASIC1,salary.MASTER_DA AS DA1,salary.MASTER_HRA AS HRA1,salary.MASTER_CONV AS CONV1,salary.MASTER_MED AS MA1,salary.MASTER_OA AS OA1,CAST((salary.MASTER_BASIC+salary.MASTER_DA+salary.MASTER_HRA+salary.MASTER_CONV+salary.MASTER_MED+salary.MASTER_OA) AS DECIMAL(11,2)) AS TOTAL1,
+            salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
+            salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET,salary.MON,employees.e_id,employees.d_id, employees.basic_pay
+            FROM salary
+            INNER JOIN(employees)
+            ON(salary.EMPCODE=employees.e_id)
+            WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN('".$i_a."')
+            ORDER BY employees.name";
         
         } else {
             
-        $sql="SELECT employees.name,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,employees.basic_pay AS BASIC1,employees.da_amout AS DA1,
-                employees.hra_amount AS HRA1,employees.convenience AS CONV1,employees.medical_allowance AS MA1,employees.special_allowance AS OA1,
-    CAST((employees.basic_pay+employees.da_amout+employees.hra_amount+employees.convenience+employees.medical_allowance+employees.special_allowance) AS DECIMAL(11,2)) AS TOTAL1,salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
-    salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET,salary.MON,employees.e_id,employees.d_id, employees.basic_pay
-        FROM salary
-        INNER JOIN(employees)
-        ON(salary.EMPCODE=employees.e_id)
-        WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN('".$i_a."') AND employees.user_id  != '13'
-        ORDER BY employees.name";    
+            $sql="SELECT employees.name,salary.T1,salary.T2,salary.T3,(salary.T4+salary.T5+salary.T6) AS T,salary.T7,
+            salary.MASTER_BASIC AS BASIC1,salary.MASTER_DA AS DA1,salary.MASTER_HRA AS HRA1,salary.MASTER_CONV AS CONV1,salary.MASTER_MED AS MA1,salary.MASTER_OA AS OA1,CAST((salary.MASTER_BASIC+salary.MASTER_DA+salary.MASTER_HRA+salary.MASTER_CONV+salary.MASTER_MED+salary.MASTER_OA) AS DECIMAL(11,2)) AS TOTAL1,
+            salary.BASIC AS BASIC2,salary.DA AS DA2,CAST((salary.BASIC+salary.DA) AS DECIMAL(11,2)) AS TOTAL2,
+            salary.HRA,salary.CONV,salary.MED,salary.OA,salary.GROSS,salary.PFAMT,salary.ESIAMT,salary.TAX,salary.INS,salary.LOAN,salary.DEDUC,salary.NET,salary.MON,employees.e_id,employees.d_id, employees.basic_pay
+            FROM salary
+            INNER JOIN(employees)
+            ON(salary.EMPCODE=employees.e_id)
+            WHERE salary.MON LIKE '".$mon."%' AND employees.e_id IN('".$i_a."') AND employees.user_id  != '13'
+            ORDER BY employees.name";    
             
         }
 
@@ -6678,6 +6721,7 @@ EOD;
                     `article_master`.`remark` AS hsn_code,    
                     `office_invoice`.`office_invoice_number`,
                     `office_invoice`.`ex_rate`,
+                    `office_invoice`.`realisation_ex_rate`,
                     DATE_FORMAT(
                         office_invoice.office_invoice_date,
                         '%d-%m-%Y'
@@ -6686,7 +6730,8 @@ EOD;
                     `office_invoice_detail`.`rate_inr`,
                     `office_invoice_detail`.`rate_foreign`,
                     `office_invoice_detail`.`quantity`,
-                    SUM(`office_invoice_detail`.`amount_inr`) as sum_amount_inr
+                    SUM(`office_invoice_detail`.`amount_inr`) as sum_amount_inr,
+                    SUM(`office_invoice_detail`.`amount` * `office_invoice`.`realisation_ex_rate`) as sum_amount_realisation
                 FROM
                     `office_invoice_detail`
                 LEFT JOIN `office_invoice` ON `office_invoice`.`office_invoice_id` = `office_invoice_detail`.`office_invoice_id`
@@ -6728,12 +6773,41 @@ EOD;
         $data['invoice_sales_reconcilation'] = $this->db
             ->join('currencies','currencies.cur_id=office_invoice.cur_id','left')
             ->order_by('office_invoice_number')
-            ->where('office_invoice_date >', $fromdate)
-            ->where('office_invoice_date <', $todate)
+            ->where('office_invoice_date >=', $fromdate)
+            ->where('office_invoice_date <=', $todate)
             ->get_where('office_invoice',array('office_invoice.status' => 1))
             ->result();
         return array('page'=>'reports/invoice_sales_reconcilation', 'data'=>$data);
 
+    }
+
+    public function report_inking_summary(){
+        
+        if($this->input->post()){
+            if($this->input->post('from_date') == '' or $this->input->post('to_date') == ''){
+                $fromdate = YEAR_START_DATE;
+                $todate = YEAR_END_DATE;
+            }else{
+                $fromdate = $this->input->post('from_date');
+                $todate = $this->input->post('to_date');
+            }
+            $data['inking_report'] = $this->db
+                ->select('employees.e_id,employees.e_code, employees.name, inking.inking_entry_date,inking_details.*, customer_order.co_no, article_master.art_no, colors.color')
+                ->join('inking','inking.e_id = employees.e_id','left')
+                ->join('inking_details','inking_details.inking_id = inking.inking_id','left')
+                ->join('customer_order','customer_order.co_id = inking_details.co_id','left')
+                ->join('article_master','article_master.am_id = inking_details.am_id','left')
+                ->join('colors','colors.c_id = inking_details.lc_id','left')
+                ->order_by('employees.e_id,inking_entry_date')
+                ->where('inking_entry_date >=', $fromdate)
+                ->where('inking_entry_date <=', $todate)
+                ->get_where('employees', array('employees.status' => 1))->result();
+            
+            // echo $this->db->last_query();echo '<pre>';print_r($data);'</pre>';die;
+        }
+
+        $data['fetch_all_employee'] = $this->db->get_where('employees', array('employees.status' => 1))->result();
+        return array('page'=>'reports/report_inking_summary', 'data'=>$data);
     }
 
     // public function article_master_report($mon,$pos) {

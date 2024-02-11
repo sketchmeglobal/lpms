@@ -66,7 +66,7 @@
             .height_119{ height: 119px; }
 
             .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th { border: 1px solid #000!important;  text-align: center;}
-            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 3px; text-align: left; font-size: 13px}
+            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 3px; text-align: left; font-size: 12px}
 
             .border-bottom{border-bottom:  1px solid #000}
 
@@ -74,7 +74,7 @@
 
             @media print{
                 .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th { border: 1px solid #000;  text-align: center;}
-                .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 5px; text-align: left; font-size: 13px}
+                .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 5px; text-align: left; font-size: 12px}
                 .col-sm-6{ width: 50%!important;float:left; }.col-sm-5 { width: 41.66666667%;float:left; }.col-sm-7 { width: 58.33333333%;float:left; }
                 .border-bottom{border-bottom:  1px solid #000}
                 .no-print {display: none;}
@@ -127,11 +127,11 @@
                     <?php foreach($invoice_sales_reconcilation as $isr): ?>
                         <tr>
                             <td><?=$iter++?></td>
-                            <td style="text-align: center"><?=$isr->office_invoice_number?></td>
+                            <td style="text-align: center!important"><?=$isr->office_invoice_number?></td>
                             <td nowrap><?=date('d-m-Y', strtotime($isr->office_invoice_date))?></td>
                             <td><?php $total_net_qnty+=$isr->net_quantity; echo $isr->net_quantity?></td>
                             <td><?php $total_net_amnt += $isr->net_amount; echo $isr->net_amount?></td>
-                            <td style="text-align: center"><?=$isr->currency . ' ('. $isr->currency_sign .')'?></td>
+                            <td style="text-align: center!important"><?=$isr->currency . ' ('. $isr->currency_sign .')'?></td>
                             <td><?=$isr->ex_rate?></td>
                             <td><?php $total_net_amount_inr+=$isr->net_amount_inr; echo $isr->net_amount_inr?></td>
                             <td style="text-align: center">
@@ -141,15 +141,15 @@
                                     echo number_format($isr->net_amount_inr * ($isr->discount/100), 2) .'<br> at ('.$isr->discount . '%)';
                                 ?>
                             </td>
-                            <td><?php $val10 += ($isr->hand_charge * $isr->ex_rate); echo $isr->hand_charge * $isr->ex_rate?></td>
+                            <td><?php $val10 += ($isr->hand_charge * $isr->ex_rate); echo number_format(($isr->hand_charge * $isr->ex_rate), 2)?></td>
                             <td><?php $val11 += $isr->realisation_ex_rate; echo $isr->realisation_ex_rate?></td>
                             
-                            <td><?php $val12 += ($isr->net_amount * $isr->realisation_ex_rate); echo ($isr->net_amount * $isr->realisation_ex_rate)?></td>
-                            <td><?php $val13 += ($isr->net_amount * $isr->realisation_ex_rate)*($isr->discount/100); echo ($isr->net_amount * $isr->realisation_ex_rate)*($isr->discount/100)?></td>
-                            <td><?php $val14 += ($isr->hand_charge * $isr->realisation_ex_rate); echo ($isr->hand_charge * $isr->realisation_ex_rate)?></td>
+                            <td><?php $val12 += ($isr->net_amount * $isr->realisation_ex_rate); echo number_format(($isr->net_amount * $isr->realisation_ex_rate),2)?></td>
+                            <td><?php $val13 += ($isr->net_amount * $isr->realisation_ex_rate)*($isr->discount/100); echo number_format(($isr->net_amount * $isr->realisation_ex_rate)*($isr->discount/100),2)?></td>
+                            <td><?php $val14 += ($isr->hand_charge * $isr->realisation_ex_rate); echo number_format(($isr->hand_charge * $isr->realisation_ex_rate), 2)?></td>
 
                             <td><?php $val15 += ($isr->net_amount_inr  - $discounted) + ($isr->hand_charge * $isr->ex_rate); echo number_format(($isr->net_amount_inr  - $discounted) + ($isr->hand_charge * $isr->ex_rate),2)?></td>
-                            <td><?php $val16 += (($isr->net_amount * $isr->realisation_ex_rate) - ($isr->net_amount * $isr->realisation_ex_rate)*($isr->discount/100)) + ($isr->hand_charge * $isr->realisation_ex_rate); echo number_format(($val12 - $val13)+$val14, 2)?></td>
+                            <td><?php $val16 += (($isr->net_amount * $isr->realisation_ex_rate) - ($isr->net_amount * $isr->realisation_ex_rate)*($isr->discount/100)) + ($isr->hand_charge * $isr->realisation_ex_rate); echo number_format((($isr->net_amount * $isr->realisation_ex_rate) - ($isr->net_amount * $isr->realisation_ex_rate)*($isr->discount/100)) + ($isr->hand_charge * $isr->realisation_ex_rate), 2)?></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -161,14 +161,14 @@
                         <th></th>
                         <th></th>
                         <th><?=$total_net_amount_inr?></th>
-                        <th><?=$total_discounted?></th>
+                        <th><?=number_format($total_discounted, 2)?></th>
                         <th><?=$val10?></th>
-                        <th><?=$val11?></th>
-                        <th><?=$val12?></th>
-                        <th><?=$val13?></th>
-                        <th><?=$val14?></th>
-                        <th><?=$val15?></th>
-                        <th><?=$val16?></th>
+                        <th></th>
+                        <th><?=number_format($val12, 2)?></th>
+                        <th><?=number_format($val13, 2)?></th>
+                        <th><?=number_format($val14, 2)?></th>
+                        <th><?=number_format($val15, 2)?></th>
+                        <th><?=number_format($val16, 2)?></th>
                     </tr>
                 </tfoot>
             </table>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Finishing List Edit | <?=WEBSITE_NAME;?></title>
+    <title>Inking List Edit | <?=WEBSITE_NAME;?></title>
     <meta name="description" content="edit Purchase Order">
 
      <!--Data Table-->
@@ -55,11 +55,11 @@
 
         <!-- page head start-->
         <div class="page-head">
-            <h3 class="m-b-less">Finishing List Edit</h3>
+            <h3 class="m-b-less">Inking List Edit</h3>
             <div class="state-information">
                 <ol class="breadcrumb m-b-less bg-less">
                     <li><a href="<?=base_url('admin/dashboard');?>">Home</a></li>
-                    <li class="active"> Finishing List Edit</li>
+                    <li class="active"> Inking List Edit</li>
                 </ol>
             </div>
         </div>
@@ -73,14 +73,14 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Edit: <?= $finishing_details[0]->employees_name ?>
+                            Edit: <?= $inking_details[0]->employees_name ?>
                             <span class="tools pull-right">
                                 <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
                             </span>
                         </header>
                         <div class="panel-body">
                             <?php #print_r($purchase_order_details); die;?>
-                            <form id="form_finishing_list_edit" method="post" action="<?=base_url('admin/form-finishing-list-edit')?>" class="cmxform form-horizontal tasi-form">
+                            <form id="form_inking_list_edit" method="post" action="<?=base_url('admin/form-inking-list-edit')?>" class="cmxform form-horizontal tasi-form">
                             
                                 <div class="form-group ">
                                     <div class="col-lg-3">
@@ -91,31 +91,31 @@
                                             foreach($employee_details as $emp_detail){
                                                 $sn = ($emp_detail->e_code == '' ? '-' : $emp_detail->e_code);
                                             ?> 
-                                                <option value="<?= $emp_detail->e_id ?>" short_name="<?=$emp_detail->name?>" e_code="<?=$emp_detail->e_code?>" <?php if($emp_detail->e_id == $finishing_details[0]->e_id){?> selected <?php } ?> ><?= $emp_detail->name . ' ['. $sn .']' ?></option>
+                                                <option value="<?= $emp_detail->e_id ?>" short_name="<?=$emp_detail->name?>" e_code="<?=$emp_detail->e_code?>" <?php if($emp_detail->e_id == $inking_details[0]->e_id){?> selected <?php } ?> ><?= $emp_detail->name . ' ['. $sn .']' ?></option>
                                                 <?php
                                             }
                                             ?>
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
-                                        <label for="finishing_start_date_time" class="control-label text-danger">Entry Date *</label>
-                                        <input id="finishing_start_date_time" name="finishing_start_date_time" type="date" placeholder="Start Date Time" class="form-control round-input" value="<?= date('Y-m-d', strtotime($finishing_details[0]->finishing_entry_date)) ?>" />
+                                        <label for="inking_start_date_time" class="control-label text-danger">Entry Date *</label>
+                                        <input id="inking_start_date_time" name="inking_start_date_time" type="date" placeholder="Start Date Time" class="form-control round-input" value="<?= date('Y-m-d', strtotime($inking_details[0]->inking_entry_date)) ?>" />
                                     </div>
                                     <div class="col-lg-2">
                                         <label for="extra_time" class="control-label text-danger">Extra Time</label>
-                                        <input type="number" id="extra_time" name="extra_time" value="<?= $finishing_details[0]->extra_time ?>" class="form-control" />
+                                        <input type="number" id="extra_time" name="extra_time" value="<?= $inking_details[0]->extra_time ?>" class="form-control" />
                                     </div>
                                 </div>
                                                                
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-3">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update Finishing</i></button>
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-refresh"> Update Inking</i></button>
                                     </div>
                                     <!--<div class="col-sm-3">
                                         <button id="print_all" type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
                                     </div>-->
                                 </div> 
-                                <input type="hidden" id="finishing_id" name="finishing_id" class="hidden" value="<?= $finishing_details[0]->finishing_id ?>" />
+                                <input type="hidden" id="inking_id" name="inking_id" class="hidden" value="<?= $inking_details[0]->inking_id ?>" />
                             </form>
                         </div>
                     </section>
@@ -144,7 +144,7 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Add Finishing details for: <?= $finishing_details[0]->employees_name ?>
+                            Add Inking details for: <?= $inking_details[0]->employees_name ?>
                             <span class="tools pull-right">
                                 <a class="t-collapse fa fa-chevron-down" href="javascript:;"></a>
                             </span>
@@ -160,14 +160,14 @@
                             <div class="tab-content">
                                 <img id="pod_edit_loader" class="hidden" style="display:block; margin: auto" src="<?= base_url('assets/img/ellipsis.gif') ?>" alt="" />
                                 <div id="cut_issue_challan_list" class="tab-pane fade in active">
-                                    <table id="finishing_list_details_table" class="table data-table dataTable">
+                                    <table id="inking_list_details_table" class="table data-table dataTable">
                                         <thead>
                                             <tr>
-                                                <th>Finishing Type</th>
+                                                <th>Inking Type</th>
+                                                <th>Inking Category</th>
                                                 <th>Order Number</th>
                                                 <th>Article Number</th>
                                                 <th>Leather Colour</th>
-                                                <th>Fitting Colour</th>
                                                 <th>Chkd Qnty</th>
                                                 <th>Othr Qnty</th>
                                                 <th>Remarks</th>
@@ -183,7 +183,7 @@
                                 <div id="cut_issue_challan_add" class="tab-pane fade">
                                     <br/>
                                     <div class="form">
-                                        <form id="form_add_finishing_list_details" method="post" action="<?=base_url('admin/form-add-finishing-listn-details')?>" class="cmxform form-horizontal tasi-form">
+                                        <form id="form_add_inking_list_details" method="post" action="<?=base_url('admin/form-add-inking-listn-details')?>" class="cmxform form-horizontal tasi-form">
                                             <div class="form-group ">
                                                 <div class="row">
                                                     <div class="col-lg-3">
@@ -205,46 +205,57 @@
                                                             <option value="">Select Article Number</option>
                                                             
                                                         </select>
+                                                        <span class="text-primary" id="art_co_qnty"></span>
                                                     </div>
                                                     <input type="hidden" id="new_am_id_add_hidden" name="new_am_id_add_hidden" class="form-control" value="" />
                                                     <div class="col-lg-3">
-                                                        <label for="remarks_for_other_quantity" class="control-label text-danger">Finishing Type</label>
+                                                        <label for="remarks_for_other_quantity" class="control-label text-danger">Inking Type</label>
                                                         <select id="remarks_for_other_quantity" name="remarks_for_other_quantity" class="form-control select2">
-                                                            <option value="TIPPING">TIPPING</option>
-                                                            <option value="COLOUR SPRAY">COLOUR SPRAY</option>
-                                                            <option value="WAX SPRAY">WAX SPRAY</option>
-                                                            <option value="IRON">IRON</option>
-                                                            <option value="CLEANING">CLEANING</option>
+                                                            <option value="EDGE INKING">EDGE INKING</option>
+                                                            <option value="BUFFING">BUFFING</option>
                                                             <option value="OTHERS">OTHERS</option>
                                                         </select>
                                                     </div>
+                                                    <div class="col-lg-3">
+                                                        <label for="inking_category" class="control-label text-danger">Inking Category</label>
+                                                        <select id="inking_category" name="inking_category" class="form-control select2">
+                                                            <option value="FINISHED GOODS">FINISHED GOODS</option>
+                                                            <option value="PARTS">PARTS</option>
+                                                            <option value="HANDLE(s)">HANDLE(s)</option>
+                                                        </select>
+                                                        <span id="inking_category_qnty" class="text-primary"></span>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
                                                     <div class="col-lg-3">
                                                         <label for="lc_id_text" class="control-label text-danger">Leather Colour</label>
                                                         <input type="text" id="lc_id_text" name="lc_id_text" required class="form-control" readonly />
                                                         <input type="hidden" id="lc_id" name="lc_id" required class="form-control" readonly />
                                                     </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
                                                     <div class="col-lg-3">
                                                         <label for="fc_id_text" class="control-label text-danger">Fitting Colour</label>
                                                         <input type="text" id="fc_id_text" name="fc_id_text" required class="form-control" readonly />
                                                         <input type="hidden" id="fc_id" name="fc_id" required class="form-control" readonly />
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <label for="checked_alter_add" class="control-label text-danger">Finishing Quantity</label>
+                                                        <label for="checked_quantity_add" class="control-label text-danger">Quantity</label>
                                                         <input type="text" id="checked_quantity_add" value="0" name="checked_quantity_add" required class="form-control" />
-                                                        
+                                                        <span id="checked_quantity_add_val" class="text-primary"></span>
+
                                                         <input type="hidden" id="cod_id_add_hidden" name="cod_id_add_hidden" required class="form-control" />
                                                         
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <label for="checked_quantity_add" class="control-label text-danger">Other Quantity</label>
+                                                        <label for="checked_alter_add" class="control-label text-danger">Other Quantity</label>
                                                         <input type="text" id="checked_alter_add" value="0" name="checked_alter_add" class="form-control" />
                                                         
-                                                        <input type="hidden" id="remaining_finishing_quantity_hidden" name="remaining_finishing_quantity_hidden" required class="form-control" />
+                                                        <input type="hidden" id="remaining_inking_quantity_hidden" name="remaining_inking_quantity_hidden" required class="form-control" />
                                                         <input type="hidden" id="cod_id_add_hidden" name="cod_id_add_hidden" required class="form-control" />
                                                     </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
                                                     <div class="col-lg-3">
                                                         <label for="remarks_add" class="control-label text-danger">Remarks</label>
                                                         <input type="text" id="remarks_add" name="remarks_add" class="form-control" />
@@ -258,7 +269,7 @@
                                                     <button class="btn btn-success" style="margin: auto; display:block;" type="submit"><i class="fa fa-plus"></i> Add details</button>
                                                 </div>
                                             </div>
-                                            <input type="text" name="finishing_id" id="finishing_id" class="hidden" value="<?= $finishing_details[0]->finishing_id ?>" />
+                                            <input type="text" name="inking_id" id="inking_id" class="hidden" value="<?= $inking_details[0]->inking_id ?>" />
                                         </form>
                                     </div>
                                 </div>
@@ -266,7 +277,7 @@
                                 <div id="cut_issue_receive_edit" class="tab-pane">
                                     <br/>
                                     <div class="form">
-                                    <form id="form_edit_finishing_list_details" method="post" action="<?=base_url('admin/form-edit-finishing-list-details')?>" class="cmxform form-horizontal tasi-form">
+                                    <form id="form_edit_inking_list_details" method="post" action="<?=base_url('admin/form-edit-inking-list-details')?>" class="cmxform form-horizontal tasi-form">
                                         <div class="form-group ">
                                             <div class="row">
                                                 <div class="col-lg-3">
@@ -290,24 +301,29 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    <label for="remarks_for_other_quantity_edit" class="control-label text-danger">Finishing Type</label>
+                                                    <label for="remarks_for_other_quantity_edit" class="control-label text-danger">Inking Type</label>
                                                     <select id="remarks_for_other_quantity_edit" name="remarks_for_other_quantity_edit" class="form-control select2">
-                                                        <option value="TIPPING">TIPPING</option>
-                                                        <option value="COLOUR SPRAY">COLOUR SPRAY</option>
-                                                        <option value="WAX SPRAY">WAX SPRAY</option>
-                                                        <option value="IRON">IRON</option>
-                                                        <option value="CLEANING">CLEANING</option>
+                                                        <option value="EDGE INKING">EDGE INKING</option>
+                                                        <option value="BUFFING">BUFFING</option>
                                                         <option value="OTHERS">OTHERS</option>
-                                                        </select>
+                                                    </select>
                                                 </div>
+                                                <div class="col-lg-3">
+                                                    <label for="inking_category" class="control-label text-danger">Inking Category</label>
+                                                    <select id="inking_category" name="inking_category" class="form-control select2">
+                                                        <option value="FINISHED GOODS">FINISHED GOODS</option>
+                                                        <option value="PARTS">PARTS</option>
+                                                        <option value="HANDLE(s)">HANDLE(s)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-lg-3">
                                                     <label for="lc_id_text_edit" class="control-label text-danger">Leather Colour</label>
                                                     <input type="text" id="lc_id_text_edit" name="lc_id_text_edit" required class="form-control" readonly />
                                                     <input type="hidden" id="lc_id_edit" name="lc_id_edit" required class="form-control" readonly />
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
                                                 <div class="col-lg-3">
                                                     <label for="fc_id_text_edit" class="control-label text-danger">Fitting Colour</label>
                                                     <input type="text" id="fc_id_text_edit" name="fc_id_text_edit" required class="form-control" readonly />
@@ -317,7 +333,7 @@
                                                     <label for="checked_quantity_edit" class="control-label text-danger">Checked Quantity</label>
                                                     <input type="text" id="checked_quantity_edit" name="checked_quantity_edit" required class="form-control" />
                                                     
-                                                    <input type="hidden" id="remaining_finishing_quantity_hidden_edit" name="remaining_finishing_quantity_hidden_edit" required class="form-control" />
+                                                    <input type="hidden" id="remaining_inking_quantity_hidden_edit" name="remaining_inking_quantity_hidden_edit" required class="form-control" />
                                                     <input type="hidden" id="cod_id_edit_hidden" name="cod_id_edit_hidden" required class="form-control" />
                                                 </div>
                                                 
@@ -325,7 +341,9 @@
                                                     <label for="checked_alter_edit" class="control-label text-danger">Other Quantity</label>
                                                     <input type="text" id="checked_alter_edit" value="0" name="checked_alter_edit" required class="form-control" />
                                                 </div>
-                                                
+                                            </div>
+                                            <hr>
+                                            <div class="row">
                                                 <div class="col-lg-3">
                                                     <label for="remarks_edit" class="control-label text-danger">Remarks</label>
                                                     <input type="text" id="remarks_edit" name="remarks_edit" class="form-control" />    
@@ -339,8 +357,8 @@
                                                 <button class="btn btn-success" style="margin: auto; display:block;" type="submit"><i class="fa fa-plus"></i> Edit details</button>
                                             </div>
                                         </div>
-                                        <input type="text" name="finishing_id" id="finishing_id" class="hidden" value="<?= $finishing_details[0]->finishing_id ?>" />
-                                        <input type="text" name="finishing_detail_id_edit" id="finishing_detail_id_edit" class="hidden" value="" />
+                                        <input type="text" name="inking_id" id="inking_id" class="hidden" value="<?= $inking_details[0]->inking_id ?>" />
+                                        <input type="text" name="inking_detail_id_edit" id="inking_detail_id_edit" class="hidden" value="" />
                                     </form>
                                     </div>
                                 </div>
@@ -427,29 +445,29 @@ $("#am_id").change(function(){
     });
 
     $(document).ready(function() {
-        $('#finishing_list_details_table').DataTable( {
+        $('#inking_list_details_table').DataTable( {
             "processing": true,
             "language": {
                 processing: '<img src="<?=base_url('assets/img/ellipsis.gif')?>"><span class="sr-only">Processing...</span>',
             },
             "serverSide": true,
             "ajax": {
-                "url": "<?=base_url('admin/ajax-finishing-list-details-table-data')?>",
+                "url": "<?=base_url('admin/ajax-inking-list-details-table-data')?>",
                 "type": "POST",
                 "dataType": "json",
                 data: {
-                    finishing_id: function () {
-                        return $("#finishing_id").val();
+                    inking_id: function () {
+                        return $("#inking_id").val();
                     },
                 },
             },
             //will get these values from JSON 'data' variable
             "columns": [
-                { "data": "finishing_type" },
+                { "data": "inking_type" },
+                { "data": "inking_category" },
                 { "data": "order_number" },
                 { "data": "article_number" },
                 { "data": "leather_colour" },
-                { "data": "fitting_colour" },
                 { "data": "quantity" },
                 { "data": "rejection_quantity" },
                 { "data": "remarks" },              
@@ -468,7 +486,7 @@ $("#am_id").change(function(){
         $co_id = $(this).val();
         
         $.ajax({
-            url: "<?= base_url('admin/get-customer-order-dtl-for-finishing') ?>",
+            url: "<?= base_url('admin/get-customer-order-dtl-for-inking') ?>",
             method: "post",
             dataType: 'json',
             data: {'co_id': $co_id},
@@ -480,7 +498,7 @@ $("#am_id").change(function(){
                 $("#am_id_add").html("");
                 $("#am_id_add").append('<option value="">Select Article Number</option>');
                 $.each($article_details, function(index, item) {
-                    $str = '<option value=' + item.cod_id + ' co_id=' + item.co_id + ' cod_id=' + item.cod_id +' fc_id='+item.fitting_id+' lc_id='+item.leather_id+' fitting_color='+item.fitting_color+' leather_color='+item.leather_color+' checked_quantity='+item.checked_quantity+' remaining_finishing_quantity='+item.remaining_finishing_quantity+'> '+ item.art_no + '['+ item.leather_color + ']</option>';
+                    $str = '<option value=' + item.cod_id + ' co_id=' + item.co_id + ' cod_id=' + item.cod_id +' fc_id='+item.fitting_id+' lc_id='+item.leather_id+' fitting_color='+item.fitting_color+' leather_color='+item.leather_color+' checked_quantity='+item.checked_quantity+' remaining_inking_quantity='+item.remaining_inking_quantity+'> '+ item.art_no + '['+ item.leather_color + ']</option>';
                     $("#am_id_add").append($str);
                 });
                 // open the challan list 
@@ -492,49 +510,21 @@ $("#am_id").change(function(){
         
     });//end function
     
-//  $("#co_id_edit").change(function(){
-//         $co_id_edit = $(this).val();
-        
-//      $.ajax({
-//          url: "<?= base_url('admin/get-customer-order-dtl-for-finishing') ?>",
-//          method: "post",
-//          dataType: 'json',
-//          data: {'co_id': $co_id_edit},
-//          success: function(result){
-//              console.log('Length:'+result.length);           
-//              console.log(JSON.stringify(result));
-//              $article_details = result;
-                
-//              $("#am_id_edit").html("");
-//              $("#am_id_edit").append('<option value="">Select Article Number</option>');
-//                 $.each($article_details, function(index, item) {
-//                     $str = '<option value=' + item.am_id + ' co_id=' + item.co_id + ' cod_id=' + item.cod_id +' fc_id='+item.fitting_id+' lc_id='+item.leather_id+' fitting_color='+item.fitting_color+' leather_color='+item.leather_color+' checked_quantity='+item.checked_quantity+' remaining_finishing_quantity='+item.remaining_finishing_quantity+'> '+ item.art_no + '['+ item.leather_color + ']</option>';
-//                     $("#am_id_edit").append($str);
-//                 });
-//                 // open the challan list 
-//                 // $('#am_id_edit').select2('open');
-                
-//          },
-//          error: function(e){console.log(e);}
-//      });
-        
-//     });//end function
-    
-    //Jobber 3
     
     $(document).on('change','#am_id_add',function(){
         $cod_id = $(this).val();
         $remarks_for_other_quantity = $("#remarks_for_other_quantity :selected").val();
+        $inking_category = $("#inking_category").val();
         // alert();
         
         $.ajax({
-            url: "<?= base_url('admin/get-customer-order-dtl-for-finishing-am-id') ?>",
+            url: "<?= base_url('admin/get-customer-order-dtl-for-inking-am-id') ?>",
             method: "post",
             dataType: 'json',
-            data: {'cod_id': $cod_id, 'remarks_for_other_quantity': $remarks_for_other_quantity},
+            data: {'cod_id': $cod_id, 'remarks_for_other_quantity': $remarks_for_other_quantity, 'inking_category': $inking_category},
             success: function(result){
-                // console.log('Length:'+result.length);            
-                // console.log(JSON.stringify(result));
+
+                console.log(result);
                 $article_details = result;
                 
                 $co_id = $article_details.co_id;
@@ -545,8 +535,12 @@ $("#am_id").change(function(){
                 $fitting_color = $article_details.fitting_color;
                 $leather_color = $article_details.leather_color;
                 $checked_quantity = $article_details.checked_quantity;
-                $remaining_finishing_quantity = $article_details.remaining_finishing_quantity;
+                $remaining_inking_quantity = $article_details.remaining_inking_quantity;
                 $cod_id_add_hidden = $article_details.cod_id;
+
+                $("#art_co_qnty").html("Customer Order Qnty: <b>"+ $article_details.co_quantity + "</b>")
+                $('select#inking_category option:eq(1)').attr('data-part', $article_details.no_of_part);
+                $('select#inking_category option:eq(2)').attr('data-handle', $article_details.no_of_handle);
                 
                 $('#lc_id_text').val($leather_color);
                 $('#lc_id').val($lc_id);
@@ -555,18 +549,18 @@ $("#am_id").change(function(){
 
                 if($remarks_for_other_quantity == 'OTHERS'){
                     $('#checked_quantity_add').val(0);
-                    $('#checked_alter_add').val($remaining_finishing_quantity);
+                    $('#checked_alter_add').val($remaining_inking_quantity);
                     $("#checked_quantity_add").prop("readonly", true);
                     $("#checked_alter_add").prop("readonly", false);
                 } 
                 else {
                     $('#checked_alter_add').val(0);
-                    $('#checked_quantity_add').val($remaining_finishing_quantity);
+                    $('#checked_quantity_add').val($remaining_inking_quantity);
                     $("#checked_quantity_add").prop("readonly", false);
                     $("#checked_alter_add").prop("readonly", true);
                 }
 
-                $('#remaining_finishing_quantity_hidden').val($remaining_finishing_quantity);
+                $('#remaining_inking_quantity_hidden').val($remaining_inking_quantity);
                 $('#cod_id_add_hidden').val($cod_id_add_hidden);
                 $('#new_am_id_add_hidden').val($article_details.am_id);
 
@@ -575,17 +569,20 @@ $("#am_id").change(function(){
         });
         
     });
+    
+    
     $("#remarks_for_other_quantity").change(function(){
         $cod_id = $("#am_id_add").val();
         $remarks_for_other_quantity = $("#remarks_for_other_quantity").val();
+        $inking_category = $("#inking_category").val();
         // alert();
         
         if($cod_id != '') {
         $.ajax({
-            url: "<?= base_url('admin/get-customer-order-dtl-for-finishing-am-id') ?>",
+            url: "<?= base_url('admin/get-customer-order-dtl-for-inking-am-id') ?>",
             method: "post",
             dataType: 'json',
-            data: {'cod_id': $cod_id, 'remarks_for_other_quantity': $remarks_for_other_quantity},
+            data: {'cod_id': $cod_id, 'remarks_for_other_quantity': $remarks_for_other_quantity, 'inking_category': $inking_category},
             success: function(result){
                 // console.log('Length:'+result.length);            
                 // console.log(JSON.stringify(result));
@@ -599,7 +596,7 @@ $("#am_id").change(function(){
                 $fitting_color = $article_details.fitting_color;
                 $leather_color = $article_details.leather_color;
                 $checked_quantity = $article_details.checked_quantity;
-                $remaining_finishing_quantity = $article_details.remaining_finishing_quantity;
+                $remaining_inking_quantity = $article_details.remaining_inking_quantity;
                 $cod_id_add_hidden = $article_details.cod_id;
         
                 $('#lc_id_text').val($leather_color);
@@ -609,17 +606,17 @@ $("#am_id").change(function(){
 
                 if($remarks_for_other_quantity == 'OTHERS'){
                     $('#checked_quantity_add').val(0);
-                    $('#checked_alter_add').val($remaining_finishing_quantity);
+                    $('#checked_alter_add').val($remaining_inking_quantity);
                     $("#checked_quantity_add").prop("readonly", true);
                     $("#checked_alter_add").prop("readonly", false);
                 } else {
                     $('#checked_alter_add').val(0);
-                    $('#checked_quantity_add').val($remaining_finishing_quantity);
+                    $('#checked_quantity_add').val($remaining_inking_quantity);
                     $("#checked_quantity_add").prop("readonly", false);
                     $("#checked_alter_add").prop("readonly", true);
                 }
                 
-                $('#remaining_finishing_quantity_hidden').val($remaining_finishing_quantity);
+                $('#remaining_inking_quantity_hidden').val($remaining_inking_quantity);
                 $('#cod_id_add_hidden').val($cod_id_add_hidden);
                 $('#new_am_id_add_hidden').val($article_details.am_id);
 
@@ -630,6 +627,95 @@ $("#am_id").change(function(){
          alert('Select customer order and article no first');   
         }
     });
+
+    $(document).on('change', "#inking_category", function(){
+
+        if($(this).val() == "PARTS"){
+            val = $(this).find("option:selected").data('part')
+            $("#inking_category_qnty").html("Original Part Qnty: <b>"+ val + "</b>")
+        } else if($(this).val() == "HANDLE(s)"){
+            val = $(this).find("option:selected").data('handle')
+            $("#inking_category_qnty").html("Original Handle Qnty: <b>"+ val + "</b>")
+        }
+
+        $("#category_quantity").remove()
+        appnd_val = "<input id='category_quantity' type='hidden' name='category_quantity' value='"+val+"' class='form-control'/>";
+        $("#inking_category_qnty").after(appnd_val)
+
+        qnty = $("#checked_quantity_add").val()
+        $("#checked_quantity_add_val").html("Category wise qnty: <b>" + (qnty*val) + "</b>")
+
+        $cod_id = $("#am_id_add").val();
+        $remarks_for_other_quantity = $("#remarks_for_other_quantity").val();
+        $inking_category = $("#inking_category").val();
+        // alert();
+        
+        if($cod_id != '') {
+        $.ajax({
+            url: "<?= base_url('admin/get-customer-order-dtl-for-inking-am-id') ?>",
+            method: "post",
+            dataType: 'json',
+            data: {'cod_id': $cod_id, 'remarks_for_other_quantity': $remarks_for_other_quantity, 'inking_category': $inking_category},
+            success: function(result){
+                // console.log('Length:'+result.length);            
+                // console.log(JSON.stringify(result));
+                $article_details = result;
+                
+                $co_id = $article_details.co_id;
+                $cod_id = $article_details.cod_id;
+                //$skiving_receive_detail_id = $('option:selected', this).attr('skiving_receive_detail_id');
+                $fc_id = $article_details.fc_id;
+                $lc_id = $article_details.lc_id;
+                $fitting_color = $article_details.fitting_color;
+                $leather_color = $article_details.leather_color;
+                $checked_quantity = $article_details.checked_quantity;
+                $remaining_inking_quantity = $article_details.remaining_inking_quantity;
+                $cod_id_add_hidden = $article_details.cod_id;
+        
+                $('#lc_id_text').val($leather_color);
+                $('#lc_id').val($lc_id);
+                $('#fc_id_text').val($fitting_color);
+                $('#fc_id').val($fc_id);
+
+                if($remarks_for_other_quantity == 'OTHERS'){
+                    $('#checked_quantity_add').val(0);
+                    $('#checked_alter_add').val($remaining_inking_quantity);
+                    $("#checked_quantity_add").prop("readonly", true);
+                    $("#checked_alter_add").prop("readonly", false);
+                } else {
+                    $('#checked_alter_add').val(0);
+                    $('#checked_quantity_add').val($remaining_inking_quantity);
+                    $("#checked_quantity_add").prop("readonly", false);
+                    $("#checked_alter_add").prop("readonly", true);
+                }
+                
+                $('#remaining_inking_quantity_hidden').val($remaining_inking_quantity);
+                $('#cod_id_add_hidden').val($cod_id_add_hidden);
+                $('#new_am_id_add_hidden').val($article_details.am_id);
+
+            },
+            error: function(e){console.log(e);}
+        });
+        } else {
+         alert('Select customer order and article no first');   
+        }
+    });
+
+    $("#checked_quantity_add").blur(function(){
+        
+        qnty = $(this).val()
+
+        if($("select#inking_category").find("option:selected").val() == "PARTS"){
+            val = $("select#inking_category").find("option:selected").data('part')
+        } else if($("select#inking_category").find("option:selected").val() == "HANDLE(s)"){
+            val = $("select#inking_category").find("option:selected").data('handle')
+        }else{
+            val = 1;
+        }
+
+        $("#checked_quantity_add_val").html("Category wise qnty: <b>" + (qnty*val) + "</b>")
+
+    })
     
     $("#am_id_edit").change(function(){
         $am_id_edit = $(this).val();
@@ -642,40 +728,40 @@ $("#am_id").change(function(){
         $fitting_color = $('option:selected', this).attr('fitting_color');
         $leather_color = $('option:selected', this).attr('leather_color');
         $checked_quantity = $('option:selected', this).attr('checked_quantity');
-        $remaining_finishing_quantity = $('option:selected', this).attr('remaining_finishing_quantity');
+        $remaining_inking_quantity = $('option:selected', this).attr('remaining_inking_quantity');
         $cod_id_edit_hidden = $('option:selected', this).attr('cod_id');
         
         $('#lc_id_text_edit').val($leather_color);
         $('#lc_id_edit').val($lc_id);
         $('#fc_id_text_edit').val($fitting_color);
         $('#fc_id_edit').val($fc_id);
-        $('#checked_quantity_edit').val($remaining_finishing_quantity);
-        $('#remaining_finishing_quantity_hidden_edit').val($remaining_finishing_quantity);
+        $('#checked_quantity_edit').val($remaining_inking_quantity);
+        $('#remaining_inking_quantity_hidden_edit').val($remaining_inking_quantity);
         $('#cod_id_edit_hidden').val($cod_id_edit_hidden);
         
     });
     
     
     $("#checked_quantity_add").blur(function(){
-        $remaining_finishing_quantity_hidden = $('#remaining_finishing_quantity_hidden').val();
+        $remaining_inking_quantity_hidden = $('#remaining_inking_quantity_hidden').val();
         $checked_quantity_add = $('#checked_quantity_add').val();
         if($checked_quantity_add == 0 && $("#for_checked").prop("checked") == true){
             alert('Quantity can not be zero');
-        }else if(parseInt($checked_quantity_add) > parseInt($remaining_finishing_quantity_hidden)){
+        }else if(parseInt($checked_quantity_add) > parseInt($remaining_inking_quantity_hidden)){
             alert('Can not greater than Issue quantity');
-            $('#checked_quantity_add').val($remaining_finishing_quantity_hidden);
+            $('#checked_quantity_add').val($remaining_inking_quantity_hidden);
         }
     });
     
-    $("#form_finishing_list_edit").validate({
+    $("#form_inking_list_edit").validate({
         rules: {
             e_id: {
                 required: true
             },
-            finishing_start_date_time: {
+            inking_start_date_time: {
                 required: true
             },
-            finishing_end_date_time: {
+            inking_end_date_time: {
                 required: true
             }
         },
@@ -683,9 +769,9 @@ $("#am_id").change(function(){
 
         }
     });
-    $('#form_finishing_list_edit').ajaxForm({
+    $('#form_inking_list_edit').ajaxForm({
         beforeSubmit: function () {
-            return $("#form_finishing_list_edit").valid(); // TRUE when form is valid, FALSE will cancel submit
+            return $("#form_inking_list_edit").valid(); // TRUE when form is valid, FALSE will cancel submit
         },
         success: function (returnData) {
             obj = JSON.parse(returnData);
@@ -695,7 +781,7 @@ $("#am_id").change(function(){
     });
 
     //add-purchase order details-form validation and submit
-    $("#form_add_finishing_list_details").validate({
+    $("#form_add_inking_list_details").validate({
         rules: {
             co_id: {
                 required: true,
@@ -711,33 +797,36 @@ $("#am_id").change(function(){
 
         }
     });
-    $('#form_add_finishing_list_details').ajaxForm({
+    $('#form_add_inking_list_details').ajaxForm({
         beforeSubmit: function () {
-            return $("#form_add_finishing_list_details").valid(); // TRUE when form is valid, FALSE will cancel submit
+            return $("#form_add_inking_list_details").valid(); // TRUE when form is valid, FALSE will cancel submit
         },
         success: function (returnData) {
             console.log('RD => ' + returnData);
             obj = JSON.parse(returnData);
-//          $('#form_add_finishing_list_details')[0].reset(); 
-            // $("#form_add_finishing_list_details").validate().resetForm(); //reset validation
+//          $('#form_add_inking_list_details')[0].reset(); 
+            // $("#form_add_inking_list_details").validate().resetForm(); //reset validation
             $("#am_id_add").select2("val", " ");
             $("#lc_id_text").val("");
             $("#fc_id_text").val("");
             $("#checked_quantity_add").val("");
             $("#checked_alter_add").val("");
             $("#remarks_add").val("");
+            $("#art_co_qnty").html("");
+            $("#inking_category_qnty").html();
+            $("#checked_quantity_add_val").html();
             $("#am_id_add").select2('open');
             notification(obj);
             
             //refresh table
-            $('#finishing_list_details_table').DataTable().ajax.reload();
+            $('#inking_list_details_table').DataTable().ajax.reload();
             
         }
     });
     
     
     //edit-purchase order details-form validation and submit
-    $("#form_edit_finishing_list_details").validate({
+    $("#form_edit_inking_list_details").validate({
         rules: {
             checked_quantity_edit: {
                 required: true,
@@ -748,50 +837,50 @@ $("#am_id").change(function(){
         }
     });
 
-    $('#form_edit_finishing_list_details').ajaxForm({
+    $('#form_edit_inking_list_details').ajaxForm({
         beforeSubmit: function () {
-            return $("#form_edit_finishing_list_details").valid(); // TRUE when form is valid, FALSE will cancel submit
+            return $("#form_edit_inking_list_details").valid(); // TRUE when form is valid, FALSE will cancel submit
         },
         success: function (returnData) {
             console.log('RD => ' + returnData);
             obj = JSON.parse(returnData);           
             notification(obj);
             //refresh table
-            $('#finishing_list_details_table').DataTable().ajax.reload();
+            $('#inking_list_details_table').DataTable().ajax.reload();
         }
     });
 
     //jobber4
-    $("#finishing_list_details_table").on('click', '.finishing_detail_edit_btn', function() {
+    $("#inking_list_details_table").on('click', '.inking_detail_edit_btn', function() {
         $("#pod_edit_loader").removeClass('hidden');
 
-        $finishing_detail_id = $(this).attr('finishing_detail_id');
+        $inking_detail_id = $(this).attr('inking_detail_id');
 
         $.ajax({
-            url: "<?= base_url('admin/ajax-fetch-finishing-details-for-edit') ?>",
+            url: "<?= base_url('admin/ajax-fetch-inking-details-for-edit') ?>",
             method: "post",
             dataType: 'json',
-            data: {'finishing_detail_id': $finishing_detail_id,},
+            data: {'inking_detail_id': $inking_detail_id,},
             success: function(data){
                 console.log(data);
-                $finishing_detail = data.finishing_detail;
-                //alert($finishing_detail.finishing_detail_id)
+                $inking_detail = data.inking_detail;
+                //alert($inking_detail.inking_detail_id)
                 /*$jobber_issue_quantity = data.jobber_issue_quantity;
                 $receive_cut_quantity = data.receive_cut_quantity;
                 $remain_quantity_to_receive = data.remain_quantity_to_receive;*/
                 
-                $("#co_id_edit").html("<option>"+$finishing_detail.co_no+"</option>").trigger('change');
-                $("#am_id_edit").html("<option>"+$finishing_detail.art_no+"</option>").trigger('change');
-                $("#lc_id_text_edit").val($finishing_detail.leather_color);
-                $("#fc_id_text_edit").val($finishing_detail.fitting_color);
-                $("#checked_quantity_edit").val($finishing_detail.checked_quantity);
-                $("#checked_alter_edit").val($finishing_detail.rejection_quantity);
-                $("#remarks_for_other_quantity_edit").html("<option>"+$finishing_detail.remarks_for_other_quantity+"</option>").trigger('change');
-                $("#remarks_edit").val($finishing_detail.remarks);
+                $("#co_id_edit").html("<option>"+$inking_detail.co_no+"</option>").trigger('change');
+                $("#am_id_edit").html("<option>"+$inking_detail.art_no+"</option>").trigger('change');
+                $("#lc_id_text_edit").val($inking_detail.leather_color);
+                $("#fc_id_text_edit").val($inking_detail.fitting_color);
+                $("#checked_quantity_edit").val($inking_detail.checked_quantity);
+                $("#checked_alter_edit").val($inking_detail.rejection_quantity);
+                $("#remarks_for_other_quantity_edit").html("<option>"+$inking_detail.remarks_for_other_quantity+"</option>").trigger('change');
+                $("#remarks_edit").val($inking_detail.remarks);
                 /*$("#jobber_issue_quantity_edit_hidden").val($jobber_issue_details.jobber_issue_quantity);
                 $("#jobber_emboss_edit").val($jobber_issue_details.jobber_emboss);
                 console.log('jobber_issue_detail_id:'+$jobber_issue_details.jobber_issue_detail_id);*/
-                $("#finishing_detail_id_edit").val($finishing_detail.finishing_detail_id);
+                $("#inking_detail_id_edit").val($inking_detail.inking_detail_id);
                 
                 $('#cut_issue_receive_edit_tab').removeClass('disabled');
                 $('#cut_issue_receive_edit_tab').children("a").attr("data-toggle", 'tab');
@@ -847,7 +936,7 @@ $("#am_id").change(function(){
             $data_pk = $(this).attr('data-pk');
 
             $.ajax({
-                url: "<?= base_url('admin/del-finishing-details-list') ?>",
+                url: "<?= base_url('admin/del-inking-details-list') ?>",
                 dataType: 'json',
                 type: 'POST',
                 data: {tab: $tab, tab_pk : $tab_pk, data_pk: $data_pk},
@@ -859,7 +948,7 @@ $("#am_id").change(function(){
                     notification(returnData);
                     
                     //refresh table
-                    $("#finishing_list_details_table").DataTable().ajax.reload();
+                    $("#inking_list_details_table").DataTable().ajax.reload();
 
                 },
                 error: function (returnData) {

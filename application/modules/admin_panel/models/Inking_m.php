@@ -1,7 +1,6 @@
 <?php
 
-
-class Lining_m extends CI_Model {
+class Inking_m extends CI_Model {
 
     public function __construct() {
         parent::__construct();
@@ -10,24 +9,24 @@ class Lining_m extends CI_Model {
 
     private function _dept_wise_module_permission($module_id,$user){
 
-            $dept_id = $this->db->get_where('user_details', array('user_id' => $user))->result()[0]->user_dept;
-            if($dept_id != NULL){
-                $nr = $this->db->where('module_permission_id', $module_id)->where('FIND_IN_SET('.$dept_id.', dept_id) !=', 0)->get('module_permission')->num_rows();
-                // echo $this->db->last_query(); die;
-                if($nr == 0){
-                    # show-all
-                    return 'show';
-                }else{
-                    # filter according to dept id
-                    return $dept_id;
-                }
-            }else{
+        $dept_id = $this->db->get_where('user_details', array('user_id' => $user))->result()[0]->user_dept;
+        if($dept_id != NULL){
+            $nr = $this->db->where('module_permission_id', $module_id)->where('FIND_IN_SET('.$dept_id.', dept_id) !=', 0)->get('module_permission')->num_rows();
+            // echo $this->db->last_query(); die;
+            if($nr == 0){
+                # show-all
                 return 'show';
+            }else{
+                # filter according to dept id
+                return $dept_id;
             }
-            
+        }else{
+            return 'show';
         }
         
-        private function _user_wise_view_permission($menu_id,$user){
+    }
+        
+    private function _user_wise_view_permission($menu_id,$user){
 
          $nr = $this->db
                 ->where('m_id', $menu_id)
@@ -43,26 +42,26 @@ class Lining_m extends CI_Model {
         
     }
 
-    public function lining_list() {
+    public function inking_list() {
         $data = [];
         $data["view_permission"] = $this->_user_wise_view_permission(13, $this->session->user_id);
-        return array('page'=>'lining/lining_list_v', 'data'=>$data);
+        return array('page'=>'inking/inking_list_v', 'data'=>$data);
     }
 
-    public function ajax_lining_table_data() {
+    public function ajax_inking_table_data() {
 
-                   // fetch department-wisemodule permission
-            $session_user_id = $this->session->user_id;
-            # if id is returned then filter else show all
-            $module_permission = $this->_dept_wise_module_permission(5, $session_user_id); #1 = costing module_id
+        // fetch department-wisemodule permission
+        $session_user_id = $this->session->user_id;
+        # if id is returned then filter else show all
+        $module_permission = $this->_dept_wise_module_permission(5, $session_user_id); #1 = costing module_id
 
         //actual db table column names
         $column_orderable = array(
             0 => 'employees.name',
-            1 => 'lining.lining_entry_date'
+            1 => 'inking.inking_entry_date'
         );
         // Set searchable column fields
-        $column_search = array('employees.name','lining.lining_entry_date');
+        $column_search = array('employees.name','inking.inking_entry_date');
         // $column_search = array('co_no');
 
         $limit = $this->input->post('length');
@@ -71,7 +70,7 @@ class Lining_m extends CI_Model {
         $order = $column_orderable[$this->input->post('order')[0]['column']];
         $dir = $this->input->post('order')[0]['dir'];
         $search = $this->input->post('search')['value'];
-                $rs = $this->db->get('lining')->result();
+                $rs = $this->db->get('inking')->result();
         $totalData = count($rs);
         $totalFiltered = $totalData;
 
@@ -80,9 +79,9 @@ class Lining_m extends CI_Model {
             $this->db->limit($limit, $start);
             $this->db->order_by($order, $dir);
             
-            $this->db->select('lining.lining_id, lining.e_id, DATE_FORMAT(lining.lining_entry_date, "%d-%m-%Y") as lining_entry_date, employees.name as employees_name, lining.extra_time');
-            $this->db->join('employees', 'employees.e_id = lining.e_id', 'left');
-                $rs = $this->db->order_by('employees.name, lining.lining_entry_date', 'asc')->get_where('lining', array('lining.status => 1'))->result();
+            $this->db->select('inking.inking_id, inking.e_id, DATE_FORMAT(inking.inking_entry_date, "%d-%m-%Y") as inking_entry_date, employees.name as employees_name, inking.extra_time');
+            $this->db->join('employees', 'employees.e_id = inking.e_id', 'left');
+                $rs = $this->db->order_by('employees.name, inking.inking_entry_date', 'asc')->get_where('inking', array('inking.status => 1'))->result();
         }
         //if searching for something
         else {
@@ -105,18 +104,18 @@ class Lining_m extends CI_Model {
             }
             $this->db->stop_cache();
 
-            $this->db->select('lining.lining_id, lining.extra_time, lining.e_id, DATE_FORMAT(lining.lining_entry_date, "%d-%m-%Y") as lining_entry_date, employees.name as employees_name');
-            $this->db->join('employees', 'employees.e_id = lining.e_id', 'left');
-                $rs = $this->db->order_by('employees.name, lining.lining_entry_date', 'asc')->get_where('lining', array('lining.status => 1'))->result();
+            $this->db->select('inking.inking_id, inking.extra_time, inking.e_id, DATE_FORMAT(inking.inking_entry_date, "%d-%m-%Y") as inking_entry_date, employees.name as employees_name');
+            $this->db->join('employees', 'employees.e_id = inking.e_id', 'left');
+                $rs = $this->db->order_by('employees.name, inking.inking_entry_date', 'asc')->get_where('inking', array('inking.status => 1'))->result();
             $totalFiltered = count($rs);
 
             $this->db->limit($limit, $start);
             $this->db->order_by($order, $dir);
             
-            $this->db->select('lining.lining_id, lining.e_id, lining.extra_time, DATE_FORMAT(lining.lining_entry_date, "%d-%m-%Y") as lining_entry_date, employees.name as employees_name');
-            $this->db->join('employees', 'employees.e_id = lining.e_id', 'left');
+            $this->db->select('inking.inking_id, inking.e_id, inking.extra_time, DATE_FORMAT(inking.inking_entry_date, "%d-%m-%Y") as inking_entry_date, employees.name as employees_name');
+            $this->db->join('employees', 'employees.e_id = inking.e_id', 'left');
 
-                $rs = $this->db->order_by('employees.name, lining.lining_entry_date', 'asc')->get_where('lining', array('lining.status => 1'))->result();
+                $rs = $this->db->order_by('employees.name, inking.inking_entry_date', 'asc')->get_where('inking', array('inking.status => 1'))->result();
             $this->db->flush_cache();
         }
 
@@ -129,9 +128,9 @@ class Lining_m extends CI_Model {
 
             $temp_co_no = '';
             $customer_order_row = $this->db->select('customer_order.co_no')
-            ->join('customer_order', 'customer_order.co_id = lining_details.co_id', 'left')
-            ->group_by('lining_details.lining_id, lining_details.co_id')
-            ->get_where('lining_details', array('lining_details.lining_id' => $val->lining_id, 'lining_details.status => 1'))->result();
+            ->join('customer_order', 'customer_order.co_id = inking_details.co_id', 'left')
+            ->group_by('inking_details.inking_id, inking_details.co_id')
+            ->get_where('inking_details', array('inking_details.inking_id' => $val->inking_id, 'inking_details.status => 1'))->result();
         
         if(count($customer_order_row) > 0) {
         foreach ($customer_order_row as $a) {
@@ -139,29 +138,29 @@ class Lining_m extends CI_Model {
              }
             }
             
-            $total_lining_qnty_vals = 0;
-            $lining_row = $this->db->select('sum(checked_quantity) as checked_quantity')
-            ->group_by('lining_details.lining_id')
-            ->get_where('lining_details', array('lining_details.lining_id' => $val->lining_id, 'lining_details.status => 1'))->row();
+            $total_inking_qnty_vals = 0;
+            $inking_row = $this->db->select('sum(checked_quantity) as checked_quantity')
+            ->group_by('inking_details.inking_id')
+            ->get_where('inking_details', array('inking_details.inking_id' => $val->inking_id, 'inking_details.status => 1'))->row();
             
-            if(count($lining_row) > 0) {
-               $total_lining_qnty_vals = $lining_row->checked_quantity;  
+            if(count($inking_row) > 0) {
+               $total_inking_qnty_vals = $inking_row->checked_quantity;  
             }
 
             //if($val->supp_status == '1'){$status='Enable';} else{$status='Disable';}
-            $nestedData['lining_id'] = $val->lining_id;
+            $nestedData['inking_id'] = $val->inking_id;
             $nestedData['e_id'] = $val->e_id;
             $nestedData['employee_name'] = $val->employees_name;
             $nestedData['extra_time'] = $val->extra_time;
-            $nestedData['lining_start_date'] = $val->lining_entry_date;
+            $nestedData['inking_start_date'] = $val->inking_entry_date;
             $nestedData['order_no'] = $temp_co_no;
-            $nestedData["tots_vals"] = $total_lining_qnty_vals;
+            $nestedData["tots_vals"] = $total_inking_qnty_vals;
             $uvp = $this->_user_wise_view_permission(13, $this->session->user_id);
             if($uvp == 'block'){
                 $nestedData['action'] = '-';    
             }else{
-                $nestedData['action'] = '<a href="'. base_url('admin/lining-list-edit/'.$val->lining_id) .'" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
-            <a href="javascript:void(0)" pk-name="lining_id" pk-value="'.$val->lining_id.'" tab="lining" child="1" ref-tab="lining_details" ref-pk-name="lining_id" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
+                $nestedData['action'] = '<a href="'. base_url('admin/inking-list-edit/'.$val->inking_id) .'" class="btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
+            <a href="javascript:void(0)" pk-name="inking_id" pk-value="'.$val->inking_id.'" tab="inking" child="1" ref-tab="inking_details" ref-pk-name="inking_id" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
             }
             $data[] = $nestedData;
 
@@ -179,10 +178,10 @@ class Lining_m extends CI_Model {
     }    
 
     //Open Add Form
-    public function lining_list_add() {
+    public function inking_list_add() {
         $data['employee_details'] = $this->db->select('e_id, name, e_code')->get_where('employees', array('employees.status' => 1, 'user_id !=' => 13))->result();
         
-        return array('page'=>'lining/lining_add_v', 'data'=>$data);
+        return array('page'=>'inking/inking_add_v', 'data'=>$data);
     }
     
     public function ajax_jobber_challan_issue_number(){
@@ -214,22 +213,22 @@ class Lining_m extends CI_Model {
     }*/
     
     //Add main header info
-    public function form_lining_list_add(){
+    public function form_inking_list_add(){
 
         $insertArray = array(
             'extra_time' => $this->input->post('extra_time'),
             'e_id' => $this->input->post('e_id'),
-            'lining_entry_date' => $this->input->post('lining_start_date_time'),
+            'inking_entry_date' => $this->input->post('inking_start_date_time'),
             'user_id' => $this->session->user_id
         );
 
         // echo '<pre>', print_r($insertArray), '</pre>';die;
 
-        $this->db->insert('lining', $insertArray);
+        $this->db->insert('inking', $insertArray);
         $data['insert_id'] = $this->db->insert_id();
         if($this->db->insert_id() > 0){
             $data['type'] = 'success';
-            $data['msg'] = 'Lining List added successfully.';
+            $data['msg'] = 'Inking List added successfully.';
         }else{
             $data['type'] = 'error';
             $data['msg'] = 'Not Inserted successfully.';
@@ -238,40 +237,40 @@ class Lining_m extends CI_Model {
     }
     
     //Get data before edit
-    public function lining_list_edit($lining_id) {
+    public function inking_list_edit($inking_id) {
         
        $data['employee_details'] = $this->db->select('e_id, name, e_code')->get_where('employees', array('employees.status' => 1, 'user_id !=' => 13))->result();
         
         $data['customer_order'] = $this->db->select('co_id, co_no')->get_where('customer_order', array( 'customer_order.status' => 1))->result();
         
-        $data['lining_details'] = $this->db->select('lining.lining_id, lining.e_id, DATE_FORMAT(lining.lining_entry_date, "%d-%m-%Y") as lining_entry_date, employees.name as employees_name, lining.extra_time')
-        ->join('employees', 'employees.e_id = lining.e_id', 'left')
-        ->get_where('lining', array('lining.lining_id' => $lining_id))->result();
+        $data['inking_details'] = $this->db->select('inking.inking_id, inking.e_id, DATE_FORMAT(inking.inking_entry_date, "%d-%m-%Y") as inking_entry_date, employees.name as employees_name, inking.extra_time')
+        ->join('employees', 'employees.e_id = inking.e_id', 'left')
+        ->get_where('inking', array('inking.inking_id' => $inking_id))->result();
             
-        return array('page'=>'lining/lining_list_edit_v', 'data'=>$data);
+        return array('page'=>'inking/inking_list_edit_v', 'data'=>$data);
     }
 
-    public function form_lining_list_edit(){
+    public function form_inking_list_edit(){
         $updateArray = array(
             'extra_time' => $this->input->post('extra_time'),
             'e_id' => $this->input->post('e_id'),
-            'lining_entry_date' => $this->input->post('lining_start_date_time'),
+            'inking_entry_date' => $this->input->post('inking_start_date_time'),
             'user_id' => $this->session->user_id
         );
-        $lining_id = $this->input->post('lining_id');
+        $inking_id = $this->input->post('inking_id');
         
-        $this->db->update('lining', $updateArray, array('lining_id' => $lining_id));
+        $this->db->update('inking', $updateArray, array('inking_id' => $inking_id));
 
         //echo $this->db->last_query();die;
         
         $data['type'] = 'success';
-        $data['msg'] = 'Lining updated successfully.';
+        $data['msg'] = 'Inking updated successfully.';
 
         return $data;
 
     }
     
-    public function get_customer_order_dtl_for_lining(){
+    public function get_customer_order_dtl_for_inking(){
         $co_id = $this->input->post('co_id');
         $this->db->select('customer_order.co_no,customer_order.co_date,customer_order_dtl.co_id,customer_order_dtl.am_id,customer_order_dtl.fc_id,customer_order_dtl.lc_id,customer_order_dtl.cod_id, customer_order_dtl.co_quantity,customer_order_dtl.co_price,customer_order_dtl.co_buy_reference,customer_order_dtl.co_remarks, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, article_master.art_no, article_master.alt_art_no');
             $this->db->join('customer_order', 'customer_order.co_id = customer_order_dtl.co_id', 'left');
@@ -286,71 +285,81 @@ class Lining_m extends CI_Model {
                 $am_id = 0;
                 $co_quantity = 0;
                 $checked_quantity = 0;
-                $remaining_lining_quantity = 0;
+                $remaining_inking_quantity = 0;
                 
                 $cod_id = $rs[$i]->cod_id;
                 $am_id = $rs[$i]->am_id;
                 $co_quantity = $rs[$i]->co_quantity;
                 
-                $checked_quantity = $this->db->select_sum('checked_quantity')->get_where('lining_details', array('cod_id' => $cod_id, 'am_id' => $am_id))->result()[0]->checked_quantity;
+                $checked_quantity = $this->db->select_sum('checked_quantity')->get_where('inking_details', array('cod_id' => $cod_id, 'am_id' => $am_id))->result()[0]->checked_quantity;
                 
-                $remaining_lining_quantity = ($co_quantity - $checked_quantity);
+                $remaining_inking_quantity = ($co_quantity - $checked_quantity);
 
 
                 $rs[$i]->checked_quantity = $checked_quantity;
-                $rs[$i]->remaining_lining_quantity = $remaining_lining_quantity;
+                $rs[$i]->remaining_inking_quantity = $remaining_inking_quantity;
             }//end for
             
             //echo json_encode($rs);
             return $rs;
     }
     
-    public function get_customer_order_dtl_for_lining_am_id(){
+    public function get_customer_order_dtl_for_inking_am_id(){
         $cod_id = $this->input->post('cod_id');
         $remarks_for_other_quantity = $this->input->post('remarks_for_other_quantity');
-        $this->db->select('customer_order.co_no,customer_order.co_date,customer_order_dtl.co_id,customer_order_dtl.am_id,customer_order_dtl.fc_id,customer_order_dtl.lc_id,customer_order_dtl.cod_id, customer_order_dtl.co_quantity,customer_order_dtl.co_price,customer_order_dtl.co_buy_reference,customer_order_dtl.co_remarks, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, article_master.art_no, article_master.alt_art_no');
+        $inking_category = $this->input->post('inking_category');
+
+        $this->db->select('customer_order.co_no,customer_order.co_date,customer_order_dtl.co_id,customer_order_dtl.am_id,customer_order_dtl.fc_id,customer_order_dtl.lc_id,customer_order_dtl.cod_id, customer_order_dtl.co_quantity,customer_order_dtl.co_price,customer_order_dtl.co_buy_reference,customer_order_dtl.co_remarks, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, article_master.art_no, article_master.alt_art_no,article_master.no_of_part,article_master.no_of_handle');
         $this->db->join('customer_order', 'customer_order.co_id = customer_order_dtl.co_id', 'left');
         $this->db->join('article_master', 'article_master.am_id = customer_order_dtl.am_id', 'left');
         $this->db->join('colors c1', 'c1.c_id = customer_order_dtl.fc_id', 'left');
         $this->db->join('colors c2', 'c2.c_id = customer_order_dtl.lc_id', 'left');
         $rs = $this->db->get_where('customer_order_dtl', array('customer_order_dtl.cod_id' => $cod_id))->row();
         //print_r($rs); die();
-            
+        
         $cod_id = 0;
         $am_id = 0;
         $co_quantity = 0;
         $checked_quantity = 0;
-        $remaining_lining_quantity = 0;
+        $remaining_inking_quantity = 0;
         
         $cod_id = $rs->cod_id;
         $am_id = $rs->am_id;
         $co_quantity = $rs->co_quantity;
-        
-        if($remarks_for_other_quantity == 'LINING CUTTING') {
-            $checked_quantity = $this->db->select_sum('checked_quantity')->get_where('lining_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->checked_quantity;
+                    
+        if($remarks_for_other_quantity == 'OTHERS') { 
+            $checked_quantity = $this->db
+                ->select_sum('rejection_quantity')
+                ->get_where('inking_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity, 'inking_category' => $inking_category))
+                ->result()[0]->rejection_quantity;  
         } else {
-            $checked_quantity = $this->db->select_sum('rejection_quantity')->get_where('lining_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity))->result()[0]->rejection_quantity;    
+            $checked_quantity = $this->db
+                ->select_sum('checked_quantity')
+                ->get_where('inking_details', array('cod_id' => $cod_id, 'am_id' => $am_id, 'remarks_for_other_quantity' => $remarks_for_other_quantity, 'inking_category' => $inking_category))
+                ->result()[0]->checked_quantity;   
         }
 
-        $remaining_lining_quantity = ($co_quantity - $checked_quantity);        
+        // ECHO $this->db->last_query();  die;
+
+        $remaining_inking_quantity = ($co_quantity - $checked_quantity);
         $rs->checked_quantity = $checked_quantity;
-        $rs->remaining_lining_quantity = $remaining_lining_quantity;
+        $rs->remaining_inking_quantity = $remaining_inking_quantity;
         
         //echo json_encode($rs);
         return $rs;
     }
 
-    public function ajax_lining_list_details_table_data() {
+    public function ajax_inking_list_details_table_data() {
        
-       $lining_id = $this->input->post('lining_id');
+       $inking_id = $this->input->post('inking_id');
         //actual db table column names table th order
         $column_orderable = array(
             0 => 'customer_order.co_no',
             1 => 'article_master.art_no',
-            4 => 'lining_details.checked_quantity',
+            4 => 'inking_details.checked_quantity',
         );
         // Set searchable column fields
-        $column_search = array('customer_order.co_no', 'article_master.art_no', 'lining_details.checked_quantity','lining_details.remarks');
+        $column_search = array('customer_order.co_no', 'article_master.art_no', 'inking_details.checked_quantity','inking_details.remarks');
 
         $limit = $this->input->post('length');
         $start = $this->input->post('start');
@@ -359,7 +368,7 @@ class Lining_m extends CI_Model {
         $dir = $this->input->post('order')[0]['dir'];
         $search = $this->input->post('search')['value'];
 
-        $rs = $this->db->get('lining_details')->result();
+        $rs = $this->db->get('inking_details')->result();
         $totalData = count($rs);
         $totalFiltered = $totalData;
 
@@ -367,12 +376,12 @@ class Lining_m extends CI_Model {
         if(empty($search)) {
             $this->db->limit($limit, $start);
             $this->db->order_by($order, $dir);
-            $this->db->select('lining_details.lining_detail_id, lining_details.lining_id, lining_details.remarks_for_other_quantity, lining_details.co_id, lining_details.cod_id, lining_details.am_id, lining_details.checked_quantity, lining_details.remarks, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, lining_details.rejection_quantity');
-            $this->db->join('customer_order', 'customer_order.co_id = lining_details.co_id', 'left');
-            $this->db->join('article_master', 'article_master.am_id = lining_details.am_id', 'left');
-            $this->db->join('colors c1', 'c1.c_id = lining_details.fc_id', 'left');
-            $this->db->join('colors c2', 'c2.c_id = lining_details.lc_id', 'left');
-            $rs = $this->db->get_where('lining_details', array('lining_details.lining_id' => $lining_id))->result();
+            $this->db->select('inking_details.inking_detail_id, inking_details.inking_id, inking_details.remarks_for_other_quantity, inking_details.co_id, inking_details.cod_id, inking_details.am_id, inking_details.checked_quantity, inking_details.remarks,inking_category, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, inking_details.rejection_quantity');
+            $this->db->join('customer_order', 'customer_order.co_id = inking_details.co_id', 'left');
+            $this->db->join('article_master', 'article_master.am_id = inking_details.am_id', 'left');
+            $this->db->join('colors c1', 'c1.c_id = inking_details.fc_id', 'left');
+            $this->db->join('colors c2', 'c2.c_id = inking_details.lc_id', 'left');
+            $rs = $this->db->get_where('inking_details', array('inking_details.inking_id' => $inking_id))->result();
         }
         //if searching for something
         else {
@@ -394,23 +403,23 @@ class Lining_m extends CI_Model {
                 $i++;
             }
             $this->db->stop_cache();
-            $this->db->select('lining_details.lining_detail_id,  lining_details.lining_id, lining_details.remarks_for_other_quantity, lining_details.co_id, lining_details.cod_id, lining_details.am_id, lining_details.checked_quantity, lining_details.remarks, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, lining_details.rejection_quantity');
-            $this->db->join('customer_order', 'customer_order.co_id = lining_details.co_id', 'left');
-            $this->db->join('article_master', 'article_master.am_id = lining_details.am_id', 'left');
-            $this->db->join('colors c1', 'c1.c_id = lining_details.fc_id', 'left');
-            $this->db->join('colors c2', 'c2.c_id = lining_details.lc_id', 'left');
-            $rs = $this->db->get_where('lining_details', array('lining_details.lining_id' => $lining_id))->result();
+            $this->db->select('inking_details.inking_detail_id,  inking_details.inking_id, inking_details.remarks_for_other_quantity, inking_details.co_id, inking_details.cod_id, inking_details.am_id, inking_details.checked_quantity, inking_details.remarks,inking_details.inking_category, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, inking_details.rejection_quantity');
+            $this->db->join('customer_order', 'customer_order.co_id = inking_details.co_id', 'left');
+            $this->db->join('article_master', 'article_master.am_id = inking_details.am_id', 'left');
+            $this->db->join('colors c1', 'c1.c_id = inking_details.fc_id', 'left');
+            $this->db->join('colors c2', 'c2.c_id = inking_details.lc_id', 'left');
+            $rs = $this->db->get_where('inking_details', array('inking_details.inking_id' => $inking_id))->result();
             
             $totalFiltered = count($rs);
 
             $this->db->limit($limit, $start);
             $this->db->order_by($order, $dir);
-            $this->db->select('lining_details.lining_detail_id,  lining_details.lining_id, lining_details.remarks_for_other_quantity, lining_details.co_id, lining_details.cod_id, lining_details.am_id, lining_details.checked_quantity, lining_details.remarks, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, lining_details.rejection_quantity');
-            $this->db->join('customer_order', 'customer_order.co_id = lining_details.co_id', 'left');
-            $this->db->join('article_master', 'article_master.am_id = lining_details.am_id', 'left');
-            $this->db->join('colors c1', 'c1.c_id = lining_details.fc_id', 'left');
-            $this->db->join('colors c2', 'c2.c_id = lining_details.lc_id', 'left');
-            $rs = $this->db->get_where('lining_details', array('lining_details.lining_id' => $lining_id))->result();
+            $this->db->select('inking_details.inking_detail_id,  inking_details.inking_id, inking_details.remarks_for_other_quantity, inking_details.co_id, inking_details.cod_id, inking_details.am_id, inking_details.checked_quantity, inking_details.remarks,inking_details.inking_category, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id, inking_details.rejection_quantity');
+            $this->db->join('customer_order', 'customer_order.co_id = inking_details.co_id', 'left');
+            $this->db->join('article_master', 'article_master.am_id = inking_details.am_id', 'left');
+            $this->db->join('colors c1', 'c1.c_id = inking_details.fc_id', 'left');
+            $this->db->join('colors c2', 'c2.c_id = inking_details.lc_id', 'left');
+            $rs = $this->db->get_where('inking_details', array('inking_details.inking_id' => $inking_id))->result();
 
             $this->db->flush_cache();
         }
@@ -422,7 +431,7 @@ class Lining_m extends CI_Model {
 
         foreach ($rs as $val) {
             
-            $nestedData['lining_type'] = $val->remarks_for_other_quantity;
+            $nestedData['inking_type'] = $val->remarks_for_other_quantity;
             $nestedData['order_number'] = $val->co_no;
             $nestedData['article_number'] = $val->art_no;
             $nestedData['leather_colour'] = $val->leather_color;
@@ -430,8 +439,9 @@ class Lining_m extends CI_Model {
             $nestedData['quantity'] = $val->checked_quantity;
             $nestedData['rejection_quantity'] = $val->rejection_quantity;
             $nestedData['remarks'] = $val->remarks;
-            $nestedData['action'] = '<a href="javascript:void(0)" lining_detail_id="'.$val->lining_detail_id.'" class="lining_detail_edit_btn btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
-            <a tab="lining_details" tab-pk="lining_detail_id" data-pk="'.$val->lining_detail_id.'" href="javascript:void(0)" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
+            $nestedData['inking_category'] = $val->inking_category;
+            $nestedData['action'] = '<a tab="inking_details" tab-pk="inking_detail_id" data-pk="'.$val->inking_detail_id.'" href="javascript:void(0)" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';
+            // <a href="javascript:void(0)" inking_detail_id="'.$val->inking_detail_id.'" class="inking_detail_edit_btn btn btn-info"><i class="fa fa-pencil"></i> Edit</a>
             
             $data[] = $nestedData;
 
@@ -448,17 +458,17 @@ class Lining_m extends CI_Model {
         return $json_data;
     }
 
-    public function ajax_fetch_lining_details_for_edit(){
-        $lining_detail_id = $this->input->post('lining_detail_id');
+    public function ajax_fetch_inking_details_for_edit(){
+        $inking_detail_id = $this->input->post('inking_detail_id');
         $data = array();
         
-        $this->db->select('lining_details.lining_detail_id,  lining_details.lining_id, lining_details.co_id, lining_details.cod_id, lining_details.am_id, lining_details.checked_quantity, lining_details.rejection_quantity, lining_details.remarks_for_other_quantity, lining_details.remarks, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id');
-        $this->db->join('customer_order', 'customer_order.co_id = lining_details.co_id', 'left');
-        $this->db->join('article_master', 'article_master.am_id = lining_details.am_id', 'left');
-        $this->db->join('colors c1', 'c1.c_id = lining_details.fc_id', 'left');
-        $this->db->join('colors c2', 'c2.c_id = lining_details.lc_id', 'left');
-        $rs = $this->db->get_where('lining_details', array('lining_details.lining_detail_id' => $lining_detail_id))->result()[0];
-        $data['lining_detail'] = $rs;
+        $this->db->select('inking_details.inking_detail_id,  inking_details.inking_id, inking_details.co_id, inking_details.cod_id, inking_details.am_id, inking_details.checked_quantity, inking_details.rejection_quantity, inking_details.remarks_for_other_quantity, inking_details.remarks, customer_order.co_no, article_master.art_no, c1.color as fitting_color, c1.c_code as leather_code, c1.c_id as leather_id, c2.color as leather_color, c2.c_code as fitting_code, c2.c_id as fitting_id');
+        $this->db->join('customer_order', 'customer_order.co_id = inking_details.co_id', 'left');
+        $this->db->join('article_master', 'article_master.am_id = inking_details.am_id', 'left');
+        $this->db->join('colors c1', 'c1.c_id = inking_details.fc_id', 'left');
+        $this->db->join('colors c2', 'c2.c_id = inking_details.lc_id', 'left');
+        $rs = $this->db->get_where('inking_details', array('inking_details.inking_detail_id' => $inking_detail_id))->result()[0];
+        $data['inking_detail'] = $rs;
         
         
         /*$am_id = $rs->am_id;
@@ -477,9 +487,9 @@ class Lining_m extends CI_Model {
         return $data;
     }
     
-    public function form_edit_lining_list_details(){
+    public function form_edit_inking_list_details(){
         $checked_quantity_edit = $this->input->post('checked_quantity_edit');
-        $lining_detail_id = $this->input->post('lining_detail_id_edit');
+        $inking_detail_id = $this->input->post('inking_detail_id_edit');
         $rejection_quantity = $this->input->post('checked_alter_edit');
         $remarks_edit = $this->input->post('remarks_edit');
         
@@ -491,9 +501,9 @@ class Lining_m extends CI_Model {
         );
         
         
-        $this->db->update('lining_details', $updateArray, array('lining_detail_id' => $lining_detail_id));
+        $this->db->update('inking_details', $updateArray, array('inking_detail_id' => $inking_detail_id));
         $data['type'] = 'success';
-        $data['msg'] = 'Lining details updated successfully.';
+        $data['msg'] = 'Inking details updated successfully.';
         return $data;
     }
     
@@ -576,9 +586,9 @@ class Lining_m extends CI_Model {
         return $data;
     }
     
-    public function form_add_lining_list_details(){
+    public function form_add_inking_list_details(){
         
-        $lining_id = $this->input->post('lining_id');
+        $inking_id = $this->input->post('inking_id');
         $co_id = $this->input->post('co_id');
         $cod_id = $this->input->post('am_id_add');
         $am_id = $this->input->post('new_am_id_add_hidden');
@@ -587,10 +597,12 @@ class Lining_m extends CI_Model {
         $checked_quantity = $this->input->post('checked_quantity_add');
         $rejection_quantity = $this->input->post('checked_alter_add');
         $remarks_for_other_quantity = $this->input->post('remarks_for_other_quantity');
+        $inking_category = $this->input->post('inking_category');
+        $category_quantity = $this->input->post('category_quantity');
         $remarks = $this->input->post('remarks_add');
         
         $insertArray = array(
-            'lining_id' => $lining_id,
+            'inking_id' => $inking_id,
             'co_id' => $co_id,
             'cod_id' => $cod_id,
             'am_id' => $am_id,
@@ -599,17 +611,19 @@ class Lining_m extends CI_Model {
             'checked_quantity' => $checked_quantity,
             'rejection_quantity' => $rejection_quantity,
             'remarks_for_other_quantity' => $remarks_for_other_quantity,
+            'inking_category' => $inking_category,
+            'category_quantity' => $category_quantity,
             'remarks' => $remarks,
             'user_id' => $this->session->user_id
         );
-        $this->db->insert('lining_details', $insertArray);
+        $this->db->insert('inking_details', $insertArray);
         $insert_id = $this->db->insert_id();
         
         $data['insert_id'] = $insert_id;
         
         if($insert_id > 0){
             $data['type'] = 'success';
-            $data['msg'] = 'Lining List added successfully.';
+            $data['msg'] = 'Inking List added successfully.';
         }else{
             $data['type'] = 'error';
             $data['msg'] = 'Insert function Error';
@@ -618,73 +632,6 @@ class Lining_m extends CI_Model {
         return $data;
     }
 
-    
-
-    public function purchase_order_print_with_code($po_id){
-        
-        $data['purchase_order_details'] = $this->db
-                ->select('purchase_order.*, purchase_order_details.*, acc_master.name, acc_master.address,countries.country,item_master.item,colors.color, colors.c_code, units.unit,item_groups.ig_id as item_group, thick')
-                ->join('purchase_order_details', 'purchase_order_details.po_id = purchase_order.po_id', 'left') // 
-                ->join('acc_master', 'acc_master.am_id = purchase_order.am_id', 'left')
-                ->join('countries', 'countries.c_id = acc_master.c_id', 'left')
-                ->join('item_dtl', 'purchase_order_details.id_id = item_dtl.id_id', 'left')
-                ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
-                ->join('item_groups', 'item_groups.ig_id = item_master.ig_id', 'left')
-                ->join('units', 'units.u_id = item_groups.u_id', 'left')
-                ->join('colors', 'colors.c_id = item_dtl.c_id', 'left')
-                ->get_where('purchase_order', array('purchase_order.po_id' => $po_id))
-                ->result();
-        return array('page'=>'purchase_order/purchase_order_print_with_code_v', 'data'=>$data);
-    }
-
-    public function purchase_order_print_without_code($po_id){
-        
-        $data['purchase_order_details'] = $this->db
-                ->select('purchase_order.*, purchase_order_details.*, acc_master.name, acc_master.address,countries.country,item_master.item,colors.color, colors.c_code, units.unit,item_groups.ig_id as item_group, thick')
-                ->join('purchase_order_details', 'purchase_order_details.po_id = purchase_order.po_id', 'left') // 
-                ->join('acc_master', 'acc_master.am_id = purchase_order.am_id', 'left')
-                ->join('countries', 'countries.c_id = acc_master.c_id', 'left')
-                ->join('item_dtl', 'purchase_order_details.id_id = item_dtl.id_id', 'left')
-                ->join('item_master', 'item_master.im_id = item_dtl.im_id', 'left')
-                ->join('item_groups', 'item_groups.ig_id = item_master.ig_id', 'left')
-                ->join('units', 'units.u_id = item_groups.u_id', 'left')
-                ->join('colors', 'colors.c_id = item_dtl.c_id', 'left')
-                ->get_where('purchase_order', array('purchase_order.po_id' => $po_id))
-                ->result();
-        return array('page'=>'purchase_order/purchase_order_print_without_code_v', 'data'=>$data);
-    }
-
-
-    public function form_edit_supp_purchase_order_details(){
-        
-        $total_amount = 0;
-        $pod_quantity_edit = $this->input->post('pod_quantity_edit');
-        $pod_rate_edit = $this->input->post('pod_rate_edit');
-        $total_amount = ($pod_quantity_edit * $pod_rate_edit);
-        
-        $updateArray = array(
-            'item_qty' => $this->input->post('pod_quantity_edit'),
-            'item_rate' => $this->input->post('pod_rate_edit'),
-            'total_amount' => $total_amount,
-            'sup_pod_remarks' => $this->input->post('pod_remarks_edit'),
-            'user_id' => $this->session->user_id
-        );
-        $sup_id = $this->input->post('sup_id');
-        $supp_dtl_id = $this->input->post('supp_dtl_id');
-        
-        $this->db->update('supp_purchase_order_detail', $updateArray, array('supp_dtl_id' => $supp_dtl_id));
-
-        $data['pod_total'] = $this->db->select_sum('total_amount')->get_where('supp_purchase_order_detail', array('sup_id' => $sup_id))->result()[0]->total_amount;
-        // update purchase order table 
-        $updateArray1= array(
-            'supp_po_total' => $data['pod_total']
-        );
-        $this->db->update('supp_purchase_order', $updateArray1, array('sup_id' => $sup_id));
-
-        $data['type'] = 'success';
-        $data['msg'] = 'Supp.purchase order details updated successfully.';
-        return $data;
-    }
     // ---------------------------------------working-----------------------------------------
 
     
@@ -702,9 +649,9 @@ class Lining_m extends CI_Model {
 
         return $data;
     }
-    /**    <a href="javascript:void(0)" pk-name="cut_id" pk-value="'.$val->cut_id.'" tab="cutting_issue_challan" child="1" ref-table="cutting_issue_challan_detail" ref-pk-name="cut_id" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';**/
+    /**<a href="javascript:void(0)" pk-name="cut_id" pk-value="'.$val->cut_id.'" tab="cutting_issue_challan" child="1" ref-table="cutting_issue_challan_detail" ref-pk-name="cut_id" class="btn btn-danger delete"><i class="fa fa-times"></i> Delete</a>';**/
 
-    public function lining_list_delete(){
+    public function inking_list_delete(){
         $tab = $this->input->post('tab');
         $pk_name = $this->input->post('pk_name');
         $pk_value = $this->input->post('pk_value');
@@ -721,11 +668,11 @@ class Lining_m extends CI_Model {
         
         $data['title'] = 'Deleted!';
         $data['type'] = 'success';
-        $data['msg'] = 'Lining Detail Successfully Deleted';
+        $data['msg'] = 'Inking Detail Successfully Deleted';
         return $data;
     }
     
-    public function del_lining_details_list(){
+    public function del_inking_details_list(){
         $tab = $this->input->post('tab');
         $tab_pk = $this->input->post('tab_pk');
         $data_pk = $this->input->post('data_pk');
@@ -734,7 +681,7 @@ class Lining_m extends CI_Model {
         
         $data['title'] = 'Deleted!';
         $data['type'] = 'success';
-        $data['msg'] = 'Lining detail list deleted successfully';
+        $data['msg'] = 'Inking detail list deleted successfully';
         return $data;
     }
     // purchase ORDER ENDS 

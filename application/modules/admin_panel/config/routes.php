@@ -686,6 +686,32 @@ $route['admin/del-skiving-receive-challan-details-list'] = 'admin_panel/Skiving_
 	
 //Sample Bill end
 
+//Checking Start
+
+	//List
+	$route['admin/checking'] = 'admin_panel/Checking/checking_list';
+	$route['admin/ajax-checking-table-data'] = 'admin_panel/Checking/ajax_checking_table_data';
+	
+	//Add
+	$route['admin/checking-list-add'] = 'admin_panel/Checking/checking_list_add';
+	$route['admin/form-checking-list-add'] = 'admin_panel/Checking/form_checking_list_add';
+	
+	//Edit
+	$route['admin/checking-list-edit/(:num)'] = 'admin_panel/Checking/checking_list_edit/$1';
+	$route['admin/ajax-checking-list-details-table-data'] = 'admin_panel/Checking/ajax_checking_list_details_table_data';
+	$route['admin/form-checking-list-edit'] = 'admin_panel/Checking/form_checking_list_edit';
+	$route['admin/get-customer-order-dtl-for-checking'] = 'admin_panel/Checking/get_customer_order_dtl_for_checking';
+	$route['admin/get-customer-order-dtl-for-checking-am-id'] = 'admin_panel/Checking/get_customer_order_dtl_for_checking_am_id';
+	$route['admin/form-add-checking-listn-details'] = 'admin_panel/Checking/form_add_checking_list_details';
+	$route['admin/ajax-fetch-checking-details-for-edit'] = 'admin_panel/Checking/ajax_fetch_checking_details_for_edit';
+	$route['admin/form-edit-checking-list-details'] = 'admin_panel/Checking/form_edit_checking_list_details';
+
+	//Delete
+	$route['admin/delete-checking-list-header'] = 'admin_panel/Checking/checking_list_delete';
+	$route['admin/del-checking-details-list'] = 'admin_panel/Checking/del_checking_details_list';
+	
+//Checking End
+
 //Lining Start
 
 	//List
@@ -737,6 +763,33 @@ $route['admin/del-skiving-receive-challan-details-list'] = 'admin_panel/Skiving_
     $route['admin/del-finishing-details-list'] = 'admin_panel/Finishing/del_finishing_details_list';
     
 //Finishing End
+
+//Inking Start
+
+    //List
+    $route['admin/inking'] = 'admin_panel/Inking/inking_list';
+    $route['admin/ajax-inking-table-data'] = 'admin_panel/Inking/ajax_inking_table_data';
+    
+    //Add
+    $route['admin/inking-list-add'] = 'admin_panel/Inking/inking_list_add';
+    $route['admin/form-inking-list-add'] = 'admin_panel/Inking/form_inking_list_add';
+    
+    //Edit
+    $route['admin/inking-list-edit/(:num)'] = 'admin_panel/Inking/inking_list_edit/$1';
+    $route['admin/ajax-inking-list-details-table-data'] = 'admin_panel/Inking/ajax_inking_list_details_table_data';
+    $route['admin/form-inking-list-edit'] = 'admin_panel/Inking/form_inking_list_edit';
+    $route['admin/get-customer-order-dtl-for-inking'] = 'admin_panel/Inking/get_customer_order_dtl_for_inking';
+    $route['admin/get-customer-order-dtl-for-inking-am-id'] = 'admin_panel/Inking/get_customer_order_dtl_for_inking_am_id';
+    $route['admin/form-add-inking-listn-details'] = 'admin_panel/Inking/form_add_inking_list_details';
+    $route['admin/ajax-fetch-inking-details-for-edit'] = 'admin_panel/Inking/ajax_fetch_inking_details_for_edit';
+    $route['admin/form-edit-inking-list-details'] = 'admin_panel/Inking/form_edit_inking_list_details';
+
+    //Delete
+    $route['admin/delete-inking-list-header'] = 'admin_panel/Inking/inking_list_delete';
+    $route['admin/del-inking-details-list'] = 'admin_panel/Inking/del_inking_details_list';
+    
+//Inking End
+
 
 //Office Proforma start
 	//List Header
@@ -993,10 +1046,13 @@ $route['admin/del-platting-issue-details-list'] = 'admin_panel/Platting_issue/de
 //REPORT SECTION
 
 // list
+
 $route['admin/report-list/(:any)'] = 'admin_panel/Report/report_list/$1';
 
 $route['admin/report-item'] = 'admin_panel/Report/report_item';
 $route['admin/ajax-item-detail-table-data'] = 'admin_panel/Report/ajax_item_detail_table_data';
+
+$route['admin/most-ordered-article'] = 'admin_panel/Report/most_ordered_article';
 
 // ORDER STATUS STARTS
 $route['admin/report-order-status'] = 'admin_panel/Report/report_order_status';
@@ -1027,6 +1083,8 @@ $route['admin/checking-summary-status'] = 'admin_panel/Report/checking_summary_s
 $route['admin/article-master-report'] = 'admin_panel/Report/article_master_report';
 //CHECKING ENTRY SHEET
 $route['admin/checking-entry-sheet'] = 'admin_panel/Report/checking_entry_sheet';
+//EDGE INKING 
+$route['admin/reports-inking-summary'] = 'admin_panel/Report/report_inking_summary';
 //STOCK SUMMARY STATUS
 $route['admin/stock-summary-details'] = 'admin_panel/Report/stock_summary_status';
 $route['items-on-item-group'] = 'admin_panel/Report/fetch_items_on_item_group';
